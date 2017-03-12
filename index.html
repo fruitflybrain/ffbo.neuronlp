@@ -187,9 +187,6 @@
               <li><p id="neu-id">FlyCircuit DB: </p></li>
               <li><button id="btn-flycircuit-pin" class="btn btn-xs btn-danger btn-unclicked">pin</button></li>
             </ul>
-            <!--div class="scroll-wrapper">
-              <iframe id="flycircuit-iframe" src=""></iframe>
-            </div-->
             <div id ="flycircuit-table" style="display: none">
               <table class="table table-inverse">
                 <tbody>
@@ -221,12 +218,10 @@
               <li><h2>Tutorial Video </h2></li>
               <li><a id="btn-video-close" class='close-symbol' role="button">&#10005;</a></li>
             </ul>
-            <video id="video-container" controls src="https://youtu.be/d9wzuuPurA0">
-              Sorry, your browser doesn't support embedded videos,
-              but don't worry, you can
-              <a href="video/FFBO_video_guide.mp4">download it</a>
-              and watch it with your favorite video player!
-            </video>
+            <div class="embed-responsive embed-responsive-16by9">
+              <iframe id="video-iframe" class="embed-responsive-item" frameborder="0" allowfullscreen src="https://www.youtube.com/embed/eVADxyO8N1k?enablejsapi=1">
+              </iframe>
+            </div>
           </div>
           <div id="arch-wrapper">
             <!--img id="block-diagram"-->
@@ -246,13 +241,11 @@
   <script type='text/javascript' src="https://cdn.rawgit.com/fruitflybrain/ffbo.visualizer_module/master/mesh3d.js"></script>
   <script type="text/javascript" src="https://cdn.rawgit.com/marcj/css-element-queries/master/src/ResizeSensor.js"></script>
 
-
-
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
   <script type="text/javascript" src="https://cdn.rawgit.com/malsup/blockui/master/jquery.blockUI.js"></script>
 
   <!-- Connection Code-->
+  <script type="text/javascript" src="js/notify.js"></script>
   <script type="text/javascript" src="js/connection.js"></script>
   <script type="text/javascript" src="js/ui_support_functions.js"></script>
   <script type="text/javascript" src="js/utils.js"></script>

@@ -1,7 +1,7 @@
 $("#btn-demo").click( function() { $("#demo-panel").slideDown(500) } );
 $("#btn-demo-close").click( function() { $("#demo-panel").slideUp(500) } );
 $("#btn-tutorial-video").click( function() { $("#video-panel").slideDown(500) } );
-$("#btn-video-close").click( function() { $("#video-container")[0].pause(); $("#video-panel").slideUp(500) } );
+$("#btn-video-close").click( function() { document.getElementById('video-iframe').contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*'); $("#video-panel").slideUp(500) } );
 
 var script_loader = ScriptLoader(function() {$("#vis-none").click()} );
 
