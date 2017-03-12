@@ -1,0 +1,98 @@
+#registerContainer{
+    position: absolute;
+    top: calc( 50vh - 205px );
+    z-index: 1011;
+    position: fixed;
+    padding: 0px;
+    margin: 0px auto;
+    width: 50vh;
+    left: 0px;
+    text-align: center;
+    color: rgb(0, 0, 0);
+    border: 3px solid rgb(170, 170, 170);
+    background: rgba(255, 255, 255, 0.7);
+    cursor: wait;
+    border-radius: 10px;
+    min-width: 300px;
+    right: 0px;
+    /*min-width: 300px;left: 0;right: 0;margin: 0 auto;*/
+		     
+}
+
+@media screen and (min-height: 370px) and (max-height: 450px) {
+    #registerContainer{
+        zoom: 0.8 ;
+	top: calc( 50vh - 164px ) !important;
+    }
+}
+
+@media screen and (max-height: 370px){
+    #registerContainer{
+        zoom: 0.6 ;
+	top: calc( 50vh - 123px ) !important;
+    }
+}
+
+
+.form-signin {
+  max-width: 350px;
+  padding: 10px 10px 10px 10px;
+  margin: auto;
+}
+
+.form-signin-heading {
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.form-signin-feedback {
+  color: red;
+  text-align: center;
+}
+
+.input-group-auth .input-group-addon,
+.input-group-auth input {
+  min-width: 90px;
+  position: relative;
+  font-size: 14px;
+  height: auto;
+  padding: 1px;
+  border: 0px;
+}
+
+#input-group-username {
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+#input-group-firstname {
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+#input-group-lastname {
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+#input-group-email {
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+#input-group-position {
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+#input-group-affiliation {
+  margin-bottom: 30px;
+  border-radius: 5px;
+}
+
+.colorgraph {
+  height: 7px;
+  border-top: 0;
+  background: #c4e17f;
+  border-radius: 5px;
+  background-image: -webkit-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: -moz-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+}

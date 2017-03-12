@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NeuroNLP</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="author" content="FFBO Team">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/hamburgers/0.5.0/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jQuery.mmenu/5.7.8/css/jquery.mmenu.all.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jQuery.mmenu/5.7.8/extensions/positioning/jquery.mmenu.positioning.css"/>
+
+    <!-- Auth css -->
+    <link rel="stylesheet" type="text/css" href="css/auth.css">
+
+    <!-- jQuery library -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <!-- jQuery.mmenu library -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jQuery.mmenu/5.7.8/js/jquery.mmenu.all.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="https://autobahn.s3.amazonaws.com/autobahnjs/latest/autobahn.min.jgz"></script>
+
+    <script>AUTOBAHN_DEBUG = true;</script>
+    <script src="js/mm_menu_init.js"></script>
+
+    <!-- FFBO Layout -->
+    <script type="text/javascript" src="https://cdn.rawgit.com/fruitflybrain/ffbo.lib/master/js/ffbo.layout.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/fruitflybrain/ffbo.lib/master/css/ffbo.layout.css">
+    <link rel="shortcut icon" href="https://cdn.rawgit.com/fruitflybrain/fruitflybrain.github.io/master/ico/favicon.ico">
+
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5848b7a00e85e58b"></script>
+  </head>
+<body>
+
+  <div id="welcomepage"></div>
+
+  <div id="login-container" style="display: none; cursor: default;">
+    <form name="Login_Form" class="form-signin">
+      <h4 class="form-signin-heading">Welcome to NeuroNLP</h4>
+      <hr class="colorgraph"><br>
+
+      <div id="input-group-username" class="input-group input-group-auth">
+        <span class="input-group-addon">Username</span>
+        <input id="txt_user" type="text" class="form-control" name="Username" placeholder="Username" required="" autofocus="" />
+      </div>
+      <div id="input-group-password" class="input-group input-group-auth">
+        <span class="input-group-addon">Password</span>
+        <input id="txt_password" type="password" class="form-control" name="Password" placeholder="Password" required=""/>
+      </div>
+
+      <button class="btn btn-lg btn-primary btn-block"  name="Submit" value="Login" type="button" id="loginBtn">Login</button>
+      <a onclick="start_guest_connection();" style="float: left;margin-top:10px" >Continue as Guest</a>
+      <a href="register.html" style="float: right;margin-top:10px" >Register </a>
+      <h5 id="auth_feedback" class="form-signin-feedback" style="margin-top:30px">&nbsp;</h5>
+    </form>
+  </div>
+
+  <div id="wrapper">
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+          <nav class="navbar navbar-ffbo navbar-inverse">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <button id="server-icon" class="navbar-brand hamburger hamburger--vortex" onclick="openServerMenu()">
+                  <span class="hamburger-box">
+                    <span class="hamburger-inner"></span>
+                  </span>
+                </button>
+                <a class="navbar-brand" href="http://fruitflybrain.org/" target="_blank">FFBO</a>
+                <button id="ui_menu_btn" type="button" class="navbar-toggle collapsed" onclick="openRightMenu()" style="z-index:1">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <ul class="nav navbar-nav ffbo-app">
+                  <li class="dropdown">
+                    <a class="dropdown-toggle" role="button" data-toggle="dropdown">NeuroNLP</a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a id='btn-demo' role='button'>Demos</a></li>
+                      <li><a id='btn-tutorial-video' role='button'>Tutorial Video</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <div class="navbar-fixed-bottom">
+                <ul class="nav navbar-nav">
+                  <li>
+                    Copyright &copy; 2016 FFBO.
+                  </li>
+                  <li>
+                    <div id="search-wrapper" class="search-bottom input-group input-group-mid">
+                      <input id = "srch_box" type="text" class="form-control" title="please type in query string..."  placeholder="enter query here, ex. show L1 neurons in lamina">
+                      <span class="input-group-btn">
+                        <button id = "srch_box_btn" class="btn btn-mid btn-primary" type="button">Query</button>
+                      </span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                  <li><a role="button" onclick="onToggleNeuClick()">Toggle Neuron</a></li>
+                  <li><a role="button" onclick="onToggleLPUClick()">Toggle Neuropil</a></li>
+                  <li><a role="button" onclick="onShowAllClick()">Show All</a></li>
+                  <li><a role="button" onclick="onHideAllClick()">Hide All</a></li>
+                </ul>
+              </div>
+              <nav id="ui_menu_nav">
+                <ul>
+                  <li>
+                    <span>Toggle Neuron </span>
+                    <ul id="toggle_neuron">
+                      <li><a id='btn-neu-all' role='button' class=''>Show All</a></li>
+                      <li><a id='btn-neu-none' role='button' class=''>Hide All</a></li>
+                      <li>
+                        <span>Pinned <i class="icon-arrow-right"></i></span>
+                        <ul id="single-pin">
+                          <li><a id="btn-pin-unpinall" role="button" class=''>Unpin All</a></li>
+                        </ul>
+                      </li>
+                      <li>
+                        <span>Single Neuron <i class="icon-arrow-right"></i></span>
+                        <ul id="single-neu" class="mm-listview"></ul>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <span>Toggle Neuropil</span>
+                    <ul id="toggle_neuropil">
+                      <li>
+                        <span>Whole Brain <i class="icon-arrow-right"></i></span>
+                        <ul id="lpu-whole-brain">
+                        </ul>
+                      </li>
+                      <li>
+                        <span>Single LPU <i class="icon-arrow-right"></i></span>
+                        <ul id="single-lpu">
+                        </ul>
+                      </li>
+                      <li>
+                        <span>Subsystem <i class="icon-arrow-right"></i></span>
+                        <ul id="lpu-subsystem"></ul>
+                      </li>
+                    </ul>
+                  </li>
+                  <li><a onclick="onShowAllClick()" role="button">Show All</a></li>
+                  <li><a onclick="onHideAllClick()" role="button">Hide All</a></li>
+                </ul>
+              </nav>
+              <nav id="sidebar-wrapper" class="ffbo-server" role="navigation">
+                <ul>
+                  <li>
+                    <a>NLP Servers </a>
+                    <select id="nlp_servers" class="selectpicker">
+                      <option>None</option>
+                    </select>
+                  </li>
+                  <li>
+                    <a>Neuroarch Servers </a>
+                    <select id="na_servers" class="selectpicker">
+                      <option>None</option>
+                    </select>
+                  </li>
+                  <li>
+                    <a>Query Language </a>
+                    <select id="query_language" class="selectpicker">
+                      <option value ="en">English</option>
+                      <option value ="es">Spanish</option>
+                    </select>
+                  </li>
+                  <li>
+                    <button type="button" class="btn btn-xs btn-primary" id="leave-feedback">Leave Feedback</button>
+                  </li>
+                </ul>
+              </nav>
+              <!-- sidebar-wrapper -->
+            </div>
+          </nav>
+
+          <div id="flycircuit-info" class="vis-info vis-info-sm">
+            <ul  class="list-inline">
+              <li><p id="neu-id">FlyCircuit DB: </p></li>
+              <li><button id="btn-flycircuit-pin" class="btn btn-xs btn-danger btn-unclicked">pin</button></li>
+            </ul>
+            <!--div class="scroll-wrapper">
+              <iframe id="flycircuit-iframe" src=""></iframe>
+            </div-->
+            <div id ="flycircuit-table" style="display: none">
+              <table class="table table-inverse">
+                <tbody>
+                  <tr class=""><td></td><td></td><td></td><td></td></tr>
+                  <tr class=""><td></td><td></td><td></td><td></td></tr>
+                  <tr class=""><td></td><td></td><td></td><td></td></tr>
+                  <tr class=""><td></td><td></td><td></td><td></td></tr>
+                </tbody>
+              </table>
+              <div class="row">
+                <div class="col-md-4"><h4>Confocal Image</h4><img style="width:100%" alt="not available" onerror="imgError(this);"></div>
+                <div class="col-md-4"><h4>Segmentation</h4><img style="width:100%" alt="not available" onerror="imgError(this);"></div>
+                <div class="col-md-4"><h4>Skeleton</h4><img style="width:100%" alt="not available" onerror="imgError(this);"></div>
+              </div>
+            </div>
+          </div>
+          <div id="vis-3d" class="vis-3d vis-3d-lg">
+            <div id="num-of-neuron-container"><p id="num-of-neuron"></p></div>
+          </div>
+          <div id="demo-panel" class='overlay'>
+            <ul class="list-inline">
+              <li><h2>Demos </h2></li>
+              <li><a id="btn-demo-close" class='close-symbol' role="button">&#10005;</a></li>
+            </ul>
+            <div id="demo-table-wrapper"></div>
+          </div>
+          <div id="video-panel" class='overlay'>
+            <ul  class="list-inline">
+              <li><h2>Tutorial Video </h2></li>
+              <li><a id="btn-video-close" class='close-symbol' role="button">&#10005;</a></li>
+            </ul>
+            <video id="video-container" controls src="https://youtu.be/d9wzuuPurA0">
+              Sorry, your browser doesn't support embedded videos,
+              but don't worry, you can
+              <a href="video/FFBO_video_guide.mp4">download it</a>
+              and watch it with your favorite video player!
+            </video>
+          </div>
+          <div id="arch-wrapper">
+            <!--img id="block-diagram"-->
+          </div>
+          <div id="msg-wrapper"><p id="msg-diagram"></p></div>
+          <div id="notifications"></div>
+     </div>
+     <!-- /#page-content-wrapper -->
+  </div>
+
+  <script type='text/javascript' src="https://d3js.org/d3.v3.min.js"></script>
+  <script type='text/javascript' src="https://cdn.rawgit.com/mrdoob/three.js/dev/examples/js/Detector.js"></script>
+  <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/three.js/78/three.js"></script>
+  <script type='text/javascript' src="https://cdn.rawgit.com/mrdoob/three.js/dev/examples/js/math/Lut.js"></script>
+  <script type="text/javascript" src="js/lib/three/libs/TrackballControls.js"></script>
+
+  <script type='text/javascript' src="https://cdn.rawgit.com/fruitflybrain/ffbo.visualizer_module/master/mesh3d.js"></script>
+  <script type="text/javascript" src="https://cdn.rawgit.com/marcj/css-element-queries/master/src/ResizeSensor.js"></script>
+
+
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+  <script type="text/javascript" src="https://cdn.rawgit.com/malsup/blockui/master/jquery.blockUI.js"></script>
+
+  <!-- Connection Code-->
+  <script type="text/javascript" src="js/connection.js"></script>
+  <script type="text/javascript" src="js/ui_support_functions.js"></script>
+  <script type="text/javascript" src="js/utils.js"></script>
+  <script type="text/javascript" src="js/demos.js"></script>
+  <script type="text/javascript" src="js/mouse.js"></script>
+  <script type="text/javascript" src="js/auth.js"></script>
+  <script type="text/javascript" src="js/user_feedback.js"></script>
+
+  </body>
+</html>

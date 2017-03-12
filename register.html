@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>NeuroNLP</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <meta name="author" content="FFBO Team">
+
+        <link rel="shortcut icon" href="ico/favicon.ico">
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="/lib/css/custom.css">
+
+        <!-- Auth css -->
+        <link rel="stylesheet" type="text/css" href="css/register.css">
+
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+        <script src="https://autobahn.s3.amazonaws.com/autobahnjs/latest/autobahn.min.jgz"></script>
+
+        <script>AUTOBAHN_DEBUG = true;</script>
+        
+    </head>
+    <body>
+
+    <div id="welcomepage"></div>
+    <div id="registerContainer" >
+    <div id="register-container">
+        <form id="reg_form" name="Register_Form" class="form-signin" onsubmit="register_user(); return false;">
+            <h4 class="form-signin-heading">Welcome to NeuroNLP</h4>
+            <hr class="colorgraph"><br>
+
+            <div id="input-group-username" class="input-group input-group-auth">
+                <span class="input-group-addon">Username</span>
+                <input id="txt_user" type="text" class="form-control" name="Username" placeholder="" required autofocus="" />
+            </div>
+            <div id="input-group-firstname" class="input-group input-group-auth">
+                <span class="input-group-addon">First Name</span>
+                <input id="txt_fname" type="text" class="form-control" name="FirstName" placeholder="" required/>
+            </div>
+	    <div id="input-group-lastname" class="input-group input-group-auth">
+                <span class="input-group-addon">Last Name</span>
+                <input id="txt_lname" type="text" class="form-control" name="LastName" placeholder="" required/>
+            </div>
+	    <div id="input-group-email" class="input-group input-group-auth">
+                <span class="input-group-addon">Email</span>
+                <input id="txt_email" type="email" class="form-control" name="Email" placeholder="" required/>
+            </div>
+	    <div id="input-group-position" class="input-group input-group-auth">
+                <span class="input-group-addon">Position</span>
+                <input id="txt_pos" type="text" class="form-control" name="Position" placeholder=""/>
+            </div>
+	    <div id="input-group-affiliation" class="input-group input-group-auth">
+                <span class="input-group-addon">Affiliation</span>
+                <input id="txt_aff" type="text" class="form-control" name="Affiliation" placeholder=""/>
+            </div>
+
+            <input class="btn btn-lg btn-primary btn-block"  name="Submit" value="Register" type="submit" id="registerBtn"/>
+            <h5 id="auth_feedback" class="form-signin-feedback">&nbsp;</h5>
+        </form>
+    </div>
+    </div>
+        <!-- Connection Code-->
+        <script src="js/register.js"></script>
+        <script src="/lib/js/bootbox.js"></script>
+
+    </body>
+</html>
+
