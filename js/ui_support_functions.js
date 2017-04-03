@@ -97,11 +97,18 @@ function imgError(image) {
      }, 1000);
 }
 
-function fetchFlycircuit(d,session) {
-
-   session.call('ffbo.processor.fetch_flycircuit',[d[0]]).then(
+function fetchFlycircuit(d) {
+    var na_servers = document.getElementById("na_servers");
+    var na_server = na_servers.options[na_servers.selectedIndex].value;
+    client_session.call('ffbo.processor.fetch_flycircuit',[d[0], na_server , user]).then(
          function (res) {
-            //console.log(res);
+             console.log(res);
+	     if('error' in res){
+		 return;
+	     }
+	     if(res['vfb_id']){
+		 $('#vfb-link').html("<a href='http://virtualflybrain.org/reports/" + res['vfb_id'] + "'>VFB link</a>")
+	     }
             $('#neu-id').attr('name', d[0]);
             $('#neu-id').attr('uid', d[1]);
             $('#neu-id').text('FlyCircuit DB: ' + res['Name']);
@@ -308,6 +315,47 @@ $("#btn-pin-unpinall").click( function() {
     });
     ffbomesh.unpinAll();
 })
+$("#btn-pin-keep").click( function() {
+    if($.isEmptyObject(Array.from(ffbomesh.pinned))) return;
+    var na_servers = document.getElementById("na_servers");
+    var na_server = na_servers.options[na_servers.selectedIndex].value;
+    msg = {};
+    msg["query"] = [{"action": {"method": {"has":{"rid":Array.from(ffbomesh.pinned)}}}, "object":{"state":0}}];
+    msg["verb"] = "keep";
+    msg["data_callback_uri"] = "ffbo.ui.receive_partial"
+    client_session.call('ffbo.na.query.'+na_server, [msg], {}, {
+	receive_progress: true
+    }).then(
+	function(res) {
+	    if(typeof res == 'object'){
+		if ('error' in res) {
+		    Notify(res['error']['message'],null,null,'danger')
+		    $("body").trigger('demoproceed', ['error']);
+		    return;
+		} else if('success' in res) {
+		    if('info' in res['success'])
+			Notify(res['success']['info']);
+		    if('data' in res['success']){
+			data = {'ffbo_json': res['success']['data'],
+				'type': 'morphology_json'};
+			processFFBOjson(data)
+		    }
+		}
+	    }
+	    $("body").trigger('demoproceed', ['success']);
+	},
+	function(err) {
+	    console.log(err)
+	    Notify(err,null,null,'danger');
+	    $("body").trigger('demoproceed', ['error']);
+	},
+	function(progress) {
+	    data = {'ffbo_json': progress,'type': 'morphology_json'};
+	    processFFBOjson(data);
+	}
+    );
+    
+})
 function updatePinNeuron(id, name, pin) {
     id = uidDecode(id);
     if (pin) {
@@ -487,4 +535,144 @@ function construct_query(session) {
 
     msg['nlp_query'] = document.getElementById('srch_box').value;
     return msg
+}
+
+var metadata = {}
+function retrieve_data(reset=true){
+    if(reset){
+	neuList = [];
+	ffbomesh.reset();
+	resetNeuronButton();
+	$('#neu-id').attr('name','');
+	$('#neu-id').attr('uid','');
+	$('#neu-id').text('FlyCircuit DB: ');
+	$("#flycircuit-iframe").attr('src','');
+    }
+    msg = {}
+    msg['data_callback_uri'] = 'ffbo.ui.receive_partial';
+    msg['username'] = username;
+    var na_servers = document.getElementById("na_servers");
+    var na_server = na_servers.options[na_servers.selectedIndex].value;
+    msg['server'] = na_server;
+    msg['query'] = "{'command':'retrieve':{'state':0}}"
+    client_session.call('ffbo.processor.neuroarch_query', [msg], {}).then(
+	function(res) {
+	    if(typeof res == 'object'){
+		if ('error' in res) {
+		    Notify(res['error']['message'],null,null,'danger')
+		    $("body").trigger('demoproceed', ['error']);
+		    return;
+		} else if('success' in res) {
+		    if('info' in res['success'])
+			Notify(res['success']['info']);
+		    if('data' in res['success']){
+			data = {'ffbo_json': res['success']['data'],
+				'type': 'morphology_json'};
+			processFFBOjson(data)
+			if(!($.isEmptyObject(metadata))){
+			    ffbomesh.import_state(metadata);
+			    metadata={};
+			}
+		    }
+		}
+	    }
+	    $("body").trigger('demoproceed', ['success']);
+	},
+	function(err) {
+	    console.log(err)
+	    Notify(err,null,null,'danger');
+	    $("body").trigger('demoproceed', ['error']);
+	}
+    );
+}
+
+function create_tag(tag){
+    var na_servers = document.getElementById("na_servers");
+    var na_server = na_servers.options[na_servers.selectedIndex].value;
+    msg = {}
+    msg['tag'] = tag;
+    msg['metadata'] = ffbomesh.export_state();
+
+    client_session.call('ffbo.na.create_tag.'+na_server, [msg], {}).then(
+	function(res) {
+	    console.log(res)
+	    if(typeof res == 'object'){
+		if('info' in res){
+		    if('error' in res['info']){
+			Notify(res['info']['error'], null,null,'danger');
+			$("body").trigger('demoproceed', ['error']);
+			$("#search-wrapper").unblock();
+		    }
+		    else if('success' in res['info']){
+			Notify(res['info']['success']);
+		    }
+		}
+	    }
+	},
+	function(err) {
+	    console.log(err)
+	    Notify(err,null,null,'danger');
+	    $("body").trigger('demoproceed', ['error']);
+	});
+}
+
+function retrieve_tag(tag){
+    var na_servers = document.getElementById("na_servers");
+    var na_server = na_servers.options[na_servers.selectedIndex].value;
+    msg = {}
+    msg['tag'] = tag;
+
+    client_session.call('ffbo.na.retrieve_tag.'+na_server, [msg], {}).then(
+	function(res) {
+	    console.log(res)
+	    if(typeof res == 'object'){
+		if('info' in res){
+		    if('error' in res['info']){
+			Notify(res['info']['error'], null,null,'danger');
+			$("body").trigger('demoproceed', ['error']);
+			$("#search-wrapper").unblock();
+		    }
+		    else if('success' in res['info']){
+			Notify(res['info']['success']);
+			if('data' in res){
+			    metadata = res['data'];
+			}
+			retrieve_data();
+			
+		    }
+		}
+	    }
+	},
+	function(err) {
+	    console.log(err)
+	    Notify(err,null,null,'danger');
+	    $("body").trigger('demoproceed', ['error']);
+	});
+}
+$('#tagSubmit').click(function(){
+    if($('#tagSubmit').text()=='Create Tag')
+	create_tag($('#tag').val());
+    else
+	retrieve_tag($('#tag').val());
+    $('#tagModal').modal('hide');
+});
+$('#tag').keyup(function(event){
+    if (event.keyCode == 13){
+	if($('#tagSubmit').text()=='Create Tag')
+	    create_tag($('#tag').val());
+	else
+	    retrieve_tag($('#tag').val());
+	$('#tagModal').modal('hide');
+    }
+});    
+function onCreateTag(){
+    $('#tagSubmit').text('Create tag');
+    $('#tagModal').modal('show');
+    $('#tag').focus();
+}
+
+function onRetrieveTag(){
+    $('#tagSubmit').text('Retrieve tag');
+    $('#tagModal').modal('show');
+    $('#tag').focus()
 }
