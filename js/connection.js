@@ -65,6 +65,10 @@ function start_connection(authid, key){
 
 	    data = {'ffbo_json': args[0],'type': 'morphology_json'};
 	    processFFBOjson(data);
+	    if(!($.isEmptyObject(metadata))){
+		ffbomesh.import_state(metadata);
+		metadata={};
+	    }
 	    return true
 	}
 	session.register('ffbo.ui.receive_partial.' + session.id, receive_partial_database).then(
@@ -103,6 +107,7 @@ function start_connection(authid, key){
 		    ids = args[0]['commands']['remove'][0]
 		    for(var i=0; i<ids.length; ++i) {
 			ind = neuList.indexOf(ids[i]);
+			$('#li-btn-'+uidDecode(ids[i])).remove();
 			if(ind>-1) neuList.splice(ind, 1);
 		    }
 		    $("#num-of-neuron").text("Number of Neurons: " + neuList.length);

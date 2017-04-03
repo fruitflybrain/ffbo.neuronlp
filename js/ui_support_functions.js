@@ -392,7 +392,7 @@ new ResizeSensor(element, function() {
     ffbomesh.onWindowResize();
 });
 var ffbomesh = new FFBOMesh3D('vis-3d', {"ffbo_json": lpuJSON, "showAfterLoadAll": true}, {"globalCenter": {'x': 0, 'y':-250, 'z':0}});
-ffbomesh.dispatch['click'] = (function (d) { $("#flycircuit-table").show(); fetchFlycircuit(d,client_session);});
+ffbomesh.dispatch['click'] = (function (d) { $("#flycircuit-table").show(); fetchFlycircuit(d);});
 ffbomesh.dispatch['dblclick'] = updatePinNeuron;
 
 /*
