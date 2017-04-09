@@ -650,7 +650,7 @@ function retrieve_tag(tag){
 	});
 }
 $('#tagSubmit').click(function(){
-    if($('#tagSubmit').text()=='Create Tag')
+    if($('#tagSubmit').text()=='Create tag')
 	create_tag($('#tag').val());
     else
 	retrieve_tag($('#tag').val());
@@ -658,7 +658,7 @@ $('#tagSubmit').click(function(){
 });
 $('#tag').keyup(function(event){
     if (event.keyCode == 13){
-	if($('#tagSubmit').text()=='Create Tag')
+	if($('#tagSubmit').text()=='Create tag')
 	    create_tag($('#tag').val());
 	else
 	    retrieve_tag($('#tag').val());
