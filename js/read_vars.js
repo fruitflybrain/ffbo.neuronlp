@@ -56,18 +56,17 @@ function getAllUrlParams(url) {
   return obj;
 }
 
-function retrieve_tag_by_id(){
-    // Call Nikuls Tag functio/n
-    console.log("Requires Implementation")
+function retrieve_tag_by_id(tag){
+    retrieve_tag(tag)
 }
 
 function retrieve_by_id(key_type,key,session){
     var valid_key_types = {'na':true,'vfb':true,'tag':true}
-        
+
     if (key_type in valid_key_types){
 
         if (key_type=='tag'){
-            retrieve_tag_by_id()
+            retrieve_tag_by_id(key)
         } else {
             retrieve_neuron_by_id(key_type,key,session)
         }

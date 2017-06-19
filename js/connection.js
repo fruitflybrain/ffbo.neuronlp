@@ -199,10 +199,9 @@ function start_connection(authid, key){
 		    populate_server_lists(res)
 		
 		    params =  getAllUrlParams()
-            console.log(params)
             keys = Object.keys(params);
             if (keys.length >0) {
-            retrieve_neuron_by_id(keys[0],params[keys[0]],client_session)
+            retrieve_by_id(keys[0],params[keys[0]],client_session)
             }
             
 		
