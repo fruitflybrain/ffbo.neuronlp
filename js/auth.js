@@ -1,15 +1,22 @@
 $(document).ready(function() {
-    $.blockUI({
-        message: $('#login-container'),
-        css: {
-            'border-radius': '10px',
-            'background': 'rgba(255,255,255,0.7)',
-            'min-width': '300px',
-            'left': 0,
-            'right': 0,
-            'margin': '0 auto'
-        }
-    });
+    if (direct_access) {
+        $.unblockUI();
+        $("#welcomepage").hide();
+
+        start_guest_connection(); 
+    }else{
+        $.blockUI({
+            message: $('#login-container'),
+            css: {
+                'border-radius': '10px',
+                'background': 'rgba(255,255,255,0.7)',
+                'min-width': '300px',
+                'left': 0,
+                'right': 0,
+                'margin': '0 auto'
+            }
+        });
+    }
 });
 
 var welcome_script = [
