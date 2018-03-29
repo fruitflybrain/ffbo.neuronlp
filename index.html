@@ -1,281 +1,552 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>NeuroNLP</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-    <meta name="author" content="FFBO Team">
+<head>
+  <title>NeuroNLP.Adult</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <meta name="author" content="FFBO Team">
 
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/hamburgers/0.5.0/hamburgers.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jQuery.mmenu/5.7.8/css/jquery.mmenu.all.css"/>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jQuery.mmenu/5.7.8/extensions/positioning/jquery.mmenu.positioning.css"/>
+  <link rel="shortcut icon" href="/lib/ico/favicon.ico">
 
-    <!-- Auth css -->
-    <link rel="stylesheet" type="text/css" href="css/auth.css">
+  <!-- Latest compiled and minified CSS -->
+  <link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Saira|Saira+Condensed|Rajdhani|Open+Sans|Quicksand">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/hamburgers/0.5.0/hamburgers.min.css">
+  <link rel="stylesheet" type="text/css" href="/lib/css/jquery.mmenu.all.css"/>
+  <link rel="stylesheet" type="text/css" href="/lib/css/jquery.mmenu.positioning.css"/>
+  <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.7.0/css/perfect-scrollbar.min.css"/>
+  <link rel="stylesheet" type="text/css" href="/lib/css/custom.css">
 
-    <!-- jQuery library -->
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-    <!-- jQuery.mmenu library -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jQuery.mmenu/5.7.8/js/jquery.mmenu.all.min.js"></script>
-    <!-- Latest compiled and minified JavaScript -->
-    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <!-- Auth css -->
+  <link rel="stylesheet" type="text/css" href="css/auth.css">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <script type="text/javascript" src="https://cdn.rawgit.com/crossbario/autobahn-js-built/master/autobahn.min.js"></script>
+  <!-- jQuery library -->
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.7.0/js/perfect-scrollbar.jquery.min.js"></script>
 
-    <script>AUTOBAHN_DEBUG = true;</script>
-    <script src="js/mm_menu_init.js"></script>
+  <!-- jQuery Mobile library -->
+  <script type="text/javascript" src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+  <script type="text/javascript">$.mobile.ajaxEnabled = false;</script>
 
-    <!-- FFBO Layout -->
-    <script type="text/javascript" src="https://cdn.rawgit.com/fruitflybrain/ffbo.lib/master/js/ffbo.layout.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/fruitflybrain/ffbo.lib/master/css/ffbo.layout.css">
-    <link rel="shortcut icon" href="https://cdn.rawgit.com/fruitflybrain/fruitflybrain.github.io/master/ico/favicon.ico">
+  <!-- Spectrum Color Picker -->
+  <script type="text/javascript" src='/lib/js/spectrum.js'></script>
+  <link rel='stylesheet' type="text/css" href='/lib/css/spectrum.css' />
+  <script type="text/javascript" src='/lib/js/modernizr.js'></script>
 
-    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5848b7a00e85e58b"></script>
-  </head>
+  <!-- jQuery.mmenu library -->
+  <script type="text/javascript" src="/lib/js/jquery.mmenu.all.min.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+  <script type="text/javascript" src="https://cdn.rawgit.com/crossbario/autobahn-js-built/master/autobahn.min.js"></script>
+  <script type='text/javascript' src="https://d3js.org/d3.v3.min.js"></script>
+
+  <script src="js/mm_menu_init.js"></script>
+
+
+
+</head>
 <body>
 
-  <div id="welcomepage"></div>
-
   <div id="login-container" style="display: none; cursor: default;">
-    <form name="Login_Form" class="form-signin">
-      <h4 class="form-signin-heading">Welcome to NeuroNLP</h4>
-      <hr class="colorgraph"><br>
+        <form name="Login_Form" class="form-signin">
+            <h4 class="form-signin-heading">Welcome to NeuroNLP</h4>
+            <hr class="colorgraph"><br>
 
-      <div id="input-group-username" class="input-group input-group-auth">
-        <span class="input-group-addon">Username</span>
-        <input id="txt_user" type="text" class="form-control" name="Username" placeholder="Username" required="" autofocus="" />
-      </div>
-      <div id="input-group-password" class="input-group input-group-auth">
-        <span class="input-group-addon">Password</span>
-        <input id="txt_password" type="password" class="form-control" name="Password" placeholder="Password" required=""/>
-      </div>
+            <div id="input-group-username" class="input-group input-group-auth">
+                <span class="input-group-addon">Username</span>
+                <input id="txt_user" type="text" class="form-control" name="Username" placeholder="Username" required="" autofocus="" />
+            </div>
+            <div id="input-group-password" class="input-group input-group-auth">
+                <span class="input-group-addon">Password</span>
+                <input id="txt_password" type="password" class="form-control" name="Password" placeholder="Password" required=""/>
+            </div>
 
-      <button class="btn btn-lg btn-primary btn-block"  name="Submit" value="Login" type="button" id="loginBtn">Login</button>
-      <a onclick="start_guest_connection();" style="float: left;margin-top:10px" >Continue as Guest</a>
-      <a href="register.html" style="float: right;margin-top:10px" >Register </a>
-      <h5 id="auth_feedback" class="form-signin-feedback" style="margin-top:30px">&nbsp;</h5>
-    </form>
-  </div>
+            <button class="btn btn-lg btn-primary btn-block"  name="Submit" value="Login" type="button" id="loginBtn">Login</button>
+              <a onclick="start_guest_connection();" style="float: left;margin-top:10px" >Continue as Guest</a>
+              <a href="register.html" style="float: right;margin-top:10px" >Register </a>
+            <h5 id="auth_feedback" class="form-signin-feedback" style="margin-top:30px">&nbsp;</h5>
+        </form>
+    </div>
   <div class="modal" id="tagModal" tabindex="-1" role="dialog" aria-labelledby="tagLabel" aria-hidden="true">
       <div class="modal-dialog">
-	<div class="modal-content">
-	  <div class="modal-header">
-	    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-	    <h4 class="modal-title" id="tagLabel">Enter tag</h4>
-	  </div>
-	  <div class="modal-body">
-	    <input type="text" name="tag" id="tag" style="width:100%">
-	  </div>
-	  <div class="modal-footer">
-	    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	    <button type="button" class="btn btn-primary" id="tagSubmit"></button>
-	  </div>
-	</div>
-      </div>
-  </div>
-    
-  <div id="wrapper">
-      <!-- Page Content -->
-      <div id="page-content-wrapper">
-          <nav class="navbar navbar-ffbo navbar-inverse">
-            <div class="container-fluid">
-              <div class="navbar-header">
-                <button id="server-icon" class="navbar-brand hamburger hamburger--vortex" onclick="openServerMenu()">
-                  <span class="hamburger-box">
-                    <span class="hamburger-inner"></span>
-                  </span>
-                </button>
-                <a class="navbar-brand" href="http://fruitflybrain.org/" target="_blank">FFBO</a>
-                <button id="ui_menu_btn" type="button" class="navbar-toggle collapsed" onclick="openRightMenu()" style="z-index:1">
-                  <span class="sr-only">Toggle navigation</span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                </button>
-                <ul class="nav navbar-nav ffbo-app">
-                  <li class="dropdown">
-                    <a class="dropdown-toggle" role="button" data-toggle="dropdown">NeuroNLP</a>
-                    <ul class="dropdown-menu" role="menu">
-                      <li><a id='btn-demo' role='button'>Demos</a></li>
-                      <li><a id='btn-tutorial-video' role='button'>Tutorial Video</a></li>
-                    </ul>
-                  </li>
-                </ul>
-              </div>
-              <div class="navbar-fixed-bottom">
-                <ul class="nav navbar-nav">
-                  <li>
-                    Copyright &copy; 2016 FFBO.
-                  </li>
-                  <li>
-                    <div id="search-wrapper" class="search-bottom input-group input-group-mid">
-                      <input id = "srch_box" type="text" class="form-control" title="please type in query string..."  placeholder="enter query here, ex. show L1 neurons in lamina">
-                      <span class="input-group-btn">
-                        <button id = "srch_box_btn" class="btn btn-mid btn-primary" type="button">Query</button>
-                      </span>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-              <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                  <li><a role="button" onclick="onToggleNeuClick()">Toggle Neuron</a></li>
-                  <li><a role="button" onclick="onToggleLPUClick()">Toggle Neuropil</a></li>
-                  <li><a role="button" onclick="onShowAllClick()">Show All</a></li>
-                  <li><a role="button" onclick="onHideAllClick()">Hide All</a></li>
-		  <li><a role="button" onclick="onCreateTag()">Create Tag </a></li>
-		  <li><a role="button" onclick="onRetrieveTag()">Load Tag</a></li>
-                </ul>
-              </div>
-              <nav id="ui_menu_nav">
-                <ul>
-                  <li>
-                    <span>Toggle Neuron </span>
-                    <ul id="toggle_neuron">
-                      <li><a id='btn-neu-all' role='button' class=''>Show All</a></li>
-                      <li><a id='btn-neu-none' role='button' class=''>Hide All</a></li>
-                      <li>
-                        <span>Pinned <i class="icon-arrow-right"></i></span>
-                        <ul id="single-pin">
-                          <li><a id="btn-pin-keep" role="button" class=''>Keep only pinned neurons</a></li>
-                          <li><a id="btn-pin-unpinall" role="button" class=''>Unpin All</a></li>
-                        </ul>
-                      </li>
-                      <li>
-                        <span>Single Neuron <i class="icon-arrow-right"></i></span>
-                        <ul id="single-neu" class="mm-listview"></ul>
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <span>Toggle Neuropil</span>
-                    <ul id="toggle_neuropil">
-                      <li>
-                        <span>Whole Brain <i class="icon-arrow-right"></i></span>
-                        <ul id="lpu-whole-brain">
-                        </ul>
-                      </li>
-                      <li>
-                        <span>Single LPU <i class="icon-arrow-right"></i></span>
-                        <ul id="single-lpu">
-                        </ul>
-                      </li>
-                      <li>
-                        <span>Subsystem <i class="icon-arrow-right"></i></span>
-                        <ul id="lpu-subsystem"></ul>
-                      </li>
-                    </ul>
-                  </li>
-                  <li><a onclick="onShowAllClick()" role="button">Show All</a></li>
-                  <li><a onclick="onHideAllClick()" role="button">Hide All</a></li>
-		  <li><a role="button" onclick="onCreateTag()">Create Tag</a></li>
-		  <li><a role="button" onclick="onRetrieveTag()">Load Tag</a></li>
-                </ul>
-              </nav>
-              <nav id="sidebar-wrapper" class="ffbo-server" role="navigation">
-                <ul>
-                  <li>
-                    <a>NLP Servers </a>
-                    <select id="nlp_servers" class="selectpicker">
-                      <option>None</option>
-                    </select>
-                  </li>
-                  <li>
-                    <a>Neuroarch Servers </a>
-                    <select id="na_servers" class="selectpicker">
-                      <option>None</option>
-                    </select>
-                  </li>
-                  <li>
-                    <a>Query Language </a>
-                    <select id="query_language" class="selectpicker">
-                      <option value ="en">English</option>
-                      <option value ="es">Spanish</option>
-                    </select>
-                  </li>
-                  <li>
-                    <button type="button" class="btn btn-xs btn-primary" id="leave-feedback">Leave Feedback</button>
-                  </li>
-                </ul>
-              </nav>
-              <!-- sidebar-wrapper -->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&#10005;</span></button>
+              <h4 class="modal-title" id="tagLabel">Enter tag</h4>
             </div>
-          </nav>
+            <div class="modal-body">
+              <input type="text" name="tag" id="tag" style="width:100%">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="tagSubmit"></button>
+            </div>
+          </div>
+      </div>
+    </div>
+  <div id="wrapper">
 
-          <div id="flycircuit-info" class="vis-info vis-info-sm">
-            <ul  class="list-inline">
-              <li><p id="neu-id">FlyCircuit DB: </p></li>
-	      <li><p id="vfb-link"></p></li>
-              <li><button id="btn-flycircuit-pin" class="btn btn-xs btn-danger btn-unclicked">pin</button></li>
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+      <nav class="navbar navbar-ffbo navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <div class="navbar-brand">
+                <a href="http://fruitflybrain.org" target="_blank"><img src="img/ffbo_logo.png" role="button"></a>
+                <span style="font-family:'Rajdhani',sans-serif; font-size: 20px; color:grey;">NeuroNLP</span>
+                <a onclick="onShowNeuroNLP()">
+                <span>.Adult</span>
+              </a>
+            </div>
+            <button id="ui_menu_btn" type="button" class="navbar-toggle collapsed" onclick="openRightMenu()" style="z-index:1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
+          <div class="navbar-fixed-bottom">
+            <ul class="nav navbar-nav">
+              <li >Copyright &copy; 2018 FFBO</li>
+              <li>
+                <div id="search-wrapper" class="search-bottom input-group input-group-mid">
+                  <input id = "srch_box" type="text" class="form-control" title="please type in query string..."  placeholder="enter query here, ex. show gabaergic local neurons in ellipsoid body">
+                  <span class="input-group-btn">
+                    <button id = "srch_box_btn" class="btn btn-mid btn-primary" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                  </span>
+                </div>
+              </li>
             </ul>
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+              <li id="btn-getting-started"><a onclick="onGettingStarted()">Get Started</a></li>
+              <li id="btn-tags" ><a onclick="onToggleTag()">Tags</a></li>
+              <li id="btn-neuron"><a onclick="onToggleNeuClick()">Toggle Neurons</a></li>
+              <li id="btn-neuropils"><a onclick="onToggleLPUClick()">Toggle Neuropils</a></li>
+            </ul>
+          </div>
+          <nav id="ui_menu_nav">
+            <ul>
+              <li>
+                <span>Get Started</span>
+                <ul id="toggle_get_started">
+                  <li id="btn-overview"><a onclick="onShowOverview()">Overview</a></li>
+                  <li id="btn-news"><a onclick="onShowAnnounce()">News</a></li>
+                  <li><a onclick="onShowDemo()">Demos</a></li>
+                  <li><a onclick="onShowTutorialVideo()">Tutorial Video</a></li>
+                </ul>
+              </li>
+              <li>
+                <span>Tags</span>
+                <ul id="toggle_tag">
+                  <li><a onclick="onCreateTag()">Create Tag</a></li>
+                  <li><a onclick="onRetrieveTag()">Load Tag</a></li>
+                </ul>
+              </li>
+              <li>
+                <span>Toggle Neuron </span>
+                <ul id="toggle_neuron">
+                  <li><a id='btn-neu-all' role='button' class=''>Show All</a></li>
+                  <li><a id='btn-neu-none' role='button' class=''>Hide All</a></li>
+                  <li>
+                    <span>Pinned <i class="icon-arrow-right"></i></span>
+                    <ul id="single-pin">
+                      <li><a id="btn-pin-keep" role="button" class=''>Keep only pinned neurons</a></li>
+                      <li><a id="btn-pin-unpinall" role="button" class=''>Unpin All</a></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <span>Single Neuron <i class="icon-arrow-right"></i></span>
+                    <ul id="single-neu" class="mm-listview"></ul>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <span>Toggle Neuropil</span>
+                <ul id="toggle_neuropil">
+                  <li>
+                    <span>Whole Brain <i class="icon-arrow-right"></i></span>
+                    <ul id="lpu-whole-brain">
+                    </ul>
+                  </li>
+                  <li>
+                    <span>Single LPU <i class="icon-arrow-right"></i></span>
+                    <ul id="single-lpu">
+                    </ul>
+                  </li>
+                  <li>
+                    <span>Subsystem <i class="icon-arrow-right"></i></span>
+                    <ul id="lpu-subsystem"></ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+          <nav id="sidebar-wrapper" class="ffbo-server" role="navigation">
+            <ul>
+              <li>
+                <a>NLP Servers </a>
+                <select id="nlp_servers" class="selectpicker">
+                  <option>None</option>
+                </select>
+              </li>
+              <li>
+                <a>Neuroarch Servers </a>
+                <select id="na_servers" class="selectpicker">
+                  <option>None</option>
+                </select>
+              </li>
+              <li>
+                <a>Query Language </a>
+                <select id="query_language" class="selectpicker">
+                  <option value ="en">English</option>
+                  <option value ="es">Spanish</option>
+                </select>
+              </li>
+              <li>
+                <button type="button" class="btn btn-xs btn-primary" id="leave-feedback">Leave Feedback</button>
+              </li>
+            </ul>
+          </nav>
+          <!-- sidebar-wrapper -->
+        </div>
+      </nav>
+
+      <div id="info-panel" class="vis-info vis-info-pin">
+        <ul class="list-inline" style="pointer-events:none">
+          <li><p>Info Panel</p></li>
+          <li><button id="btn-info-pin" style="pointer-events:auto" class="btn btn-xs btn-clicked"><i class="fa fa-compress" aria-hidden="true"></i></button></li>
+        </ul>
+        <div>
+          <div id="info-reset" class="ffbo-intro" style="display: none">
+            <h4>
+              Click on a neuron to display its detailed information in this
+              panel.
+          </div>
+          <div id="info-intro" class="ffbo-intro">
+            <h4>What is NeuroNLP?</h4>
+            <p>
+              NeuroNLP provides a modern web-based portal for navigating fruit fly
+              brain circuit data. It enables in-depth exploration and investigation
+              of brain structure, using intuitive plain English queries, such as
+              <br><br><u style="font-style:italic">"show glutamatergic local neurons in the left antennal lobe".</u></br></br>
+              NeuroNLP can be accessed from any browser supporting WebGL. Remember
+              to check it out on your smartphone!
+            </p>
+            <br><br>
+            <h4>Overview</h4>
+            <p>
+               Check out the Overview for a brief description of the layout and menus.
+            </p>
+            <a onmouseover="mimicMouseOver('#btn-getting-started')" onmouseout="mimicMouseOut('#btn-getting-started')" onclick="onShowOverview()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Open Overview!</a>
+            <br><br>
+            <h4>News</h4>
+            <p>
+               Updates and annoucements for <u style="text-decoration:none; font-family:'Rajdhani',sans-serif; color:grey;">NeuroNLP.Adult</u>.
+            </p>
+            <a onmouseover="mimicMouseOver('#btn-getting-started')" onmouseout="mimicMouseOut('#btn-getting-started')" onclick="onShowAnnounce()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> See What's New!</a>
+            <br><br>
+            <h4>Quick Demos</h4>
+            <p>
+               Want to get started? Go check out some real-time "Demos" for NLP queries and GUI usage!
+            </p>
+            <a  onmouseover="mimicMouseOver('#btn-getting-started')" onmouseout="mimicMouseOut('#btn-getting-started')" onclick="onShowDemo()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Try Demos!</a>
+            <br><br>
+            <h4>Tutorial Video</h4>
+            <p>
+               Want to learn more? Go watch the "Tutorial Video" covering details and features of NeuroNLP!
+            </p>
+            <a  onmouseover="mimicMouseOver('#btn-getting-started')" onmouseout="mimicMouseOut('#btn-getting-started')" onclick="onShowTutorialVideo()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Watch Tutorial Video!</a>
+            <br><br>
+            <h4>Sharing Query Results</h4>
+            <p>
+               Sharing query results is easy with the "Tags" feature. Try
+               create your own tags!
+            </p>
+            <a onmouseover="mimicMouseOver('#btn-tags')" onmouseout="mimicMouseOut('#btn-tags')"  onclick="onToggleTag()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Try Tags!</a>
+          </div>
+          <div id ="info-table-wrap" style="display: none">
+            <div id="summary" style="display:none">
+              <div id ="neu-name" style="">
+                <ul  class="list-inline">
+                  <li><p id="neu-id"></p></li>
+                  <li><p id="vfb-link" style="display:none"></p></li>
+                  <li></li>
+                </ul>
+              </div>
+              <table id="basic-info" class="table table-inverse table-custom-striped">
+                <tbody>
+
+                    </tbody>
+              </table>
+            </div>
             <div id ="flycircuit-table" style="display: none">
               <table class="table table-inverse">
                 <tbody>
-                  <tr class=""><td></td><td></td><td></td><td></td></tr>
-                  <tr class=""><td></td><td></td><td></td><td></td></tr>
-                  <tr class=""><td></td><td></td><td></td><td></td></tr>
-                  <tr class=""><td></td><td></td><td></td><td></td></tr>
-                </tbody>
+                      <tr class=""><td></td><td></td><td></td><td></td></tr>
+                      <tr class=""><td></td><td></td><td></td><td></td></tr>
+                      <tr class=""><td></td><td></td><td></td><td></td></tr>
+                      <tr class=""><td></td><td></td><td></td><td></td></tr>
+                    </tbody>
               </table>
               <div class="row">
-                <div class="col-md-4"><h4>Confocal Image</h4><img style="width:100%" alt="not available" onerror="imgError(this);"></div>
-                <div class="col-md-4"><h4>Segmentation</h4><img style="width:100%" alt="not available" onerror="imgError(this);"></div>
-                <div class="col-md-4"><h4>Skeleton</h4><img style="width:100%" alt="not available" onerror="imgError(this);"></div>
+                    <div class="col-md-4"><h4>Confocal Image</h4><img class="clickable-image" style="width:100%" alt="not available" onerror="imgError(this);"></div>
+                    <div class="col-md-4"><h4>Segmentation</h4><img class="clickable-image" style="width:100%" alt="not available" onerror="imgError(this);"></div>
+                    <div class="col-md-4"><h4>Skeleton</h4><img class="clickable-image" style="width:100%" alt="not available" onerror="imgError(this);"></div>
               </div>
             </div>
-          </div>
-          <div id="vis-3d" class="vis-3d vis-3d-lg">
-            <div id="num-of-neuron-container"><p id="num-of-neuron"></p></div>
-          </div>
-          <div id="demo-panel" class='overlay'>
-            <ul class="list-inline">
-              <li><h2>Demos </h2></li>
-              <li><a id="btn-demo-close" class='close-symbol' role="button">&#10005;</a></li>
-            </ul>
-            <div id="demo-table-wrapper"></div>
-          </div>
-          <div id="video-panel" class='overlay'>
-            <ul  class="list-inline">
-              <li><h2>Tutorial Video </h2></li>
-              <li><a id="btn-video-close" class='close-symbol' role="button">&#10005;</a></li>
-            </ul>
-            <div class="embed-responsive embed-responsive-16by9">
-              <iframe id="video-iframe" class="embed-responsive-item" frameborder="0" allowfullscreen src="https://www.youtube.com/embed/eVADxyO8N1k?enablejsapi=1">
-              </iframe>
+              <div id="syn-profile-info-wrapper" style="display:none">
+                <table id="syn-profile-info" class="table table-inverse table-custom-striped">
+                  <tbody>
+                  </tbody>
+                </table>
+              </div>
+            <div id="svg-syn" class="svg-syn" style="width:100%; height:150px; display:none"></div>
+            <div id ="syn-wrap" style="display: none">
+              <h4>Presynaptic Partners</h4>
+              <table id="presyn-neus" class="table table-inverse table-custom-striped">
+                <thead>
+                  <tr class=""><th>Neuron</th> <th>Number of Synapses</th> <th></th></tr>
+                  <tr class=""><th><span class="info-input-span"> Filter by name <br></span><input type='text' id="presyn-srch" value="" class="info-input"/></th> <th><span class="info-input-span"> N greater than <br></span><input type="number" id="presyn-N" value="5" class="info-input selectable"/></th> <th></th></tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+              <h4>Postsynaptic Partners</h4>
+              <table id="postsyn-neus" class="table table-inverse table-custom-striped">
+                <thead>
+                  <tr  class=""><th>Neuron</th> <th>Number of Synapses</th> <th></th></tr>
+                  <tr class=""><th><span class="info-input-span"> Filter by name <br></span><input type='text' id="postsyn-srch" value="" class="info-input"/></th> <th><span class="info-input-span"> N greater than <br></span><input type="number" id="postsyn-N" value="5" class="info-input selectable"/></th> <th></th></tr>
+                </thead>
+                <tbody></tbody>
+              </table>
             </div>
           </div>
-          <div id="arch-wrapper">
-            <!--img id="block-diagram"-->
+        </div>
+      </div>
+
+      <div class="slider-bar" draggable="true"></div>
+
+      <div id="vis-3d" class="vis-3d vis-3d-hf"></div>
+
+      <div class="overlay-background" onclick="closeAllOverlay()"></div>
+
+      <div id="demo-panel" class='overlay'>
+        <ul class="list-inline">
+          <li><h2>Demos </h2></li>
+        </ul>
+        <div id="demo-table-wrapper"></div>
+      </div>
+      <div id="video-panel" class='overlay'>
+        <ul  class="list-inline">
+          <li><h2>Tutorial Video </h2></li>
+        </ul>
+        <video id="video-container" controls src="/lib/video/FFBO_video_guide.mp4">
+          Sorry, your browser doesn't support embedded videos,
+          but don't worry, you can
+          <a href="video/FFBO_video_guide.mp4">download it</a>
+          and watch it with your favorite video player!
+        </video>
+      </div>
+      <div id="img-viewer-overlay" class='overlay'>
+        <img id="full-img">
+        <h2 id="img-viewer-caption"></h2>
+      </div>
+      <div id="information-overlay" class='overlay'>
+        <div class="container">
+        </div>
+      </div>
+      <!-- Overview Panel -->
+      <div id="overview-panel" class="overlay">
+        <ul id="overview-header" class="overview-header list-inline">
+          <li><h2>Overview</h2></li>
+        </ul>
+
+        <div class="overview-content-wrapper">
+          <div class="overview-text">
+            <h4>What is NeuroNLP</h4>
+            <band>
+              <article>
+                <p>
+                  NeuroNLP is a modern web-based portal for navigating fruit fly brain data.
+                  NLP stands for Natural Language Processing, which means the website allows user to use intuitive plain English queries for
+                  in-depth exploration and investigation of brain structure.
+                </p>
+                <ul>The data currently provided are of the following kinds:
+                  <li><strong>Neurons</strong>: 3D skeleton, neuron name, type, data source, neurotransmitter, transgenic lines, etc.</li>
+                  <li><strong>Synapses</strong>:presynaptic and postsynaptic neurons, number of synapses.</li>
+                </ul>
+                <p>
+                  The NLP module allows for querying neurons and synaptic partners by a variety of
+                  attributes of the query targets (refer to <i>Search Bar</i> section below for examples).
+                </p>
+                <blockquote><p> NeuroNLP can be accessed from any browser supporting WebGL. Try it on your smartphone!</p></blockquote>
+              </article>
+              <images></images>
+            </band>
           </div>
-          <div id="msg-wrapper"><p id="msg-diagram"></p></div>
-          <div id="notifications"></div>
-     </div>
-     <!-- /#page-content-wrapper -->
+
+          <div class="overview-text">
+            <h4>Layout Overview</h4>
+            <band>
+              <article>
+                <ul>NeuroNLP site consists of mainly 4 sections
+                  <li><strong>Header bar</strong>: provides operations such as hide neurons, create tags,etc. </li>
+                  <li><strong>3D visualizer</strong>: 3D skeleton visualization of queried neurons and the underlying neuropils.</li>
+                  <li><strong>Information Panel</strong>: detailed information including synaptic partners of neuron pinned in the visualizer.</li>
+                  <li><strong>Search bar</strong>: natural language interface for query neurons.</li>
+                </ul>
+              </article>
+              <images>
+                <img src="img/overview-panel/layout_release_overview.png"> </img>
+              </images>
+            </band>
+
+          </div>
+
+          <div class="overview-text">
+            <h4>Search Bar</h4>
+            <band>
+              <article>
+                <p>
+                  The Search Bar is the central querying interface. It supports natural language queries of neurons, synaptic partners, etc.
+                  By combining various attributes of query targets, you can create some very powerful queries.
+                </p>
+                <ul>Here are a list of example queries you can try:
+                  <li>show glutamatergic local neurons in the left antennal lobe</li>
+                  <li> add dopaminergic neurons in the right MB </li>
+                  <li> add postsynaptic MBONs with at least 50 synapses</li>
+                </ul>
+                <blockquote><p> Note: <i> show </i> neurons will reset workspace (clear existing neurons, reset viewing angle). While <i>add</i> will preserve the current workspace. </p></blockquote>
+
+              </article>
+              <images></images>
+            </band>
+          </div>
+
+          <div id="overview-info-wrapper" class="overview-text">
+            <h4>Information Panel</h4>
+            <band>
+              <article>
+              <p>
+                Information panel is your major source of information regarding the individual neurons.
+              </p>
+
+              </article>
+            </band>
+          </div>
+
+
+          <div class="overview-text">
+            <h4>Visualization Pannel</h4>
+            <band>
+              <article>
+                <p>
+                  The visualization panel provides a interactive workspace of neuron skeletons in the context of relevant neuropils.
+                  It allows you to change view, select neurons, pin neurons, etc.
+                  <br>
+                  In addition the the neuron and neuropil mesh files, the visualization panel provides a list of useful buttons for
+                  ease of interaction. For more details regarding the visualization panel, click on the &nbsp;<i class='fa fa-info-circle' aria-hidden='true'></i>&nbsp; button on the top right corner of the panel.
+                </p>
+
+                <blockquote><p> Pinning neuron of interest and removing all unpinned neuron by clicking the &nbsp;<i class='fa fa-trash' aria-hidden='true'></i>&nbsp; button is a good way to clean up the workspace and keep only the neurons of your interest. </p></blockquote>
+
+              </article>
+            </band>
+          </div>
+        </div>
+      </div>
+
+      <div id="arch-wrapper"></div>
+      <div id="msg-wrapper"><p id="msg-diagram"></p></div>
+      <div id="notifications"></div>
+      <div id="gui-3d" class='overlay'>
+        <ul class="list-inline">
+          <li><h2>3D GUI</h2></li>
+        </ul>
+        <div class="demo-table-wrapper">
+          <h4>Translation</h4>
+          <p>Right-click and then drag the cursor to translate the entire 3D scene. On mobile and tablets, the scene can be translated by dragging with three fingers.</p>
+          <h4>Rotation</h4>
+          <p>Left-click and then drag the cursor  to rotate the entire 3D scene. On mobile and tablets, touch and drag with one finger to rotate the scene.</p>
+          <h4>Zoom</h4>
+          <p>Scroll up or down to zoom in or out the entire 3D scene. On mobile and tablets, pinch out or in to zoom out or in respectively.</p>
+          <h4>Select</h4>
+          <p>Hover over a neuron and Left-Click to retrieve the detail information. On mobile and tablets, touch on the neuron with a single finger to select it.</p>
+          <h4>Pin</h4>
+          <p>Hover over a neuron and Double-Click to pin it in the scene. Pinned neurons will always be highlighted. After pinning neurons of interest, you can use the remove unpinned neurons icon (&nbsp;<i class="fa fa-trash" aria-hidden="true"></i>&nbsp;) to restrict the workspace to neurons you are interested in.</p>
+          <p> On mobile and tablets, select a neuron and then touch and hold on it for atleast 750ms to pin it.</p>
+        </div>
+        <div id="desktop-gui" class="demo-table-wrapper" style="display: none">
+          <h4>Translation</h4>
+          <p>Right-click and then drag the cursor to translate the entire 3D scene.</p>
+          <h4>Rotation</h4>
+          <p>Left-click and then drag the cursor  to rotate the entire 3D scene.</p>
+          <h4>Zoom</h4>
+          <p>Scroll up or down to zoom in or out the entire 3D scene.</p>
+          <h4>Select</h4>
+          <p>Hover over a neuron and Left-Click to retrieve its detailed information in the Info Panel.</p>
+          <h4>Pin</h4>
+          <p>Hover over a neuron and Double-Click to pin it in the scene. Pinned neurons will always be highlighted. After pinning neurons of interest, you can use the remove unpinned neurons icon (&nbsp;<i class="fa fa-trash" aria-hidden="true"></i>&nbsp;) to restrict the workspace to neurons you are interested in.</p>
+        </div>
+        <div id="mobile-gui" class="demo-table-wrapper" style="display: none">
+          <h4>Translation</h4>
+          <p>Touch anywhere on the scene with three fingers and then drag to translate the entire 3D scene.</p>
+          <h4>Rotation</h4>
+          <p>Touch anywhere on the scene with one finger and then drag to rotate the entire 3D scene.</p>
+          <h4>Zoom</h4>
+          <p>Pinch out or in to zoom in or out the entire 3D scene repectively.</p>
+          <h4>Select</h4>
+          <p>Touch on a neuron with a single finger to select it and retrieve its detailed information in the Info Panel.</p>
+          <h4>Pin</h4>
+          <p>Select a neuron and then touch and hold on it with a single finger for atleast 750ms to pin it.Pinned neurons will always be highlighted. After pinning neurons of interest, you can use the remove unpinned neurons icon (&nbsp;<i class="fa fa-trash" aria-hidden="true"></i>&nbsp;) to restrict the workspace to neurons you are interested in.</p>
+        </div>
+      </div>
+      <div id="neuronlp-switch" class="overlay">
+        <div class="neuronlp-switch-wrapper">
+          <a class="info-try btn btn-xs">Stay at <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #999;">NeuroNLP .Adult</span></a>
+          <h5>Or</h5>
+          <a class="info-try btn btn-xs" href="https://neuronlp.larva.fruitflybrain.org">Switch to <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #999;">NeuroNLP .Larva</span></a>
+        </div>
+      </div>
+
+      <div id="announce-panel" class="overlay">
+         <ul class="list-inline">
+           <li><h2>Latest News</h2></li>
+         </ul>
+         <div>
+           <a class="twitter-timeline"  data-chrome="noheader nofooter transperant" data-partner="tweetdeck" data-theme="dark" href="https://twitter.com/FlyBrainObs/timelines/895746744633483264">NeuroNLPUpdates - Curated tweets by FlyBrainObs</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+         </div>
+      </div>
+    </div>
+ <!-- /#page-content-wrapper -->
   </div>
 
-  <script type='text/javascript' src="https://d3js.org/d3.v3.min.js"></script>
-  <script type='text/javascript' src="https://cdn.rawgit.com/mrdoob/three.js/dev/examples/js/Detector.js"></script>
-  <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/three.js/78/three.js"></script>
-  <script type='text/javascript' src="https://cdn.rawgit.com/mrdoob/three.js/dev/examples/js/math/Lut.js"></script>
-  <script type="text/javascript" src="js/lib/three/libs/TrackballControls.js"></script>
 
-  <script type='text/javascript' src="https://cdn.rawgit.com/fruitflybrain/ffbo.visualizer_module/master/mesh3d.js"></script>
-  <script type="text/javascript" src="https://cdn.rawgit.com/marcj/css-element-queries/master/src/ResizeSensor.js"></script>
+  <!-- ffbo.lib/js -->
+  <script type='text/javascript' src="/lib/js/three/Detector.js"></script>
+  <script type='text/javascript' src="/lib/js/three/three.js"></script>
+  <script type='text/javascript' src="/lib/js/three/math/Lut.js"></script>
+  <script type="text/javascript" src="/lib/js/three/libs/TrackballControls.js"></script>
+  <script type='text/javascript' src="/lib/js/mesh3d.js"></script>
+  <script type="text/javascript" src="/lib/js/Notify.js"></script>
+  <script type="text/javascript" src="/lib/js/bootbox.js"></script>
+  <script type="text/javascript" src="/lib/js/blockui.js"></script>
+  <script type="text/javascript" src="/lib/js/utils.js"></script>
+  <script type="text/javascript" src="/lib/js/ResizeSensor.js"></script>
+  <script type="text/javascript" src="/lib/js/mouse.js"></script>
 
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
-  <script type="text/javascript" src="https://cdn.rawgit.com/malsup/blockui/master/jquery.blockUI.js"></script>
-
-  <!-- Connection Code-->
-  <script type="text/javascript" src="js/notify.js"></script>
+  <script type="text/javascript" src="js/read_vars.js"></script>
   <script type="text/javascript" src="js/connection.js"></script>
   <script type="text/javascript" src="js/ui_support_functions.js"></script>
-  <script type="text/javascript" src="js/utils.js"></script>
+  <script type="text/javascript" src="js/adult.js"></script>
   <script type="text/javascript" src="js/demos.js"></script>
-  <script type="text/javascript" src="js/mouse.js"></script>
   <script type="text/javascript" src="js/auth.js"></script>
   <script type="text/javascript" src="js/user_feedback.js"></script>
-
-  </body>
+  <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5848b7a00e85e58b"></script>
+</body>
 </html>
