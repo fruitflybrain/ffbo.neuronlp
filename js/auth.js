@@ -1,16 +1,27 @@
+/*
 $(document).ready(function() {
+    if (direct_access) {
+    $.unblockUI();
+    $("#welcomepage").hide();
+
+    start_guest_connection();
+    }else{
     $.blockUI({
         message: $('#login-container'),
         css: {
-            'border-radius': '10px',
-            'background': 'rgba(255,255,255,0.7)',
-            'min-width': '300px',
-            'left': 0,
-            'right': 0,
-            'margin': '0 auto'
+        'border-radius': '10px',
+        'background': 'rgba(255,255,255,0.7)',
+        'min-width': '300px',
+        'left': 0,
+        'right': 0,
+        'margin': '0 auto'
         }
     });
-});
+    }
+    });
+*/
+start_guest_connection();
+
 
 var welcome_script = [
     [1000, function() { Notify("A cursor will appear at the center of the window, and bring up the demo page!"); }],
@@ -23,6 +34,7 @@ var welcome_script = [
     [700,  function() { $("#btn-demo").click(); $("#btn-demo").removeClass("dropdown-li-a-hover");} ],
     [200,  function() { cursor.svg.remove(); delete cursor;} ],
 ];
+
 
 var user;
 var loginhBtn = document.getElementById('loginBtn');

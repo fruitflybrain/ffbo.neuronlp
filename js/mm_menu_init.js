@@ -18,39 +18,17 @@ $(document).ready(function() {
             pageSelector: "#page-content-wrapper",
         }
     });
-    $("#sidebar-wrapper").mmenu({
-        onClick: {
-           close: false
-        },
-        "extensions": ["effect-menu-zoom"],
-        offCanvas: {
-            pageSelector: "#page-content-wrapper",
-            position: "left",
-            direction:"right",
-        },
-        navbar: {
-          title: "FFBO Servers"
-        }
-    },{
-        offCanvas: {
-            pageSelector: "#page-content-wrapper",
-        }
-    });
     mm_menu_right = $("#ui_menu_nav").data( "mmenu" );
-    mm_menu_left = $("#sidebar-wrapper").data( "mmenu" );
-    var $left_hamburger = $("#server-icon");
 
-    mm_menu_left.bind( "opened", function() {
-       setTimeout(function() {
-          $left_hamburger.addClass( "is-active" );
-       }, 100);
-    });
-    mm_menu_left.bind( "closed", function() {
-       setTimeout(function() {
-          $left_hamburger.removeClass( "is-active" );
-       }, 100);
-    });
 
+    onGettingStarted = function() {
+        mm_menu_right.open();
+        $("a[href='#toggle_get_started']")[0].click()
+    }
+    onToggleTag = function() {
+        mm_menu_right.open();
+        $("a[href='#toggle_tag']")[0].click()
+    }
     onToggleNeuClick = function() {
         mm_menu_right.open();
         $("a[href='#toggle_neuron']")[0].click()
@@ -61,8 +39,5 @@ $(document).ready(function() {
     }
     openRightMenu = function() {
         mm_menu_right.open();
-    }
-    openServerMenu = function() {
-        mm_menu_left.open();
     }
 });

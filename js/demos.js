@@ -1,7 +1,11 @@
-$("#btn-demo").click( function() { $("#demo-panel").slideDown(500) } );
-$("#btn-demo-close").click( function() { $("#demo-panel").slideUp(500) } );
-$("#btn-tutorial-video").click( function() { $("#video-panel").slideDown(500) } );
-$("#btn-video-close").click( function() { document.getElementById('video-iframe').contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*'); $("#video-panel").slideUp(500) } );
+function onShowDemo() {
+    mm_menu_right.close();
+    setTimeout( function() {
+        closeAllOverlay(true);
+        $("#demo-panel").slideDown(500);
+    }, 500);
+}
+$("#btn-video-close").click( function() { $("#video-container")[0].pause(); $("#video-panel").slideUp(500) } );
 
 var script_loader = ScriptLoader(function() {$("#vis-none").click()} );
 
@@ -47,7 +51,7 @@ var show_2_script = [
 var show_3_query = "Show neurons in the PB";
 var show_3_script = [
     [1000, function() { Notify("Hi!"); }],
-    [3000, function() { Notify("Let's query for neurons in the PB (Photocerebral Bridge)!"); }],
+    [3000, function() { Notify("Let's query for neurons in the PB (Protocerebral Bridge)!"); }],
     [3000, function() { $("#search-wrapper").toggleClass("search-top search-middle"); }],
     [1000, auto_type(show_3_query)],
     [null, function() { }],
@@ -97,7 +101,8 @@ var add_1_script = [
     [500,  function() { $('#srch_box_btn').removeClass("search-hover"); }],
     [500,  function() { $("#search-wrapper").toggleClass("search-top search-middle"); }],
     [2000, function() { srchBtn.click(); }],
-    [null, function() { }],
+    //[null, function() { }],
+    [null, function() { $("#btn-lpu-group-all").click(); }],
     [2000, function() { Notify("Done!"); }],
     [3000, function() { Notify("It is all yours now! Try it yourself!"); }]
 ];
@@ -123,13 +128,14 @@ var add_2_script = [
     [500,  function() { $('#srch_box_btn').removeClass("search-hover"); }],
     [500,  function() { $("#search-wrapper").toggleClass("search-top search-middle"); }],
     [2000, function() { srchBtn.click(); }],
-    [null, function() { }],
+    //[null, function() { }],
+    [null, function() { $("#btn-lpu-group-all").click(); }],
     [1000, function() { Notify("Done!"); }],
     [3000, function() { Notify("It is all yours now! Try it yourself!"); }]
 ];
 
 var add_3_query_1 = "Show neurons in eb";
-var add_3_query_2 = "Add neurons in photocerebral bridge";
+var add_3_query_2 = "Add neurons in protocerebral bridge";
 var add_3_script = [
     [1000, function() { Notify("Hi!"); }],
     [3000, function() { Notify("Let's query for neurons in the ellipsoid body!"); }],
@@ -141,7 +147,7 @@ var add_3_script = [
     [500,  function() { $("#search-wrapper").toggleClass("search-top search-middle"); }],
     [2000, function() { srchBtn.click(); }],
     [null, function() { }],
-    [2000, function() { Notify("Now let's bring in neurons from photocerebral bridge."); }],
+    [2000, function() { Notify("Now let's bring in neurons from protocerebral bridge."); }],
     [3000, function() { $("#search-wrapper").toggleClass("search-top search-middle"); }],
     [1000, auto_type(add_3_query_2)],
     [null, function() { }],
@@ -149,7 +155,8 @@ var add_3_script = [
     [500,  function() { $('#srch_box_btn').removeClass("search-hover"); }],
     [500,  function() { $("#search-wrapper").toggleClass("search-top search-middle"); }],
     [2000, function() { srchBtn.click(); }],
-    [null, function() { }],
+    //[null, function() { }],
+    [null, function() { $("#btn-lpu-group-all").click(); }],
     [2000, function() { Notify("Done!"); }],
     [3000, function() { Notify("It is all yours now! Try it yourself!"); }]
 ];
@@ -195,7 +202,8 @@ var undo_1_script = [
     [500,  function() { $('#srch_box_btn').removeClass("search-hover"); }],
     [500,  function() { $("#search-wrapper").toggleClass("search-top search-middle"); }],
     [2000, function() { srchBtn.click(); }],
-    [null, function() { }],
+    //[null, function() { }],
+    [null, function() { $("#btn-lpu-group-all").click(); }],
     [2000, function() { Notify("Done!"); }],
     [3000, function() { Notify("It is all yours now! Try it yourself!"); }]
 ];
@@ -241,6 +249,7 @@ var keep_1_script = [
     [500,  function() { $("#search-wrapper").toggleClass("search-top search-middle"); }],
     [2000, function() { srchBtn.click(); }],
     [null, function() { }],
+    //[null, function() { $("#btn-lpu-group-all").click(); }],
     [2000, function() { Notify("Done!"); }],
     [3000, function() { Notify("It is all yours now! Try it yourself!"); }]
 ];
@@ -268,6 +277,7 @@ var remove_1_script = [
     [500,  function() { $("#search-wrapper").toggleClass("search-top search-middle"); }],
     [2000, function() { srchBtn.click(); }],
     [null, function() { }],
+    //[null, function() { $("#btn-lpu-group-all").click(); }],
     [2000, function() { Notify("Done!"); }],
     [3000, function() { Notify("It is all yours now! Try it yourself!"); }]
 ];
@@ -342,7 +352,7 @@ var lptc_script = [
     [1000, function() { $("#btn-lpu-group-all").click(); }],
     [1000, function() { Notify("Hi!"); }],
     [3000, function() { Notify("It is known that Lobula Plate Tangential Cells are an essential component of optomotor responses."); }],
-    [3000, function() { Notify("Let's search for LPTC."); }],
+    [3000, function() { Notify("Let's try and find some  LPTCs from the FlyCircuit data..."); }],
     [3000, function() { $("#search-wrapper").toggleClass("search-top search-middle"); }],
     [1000, auto_type(lptc_query_1,undefined,20)],
     [null, function() { }],
@@ -351,7 +361,7 @@ var lptc_script = [
     [500,  function() { $("#search-wrapper").toggleClass("search-top search-middle"); }],
     [2000, function() { srchBtn.click(); }],
     [null, function() { $("#btn-lpu-group-all").click(); }],
-    [1000, function() { Notify("Now let's add neuron from the other side of the brain."); }],
+    [1000, function() { Notify("Now let's add neurons from the other side of the brain."); }],
     [3000, function() { $("#search-wrapper").toggleClass("search-top search-middle"); }],
     [1000, auto_type(lptc_query_2,undefined,20)],
     [null, function() { }],
@@ -397,23 +407,28 @@ var lptc_script = [
     [200, function() {visual_highlight_neuron(demo_neuron_id); }],
     [200, function() {demo_neuron_id = chooseNeuron("VGlut-F-000241");  cursor.moveto(ffbomesh.getNeuronScreenPosition(demo_neuron_id), 10*(!isOnMobile));}],
     [200, function() {visual_highlight_neuron(demo_neuron_id); }],
+    [200, function() {fetchInfo("VGlut-F-000241"); }],
     [5000, function() { Notify("We can also investigate each of the LPTC individually."); }],
-    [2000, function() { Notify("Let's unpinn all the pinned neurons first."); }],
-    [1000, function() {cursor.moveto("#page-content-wrapper > nav > div > div.navbar-collapse.collapse > ul > li:nth-child(1) > a",400);}],
-    [1000, function() {cursor.click(); $("#page-content-wrapper > nav > div > div.navbar-collapse.collapse > ul > li:nth-child(1) > a").click();}], //toggle neuron
-    [1000, function() {cursor.moveto("#btn-neu-none",400);}],
-    [1000, function() {cursor.click(); $("#btn-neu-none").click();}],
+    [2000, function() { Notify("Let's remove the unpinned neurons first."); }],
+    [1000, function() {cursor.moveto(".fa-trash", 400)}],
+    [1000, function() {cursor.click(); $("#btn-pin-keep").click();}],
+    [null, function() { }],
+    [2000, function() { Notify("And unpin all the pinned neurons."); }],
+    [1000, function() {cursor.moveto("#page-content-wrapper > nav > div > div.navbar-collapse.collapse > ul > li:nth-child(3) > a",400);}],
+    [1000, function() {cursor.click(); $("#page-content-wrapper > nav > div > div.navbar-collapse.collapse > ul > li:nth-child(3) > a").click();}], //toggle neuron
+    //[1000, function() {cursor.moveto("#btn-neu-none",400);}],
+    //[1000, function() {cursor.click(); $("#btn-neu-none").click();}],
     [1000, function() {cursor.moveto("#toggle_neuron > ul > li:nth-child(3) > a");}],
     [1000, function() {cursor.click(); $("#toggle_neuron > ul > li:nth-child(3) > a").click(); }], //pinned
     [1000, function() {cursor.moveto("#btn-pin-unpinall",400);}],
     [1000, function() {cursor.click(); $("#btn-pin-unpinall").click(); }], //unpin all
-    [1000, function() {cursor.moveto("#page-content-wrapper > nav > div > div.navbar-collapse.collapse > ul > li:nth-child(1) > a",400);}],
-    [1000, function() {cursor.click(); $("#page-content-wrapper > nav > div > div.navbar-collapse.collapse > ul > li:nth-child(1) > a").click();}], //toggle neuron
+    [1000, function() {cursor.moveto("#page-content-wrapper > nav > div > div.navbar-collapse.collapse > ul > li:nth-child(3) > a",400);}],
+    [1000, function() {cursor.click(); $("#page-content-wrapper > nav > div > div.navbar-collapse.collapse > ul > li:nth-child(3) > a").click();}], //toggle neuron
     [1000, function() {cursor.moveto("#btn-neu-none",400);}],
     [1000, function() {cursor.click(); $("#btn-neu-none").click();}],
-    [1000, function() { Notify("Now let's toggle the neurpils of interest: LOP and CVLP."); }],
-    [1000, function() {cursor.moveto("#page-content-wrapper > nav > div > div.navbar-collapse.collapse > ul > li:nth-child(2) > a",400);}],
-    [1000, function() {cursor.click(); $("#page-content-wrapper > nav > div > div.navbar-collapse.collapse > ul > li:nth-child(2) > a").click(); }], //toggle neuropil
+    [1000, function() { Notify("Now let's toggle the neuropils of interest: LOP and CVLP."); }],
+    [1000, function() {cursor.moveto("#page-content-wrapper > nav > div > div.navbar-collapse.collapse > ul > li:nth-child(4) > a",400);}],
+    [1000, function() {cursor.click(); $("#page-content-wrapper > nav > div > div.navbar-collapse.collapse > ul > li:nth-child(4) > a").click(); }], //toggle neuropil
     [1000, function() {cursor.moveto("#toggle_neuropil > ul > li:nth-child(2) > a",400);}],
     [1000, function() {cursor.click(); $("#toggle_neuropil > ul > li:nth-child(2) > a").click(); }], //toggle neuropil
     [1000, function() {cursor.moveto("#btn-cvlp_l",400);}],
@@ -425,8 +440,8 @@ var lptc_script = [
     [1000, function() {cursor.moveto("#btn-lop_r");},400],
     [1000, function() {cursor.click(); $("#btn-lop_r").click(); }], //toggle lop_r
     [1000, function() { Notify("Now let's inspect individual neurons"); }],
-    [500, function() {cursor.moveto("#page-content-wrapper > nav > div > div.navbar-collapse.collapse > ul > li:nth-child(1) > a",400);}],
-    [500, function() {cursor.click(); $("#page-content-wrapper > nav > div > div.navbar-collapse.collapse > ul > li:nth-child(1) > a").click();}], //toggle neuron
+    [500, function() {cursor.moveto("#page-content-wrapper > nav > div > div.navbar-collapse.collapse > ul > li:nth-child(3) > a",400);}],
+    [500, function() {cursor.click(); $("#page-content-wrapper > nav > div > div.navbar-collapse.collapse > ul > li:nth-child(3) > a").click();}], //toggle neuron
     [500, function() {cursor.moveto("#toggle_neuron > ul > li:nth-child(4) > a",400);}],
     [500, function() {cursor.click(); $("#toggle_neuron > ul > li:nth-child(4) > a").click();}], //single neuron
     [2000, function() {demo_neuron_selector = "#btn-"+uidDecode(chooseNeuron("VGlut-F-400392")); cursor.moveto(demo_neuron_selector,200);}],
@@ -509,16 +524,25 @@ var lptc_script = [
     [500, function() {cursor.click(); $(demo_neuron_selector).click();}], //single neuron
     [500, function() {demo_neuron_selector = "#btn-"+uidDecode(chooseNeuron("VGlut-F-000241")); cursor.moveto(demo_neuron_selector,200);}],
     [500, function() {cursor.click(); $(demo_neuron_selector).click();}], //single neuron
-    [4000, function() {cursor.moveto("#page-content-wrapper > nav > div > div.navbar-collapse.collapse > ul > li:nth-child(2) > a",400);}],
-    [500, function() {cursor.click(); $("#page-content-wrapper > nav > div > div.navbar-collapse.collapse > ul > li:nth-child(2) > a").click(); }], //toggle neuropil
+    [4000, function() {cursor.moveto("#page-content-wrapper > nav > div > div.navbar-collapse.collapse > ul > li:nth-child(4) > a",400);}],
+    [500, function() {cursor.click(); $("#page-content-wrapper > nav > div > div.navbar-collapse.collapse > ul > li:nth-child(4) > a").click(); }], //toggle neuropil
     [500, function() {cursor.moveto("#toggle_neuropil > ul > li:nth-child(1) > a",400);}],
     [500, function() {cursor.click(); $("#toggle_neuropil > ul > li:nth-child(1) > a").click();}], //single neuron
     [500, function() {cursor.moveto("#btn-lpu-group-all",400);}],
     [500, function() {cursor.click(); $("#btn-lpu-group-all").click();}], //single neuron
-    [500, function() {cursor.remove();}],
+    [2000, function() { Notify("Let's hide all but one of the neurons!"); }],
+    [1000, function() {$("#ui_menu_nav").data( "mmenu" ).close();}],
+    [2000, function() {demo_neuron_id = chooseNeuron("VGlut-F-000241");  cursor.moveto(ffbomesh.getNeuronScreenPosition(demo_neuron_id), 10*(!isOnMobile));}],
+    [2000, function() {visual_highlight_neuron(demo_neuron_id); }],
+    [1000, function() {cursor.moveto("#page-content-wrapper > nav > div > div.navbar-collapse.collapse > ul > li:nth-child(3) > a",400);}],
+    [500, function() {cursor.click(); $("#page-content-wrapper > nav > div > div.navbar-collapse.collapse > ul > li:nth-child(3) > a").click(); }], //toggle neuron
+    [500, function() {cursor.moveto("#toggle_neuron > ul > li:nth-child(2) > a",400);}],
+    [500, function() {cursor.click(); $("#toggle_neuron > ul > li:nth-child(2) > a").click();}], //Hide all
+    [500, function() {cursor.remove();$("#ui_menu_nav").data( "mmenu" ).close()}],
     [10, function() {delete cursor;}],
+
     [2000, function() { Notify("Done!"); }],
-    [3000, function() { Notify("It is all yours now! Try it yourself!"); }]
+    [3000, function() { Notify("Try exploring detailed information from the Info Panel!"); }]
 ];
 
 var local_1_query_1 = "Show local neurons in the right antennal lobe";
@@ -638,6 +662,7 @@ var highlight_script = [
     [3000, function() { Notify("Let's move the cursor over the neurons to highlight them!"); }],
     [3000, function() { cursor.test(); }],
     [5000, function() { Notify("Try it yourself!"); }],
+    [1000, function() { $("#btn-lpu-group-all").click(); }],
     [1000, function() { cursor.svg.remove(); delete cursor;} ]
 ];
 
@@ -658,26 +683,17 @@ var select_script = [
     [3000, function() { cursor.moveto(ffbomesh.getNeuronScreenPosition(chooseNeuron("VGlut-F-200478"))); }],
     [1500, function() { cursor.click(); ffbomesh.onDocumentMouseClick(); }],
     [3000, function() { Notify("The information of the selected neuron has been loaded from the FlyCircuit Database!"); }],
-    [3000, function() { Notify("Let's enlarge the FlyCircuit information!"); }],
-    [3000, function() { cursor.moveto("#flycircuit-info"); }],
-    [1100, function() { $("#flycircuit-info").mouseenter().toggleClass("vis-info-sm vis-info-pin")}],
-    [3000, function() { Notify("You can go back and forth between the information panel and the visualization!"); }],
-    [3000, function() { cursor.moveto("#vis-3d"); }],
-    [1000, function() { $("#flycircuit-info").toggleClass("vis-info-sm vis-info-pin").mouseleave()}],
-    [3000, function() { cursor.moveto("#flycircuit-info"); }],
-    [1100, function() { $("#flycircuit-info").mouseenter().toggleClass("vis-info-sm vis-info-pin")}],
-    [3000, function() { Notify("You can pin the information panel to make it remain enlarged."); }],
-    [2000, function() { cursor.moveto("#btn-flycircuit-pin"); }],
+    [3000, function() { Notify("You can collapse the information panel to hace more space for the 3D visualization."); }],
+    [2000, function() { cursor.moveto("#btn-info-pin"); }],
     [1100, function() { cursor.click(); }],
-    [600,  function() { $("#btn-flycircuit-pin").text("unpin"); }],
     [1000, function() { cursor.moveto("#vis-3d"); }],
-    [3000, function() { Notify("You can unpin the information panel."); }],
-    [2000, function() { cursor.moveto("#btn-flycircuit-pin"); }],
-    [1100, function() { cursor.click(); }],
-    [600,  function() { $("#btn-flycircuit-pin").text("pin"); }],
+    [500,  function() { $("#info-panel").toggleClass("vis-info-sm vis-info-pin").mouseleave()}],
+    [3000, function() { Notify("You can expand the info-panel again using the same button."); }],
+    [2000, function() { cursor.moveto("#btn-info-pin"); }],
+    [1100, function() { cursor.click(); $("#info-panel").toggleClass("vis-info-sm vis-info-pin");}],
     [1000, function() { cursor.moveto("#vis-3d"); }],
-    [500,  function() { $("#flycircuit-info").toggleClass("vis-info-sm vis-info-pin").mouseleave()}],
     [3000, function() { Notify("Try it yourself!"); }],
+    [1000, function() { $("#btn-lpu-group-all").click(); }],
     [1000, function() { cursor.svg.remove(); delete cursor;} ],
 ];
 
@@ -704,9 +720,8 @@ var pin_script = [
     [1500, function() { cursor.dbclick(); ffbomesh.onDocumentMouseDBLClick(); }],
     [3000, function() { Notify("The pinned neurons always remain highlighted."); }],
     [3000, function() { Notify("Let's hide all unpinned neurons."); }],
-    [3000, function() { cursor.moveto("#page-content-wrapper > nav > div > div.navbar-collapse.collapse > ul > li:nth-child(4)", 1500); }],
-    [1600, function() { $("#vis-none").addClass("navbar-header-hover"); }],
-    [500,  function() { cursor.click(); onHideAllClick();}],
+    [1000, function() {cursor.moveto(".fa-eye-slash", 1000)}],
+    [1500,  function() { cursor.click(); onHideAllClick();}],
     [500,  function() { Notify("Now we only have pinned neurons in the scene."); }],
     [3000, function() { var rect = $("body")[0].getBoundingClientRect(); cursor.moveto({'x':(1*rect.width/2), 'y':(2*rect.height/5)}); }],
     [200,  function() { $("#vis-none").removeClass("navbar-header-hover"); }],
@@ -716,6 +731,7 @@ var pin_script = [
     [2000, function() { cursor.dbclick(); ffbomesh.onDocumentMouseDBLClick(); }],
     [1500, function() { var rect = $("body")[0].getBoundingClientRect(); cursor.moveto({'x':(1*rect.width/2), 'y':(4*rect.height/5)}); }],
     [5000, function() { Notify("Try it yourself!"); }],
+    [1000, function() { $("#btn-lpu-group-all").click(); }],
     [1000, function() { cursor.svg.remove(); delete cursor;} ],
 ];
 /*
@@ -930,7 +946,7 @@ function ArchSVG(divID) {
 }
 var arch_script = [
     [100,  function() { $("#flycircuit-info").hide() }],
-    [100,  function() { $("#arch-wrapper").show(); arch_diag = new ArchSVG("arch-wrapper")}],
+    [100,  function() { closeAllOverlay(true); $("#arch-wrapper").show(); arch_diag = new ArchSVG("arch-wrapper")}],
     [1000, function() { $("#msg-diagram").html("<h1>Fruit Fly Brain Observatory</h1><h2>NeuroNLP Architecture Demo</h2>"); $("#msg-wrapper").fadeIn(500); }],
     [3000, function() { $("#msg-wrapper").fadeOut(500); }],
     [2000, function() { $("#msg-diagram").text("The NeuroNLP interface consists of two key components:"); $("#msg-wrapper").fadeIn(500); }],
@@ -957,8 +973,8 @@ var arch_script = [
     [6000, function() { $("#msg-wrapper").fadeOut(500, function() { $("#msg-diagram").html("Now, let's launch the query!"); }).fadeIn(500)} ],
     [2000, function() { $("#msg-diagram").html($("#msg-diagram").html() + "<br /><br />You will see notification messages pop up at the bottom right corner."); } ],
     [4200, function() { arch_diag.svg.remove(); delete arch_diag; $("#arch-wrapper").hide(); }],
-    [1000, function() { $("#msg-wrapper").fadeOut(500); srchBtn.click(); }],
-    [null, function() { $("#vis-all").click(); }],
+    [1000, function() { $("#msg-wrapper").fadeOut(500); srchBtn.click(); closeAllOverlay(true); }],
+    [null, function() { $("#vis-all").click();  }],
     [100,  function() { $("#flycircuit-info").show() }],
 ];
 
@@ -994,7 +1010,7 @@ demo_json = [
             {
                 'id': 'show_3',
                 'name':'Show',
-                'description':'Visualize neurons in the photocerebral bridge',
+                'description':'Visualize neurons in the protocerebral bridge',
                 'script':show_3_script
             },
             {
@@ -1018,7 +1034,7 @@ demo_json = [
             {
                 'id': 'add_3',
                 'name':'Add',
-                'description':'Visualize neurons in Ellipsoid Body and then add neurons in the Photocerebral Bridge.',
+                'description':'Visualize neurons in Ellipsoid Body and then add neurons in the Protocerebral Bridge.',
                 'script':add_3_script
             },
             {
@@ -1142,7 +1158,8 @@ function demoBtnCallback(script) {
         $("#btn-pin-unpinall").click();
         onHideAllClick();
         $("#demo-panel").slideUp(500);
-        ffbomesh.controls.reset();
+        closeAllOverlay(false);
+	ffbomesh.controls.reset();
         script_loader(script);
     }
 }
@@ -1151,6 +1168,14 @@ function chooseNeuron(name) {
     for(var i in ffbomesh.meshDict) {
         if (ffbomesh.meshDict[i].name == name) {
             return i;
+        }
+    }
+}
+
+function fetchInfo(name) {
+    for(var i in ffbomesh.meshDict) {
+        if (ffbomesh.meshDict[i].name == name) {
+            fetchDetailInfo([name, i]);
         }
     }
 }
