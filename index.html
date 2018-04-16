@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>NeuroNLP.AdultBeta</title>
+  <title>NeuroNLP.Adult Beta</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
   <meta name="author" content="FFBO Team">
@@ -54,9 +54,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.1.6/js/swiper.js"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min.js"></script>
+
+  
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/css/bootstrap-slider.min.css">
 
-  <link rel="stylesheet" type="text/css" href="/lib/css/ffbo.layout.css">
+  <script src="js/css_swap.js"></script>
+  <link rel="stylesheet" id="current_theme" type="text/css" href="/lib/css/ffbo.default_theme.css">
+  <link rel="stylesheet" id="main_css" type="text/css" href="/lib/css/ffbo.layout.css">
 
 </head>
 <body>
@@ -109,7 +113,7 @@
           <div class="navbar-header">
             <div class="navbar-brand">
                 <a href="http://fruitflybrain.org" target="_blank"><img src="img/ffbo_logo.png" role="button"></a>
-                <span style="font-family:'Rajdhani',sans-serif; font-size: 20px; color:grey;">NeuroNLP</span>
+                <span style="font-family:var(--title-font-family); font-size: 20px; color:var(--navbar-text-color);">NeuroNLP</span>
                 <a onclick="onShowNeuroNLP()">
                 <span>.Adult</span>
               </a>
@@ -343,7 +347,7 @@
         </div>
       </div>
 
-      <div class="slider-bar" draggable="true" id="info_panel_dragger"></div>
+      <div class="slider-bar" draggable="true"></div>
 
       <div id="vis-3d" class="vis-3d vis-3d-hf"></div>
 
@@ -356,23 +360,20 @@
         <div id="demo-table-wrapper"></div>
       </div>
 
-      <div id="vis_set" class='vis-info vis-info-pin' style="display:none">
-        <ul class="list-inline" style="pointer-events:none">
-          <li><p></p></li>
-          <li><button id="btn-vis-set-close" style="pointer-events:auto" class="btn btn-xs btn-clicked"><i class="fa fa-times" aria-hidden="true"></i></button></li>
-        </ul>
-        <h4>Visualization Settings</h4>
-	<div class='setting-wrapper'>
+      <div id="vis_set" class='overlay'>
+	<h4>Visualization Settings</h4>
+
+	<div>
 	  <p>* (Doesn't affect neurons already in workspace)</p>
 	  <h5> Neuron Rendering </h5>
 	  <div class="row">
-	    <div class="panel-col  col-md-6">3D Neuron Rendering *</div>
-	    <div class="panel-col  col-md-6"><input type="checkbox" id="3d_rendering" class="switch_checkbox" />
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">3D Neuron Rendering *</div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><input type="checkbox" id="3d_rendering" class="switch_checkbox" />
 	      <label for="3d_rendering" class="switch_checkbox_label"></label></div>
 	  </div>
 	  <div class="row option_3d">
-	    <div class="panel-col  col-md-6">3D Neuron Rendering Mode *</div>
-	    <div class="panel-col  col-md-6">
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">3D Neuron Rendering Mode *</div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 	      <input checked="checked" type="radio" name="mode3d" id="rd1" value="1"/>
 	      <label for="rd1">Cylinders</label><br/>
 	      <input type="radio" name="mode3d" id="rd2" value="2"/>
@@ -382,184 +383,147 @@
 	    </div>
 	  </div>
 	  <div class="row option_3d">
-	    <div class="panel-col  col-md-6">Default Neurite Radius *</div>
-	    <div class="panel-col  col-md-6"><input id="default_radius" data-slider-id='def_rad_slider' type="text" data-slider-min="0" data-slider-max="2.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">Default Neurite Radius *</div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><input id="default_radius" data-slider-id='def_rad_slider' type="text" data-slider-min="0" data-slider-max="2.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
 	  </div>
 	  <div class="row">
-	    <div class="panel-col  col-md-6">Default Soma Radius *</div>
-	    <div class="panel-col  col-md-6"><input id="default_soma_radius" data-slider-id='def_soma_slider' type="text" data-slider-min="0.4" data-slider-max="10.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">Default Soma Radius *</div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><input id="default_soma_radius" data-slider-id='def_soma_slider' type="text" data-slider-min="0.4" data-slider-max="10.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
 	  </div>
 
 	  <div class="row">
-	    <div class="panel-col  col-md-6">Default Opacity</div>
-	    <div class="panel-col  col-md-6"><input id="default_opacity" data-slider-id='def_op_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">Default Opacity</div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><input id="default_opacity" data-slider-id='def_op_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
 	  </div>
 	  <div class="row">
-	    <div class="panel-col  col-md-6">Higlighted Neuron Opacity</div>
-	    <div class="panel-col  col-md-6"><input id="highlighted_object_opacity" data-slider-id='highlight_op_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">Higlighted Neuron Opacity</div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><input id="highlighted_object_opacity" data-slider-id='highlight_op_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
 	  </div>
 	  	  <div class="row">
-	    <div class="panel-col  col-md-6">Low Opacity in Highlight mode</div>
-	    <div class="panel-col  col-md-6"><input id="low_opacity" data-slider-id='low_op_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">Low Opacity in Highlight mode</div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><input id="low_opacity" data-slider-id='low_op_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
 	  </div>
 
 	  <div class="row">
-	    <div class="panel-col  col-md-6">Pinned Neuron Opacity</div>
-	    <div class="panel-col  col-md-6"><input id="pin_opacity" data-slider-id='pin_op_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">Pinned Neuron Opacity</div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><input id="pin_opacity" data-slider-id='pin_op_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
 	  </div>
 	  <div class="row">
-	    <div class="panel-col  col-md-6">Low Opacity in Pinned Mode</div>
-	    <div class="panel-col  col-md-6"><input id="pin_low_opacity" data-slider-id='pin_low_op_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
-	  </div>
-
-	  <div class="row">
-	    <div class="panel-col  col-md-6">Ambient Light</div>
-		<div class="panel-col  col-md-6"><input id="ambientlight" data-slider-id='amb_lght_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
-	  </div>
-	  <div class="row">
-	    <div class="panel-col  col-md-6">Directional Light</div>
-	    <div class="panel-col  col-md-6"><input id="dirlight" data-slider-id='dir_lght_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">Low Opacity in Pinned Mode</div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><input id="pin_low_opacity" data-slider-id='pin_low_op_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
 	  </div>
 
 	  <div class="row">
-	    <p>Spot Light 1</p><p></p>
-	    <div class="panel-col  col-md-6">Horizontal Angle</div>
-	    <div class="panel-col  col-md-6">
-              <input id="frontSpot_1_posAngle1" data-slider-id="frontSpot_1_posAngle1" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/></div>
-	    <div class="panel-col  col-md-6">Vertical Angle</div>
-	    <div class="panel-col  col-md-6"><input id="frontSpot_1_posAngle2" data-slider-id="frontSpot_1_posAngle2" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/></div>
-	    <div class="panel-col  col-md-6">Intensity</div>
-	    <div class="panel-col  col-md-6"><input id="frontSpot_1_intensity" data-slider-id="frontSpot_1_intensity" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="0.1" data-slider-value="4"/></div>
-	    <div class="panel-col  col-md-6">Track Camera</div>
-	    <div class="panel-col  col-md-6"><input type="checkbox" id="frontSpot_1_track" class="switch_checkbox" />
-	      <label for="frontSpot_1_track" class="switch_checkbox_label"></label></div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">Ambient Light</div>
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><input id="ambientlight" data-slider-id='amb_lght_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
 	  </div>
-	    
-	  
 	  <div class="row">
-	    <p>Spot Light 2</p><p></p>
-	    
-	    <div class="panel-col  col-md-6">Horizontal Angle</div>
-	    <div class="panel-col  col-md-6"><input id="frontSpot_2_posAngle1" data-slider-id="frontSpot_2_posAngle1" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/></div>
-	    
-	    <div class="panel-col  col-md-6">Vertical Angle</div>
-	    <div class="panel-col  col-md-6"><input id="frontSpot_2_posAngle2" data-slider-id="frontSpot_2_posAngle2" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/></div>
-	    
-	    <div class="panel-col  col-md-6">Intensity</div>
-	    <div class="panel-col  col-md-6"><input id="frontSpot_2_intensity" data-slider-id="frontSpot_2_intensity" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="0.1" data-slider-value="4"/></div>
-	    
-	    <div class="panel-col  col-md-6">Track Camera</div>
-	    <div class="panel-col  col-md-6"><input type="checkbox" id="frontSpot_2_track" class="switch_checkbox" />
-	      <label for="frontSpot_2_track" class="switch_checkbox_label"></label></div>
-
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">Directional Light</div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><input id="dirlight" data-slider-id='dir_lght_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
 	  </div>
 
 	  <h5> Neuropil Rendering </h5>
 	  <div class="row">
-	    <div class="panel-col  col-md-6">Color</div>
-	    <div class="panel-col  col-md-6" id="neuropil-color"></div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">Color</div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" id="neuropil-color"></div>
 	  </div>
 	  <div class="row">
-	    <div class="panel-col  col-md-6">Opacity</div>
-	    <div class="panel-col  col-md-6"><input id="background_opacity" data-slider-id='back_op_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">Opacity</div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><input id="background_opacity" data-slider-id='back_op_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
 	  </div>
 	  <div class="row">
-	    <div class="panel-col  col-md-6">Wireframe Opacity</div>
-	    <div class="panel-col  col-md-6"><input id="background_wireframe_opacity" data-slider-id='back_op_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
-	  </div>
-
-	  <div class="row">
-	    <div class="panel-col  col-md-6">Screen-space ambient occlusion pass (SSAO) </div>
-	    <div class="panel-col  col-md-6"><input type="checkbox" id="ssao" class="switch_checkbox"/>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">Screen-space ambient occlusion pass (SSAO) </div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><input type="checkbox" id="ssao" class="switch_checkbox"/>
 	      <label for="ssao" class="switch_checkbox_label"></label></div>
 	  </div>
 	  <div class="row">
-	    <div class="panel-col  col-md-6">Ambient Light</div>
-		<div class="panel-col  col-md-6"><input id="backambientlight" data-slider-id='backamb_lght_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">Ambient Light</div>
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><input id="backambientlight" data-slider-id='backamb_lght_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
 	  </div>
 	  <div class="row">
-	    <div class="panel-col  col-md-6">Directional Light</div>
-	    <div class="panel-col  col-md-6"><input id="backdirlight" data-slider-id='backdir_lght_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">Directional Light</div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><input id="backdirlight" data-slider-id='backdir_lght_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
 	  </div>
 
-	  
-	  <div class="row">
-	    <p>Spot Light 1</p><p></p>
-	    
-	    <div class="panel-col  col-md-6">Horizontal Angle</div>
-	    <div class="panel-col  col-md-6"><input id="backSpot_1_posAngle1" data-slider-id="backSpot_1_posAngle1" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/></div>
-	    
-	    <div class="panel-col  col-md-6">Vertical Angle</div>
-	    <div class="panel-col  col-md-6"><input id="backSpot_1_posAngle2" data-slider-id="backSpot_1_posAngle2" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/></div>
-	    
-	    <div class="panel-col  col-md-6">Intensity</div>
-	    <div class="panel-col  col-md-6"><input id="backSpot_1_intensity" data-slider-id="backSpot_1_intensity" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="0.1" data-slider-value="4"/></div>
-	    
-	    <div class="panel-col  col-md-6">Track Camera</div>
-	    <div class="panel-col  col-md-6"><input type="checkbox" id="backSpot_1_track" class="switch_checkbox" />
-	      <label for="backSpot_1_track" class="switch_checkbox_label"></label></div>
-	    
-	  </div>
-	  
-	  <div class="row">
-	    <p>Spot Light 2</p><p></p>
-	    
-	    <div class="panel-col  col-md-6">Horizontal Angle</div>
-	    <div class="panel-col  col-md-6"><input id="backSpot_2_posAngle1" data-slider-id="backSpot_2_posAngle1" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/></div>
-	    
-	    <div class="panel-col  col-md-6">Vertical Angle</div>
-	    <div class="panel-col  col-md-6"><input id="backSpot_2_posAngle2" data-slider-id="backSpot_2_posAngle2" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/></div>
-	    
-	    <div class="panel-col  col-md-6">Intensity</div>
-	    <div class="panel-col  col-md-6"><input id="backSpot_2_intensity" data-slider-id="backSpot_2_intensity" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="0.1" data-slider-value="4"/></div>
-	    
-	    <div class="panel-col  col-md-6">Track Camera</div>
-	    <div class="panel-col  col-md-6"><input type="checkbox" id="backSpot_2_track" class="switch_checkbox" />
-	      <label for="backSpot_2_track" class="switch_checkbox_label"></label></div>
-
-	  </div>
-
-	  
 	  <h5> Synapse Rendering </h5>
 	  <div class="row">
-	    <div class="panel-col  col-md-6">Synapse Size *</div>
-	    <div class="panel-col  col-md-6"><input id="default_synapse_radius" data-slider-id='def_syn_slider' type="text" data-slider-min="0.1" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">Synapse Size *</div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><input id="default_synapse_radius" data-slider-id='def_syn_slider' type="text" data-slider-min="0.1" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
 	  </div>
 	  
 	  <div class="row">
-	    <div class="panel-col  col-md-6">Synapse Opacity</div>
-	    <div class="panel-col  col-md-6"><input id="synapse_opacity" data-slider-id='syn_op_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">Synapse Opacity</div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><input id="synapse_opacity" data-slider-id='syn_op_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
 	  </div>
 	  
 	  <h5> PostProcessing Settings </h5>
 	  <div class="row">
-	    <div class="panel-col  col-md-6">Fast approXimate Anti-Aliasing (FXAA) </div>
-	    <div class="panel-col  col-md-6"><input type="checkbox" id="fxaa" class="switch_checkbox"/>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">Fast approXimate Anti-Aliasing (FXAA) </div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><input type="checkbox" id="fxaa" class="switch_checkbox"/>
 	      <label for="fxaa" class="switch_checkbox_label"></label></div>
 	  </div>
 	  <div class="row">
-	    <!--<p> AdaptiveToneMapping Settings </p><p></p>
-	    <div class="panel-col  col-md-6">Enabled </div>
-	    <div class="panel-col  col-md-6"><input type="checkbox" id="tonemapping" class="switch_checkbox"/><label for="tonemapping" class="switch_checkbox_label"></label></div>-->
-	     <div class="panel-col  col-md-6">Brightness</div>
-	     <div class="panel-col  col-md-6"><input id="tonemappingbright" data-slider-id='tm_brght_slider' type="text" data-slider-min="0.01" data-slider-max="0.99" data-slider-step="0.01" data-slider-value="0.95"/></div>
-
-	      
-	  </div>
-	  <div class="row">
 	    <p> Bloom Pass Settings </p><p></p>
-	    <div class="panel-col  col-md-6">Radius</div>
-	    <div class="panel-col  col-md-6"><input id="bloomradius" data-slider-id='blm_rad_slider' type="text" data-slider-min="0.05" data-slider-max="10.0" data-slider-step="0.05" data-slider-value="0.8"/></div>
-	    <div class="panel-col  col-md-6">Threshold</div>
-	    <div class="panel-col  col-md-6"><input id="bloomthreshold" data-slider-id='blm_th_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
-	    <div class="panel-col  col-md-6">Strength</div>
-	    <div class="panel-col  col-md-6"><input id="bloomstrength" data-slider-id='blm_st_slider' type="text" data-slider-min="0" data-slider-max="2.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">Radius</div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><input id="bloomradius" data-slider-id='blm_rad_slider' type="text" data-slider-min="0.05" data-slider-max="10.0" data-slider-step="0.05" data-slider-value="0.8"/></div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">Threshold</div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><input id="bloomthreshold" data-slider-id='blm_th_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">Strength</div>
+	    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><input id="bloomstrength" data-slider-id='blm_st_slider' type="text" data-slider-min="0" data-slider-max="2.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
 
 	  </div>
+	  <!--
+	  <table id="vis_set_table" class="table table-inverse table-custom-striped">
+	    <tbody>
+	      <tr class="">
+		<td>3D Neuron Rendering (Doesn't affect neurons already in workspace)</td>
+		<td><input type="checkbox" id="3d_rendering" class="switch_checkbox" />
+		  <label for="3d_rendering" class="switch_checkbox_label"></label></td>
+	      </tr>
+	      <tr id="3d_mode" class="" style="display:none">
+		<td>3D Neuron Rendering Mode</td>
+		<td></td>
+	      </tr>
+	      <tr class="">
+		<td>Default Opacity</td>
+		<td><input id="default_opacity" data-slider-id='def_op_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></td>
+	    </tr>
+	      <tr class="">
+		<td>Ambient Light</td>
+		<td><input id="ambientlight" data-slider-id='amb_lght_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></td>
+	      </tr>
+	      <tr class="">
+		<td>Fast approXimate Anti-Aliasing </td>
+		<td><input type="checkbox" id="fxaa" class="switch_checkbox"/>
+		  <label for="fxaa" class="switch_checkbox_label"></label></td>
+	      </tr>
+	      <tr>
+		<td colspan="2" style="text-align:left;padding-right:10px">
+		  Bloom Pass Settings
+		  <table id="bloom_pass" class="table-custom-striped">
+		    <tbody>
+		      <tr>
+			<td>Radius</td>
+			<td style="padding-right:0px"><input id="bloomradius" data-slider-id='blm_rad_slider' type="text" data-slider-min="0.05" data-slider-max="10.0" data-slider-step="0.05" data-slider-value="0.8"/></td>
+		      </tr>
+		    <tr>
+		      <td>Threshold</td>
+		      <td style="padding-right:0px"><input id="bloomthreshold" data-slider-id='blm_th_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></td>
+		    </tr>
+		      <tr>
+			<td>Strength</td>
+			<td style="padding-right:0px"><input id="bloomstrength" data-slider-id='blm_st_slider' type="text" data-slider-min="0" data-slider-max="2.0" data-slider-step="0.01" data-slider-value="0.8"/></td>
+		      </tr>
+		    </tbody>
+		  </table>
+	      </td>
+		
+	      </tr>
+	      <tr><td></td><td></td></tr>
+	    </tbody>
+	  </table> -->
 	</div>
       </div>
-      <!-- div class="slider-bar" draggable="true" style="display:none" id="vis_set_dragger"></div -->
-
       <div id="video-panel" class='overlay'>
         <ul  class="list-inline">
           <li><h2>Tutorial Video </h2></li>
@@ -774,12 +738,12 @@
     <script type="text/javascript" src="/lib/js/three/postprocessing/AdaptiveToneMappingPass.js"></script>
 
   <script src="js/PropertyManager.js"></script>
-  <script src="js/lightsHelper.js"></script>
   <script type='text/javascript' src="/lib/js/mesh3d.js"></script>
 
   <!-- Connection Code-->
+  <script type="text/javascript" src="js/getAllUrlParams.js"></script>
   <script type="text/javascript" src="js/read_vars.js"></script>
-  
+  <script src="js/connection.js"></script>
   <script src="/lib/js/ResizeSensor.js"></script>
   <script src="js/ui_support_functions.js"></script>
   <script src="js/adult.js"></script>
@@ -789,11 +753,10 @@
   <script src="/lib/js/utils.js"></script>
   <script src="js/demos.js"></script>
   <script src="/lib/js/mouse.js"></script>
-  <script src="js/visualization_settings.js"></script>
-  <script src="js/connection.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/user_feedback.js"></script>
-  
+  <script src="js/visualization_settings.js"></script>
+
   <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5848b7a00e85e58b"></script>
 </body>
 </html>
