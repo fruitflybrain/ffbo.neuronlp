@@ -14,6 +14,21 @@ var auto_type = AutoTyper(srchInput);
 var isOnMobile = checkOnMobile();
 
 /*
+ * 'Welcome' demo
+ */
+var welcome_script = [
+  [1000, function() { Notify("c!"); }],
+  [3000, function() { cursor = new mouseSVG(); cursor.show(); cursor.blink()}],
+  [3000, function() { cursor.moveto(".ffbo-app > li > a")} ],
+  [2000, function() { $(".ffbo-app > li > a").addClass("ffbo-app-hover"); $(".ffbo-app > li > a").click()} ],
+  [500,  function() { $(".ffbo-app > li > a").removeClass("ffbo-app-hover"); cursor.moveto("#btn-demo")} ],
+  [1000, function() { $("#btn-demo").addClass("dropdown-li-a-hover");} ],
+  [1000, function() { cursor.click();} ],
+  [700,  function() { $("#btn-demo").click(); $("#btn-demo").removeClass("dropdown-li-a-hover");} ],
+  [200,  function() { cursor.svg.remove(); delete cursor;} ],
+];
+
+/*
  * 'Show' demos
  */
 var show_1_query = "Show neurons in the Ellipsoid Body";
