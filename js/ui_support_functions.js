@@ -22,23 +22,26 @@ for (var i=0; i < lpuList.length; i++ ) {
         side = "Left "
     }
     lpuJSON[lpuList[i]] = {
-    'filename': '/lib/mesh/' + lpuList[i] + '.json',
+    'filename': 'lib/mesh/' + lpuList[i] + '.json',
     'label': side + x[0].toUpperCase(),
     'highlight': false,
     'background': true,
-    'color': new THREE.Color( 0.7, 0, 0.7)
+    'color': new THREE.Color( 0.15, 0.01, 0.15)
   };
 }
 
 
 function closeAllOverlay(e) {
-  $(".overlay").each( function() {
-    $(this).hide();
-  })
-  if (e)
-    $(".overlay-background").show();
-  else
-    $(".overlay-background").hide();
+    $(".overlay").each( function() {
+	$(this).hide();
+    });
+    $( "#vis_set_dragger" ).hide();
+    $(".overlay-background").css("width", "")
+
+    if (e)
+	$(".overlay-background").show();
+    else
+	$(".overlay-background").hide();
 }
 
 $("#neuronlp-switch").click( function() {
@@ -73,15 +76,15 @@ function onShowIntro() {
 function onShowOverview() {
     mm_menu_right.close();
     setTimeout( function() {
-          closeAllOverlay(true);
-          $("#overview-panel").slideDown(500);
+	closeAllOverlay(true);
+	$("#overview-panel").slideDown(500);
     }, 500);
 }
  function onShowAnnounce() {
      mm_menu_right.close();
      setTimeout( function() {
-           closeAllOverlay(true);
-           $("#announce-panel").slideDown(500);
+ 	closeAllOverlay(true);
+ 	$("#announce-panel").slideDown(500);
      }, 500);
  }
 
@@ -105,17 +108,18 @@ function onShowOverview() {
 /*
  * pin/unpin the information panel
  */
-$("#btn-flycircuit-pin").click( function() {
-    if ($(this).hasClass('btn-unclicked')) {
-        $(this).text("unpin");
-        $('#flycircuit-info').toggleClass('vis-info-sm vis-info-pin');
-    } else {
-        $(this).text("pin");
-        $('#flycircuit-info').toggleClass('vis-info-sm vis-info-pin');
-    }
-    $(this).toggleClass('btn-clicked btn-unclicked');
-})
 
+$("#btn-info-pin").click( function() {
+    $(this).children().toggleClass("fa-compress fa-expand");
+    $("#info_panel_dragger").toggle();
+    $("#info-panel").toggleClass("vis-info-sm vis-info-pin");
+    $("#vis-3d").toggleClass("vis-3d-lg vis-3d-hf");
+    $(this).toggleClass('btn-clicked btn-unclicked');
+    setTimeout( function(){
+      ffbomesh.onWindowResize();
+      }, 500
+    );
+});
 
 function imgError(image) {
     setTimeout(function (){
@@ -129,7 +133,7 @@ function imgError(image) {
  * Buttons
  */
 $("#btn-neu-all").click( function() {
-    /*$('.btn-single-neu').each( function() {
+    $('.btn-single-neu').each( function() {
         var x = $(this).html().substring(1);
         $(this).html('&FilledSmallSquare; ' + x );
         $(this).addClass("selected");
@@ -137,11 +141,11 @@ $("#btn-neu-all").click( function() {
         var id = $(this).attr("id").substring(4);
         id = uidEncode(id);
         ffbomesh.show(id);
-          });*/
-    ffbomesh.showAll();
+	});
+//    ffbomesh.showAll();
 });
 $("#btn-neu-none").click( function() {
-    /*$('.btn-single-neu').each( function() {
+    $('.btn-single-neu').each( function() {
         var id = $(this).attr("id").substring(4);
         id = uidEncode(id);
         if (ffbomesh.pinned.has(id))
@@ -151,8 +155,8 @@ $("#btn-neu-none").click( function() {
         $(this).removeClass("selected");
         $(this).addClass("unselected");
         ffbomesh.hide(id);
-          });*/
-    ffbomesh.hideAll();
+	});
+//    ffbomesh.hideAll();
 });
 
 
@@ -235,8 +239,7 @@ function generateNeuronButton(newNeuJson) {
  */
 var onShowAllClick = function() {
     ffbomesh.showAll();
-    /*[[
-    $('.btn-single-obj').each( function() {
+/*    $('.btn-single-obj').each( function() {
         var x = $(this).html().substring(1);
         $(this).html('&FilledSmallSquare; ' + x );
         $(this).addClass("selected");
@@ -248,17 +251,14 @@ var onShowAllClick = function() {
  */
 var onHideAllClick = function() {
     ffbomesh.hideAll();
-    /*for (var id in lpuJSON)
+/*    for (var id in lpuJSON)
         toggleOBJ(id, false);
-    $("#btn-neu-none").click();*/
-    /*
     $('.btn-single-obj').each( function() {
         var x = $(this).html().substring(1);
         $(this).html('&EmptySmallSquare; ' + x );
         $(this).removeClass("selected");
         $(this).addClass("unselected");
-    });
-    */
+    });*/
 }
 /*
  * Create a button for each LPU
@@ -312,8 +312,8 @@ $("#btn-pin-unpinall").click( function() {
 $("#btn-pin-keep").click( function() {
     //if($.isEmptyObject(Array.from(ffbomesh.pinned))) return;
     if($.isEmptyObject(Array.from(ffbomesh.pinned))){
-          Notify('There are no pinned neurons in the scene. Click on <i class="fa fa-info-circle" aria-hidden="true"></i> for information on how to pin neurons', null, null, 'danger');
-          return;
+	Notify('There are no pinned neurons in the scene. Click on <i class="fa fa-info-circle" aria-hidden="true"></i> for information on how to pin neurons', null, null, 'danger');
+	return;
     }
     var na_servers = document.getElementById("na_servers");
     var na_server = na_servers.options[na_servers.selectedIndex].value;
@@ -322,35 +322,35 @@ $("#btn-pin-keep").click( function() {
     msg["verb"] = "keep";
     msg["data_callback_uri"] = "ffbo.ui.receive_partial"
     client_session.call('ffbo.na.query.'+na_server, [msg], {}, {
-          receive_progress: true
+	receive_progress: true
     }).then(
-          function(res) {
-              if(typeof res == 'object'){
-                    if ('error' in res) {
-                        Notify(res['error']['message'],null,null,'danger')
-                        $("body").trigger('demoproceed', ['error']);
-                        return;
-                    } else if('success' in res) {
-                        if('info' in res['success'])
-                              Notify(res['success']['info']);
-                        if('data' in res['success']){
-                              data = {'ffbo_json': res['success']['data'],
-                                        'type': 'morphology_json'};
-                              processFFBOjson(data)
-                        }
-                    }
-              }
-              $("body").trigger('demoproceed', ['success']);
-          },
-          function(err) {
-              console.log(err)
-              Notify(err,null,null,'danger');
-              $("body").trigger('demoproceed', ['error']);
-          },
-          function(progress) {
-              data = {'ffbo_json': progress,'type': 'morphology_json'};
-              processFFBOjson(data);
-          }
+	function(res) {
+	    if(typeof res == 'object'){
+		if ('error' in res) {
+		    Notify(res['error']['message'],null,null,'danger')
+		    $("body").trigger('demoproceed', ['error']);
+		    return;
+		} else if('success' in res) {
+		    if('info' in res['success'])
+			Notify(res['success']['info']);
+		    if('data' in res['success']){
+			data = {'ffbo_json': res['success']['data'],
+				'type': 'morphology_json'};
+			processFFBOjson(data)
+		    }
+		}
+	    }
+	    $("body").trigger('demoproceed', ['success']);
+	},
+	function(err) {
+	    console.log(err)
+	    Notify(err,null,null,'danger');
+	    $("body").trigger('demoproceed', ['error']);
+	},
+	function(progress) {
+	    data = {'ffbo_json': progress,'type': 'morphology_json'};
+	    processFFBOjson(data);
+	}
     );
 
 })
@@ -391,9 +391,26 @@ new ResizeSensor(element, function() {
 });
 */
 var ffbomesh = new FFBOMesh3D('vis-3d', {"ffbo_json": lpuJSON, "showAfterLoadAll": true}, {"globalCenter": {'x': 0, 'y':-250, 'z':0}});
+ffbomesh.createUIBtn("showSettings", "fa-cog", "Settings")
+ffbomesh.createUIBtn("takeScreenshot", "fa-camera", "Download Screenshot")
+ffbomesh.createUIBtn("showInfo", "fa-info-circle", "GUI guideline")
+ffbomesh.createUIBtn("resetView", "fa-refresh", "Reset View")
+ffbomesh.createUIBtn("resetVisibleView", "fa-align-justify", "Centre View To Visible Objects")
+ffbomesh.createUIBtn("show_all", "fa-eye", "Unhide All")
+ffbomesh.createUIBtn("hide_all", "fa-eye-slash", "Hide All")
+ffbomesh.createUIBtn("removeUnpin", "fa-trash", "Remove Unpinned Neurons")
+ffbomesh.createUIBtn("DownData", "fa-download", "Download Connectivity")
+
+ffbomesh.dispatch['resetView'] = (function() {ffbomesh.resetView()})
+ffbomesh.dispatch['resetVisibleView'] = (function() {ffbomesh.resetVisibleView()})
 ffbomesh.dispatch['dblclick'] = updatePinNeuron;
 ffbomesh.dispatch['showInfo'] = (function() {closeAllOverlay(true); $("#gui-3d").show()});
 ffbomesh.dispatch['removeUnpin'] = (function() {$("#btn-pin-keep").trigger("click")});
+ffbomesh.dispatch['hide_all'] = (function() {ffbomesh.hideAll()});
+ffbomesh.dispatch['show_all'] = (function() {ffbomesh.showAll()});
+ffbomesh.dispatch['takeScreenshot'] = (function() {ffbomesh._take_screenshot=true;});
+
+
 ffbomesh.dispatch['showAll'] = function(){
     $('.btn-single-neu').each( function() {
         var x = $(this).html().substring(1);
@@ -401,9 +418,9 @@ ffbomesh.dispatch['showAll'] = function(){
         $(this).addClass("selected");
         $(this).removeClass("unselected");
     })
-          for (var id in lpuJSON)
+	for (var id in lpuJSON)
             toggleOBJ(id, true);
-          }
+	}			       
 
 ffbomesh.dispatch['hideAll'] = function(){
     $('.btn-single-neu').each( function() {
@@ -423,7 +440,12 @@ ffbomesh.dispatch['hideAll'] = function(){
 /*
  * communication between frontend and processor_component
  */
+ep_server_id = ""
 function populate_server_lists(directory) {
+    if("ep" in directory)
+	for(var id in directory["ep"])
+	    ep_server_id = id
+    
     var valid_server_type = ['na', 'nlp'];
     for (var type in directory) {
         if (valid_server_type.indexOf(type) > -1) {
@@ -448,15 +470,15 @@ function processFFBOjson(data) {
     var newNeuList = [];
     for (key in data['ffbo_json']) {
         var x = data['ffbo_json'][key];
-          if('uname' in x){
-              x['label'] = x['uname'];
-              newNeuList.push({'id': key, 'name': x['uname']});
-          }
-          else{
+	if('uname' in x){
+	    x['label'] = x['uname'];
+	    newNeuList.push({'id': key, 'name': x['uname']});
+	}
+	else{
             newNeuList.push({'id': key, 'name': x['name']});
-          }
+	}
     }
-    newNeuList.sort(function(a, b) {return a.name > b.name ? 1: -1;});
+    newNeuList.sort(function(a, b) {return a.name > b.name ? 1: -1;}); 
     neuList = neuList.concat( newNeuList.map( a => a.id ) );
     generateNeuronButton(newNeuList);
     ffbomesh.addJson(data);
@@ -475,9 +497,11 @@ srchBtn.addEventListener('click', function(event) {
         $("#btn-demo-close").click();
     if ($("#video-panel").is(":visible"))
         $("#btn-video-close").click();
+    query = document.getElementById('srch_box').value;
     $("#search-wrapper").block({ message: null });
     srchInput.blur();
     send_query();
+    
 });
 
 srchInput.addEventListener("keyup", function(event) {
@@ -500,40 +524,73 @@ function send_query() {
 
 };
 
+/*
+function process_command(task) {
+    client_session.call('ffbo.na.process_command.' + na_servers.options[na_servers.selectedIndex].value, [task],{},{receive_progress: true}).then(
+	function(res) {
+            if ('error' in res) {
+                Notify(res['error']['message'],null,null,'danger')
+                $("body").trigger('demoproceed', ['error']);
+            } else if('success' in res) {
+		if('info' in res['success'])
+                    Notify(res['success']['info']);
+		if('data' in res['success']){
+		    data = {'ffbo_json': res['success']['data'],
+			    'type': 'morphology_json'};
+		    processFFBOjson(data)
+		}
+                $("body").trigger('demoproceed', ['success']);
+            };
+            $("#search-wrapper").unblock();
+        },
+        function(err) {
+	    console.log(err)
+	    Notify(err,null,null,'danger');
+            $("body").trigger('demoproceed', ['error']);
+            $("#search-wrapper").unblock();
+        },
+        function(progress) {
+            data = {'ffbo_json': progress,'type': 'morphology_json'};
+	    processFFBOjson(data);
+        }
+    );
+};
+*/
+
 function send(msg, session) {
 
     session.call('ffbo.processor.nlp_to_visualise', [msg], {}, {
         receive_progress: true
     }).then(
         function(res) {
-              if(typeof res == 'object'){
-                    if ('error' in res) {
+	    if(typeof res == 'object'){
+		if ('error' in res) {
                     Notify(res['error']['message'],null,null,'danger')
                     $("body").trigger('demoproceed', ['error']);
-                        return;
-                    } else if('success' in res) {
-                        if('info' in res['success'])
-                              Notify(res['success']['info']);
-                        if('data' in res['success']){
-                              data = {'ffbo_json': res['success']['data'],
-                                        'type': 'morphology_json'};
-                              processFFBOjson(data)
-                        }
-                    }
-              }
-              //console.log(res)
+		    return;
+		} else if('success' in res) {
+		    if('info' in res['success'])
+			Notify(res['success']['info']);
+		    if('data' in res['success']){
+			data = {'ffbo_json': res['success']['data'],
+				'type': 'morphology_json'};
+			processFFBOjson(data)
+		    }
+		}
+	    }
+	    //console.log(res)
             $("#search-wrapper").unblock();
-              $("body").trigger('demoproceed', ['success']);
+	    $("body").trigger('demoproceed', ['success']);
         },
         function(err) {
-              console.log(err)
-              Notify(err,null,null,'danger');
+	    console.log(err)
+	    Notify(err,null,null,'danger');
             $("body").trigger('demoproceed', ['error']);
             $("#search-wrapper").unblock();
         },
         function(progress) {
             data = {'ffbo_json': progress,'type': 'morphology_json'};
-              processFFBOjson(data);
+	    processFFBOjson(data);
         }
     );
 };
@@ -543,6 +600,9 @@ function construct_query(session) {
     msg['username'] = username;
     msg['servers'] = {}
     msg['data_callback_uri'] = 'ffbo.ui.receive_partial'
+    msg["threshold"] = 20
+    if(ffbomesh.neurons_3d)
+	msg["threshold"] = 1
 
     var language_selector = document.getElementById("query_language");
     msg['language'] = language_selector.options[language_selector.selectedIndex].value;
@@ -573,13 +633,13 @@ function construct_query(session) {
 var metadata = {}
 function retrieve_data(reset=true){
     if(reset){
-          neuList = [];
-          ffbomesh.reset();
-          resetNeuronButton();
-          $('#neu-id').attr('name','');
-          $('#neu-id').attr('uid','');
-          $('#neu-id').text('FlyCircuit DB: ');
-          $("#flycircuit-iframe").attr('src','');
+	neuList = [];
+	ffbomesh.reset();
+	resetNeuronButton();
+	$('#neu-id').attr('name','');
+	$('#neu-id').attr('uid','');
+	$('#neu-id').text('FlyCircuit DB: ');
+	$("#flycircuit-iframe").attr('src','');
     }
     msg = {}
     msg['data_callback_uri'] = 'ffbo.ui.receive_partial';
@@ -588,34 +648,43 @@ function retrieve_data(reset=true){
     var na_server = na_servers.options[na_servers.selectedIndex].value;
     msg['server'] = na_server;
     msg['query'] = "{'command':'retrieve':{'state':0}}"
+    msg["threshold"] = 20
+    if(ffbomesh.neurons_3d)
+	msg["threshold"] = 1
+
     client_session.call('ffbo.processor.neuroarch_query', [msg], {}).then(
-          function(res) {
-              if(typeof res == 'object'){
-                    if ('error' in res) {
-                        Notify(res['error']['message'],null,null,'danger')
-                        $("body").trigger('demoproceed', ['error']);
-                        return;
-                    } else if('success' in res) {
-                        if('info' in res['success'])
-                              Notify(res['success']['info']);
-                        if('data' in res['success']){
-                              data = {'ffbo_json': res['success']['data'],
-                                        'type': 'morphology_json'};
-                              processFFBOjson(data)
-                              if(!($.isEmptyObject(metadata))){
-                                  ffbomesh.import_state(metadata);
-                                  metadata={};
-                              }
-                        }
-                    }
-              }
-              $("body").trigger('demoproceed', ['success']);
-          },
-          function(err) {
-              console.log(err)
-              Notify(err,null,null,'danger');
-              $("body").trigger('demoproceed', ['error']);
-          }
+	function(res) {
+	    console.log(res);
+	    if(typeof res == 'object'){
+		if ('error' in res) {
+		    Notify(res['error']['message'],null,null,'danger')
+		    $("body").trigger('demoproceed', ['error']);
+		    return;
+		} else if('success' in res) {
+		    if(!($.isEmptyObject(metadata))){
+			ffbomesh.import_state(metadata);
+			metadata={};
+			Notify('Tag retrieved succesfully')
+		    }
+
+		    if('info' in res['success'])
+			Notify(res['success']['info']);
+		    if('data' in res['success']){
+			data = {'ffbo_json': res['success']['data'],
+				'type': 'morphology_json'};
+			processFFBOjson(data)
+		    }
+		    $('.overlay-background').hide();
+		    ffbomesh.resume();
+		}
+	    }
+	    $("body").trigger('demoproceed', ['success']);
+	},
+	function(err) {
+	    console.log(err)
+	    Notify(err,null,null,'danger');
+	    $("body").trigger('demoproceed', ['error']);
+	}
     );
 }
 
@@ -627,26 +696,26 @@ function create_tag(tag){
     msg['metadata'] = ffbomesh.export_state();
 
     client_session.call('ffbo.na.create_tag.'+na_server, [msg], {}).then(
-          function(res) {
-              console.log(res)
-              if(typeof res == 'object'){
-                    if('info' in res){
-                        if('error' in res['info']){
-                              Notify(res['info']['error'], null,null,'danger');
-                              $("body").trigger('demoproceed', ['error']);
-                              $("#search-wrapper").unblock();
-                        }
-                        else if('success' in res['info']){
-                              Notify(res['info']['success']);
-                        }
-                    }
-              }
-          },
-          function(err) {
-              console.log(err)
-              Notify(err,null,null,'danger');
-              $("body").trigger('demoproceed', ['error']);
-          });
+	function(res) {
+	    console.log(res)
+	    if(typeof res == 'object'){
+		if('info' in res){
+		    if('error' in res['info']){
+			Notify(res['info']['error'], null,null,'danger');
+			$("body").trigger('demoproceed', ['error']);
+			$("#search-wrapper").unblock();
+		    }
+		    else if('success' in res['info']){
+			Notify(res['info']['success']);
+		    }
+		}
+	    }
+	},
+	function(err) {
+	    console.log(err)
+	    Notify(err,null,null,'danger');
+	    $("body").trigger('demoproceed', ['error']);
+	});
 }
 
 function retrieve_tag(tag){
@@ -655,48 +724,50 @@ function retrieve_tag(tag){
     msg = {}
     msg['tag'] = tag;
 
+    $('.overlay-background').show();
     client_session.call('ffbo.na.retrieve_tag.'+na_server, [msg], {}).then(
-          function(res) {
-              console.log(res)
-              if(typeof res == 'object'){
-                    if('info' in res){
-                        if('error' in res['info']){
-                              Notify(res['info']['error'], null,null,'danger');
-                              $("body").trigger('demoproceed', ['error']);
-                              $("#search-wrapper").unblock();
-                        }
-                        else if('success' in res['info']){
-                              Notify(res['info']['success']);
-                              if('data' in res){
-                                  metadata = res['data'];
-                              }
-                              retrieve_data();
+	function(res) {
+	    console.log(res)
+	    if(typeof res == 'object'){
+		if('info' in res){
+		    if('error' in res['info']){
+			Notify(res['info']['error'], null,null,'danger');
+			$("body").trigger('demoproceed', ['error']);
+			$("#search-wrapper").unblock();
+		    }
+		    else if('success' in res['info']){
+			//Notify(res['info']['success']);
+			Notify('Retreiving Tag');
+			if('data' in res){
+			    metadata = res['data'];
+			}
+			retrieve_data();
 
-                        }
-                    }
-              }
-          },
-          function(err) {
-              console.log(err)
-              Notify(err,null,null,'danger');
-              $("body").trigger('demoproceed', ['error']);
-          });
+		    }
+		}
+	    }
+	},
+	function(err) {
+	    console.log(err)
+	    Notify(err,null,null,'danger');
+	    $("body").trigger('demoproceed', ['error']);
+	});
 }
 
 $('#tagSubmit').click(function(){
     if($('#tagSubmit').text()=='Create tag')
-          create_tag($('#tag').val());
+	create_tag($('#tag').val());
     else
-          retrieve_tag($('#tag').val());
+	retrieve_tag($('#tag').val());
     $('#tagModal').modal('hide');
 });
 $('#tag').keyup(function(event){
     if (event.keyCode == 13){
-          if($('#tagSubmit').text()=='Create tag')
-              create_tag($('#tag').val());
-          else
-              retrieve_tag($('#tag').val());
-          $('#tagModal').modal('hide');
+	if($('#tagSubmit').text()=='Create tag')
+	    create_tag($('#tag').val());
+	else
+	    retrieve_tag($('#tag').val());
+	$('#tagModal').modal('hide');
     }
 });
 function onCreateTag(){
@@ -711,27 +782,46 @@ function onRetrieveTag(){
     $('#tag').focus()
 }
 
-$( ".slider-bar" ).draggable({
-  axis: "x",
-  delay: 200,
-  start: function( event, ui ) {
-    $("#info-panel").addClass("notransition");
-  },
-  drag: function( event, ui ) {
-    var rect = document.getElementById("info-panel").getBoundingClientRect()
-    var width = ui.position.left - rect.left;
-    $("#info-panel").css("width",width);
-  },
-  stop: function( event, ui ) {
-    var perc = event.pageX / window.outerWidth * 100;
-    document.documentElement.style.setProperty("--boundary-horizontal", perc + "%");
-    $("#info-panel").removeClass("notransition");
-    $(".slider-bar").css({"top": "", "left":""});
-    $("#info-panel").css("width","");
-    setTimeout( function() {
-    ffbomesh.onWindowResize()}, 500 );
-  },
+
+
+$( "#info_panel_dragger" ).draggable({
+    axis: "x",
+    delay: 200,
+    start: function( event, ui ) {
+	// $("#info-panel").addClass("notransition");
+	$(".vis-info-pin").addClass("notransition");
+    },
+    drag: function( event, ui ) {
+	//var rect = document.getElementById("info-panel").getBoundingClientRect()
+        var rect;
+        var objs = document.getElementsByClassName('vis-info-pin');
+        for (var i=0; i < objs.length; ++i) {
+           if ($(objs[i]).is(':visible')) {
+             rect = objs[i].getBoundingClientRect();
+           }
+        }
+	var width = ui.position.left - rect.left;
+	// $("#info-panel").css("width",width);
+	$(".vis-info-pin").css("width", width + "px");
+    },
+    stop: function( event, ui ) {
+	var perc = event.pageX / window.innerWidth * 100;
+	document.documentElement.style.setProperty("--boundary-horizontal", perc + "%");
+ /*
+	$("#info-panel").removeClass("notransition");
+	$("#info_pannel_dragger").css({"top": "", "left":""});
+	$("#info-panel").css("width","");
+*/
+	$(".vis-info-pin").removeClass("notransition");
+	$("#info_panel_dragger").css({"top": "", "left":""});
+	$(".vis-info-pin").css("width","");
+	setTimeout( function() {
+	    ffbomesh.onWindowResize()}, 500 );
+    },
 });
+
+
+
 
 
 $('.vis-info').perfectScrollbar();
@@ -742,9 +832,9 @@ var resize_listener;
 window.addEventListener("resize", function(){
     clearTimeout(resize_listener);
     resize_listener = setTimeout(
-          function() {
-              ffbomesh.onWindowResize();
-          }, 400 );
+	function() {
+	    ffbomesh.onWindowResize();
+	}, 400 );
 });
 $(window).blur(function(){
     //console.log("yes");
