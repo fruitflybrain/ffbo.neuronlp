@@ -1,0 +1,66 @@
+<div id="info-panel"> 
+  <!-- "info panel" header -->
+  <ul class="list-inline">
+    <li><p>Info Panel</p></li>
+    <li><button id="btn-info-pin"></button></li>
+  </ul>
+  <!-- content wrapper -->
+  <div> 
+    <div id="info-reset" class="ffbo-intro"></div>
+    <div id="info-intro" class="ffbo-intro"></div>
+    <div id="info-table-wrap">
+      <!-- Neuron Information -->
+      <div id="info-table-neu-wrapper" style="">
+        <table id="neu-info-summary" class="table table-inverse table-custom-striped" style="">
+          <!-- name, VFB link -->
+          <p id="neu-id" style=""></p> <p> Data Source </p>
+          <!-- Color, Data Source -->
+        </table>
+
+        <!-- FlyCircuit Table, if needed -->
+        <div id="flycircuit-table">
+          <table class="table table-inverse">
+          </table>
+        </div>
+      </div>
+
+      <!-- Synaptic information -->
+      <div id="info-table-syn-wrapper">
+        <!-- synaptic summary text -->
+        <table id="syn-profile-text" class="table table-inverse table-custom-striped"></table>
+        <!-- syn-reference-text called by svg -->
+        <div id="syn-profile-svg" class="svg-syn">
+          <svg width="657" height="150"></svg>
+        </div>
+
+        <div id="syn-table">
+          <h4> Pre-partner</h4>
+          <table id="syn-table-pre" class="table table-inverse table-custom-striped">
+            <th id="syn-table-pre-search"></th>
+            <th id="syn-table-pre-N"></th>
+          </table>
+          <h4> Post-partner</h4>
+          <table id="syn-table-post" class="table table-inverse table-custom-striped">
+            <th id="syn-table-post-search"></th>
+            <th id="syn-table-post-N"></th>
+          </table>       
+         </div>
+      </div>
+
+
+    </div>
+
+
+  <!-- Info Panel Resize Bar -->
+  <div class="ps__scrollbar-x-rail" style="left: 0px; bottom: 0px; width: 657px;">
+    <div class="ps__scrollbar-x" tabindex="0" style="left: 0px; width: 642px;"></div>
+  </div>
+  <div class="ps__scrollbar-y-rail" style="top: 0px; right: 0px; height: 539px;">
+    <div class="ps__scrollbar-y" tabindex="0" style="top: 0px; height: 112px;"></div>
+  </div>
+
+
+</div>
+
+
+<div id="syn-info-overlay" class="overlay" style="display: block;"></div>

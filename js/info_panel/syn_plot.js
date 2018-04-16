@@ -1,7 +1,4 @@
 define(['d3','jquery'],function(d3,$){
-  const svgWrapperId = "#svg-syn";
-  const synRefId = "#syn-reference-text";
-
   /** 
    * Plot Synaptic Concentration Profile
    */
@@ -20,7 +17,7 @@ define(['d3','jquery'],function(d3,$){
 
     // Total dimension for entire SVG div
     var height_tot = 150;
-    var width_tot = $(svgWrapperId).getBoundingClientRect().width;
+    var width_tot = $("#syn-profile-svg").getBoundingClientRect().width;
 
     // Calculate SVG dimension
     var margin = {top: 20, right: 40, bottom: 30, left: 80},
@@ -48,10 +45,10 @@ define(['d3','jquery'],function(d3,$){
                         .orient("left");
 
     
-    d3.select(svgWrapperId).html("");
+    d3.select("#syn-profile-svg").html("");
 
     // create SVG
-    var svg = d3.select(svgWrapperId).append("svg")
+    var svg = d3.select("#syn-profile-svg").append("svg")
                                        .attr("width", width_tot)
                                        .attr("height", height_tot)
                                        .attr("viewBox", "0 0 " + width_tot +" "+ height_tot )
@@ -223,7 +220,7 @@ define(['d3','jquery'],function(d3,$){
    * Resize Synaptic Profile plot
    */
   function resizeSynProfile(){
-    if(d3.select(svgWrapperId).select("svg")[0][0]){ //check if an svg file exists, if not getBBox will throw error
+    if(d3.select("#syn-profile-svg").select("svg")[0][0]){ //check if an svg file exists, if not getBBox will throw error
       let svg = d3.select(".svg-syn svg").node();
       let bbox =  svg.getBBox();
       let width_margin = 40;
@@ -238,7 +235,7 @@ define(['d3','jquery'],function(d3,$){
    * Add callbacks to synaptic profile plot
    */
   function addCallbackSynProfile(){
-    d3.select(svgWrapperId)
+    d3.select("#syn-profile-svg")
         .selectAll("rect")
           .on("mouseover",function(d){
             if (d['y']=='Presynaptic'){
@@ -257,7 +254,7 @@ define(['d3','jquery'],function(d3,$){
             addSynReference(ref_data);
           })
           .on("mouseout",function(){
-            d3.select(synRefId)
+            d3.select("#syn-profile-text")
                 .text("Click on/Hover over plot to extract detailed synaptic information");;
           });
   };
@@ -268,7 +265,7 @@ define(['d3','jquery'],function(d3,$){
    */
   function addSynReference(d){
     // d:type, neuron, percentage, number
-    let target= d3.select(synRefId);
+    let target= d3.select("#syn-profile-text");
     let reference_info = d.type+" "+d.neuron+": "+ (d.percentage).toFixed(1) +"%("+Math.round(d.number).toString() +")";
     target.text(reference_info);
   }
