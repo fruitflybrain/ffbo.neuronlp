@@ -22,7 +22,7 @@ for (var i=0; i < lpuList.length; i++ ) {
         side = "Left "
     }
     lpuJSON[lpuList[i]] = {
-    'filename': 'lib/mesh/' + lpuList[i] + '.json',
+    'filename': '/lib/mesh/' + lpuList[i] + '.json',
     'label': side + x[0].toUpperCase(),
     'highlight': false,
     'background': true,
