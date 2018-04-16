@@ -5,7 +5,6 @@ var ui = require('./UI.js');
 var autobahn = require('./autobahn.js');
 
 
-
 function getAllUrlParams(url) {
   /**
    * Parse all parameters delivered with the URL and return a dictionary with the parsed parameters.
@@ -74,15 +73,62 @@ function retrieveTagByID(tag){
   tags.retrieveTag(tag);
 }
 
-function retrieveNeuronByID(key_type,key,session) {
-  /*
+function onCallSuccess (res, callback) {
+  /**
+   * Called upon the success of a common Crossbar/NA call.
+   */
+  callback = callback || function(x) {return null;};
+  if(typeof res == 'object'){
+  if ('error' in res) {
+    Notify(res['error']['message'],null,null,'danger')
+    $("body").trigger('demoproceed', ['error']);
+    return;
+  } else if('success' in res) {
+    if('info' in res['success'])
+    Notify(res['success']['info']);
+    if('data' in res['success']){
+    data = {'ffbo_json': res['success']['data'],
+      'type': 'morphology_json'};
+    processFFBOjson(data);
+    }
+    callback(res);
+  }
+  }
+  $("#search-wrapper").unblock();
+  $("body").trigger('demoproceed', ['success']);
+};
+
+function onCallError(err) {
+  /**
+   * Called upon the raising of an error during a common Crossbar/NA call.
+   */
+  console.log(err)
+  Notify(err,null,null,'danger');
+  $("body").trigger('demoproceed', ['error']);
+  $("#search-wrapper").unblock();
+}
+
+function onCallProgress(progress) {
+  /**
+   * Called upon the progress of a common Crossbar/NA call.
+   */
+  data = {'ffbo_json': progress,'type': 'morphology_json'};
+  processFFBOjson(data);
+}
+
+function retrieveNeuronByID(key_type, key, session) {
+  /**
    * Hook into the Information panel to retieve individual neuron information from NA.
-  */
+   */
 
   msg = {}
   msg['username'] = username;
   msg['servers'] = {}
   msg['data_callback_uri'] = 'ffbo.ui.receive_partial'
+
+  msg['task'] = {}
+  msg['task']['key_type'] = key_type;
+  msg['task']['key'] = key;
 
   var na_servers = document.getElementById("na_servers");
 
@@ -94,44 +140,8 @@ function retrieveNeuronByID(key_type,key,session) {
 
   return;
   }
-  msg['task'] = {}
-  msg['task']['key_type'] = key_type;
-  msg['task']['key'] = key;
 
-  session.call('ffbo.processor.request_by_id', [msg], {}, {
-  receive_progress: true
-  }).then(
-  function(res) {
-    if(typeof res == 'object'){
-    if ('error' in res) {
-      Notify(res['error']['message'],null,null,'danger')
-      $("body").trigger('demoproceed', ['error']);
-      return;
-    } else if('success' in res) {
-      if('info' in res['success'])
-      Notify(res['success']['info']);
-      if('data' in res['success']){
-      data = {'ffbo_json': res['success']['data'],
-        'type': 'morphology_json'};
-      processFFBOjson(data)
-      }
-    }
-    }
-    //console.log(res)
-    $("#search-wrapper").unblock();
-    $("body").trigger('demoproceed', ['success']);
-  },
-  function(err) {
-    console.log(err)
-    Notify(err,null,null,'danger');
-    $("body").trigger('demoproceed', ['error']);
-    $("#search-wrapper").unblock();
-  },
-  function(progress) {
-    data = {'ffbo_json': progress,'type': 'morphology_json'};
-    processFFBOjson(data);
-  }
-  );
+  session.call('ffbo.processor.request_by_id', [msg], {}, {receive_progress: true}).then(onCallSuccess,onCallError,onCallProgress);
 }
 
 function retrieveByID(key_type,key,session){
@@ -152,244 +162,413 @@ function retrieveByID(key_type,key,session){
   }
 }
 
-
-
-
-
 // Former connection.js
 
 // Define a number of user-related global variables, allowing messages to be sent externally.
-var client_session;
-var user;
-var morphology_store = {};
-var username;
 
-var local_url = "wss://neuronlp.fruitflybrain.org:9050/ws";
-var server_url = "ws://127.0.0.1:8080/ws";
+function ClientSession() {
+  /**
+   * This is the ClientSession object that holds client session
+   */
+  var client_session;
+  var user;
+  var morphology_store = {};
+  var username;
 
+  var local_url = "wss://neuronlp.fruitflybrain.org:9050/ws";
+  var server_url = "ws://127.0.0.1:8080/ws";
 
-var wsuri;
-if (document.location.origin == "file://") {
-  wsuri = server_url;
-} else {
-  wsuri = local_url;
-}
+  var wsuri;
+  if (document.location.origin == "file://") {
+    wsuri = server_url;
+  } else {
+    wsuri = local_url;
+  }
 
-var connection;
-var login_success = false;
+  var connection;
+  var login_success = false;
 
-var direct_access = false;
+  var direct_access = false;
 
-var params =  getAllUrlParams();
-keys = Object.keys(params);
-if (keys.length >0) {
+  var params = getAllUrlParams();
+  keys = Object.keys(params);
+  if (keys.length > 0) {
     direct_access = true;
-}
+  }
 
+  function constructQuery(session) {
+    /**
+     * Prepares a query to send to NA.
+     */
+    msg = {};
+    msg["username"] = username;
+    msg["servers"] = {};
+    msg["data_callback_uri"] = "ffbo.ui.receive_partial";
+    msg["threshold"] = 20;
+    if (ffbomesh.neurons_3d) msg["threshold"] = 1;
 
-function startConnection(authid, key){
-  // the WAMP connection to the Router
-  //
-  function onchallenge (session, method, extra) {
-    if (method === "wampcra") {
-        salted_key = autobahn.auth_cra.derive_key(key,extra.salt, extra.iterations, extra.keylen)
-        if(key=="guestpass" && authid=="guest"){
-      salted_key = "C5/c598Gme4oALjmdhVC2H25OQPK0M2/tu8yrHpyghA=";
-        }
-        return autobahn.auth_cra.sign(salted_key, extra.challenge);
+    var language_selector = document.getElementById("query_language");
+    msg["language"] = language_selector.options[language_selector.selectedIndex].value;
+
+    var nlp_servers = document.getElementById("nlp_servers");
+    var na_servers = document.getElementById("na_servers");
+
+    try {
+      msg["servers"]["nlp"] = nlp_servers.options[nlp_servers.selectedIndex].value;
+    } catch (err) {
+      console.log("nlp server not valid");
+      return;
+    }
+
+    try {
+      msg["servers"]["na"] = na_servers.options[na_servers.selectedIndex].value;
+    } catch (err) {
+      console.log("na server not valid");
+      return;
+    }
+
+    msg["nlp_query"] = document.getElementById("srch_box").value;
+    return msg;
+  }
+  
+  function sendQuery() {
+    /**
+     * Sends a query to NA.
+     */
+    var msg = constructQuery(client_session);
+    if (typeof msg === "undefined") {
+      Notify("Server List is not Complete", null, null, "danger");
+      $("#search-wrapper").unblock();
+      $("body").trigger("demoproceed", ["error"]);
+    } else {
+      client_session.call("ffbo.processor.nlp_to_visualise",[msg],{},{ receive_progress: true }).then(onCallSuccess, onCallError, onCallProgress);
     }
   }
-  connection = new autobahn.Connection({
-    url: wsuri,
-    realm: "realm1",
-    authmethods: ["wampcra"],
-    authid: authid,
-    onchallenge: onchallenge
-  });
 
-  connection.onopen = function(session, details) {
-    console.log("Connected to FFBO");
-    client_session = session;
-    user = session.id;
-    username = details.authid;
-    // get feedback element
-    var feedback = document.getElementById("auth_feedback");
-    feedback.innerHTML = "Welcome " + username + "!";
-    feedback.style.color = "green";
-    if (login_succ == false) {
-      if (!direct_access) {
-      } else {
-        $.unblockUI();
-        //$("#welcomepage").hide();
-      }
+
+
+  function sendStandardNA(msg, call, callback) {
+    /**
+     * Sends a standard command to NA; allows for custom callbacks and calls.
+     */
+    var na_servers = document.getElementById("na_servers");
+    var na_server = na_servers.options[na_servers.selectedIndex].value;
+    call = call || "ffbo.na.query." + na_server;
+    callback = callback || null;
+    var onStandardCallSuccess = function(x) {
+      return onCallSuccess(x, callback);
     }
-    login_succ = true;
+    msg["username"] = username;
+    client_session.call(call, [msg], {}).then(onStandardCallSuccess, onCallError);
+  }
 
-    // Start registering procedures for remote calls.
+  // Functions to interact with NA directly:
 
-    function receivePartialDatabase(args) {
-      /**
-       * Receive a section of the morphology database
-       */
-      data = { ffbo_json: args[0], type: "morphology_json" };
-      if (!$.isEmptyObject(metadata)) {
-        for (var key in data["ffbo_json"]) {
-          if (key in metadata["color"]) {
-            var color = metadata["color"][key];
-            data["ffbo_json"][key]["color"] = new THREE.Color(color[0], color[1], color[2]);
-          }
+  function getConnectivityData() {
+    /**
+     * Receives and processes connectivity data.
+     */
+    msg = {};
+    msg["format"] = "nx"; // Format can be one of 'morphology', 'na','no_result', 'df', 'nk' or 'get_data'. Defaults to morphology
+    msg["query"] = [
+      {
+        action: { method: { add_connecting_synapses: {} } },
+        object: { state: 0 }
+      }
+    ];
+    msg["temp"] = true;
+    $(".overlay-background").show();
+    Notify("Fetching connectivity data");
+    sendStandardNA(msg, "ffbo.processor.neuroarch_query", function(res) {$(".overlay-background").hide(); Notify("Finished fetching connectivity data."); process_connectivity_data(res);});
+    // Setting 'temp': true won't append results to the state memory, keeping front end interactions independent of this query
+    // Passing keyword args to a method would be done something like this 'add_connecting_synapses': {'include_inferred': false}
+    // Memory can be used to refer to intermediate results. For example, the following is the translation of show neurons in eb
+    // msg['query'] = [{'action': {'method': {'query': {}}}, 'object': {'class': 'Neuropil'}},   // ALL neuropils
+    //{'action': {'method': {'has': {'name': 'EB'}}}, 'object': {'memory': 0}},// ALL neuropils => has name eb
+    //  {'action': {'method': {'traverse_owns': {'cls': 'Neuron'}}}, 'object': {'memory': 0}}] // eb => traverse for neurons
+  }
+
+  function addByUname(uname) {
+    /**
+     * Adds a neuron by its name.
+     */
+    msg = {
+      format: "morphology",
+      data_callback_uri: "ffbo.ui.receive_partial",
+      verb: "add",
+      query: [
+        {
+          action: { method: { query: { uname: uname } } },
+          object: { class: "Neuron" }
         }
-      }
-      processFFBOjson(data);
-      return true;
-    }
+      ]
+    };
+    sendStandardNA(msg);
+  }
 
-    session.register("ffbo.ui.receive_partial." + session.id,receivePartialDatabase).then(
-      function(reg) {},
-      function(err) {
-        console.log(
-          "Failed to register procedure ffbo.ui.recieve_partial." +
-            session.id,
-          err
+  function removeByUname(uname) {
+    /**
+     * Removes a neuron by its name.
+     */
+    msg = {
+      format: "morphology",
+      data_callback_uri: "ffbo.ui.receive_partial",
+      verb: "remove",
+      query: [
+        {
+          action: { method: { query: { uname: uname } } },
+          object: { class: "Neuron" }
+        }
+      ]
+    };
+    sendStandardNA(msg);
+  }
+
+  function addSynapseByUname(uname) {
+    /**
+     * Adds a synapse by its name.
+     */
+    msg = {
+      format: "morphology",
+      data_callback_uri: "ffbo.ui.receive_partial",
+      verb: "add",
+      query: [
+        {
+          action: { method: { query: { uname: uname } } },
+          object: { class: "Synapse" }
+        }
+      ]
+    };
+    sendStandardNA(msg);
+  }
+
+  function removeSynapseByUname(uname) {
+    /**
+     * Removes a synapse by its name.
+     */
+    msg = {
+      format: "morphology",
+      data_callback_uri: "ffbo.ui.receive_partial",
+      verb: "remove",
+      query: [
+        {
+          action: { method: { query: { uname: uname } } },
+          object: { class: "Synapse" }
+        }
+      ]
+    };
+    sendStandardNA(msg);
+  }
+
+  // Start Connection
+
+  function startConnection(authid, key) {
+    // the WAMP connection to the Router
+    //
+    function onchallenge(session, method, extra) {
+      if (method === "wampcra") {
+        salted_key = autobahn.auth_cra.derive_key(
+          key,
+          extra.salt,
+          extra.iterations,
+          extra.keylen
         );
+        if (key == "guestpass" && authid == "guest") {
+          salted_key = "C5/c598Gme4oALjmdhVC2H25OQPK0M2/tu8yrHpyghA=";
+        }
+        return autobahn.auth_cra.sign(salted_key, extra.challenge);
       }
-    );
+    }
+    connection = new autobahn.Connection({
+      url: wsuri,
+      realm: "realm1",
+      authmethods: ["wampcra"],
+      authid: authid,
+      onchallenge: onchallenge
+    });
 
-    function receiveMessage(args) {
-      if ("info" in args[0]) {
-        if ("error" in args[0]["info"]) {
-          Notify(args[0]["info"]["error"], null, null, "danger");
-          $("body").trigger("demoproceed", ["error"]);
-          $("#search-wrapper").unblock();
-        } else if ("success" in args[0]["info"]) {
-          Notify(args[0]["info"]["success"]);
+    connection.onopen = function(session, details) {
+      console.log("Connected to FFBO");
+      client_session = session;
+      user = session.id;
+      username = details.authid;
+      // get feedback element
+      var feedback = document.getElementById("auth_feedback");
+      feedback.innerHTML = "Welcome " + username + "!";
+      feedback.style.color = "green";
+      if (login_succ == false) {
+        if (!direct_access) {
+        } else {
+          $.unblockUI();
+          //$("#welcomepage").hide();
         }
       }
-      if ("commands" in args[0]) {
-        if ("reset" in args[0]["commands"]) {
-          neuList = [];
-          ffbomesh.reset();
-          resetNeuronButton();
-          $("#neu-id").attr("name", "");
-          $("#neu-id").attr("uid", "");
-          $("#neu-id").text("FlyCircuit DB: ");
-          $("#flycircuit-iframe").attr("src", "");
-          delete args[0]["commands"]["reset"];
-        }
-        if ("remove" in args[0]["commands"]) {
-          ids = args[0]["commands"]["remove"][0];
-          for (var i = 0; i < ids.length; ++i) {
-            ind = neuList.indexOf(ids[i]);
-            $("#li-btn-" + uidDecode(ids[i])).remove();
-            try {
-              $("#btn-keep-" + uidDecode(ids[i])).remove();
-            } catch (e) {}
-            if (ind > -1) neuList.splice(ind, 1);
-          }
-        }
-        for (var cmd in args[0]["commands"]) {
-          try {
-          } catch (err) {}
-          ffbomesh.addCommand({
-            commands: [cmd],
-            neurons: args[0]["commands"][cmd][0],
-            args: args[0]["commands"][cmd][1]
-          });
-        }
-        try {
-          if (synaptic_info && last_click) {
-            if (last_click in ffbomesh.meshDict) {
-              d = [ffbomesh.meshDict[last_click].name, last_click];
-              fetchDetailInfo(d);
+      login_succ = true;
+
+      // Start registering procedures for remote calls.
+
+      function receivePartialDatabase(args) {
+        /**
+         * Receive a section of the morphology database
+         */
+        data = { ffbo_json: args[0], type: "morphology_json" };
+        if (!$.isEmptyObject(metadata)) {
+          for (var key in data["ffbo_json"]) {
+            if (key in metadata["color"]) {
+              var color = metadata["color"][key];
+              data["ffbo_json"][key]["color"] = new THREE.Color(
+                color[0],
+                color[1],
+                color[2]
+              );
             }
           }
-        } finally {
-          ffbomesh.updateInfoPanel();
         }
+        processFFBOjson(data);
+        return true;
       }
-    }
 
-    session.register("ffbo.ui.receive_msg." + session.id, receiveMessage).then(
-      function(reg) {},
-      function(err) {
-        console.log(
-          "failed to register procedure ffbo.ui.receive_msg." +
-            session.id,
-          err
+      session.register("ffbo.ui.receive_partial." + session.id,receivePartialDatabase).then(
+          function(reg) {},
+          function(err) {
+            console.log("Failed to register procedure ffbo.ui.recieve_partial." + session.id,err);
+          }
         );
-      }
-    );
 
-    // SUBSCRIBE to topics and receive events.
-
-    function onServerUpdate(args) {
-      var directory = args[0];
-      populate_server_lists(directory);
-    }
-
-    session.subscribe("ffbo.server.update", onServerUpdate).then(
-      function(sub) {},
-      function(err) {
-        console.log("failed to subscribe to server update", err);
-      }
-    );
-
-    // SUBSCRIBE to dynamic UI updates from the processor:
-
-    function onUIUpdate(args) {
-      var info = args[0];
-      Notify(info, null, null, "danger");
-    }
-
-    session.subscribe("ffbo.ui.update." + session.id, onUIUpdate).then(
-      function(sub) {},
-      function(err) {
-        console.log("failed to subscribe to ui update", err);
-      }
-    );
-
-    session.call("ffbo.processor.server_information").then(function(res) {
-        populate_server_lists(res);
-        params = getAllUrlParams();
-        keys = Object.keys(params);
-        if ("mode" in params && params.mode == "3d") {
-          if (!ffbomesh.neurons_3d) $("#3d_rendering")[0].click();
+      function receiveMessage(args) {
+        if ("info" in args[0]) {
+          if ("error" in args[0]["info"]) {
+            Notify(args[0]["info"]["error"], null, null, "danger");
+            $("body").trigger("demoproceed", ["error"]);
+            $("#search-wrapper").unblock();
+          } else if ("success" in args[0]["info"]) {
+            Notify(args[0]["info"]["success"]);
+          }
         }
-        if ("bp_strength" in params) {
-          val = params["bp_strength"];
-          $("#bloomstrength").bootstrapSlider("setValue", val);
-          ffbomesh.bloomPass.strength = val;
+        if ("commands" in args[0]) {
+          if ("reset" in args[0]["commands"]) {
+            neuList = [];
+            ffbomesh.reset();
+            resetNeuronButton();
+            $("#neu-id").attr("name", "");
+            $("#neu-id").attr("uid", "");
+            $("#neu-id").text("FlyCircuit DB: ");
+            $("#flycircuit-iframe").attr("src", "");
+            delete args[0]["commands"]["reset"];
+          }
+          if ("remove" in args[0]["commands"]) {
+            ids = args[0]["commands"]["remove"][0];
+            for (var i = 0; i < ids.length; ++i) {
+              ind = neuList.indexOf(ids[i]);
+              $("#li-btn-" + uidDecode(ids[i])).remove();
+              try {
+                $("#btn-keep-" + uidDecode(ids[i])).remove();
+              } catch (e) {}
+              if (ind > -1) neuList.splice(ind, 1);
+            }
+          }
+          for (var cmd in args[0]["commands"]) {
+            try {
+            } catch (err) {}
+            ffbomesh.addCommand({
+              commands: [cmd],
+              neurons: args[0]["commands"][cmd][0],
+              args: args[0]["commands"][cmd][1]
+            });
+          }
+          try {
+            if (synaptic_info && last_click) {
+              if (last_click in ffbomesh.meshDict) {
+                d = [ffbomesh.meshDict[last_click].name, last_click];
+                fetchDetailInfo(d);
+              }
+            }
+          } finally {
+            ffbomesh.updateInfoPanel();
+          }
         }
+      }
 
-        if ("tag" in params) {
-          $("#btn-info-pin").click();
-          retrieve_tag(params["tag"]);
-        } else if ("na" in params) {
-          retrieve_neuron_by_id("na", params["na"], session);
-        } else if ("vfb" in params) {
-          retrieve_neuron_by_id("vfb", params["vfb"], session);
+      session.register("ffbo.ui.receive_msg." + session.id, receiveMessage).then(
+          function(reg) {},
+          function(err) {
+            console.log("failed to register procedure ffbo.ui.receive_msg." + session.id, err);
+          }
+        );
+
+      // SUBSCRIBE to topics and receive events.
+
+      function onServerUpdate(args) {
+        var directory = args[0];
+        populate_server_lists(directory);
+      }
+
+      session.subscribe("ffbo.server.update", onServerUpdate).then(
+        function(sub) {},
+        function(err) {
+          console.log("failed to subscribe to server update", err);
         }
-      }, function(err) {
-        console.log("server retrieval error:", err);
-      });
-  };
+      );
 
-  // fired when connection was lost (or could not be established)
-  //
-  connection.onclose = function(reason, details) {
-    console.log("Connection lost: " + reason);
-    if (login_succ == false) {
-      var feedback = document.getElementById("auth_feedback");
-      feedback.innerHTML = "Incorrect username or password...";
-      feedback.style.color = "red";
-    }
-  };
+      // SUBSCRIBE to dynamic UI updates from the processor:
 
-  // Finally, open the connection
-  connection.open();
+      function onUIUpdate(args) {
+        var info = args[0];
+        Notify(info, null, null, "danger");
+      }
+
+      session.subscribe("ffbo.ui.update." + session.id, onUIUpdate).then(
+        function(sub) {},
+        function(err) {
+          console.log("failed to subscribe to ui update", err);
+        }
+      );
+
+      session.call("ffbo.processor.server_information").then(
+        function(res) {
+          populate_server_lists(res);
+          params = getAllUrlParams();
+          keys = Object.keys(params);
+          if ("mode" in params && params.mode == "3d") {
+            if (!ffbomesh.neurons_3d) $("#3d_rendering")[0].click();
+          }
+          if ("bp_strength" in params) {
+            val = params["bp_strength"];
+            $("#bloomstrength").bootstrapSlider("setValue", val);
+            ffbomesh.bloomPass.strength = val;
+          }
+
+          if ("tag" in params) {
+            $("#btn-info-pin").click();
+            retrieve_tag(params["tag"]);
+          } else if ("na" in params) {
+            retrieve_neuron_by_id("na", params["na"], session);
+          } else if ("vfb" in params) {
+            retrieve_neuron_by_id("vfb", params["vfb"], session);
+          }
+        },
+        function(err) {
+          console.log("server retrieval error:", err);
+        }
+      );
+    };
+
+    // fired when connection was lost (or could not be established)
+    //
+    connection.onclose = function(reason, details) {
+      console.log("Connection lost: " + reason);
+      if (login_succ == false) {
+        var feedback = document.getElementById("auth_feedback");
+        feedback.innerHTML = "Incorrect username or password...";
+        feedback.style.color = "red";
+      }
+    };
+
+    // Finally, open the connection
+    connection.open();
+  }
 }
-
-// auth.js functions
+// Former auth.js functions
 
 function createLoginContainer() {
   if (client.direct_access) {
@@ -438,11 +617,7 @@ pwInput.addEventListener("keyup", function(event) {
 
 
 module.exports = {
-  client_session: client_session,
-  connection: connection,
-  login_success: login_success,
-  params: params,
-  keys: keys,
+  ClientSession: ClientSession,
   retrieveByID: retrieveByID,
   startConnection: startConnection,
   loginBtn: loginBtn,
