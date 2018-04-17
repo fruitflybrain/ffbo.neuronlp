@@ -1,7 +1,37 @@
 
 
 function Tags() {
+  this.initialize = function() {
+    $('#tagSubmit').click(function () {
+      if ($('#tagSubmit').text() == 'Create tag')
+        window.CurrentTag.createTag($('#tag').val());
+      else
+        window.CurrentTag.retrieveTag($('#tag').val());
+      $('#tagModal').modal('hide');
+    });
+    $('#tag').keyup(function (event) {
+      if (event.keyCode == 13) {
+        if ($('#tagSubmit').text() == 'Create tag')
+          window.CurrentTag.createTag($('#tag').val());
+        else
+          window.CurrentTag.retrieveTag($('#tag').val());
+        $('#tagModal').modal('hide');
+      }
+    });
+}
   
+  this.onCreateTag = function() {
+    $('#tagSubmit').text('Create Tag');
+    $('#tagModal').modal('show');
+    $('#tag').focus();
+  }
+  
+  this.onRetrieveTag = function(){
+    $('#tagSubmit').text('Retrieve Tag');
+    $('#tagModal').modal('show');
+    $('#tag').focus()
+  }
+
   this.metadata = {};
 
   this.createTag = function(CurrentClient, fffbomesh, tag) {
@@ -55,31 +85,3 @@ function Tags() {
   }
 };
 
-$('#tagSubmit').click(function () {
-  if ($('#tagSubmit').text() == 'Create tag')
-    window.CurrentTag.createTag($('#tag').val());
-  else
-    window.CurrentTag.retrieveTag($('#tag').val());
-  $('#tagModal').modal('hide');
-});
-$('#tag').keyup(function (event) {
-  if (event.keyCode == 13) {
-    if ($('#tagSubmit').text() == 'Create tag')
-      window.CurrentTag.createTag($('#tag').val());
-    else
-      window.CurrentTag.retrieveTag($('#tag').val());
-    $('#tagModal').modal('hide');
-  }
-});
-
-function onCreateTag() {
-  $('#tagSubmit').text('Create tag');
-  $('#tagModal').modal('show');
-  $('#tag').focus();
-}
-
-function onRetrieveTag(){
-  $('#tagSubmit').text('Retrieve tag');
-  $('#tagModal').modal('show');
-  $('#tag').focus()
-}
