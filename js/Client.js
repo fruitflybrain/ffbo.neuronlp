@@ -1,6 +1,20 @@
+function getNAServer(){
+  /**
+   * Gets the current NA server.
+   */
+  var na_servers = document.getElementById("na_servers");
+  var na_server = na_servers.options[na_servers.selectedIndex].value;
+  return na_server;
+}
+
+function addNAServer(x){
+  /**
+   * Appends the current NA server to the call.
+   */
+  return x + '.' + getNAServer();
+}
+
 // Former read_vars.js
-
-
 
 function getAllUrlParams(url) {
   /**
@@ -159,6 +173,41 @@ function retrieveByID(key_type,key,session){
   }
 }
 
+function constructQuery(session, ffbomesh) {
+  /**
+   * Prepares a query to send to NA.
+   */
+  msg = {};
+  msg["username"] = username;
+  msg["servers"] = {};
+  msg["data_callback_uri"] = "ffbo.ui.receive_partial";
+  msg["threshold"] = 20;
+  if (ffbomesh.neurons_3d) msg["threshold"] = 1;
+
+  var language_selector = document.getElementById("query_language");
+  msg["language"] = language_selector.options[language_selector.selectedIndex].value;
+
+  var nlp_servers = document.getElementById("nlp_servers");
+  var na_servers = document.getElementById("na_servers");
+
+  try {
+    msg["servers"]["nlp"] = nlp_servers.options[nlp_servers.selectedIndex].value;
+  } catch (err) {
+    console.log("nlp server not valid");
+    return;
+  }
+
+  try {
+    msg["servers"]["na"] = na_servers.options[na_servers.selectedIndex].value;
+  } catch (err) {
+    console.log("na server not valid");
+    return;
+  }
+
+  msg["nlp_query"] = document.getElementById("srch_box").value;
+  return msg;
+}
+
 // Former connection.js
 
 // Define a number of user-related global variables, allowing messages to be sent externally.
@@ -195,46 +244,13 @@ function ClientSession() {
     window.direct_access = true;
   }
 
-  function constructQuery(session) {
-    /**
-     * Prepares a query to send to NA.
-     */
-    msg = {};
-    msg["username"] = username;
-    msg["servers"] = {};
-    msg["data_callback_uri"] = "ffbo.ui.receive_partial";
-    msg["threshold"] = 20;
-    if (ffbomesh.neurons_3d) msg["threshold"] = 1;
 
-    var language_selector = document.getElementById("query_language");
-    msg["language"] = language_selector.options[language_selector.selectedIndex].value;
-
-    var nlp_servers = document.getElementById("nlp_servers");
-    var na_servers = document.getElementById("na_servers");
-
-    try {
-      msg["servers"]["nlp"] = nlp_servers.options[nlp_servers.selectedIndex].value;
-    } catch (err) {
-      console.log("nlp server not valid");
-      return;
-    }
-
-    try {
-      msg["servers"]["na"] = na_servers.options[na_servers.selectedIndex].value;
-    } catch (err) {
-      console.log("na server not valid");
-      return;
-    }
-
-    msg["nlp_query"] = document.getElementById("srch_box").value;
-    return msg;
-  }
   
-  this.sendQuery = function() {
+  this.sendQuery = function(ffbomesh) {
     /**
      * Sends a query to NA.
      */
-    var msg = constructQuery(client_session);
+    var msg = constructQuery(client_session, ffbomesh);
     if (typeof msg === "undefined") {
       Notify("Server List is not Complete", null, null, "danger");
       $("#search-wrapper").unblock();
@@ -619,6 +635,8 @@ pwInput.addEventListener("keyup", function(event) {
 
 module = {};
 module.exports = {
+  getNAServer: getNAServer,
+  addNAServer: addNAServer,
   ClientSession: ClientSession,
   retrieveByID: retrieveByID,
   loginBtn: loginBtn,
