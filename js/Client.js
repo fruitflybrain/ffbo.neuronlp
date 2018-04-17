@@ -1,8 +1,5 @@
 // Former read_vars.js
 
-var tags = require('./Tags.js');
-var ui = require('./UI.js');
-var autobahn = require('./autobahn.js');
 
 
 function getAllUrlParams(url) {
@@ -170,30 +167,32 @@ function ClientSession() {
   /**
    * This is the ClientSession object that holds client session
    */
-  var client_session;
-  var user;
-  var morphology_store = {};
-  var username;
+  this.client_session;
+  this.user;
+  this.morphology_store = {};
+  this.username;
 
-  var local_url = "wss://neuronlp.fruitflybrain.org:9050/ws";
-  var server_url = "ws://127.0.0.1:8080/ws";
+  this.local_url = "wss://neuronlp.fruitflybrain.org:9050/ws";
+  this.server_url = "ws://127.0.0.1:8080/ws";
 
-  var wsuri;
+  this.wsuri = '';
   if (document.location.origin == "file://") {
-    wsuri = server_url;
+    this.wsuri = this.server_url;
   } else {
-    wsuri = local_url;
+    this.wsuri = this.local_url;
   }
 
-  var connection;
-  var login_success = false;
+  this.connection;
+  this.login_success = false;
+  window.login_success = this.login_success;
+  this.direct_access = false;
+  window.direct_access = this.direct_access;
 
-  var direct_access = false;
-
-  var params = getAllUrlParams();
-  keys = Object.keys(params);
+  this.params = getAllUrlParams();
+  keys = Object.keys(this.params);
   if (keys.length > 0) {
-    direct_access = true;
+    this.direct_access = true;
+    window.direct_access = true;
   }
 
   function constructQuery(session) {
@@ -231,7 +230,7 @@ function ClientSession() {
     return msg;
   }
   
-  function sendQuery() {
+  this.sendQuery = function() {
     /**
      * Sends a query to NA.
      */
@@ -247,7 +246,7 @@ function ClientSession() {
 
 
 
-  function sendStandardNA(msg, call, callback) {
+  this.sendStandardNA = function(msg, call, callback) {
     /**
      * Sends a standard command to NA; allows for custom callbacks and calls.
      */
@@ -264,7 +263,7 @@ function ClientSession() {
 
   // Functions to interact with NA directly:
 
-  function getConnectivityData() {
+  this.getConnectivityData = function() {
     /**
      * Receives and processes connectivity data.
      */
@@ -288,7 +287,7 @@ function ClientSession() {
     //  {'action': {'method': {'traverse_owns': {'cls': 'Neuron'}}}, 'object': {'memory': 0}}] // eb => traverse for neurons
   }
 
-  function addByUname(uname) {
+  this.addByUname = function(uname) {
     /**
      * Adds a neuron by its name.
      */
@@ -306,7 +305,7 @@ function ClientSession() {
     sendStandardNA(msg);
   }
 
-  function removeByUname(uname) {
+  this.removeByUname = function(uname) {
     /**
      * Removes a neuron by its name.
      */
@@ -324,7 +323,7 @@ function ClientSession() {
     sendStandardNA(msg);
   }
 
-  function addSynapseByUname(uname) {
+  this.addSynapseByUname = function(uname) {
     /**
      * Adds a synapse by its name.
      */
@@ -342,7 +341,7 @@ function ClientSession() {
     sendStandardNA(msg);
   }
 
-  function removeSynapseByUname(uname) {
+  this.removeSynapseByUname = function(uname) {
     /**
      * Removes a synapse by its name.
      */
@@ -362,7 +361,7 @@ function ClientSession() {
 
   // Start Connection
 
-  function startConnection(authid, key) {
+  this.startConnection = function(authid, key) {
     // the WAMP connection to the Router
     //
     function onchallenge(session, method, extra) {
@@ -380,7 +379,7 @@ function ClientSession() {
       }
     }
     connection = new autobahn.Connection({
-      url: wsuri,
+      url: this.wsuri,
       realm: "realm1",
       authmethods: ["wampcra"],
       authid: authid,
@@ -396,14 +395,14 @@ function ClientSession() {
       var feedback = document.getElementById("auth_feedback");
       feedback.innerHTML = "Welcome " + username + "!";
       feedback.style.color = "green";
-      if (login_succ == false) {
-        if (!direct_access) {
+      if (window.login_success == false) {
+        if (!window.direct_access) {
         } else {
           $.unblockUI();
           //$("#welcomepage").hide();
         }
       }
-      login_succ = true;
+      window.login_success = true;
 
       // Start registering procedures for remote calls.
 
@@ -557,7 +556,7 @@ function ClientSession() {
     //
     connection.onclose = function(reason, details) {
       console.log("Connection lost: " + reason);
-      if (login_succ == false) {
+      if (window.login_success == false) {
         var feedback = document.getElementById("auth_feedback");
         feedback.innerHTML = "Incorrect username or password...";
         feedback.style.color = "red";
@@ -566,12 +565,13 @@ function ClientSession() {
 
     // Finally, open the connection
     connection.open();
+    console.log('ClientSession connection established to FFBO.');
   }
 }
 // Former auth.js functions
 
 function createLoginContainer() {
-  if (client.direct_access) {
+  if (window.direct_access) {
     $.unblockUI();
     $("#welcomepage").hide();
     startGuestConnection();
@@ -590,36 +590,37 @@ function createLoginContainer() {
   }
 }
 
+// FIX the snippet here before the module exports:
+
 var user;
 var loginBtn = document.getElementById('loginBtn');
 loginBtn.addEventListener('click', function(event) {
-    // get user
-    user = document.getElementById('txt_user').value;
-    // get password
-    var password = document.getElementById('txt_password').value;
-    // get feedback element
-    var feedback = document.getElementById('auth_feedback');
+  // get user
+  user = document.getElementById('txt_user').value;
+  // get password
+  var password = document.getElementById('txt_password').value;
+  // get feedback element
+  var feedback = document.getElementById('auth_feedback');
 
-    start_connection(user, password);
+  window.ClientSession.start_connection(user, password);
 });
 
-function startGuestConnection(){
-    startConnection("guest", "guestpass");
+function startGuestConnection(ClientSession){
+  ClientSession.startConnection("guest", "guestpass");
 }
 
 var pwInput = document.getElementById('txt_password');
 pwInput.addEventListener("keyup", function(event) {
-    event.preventDefault();
-    if (event.keyCode == 13)
-        loginhBtn.click();
+  event.preventDefault();
+  if (event.keyCode == 13)
+      loginhBtn.click();
 });
 
 
-
+module = {};
 module.exports = {
   ClientSession: ClientSession,
   retrieveByID: retrieveByID,
-  startConnection: startConnection,
   loginBtn: loginBtn,
   pwInput: pwInput,
   user: user,
