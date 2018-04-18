@@ -1,4 +1,16 @@
-define([
+var loader = function(name, dependencies, definition) {
+  if (typeof module === 'object' && module && module.exports) {
+      dependencies = dependencies.map(require);
+      module.exports = definition.apply(context, dependencies);
+  } else if (typeof require === 'function') {
+    define(dependencies, definition);
+  } else {
+    window[name] = definition();
+  }
+};
+
+loader("InfoPanel",
+  [
   'jquery',
   'app/info_panel/summary_table',
   'app/info_panel/conn_svg',
@@ -6,7 +18,7 @@ define([
   ],
   function(
     $,
-    Summary,
+    SummaryTable,
     ConnSVG,
     ConnTable
   )
@@ -30,8 +42,7 @@ define([
 
     this.connSVG = new ConnSVG("#info-panel-conn",synData);
     this.connTable = new ConnTable("#info-panel-table",synData,false,this.isInWorkspace);
-    this.summary = new Summary("#info-panel-summary","#info-panel-summary-extra",neuData,this.isInWorkspace); // neuron information table
-
+    this.summaryTable = new SummaryTable("#info-panel-summary","#info-panel-summary-extra",neuData,this.isInWorkspace); // neuron information table
    }
 
   /**

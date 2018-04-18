@@ -1,4 +1,16 @@
-define(['jquery','d3','app/overlay'],
+var loader = function(name, dependencies, definition) {
+  if (typeof module === 'object' && module && module.exports) {
+      dependencies = dependencies.map(require);
+      module.exports = definition.apply(context, dependencies);
+  } else if (typeof require === 'function') {
+    define(dependencies, definition);
+  } else {
+    window[name] = definition();
+  }
+};
+
+loader("SummaryTable"
+  ['jquery','d3','app/overlay'],
   function($,d3,Overlay)
 {
   /**

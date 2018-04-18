@@ -1,4 +1,16 @@
-define([
+var loader = function(name, dependencies, definition) {
+  if (typeof module === 'object' && module && module.exports) {
+      dependencies = dependencies.map(require);
+      module.exports = definition.apply(context, dependencies);
+  } else if (typeof require === 'function') {
+    define(dependencies, definition);
+  } else {
+    window[name] = definition();
+  }
+};
+
+loader("ConnSVG",
+  [
 	'jquery',
 	'd3',
 	'app/info_panel/pre_process'],
