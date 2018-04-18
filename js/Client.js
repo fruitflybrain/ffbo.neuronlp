@@ -12,7 +12,7 @@ if( moduleExporter === undefined){
   };
 }
 
-moduleExporter("ClientSession", ["autobahn", "PropertyManager"], function(autobahn, PropertyManager){
+moduleExporter("FFBOClient", ["autobahn", "PropertyManager"], function(autobahn, PropertyManager){
   // NA server crossbar id
   naServerID = undefined;
   // NLP server crossbar id
@@ -96,9 +96,9 @@ moduleExporter("ClientSession", ["autobahn", "PropertyManager"], function(autoba
   }
 
 
-  function ClientSession() {
+  function FFBOClient() {
     /**
-     * This is the ClientSession object that holds client session
+     * This is the FFBOClient object that holds client session
      */
 
     // Autobahn Session
@@ -119,17 +119,17 @@ moduleExporter("ClientSession", ["autobahn", "PropertyManager"], function(autoba
   }
 
   // Should be overloaded by application
-  ClientSession.prototype.receiveCommand = function(message){}
+  FFBOClient.prototype.receiveCommand = function(message){}
 
   // Should be overloaded by application
-  ClientSession.prototype.notifySuccess = function(message){}
+  FFBOClient.prototype.notifySuccess = function(message){}
 
   // Should be overloaded by application
-  ClientSession.prototype.notifyError = function(message){}
+  FFBOClient.prototype.notifyError = function(message){}
 
 
 
-  ClientSession.prototype.executeNLPquery = function (query, callbacks, format) {
+  FFBOClient.prototype.executeNLPquery = function (query, callbacks, format) {
     /**
      * Sends natrual language query to NLP Server.
      * If successfully interpreted by NLP modele,
@@ -162,7 +162,7 @@ moduleExporter("ClientSession", ["autobahn", "PropertyManager"], function(autoba
     return queryID;
   }
 
-  ClientSession.prototype.executeNAquery = function (msg, callbacks, format, queryID){
+  FFBOClient.prototype.executeNAquery = function (msg, callbacks, format, queryID){
     /**
      * Sends a standard command to NA; allows for custom callbacks and calls.
      * msg should be an object with query field mandatory. The query should
@@ -226,7 +226,7 @@ moduleExporter("ClientSession", ["autobahn", "PropertyManager"], function(autoba
 
   /* Helper functions to generate commonly used NA queries */
 
-  ClientSession.prototype.connectivityQuery = function(){
+  FFBOClient.prototype.connectivityQuery = function(){
     /**
      * Query to retrieve Connectivity Data
      */
@@ -249,7 +249,7 @@ moduleExporter("ClientSession", ["autobahn", "PropertyManager"], function(autoba
   }
 
 
-  ClientSession.prototype.addByUnameQuery = function(uname){
+  FFBOClient.prototype.addByUnameQuery = function(uname){
     /**
      * Query to add a neuron by its name.
      */
@@ -264,7 +264,7 @@ moduleExporter("ClientSession", ["autobahn", "PropertyManager"], function(autoba
     };
   }
 
-  ClientSession.prototype.removeByUnameQuery = function(uname){
+  FFBOClient.prototype.removeByUnameQuery = function(uname){
     /**
      * Query to remove a neuron by its name.
      */
@@ -279,7 +279,7 @@ moduleExporter("ClientSession", ["autobahn", "PropertyManager"], function(autoba
     };
   }
 
-  ClientSession.prototype.addSynapseByUnameQuery = function(uname){
+  FFBOClient.prototype.addSynapseByUnameQuery = function(uname){
     /**
      * Query to add a Synapse by its name.
      */
@@ -294,7 +294,7 @@ moduleExporter("ClientSession", ["autobahn", "PropertyManager"], function(autoba
     };
   }
 
-  ClientSession.prototype.removeSynapseByUnameQuery = function(uname){
+  FFBOClient.prototype.removeSynapseByUnameQuery = function(uname){
     /**
      * Query to remove a Synapse by its name.
      */
@@ -309,7 +309,7 @@ moduleExporter("ClientSession", ["autobahn", "PropertyManager"], function(autoba
     };
   }
 
-  ClientSession.prototype.retrieveNeuronQuery = function(key, value, session) {
+  FFBOClient.prototype.retrieveNeuronQuery = function(key, value, session) {
     /**
      *Query to retrieve a single neuron based on a key-value pair (key could be rid or vfb_id or uname)
      */
@@ -325,7 +325,7 @@ moduleExporter("ClientSession", ["autobahn", "PropertyManager"], function(autoba
   }
 
 
-  ClientSession.prototype.createTagQuery = function(tag_name, metadata, settings, keywords, decription){
+  FFBOClient.prototype.createTagQuery = function(tag_name, metadata, settings, keywords, decription){
     msg = {
       tag: tag_name,
       metadata: metadata,
@@ -337,21 +337,21 @@ moduleExporter("ClientSession", ["autobahn", "PropertyManager"], function(autoba
     return msg
   }
 
-  ClientSession.prototype.retrieveTagQuery = function(tag_name){
+  FFBOClient.prototype.retrieveTagQuery = function(tag_name){
     return {
       tag: tag_name,
       uri: 'ffbo.na.retrieve_tag'
     }
   }
 
-  ClientSession.prototype.neuronInfoQuery = function(rid){
+  FFBOClient.prototype.neuronInfoQuery = function(rid){
     return {
       id: rid,
       uri: 'ffbo.na.get_data'
     }
   }
 
-  ClientSession.prototype.synapseInfoQuery = function(rid){
+  FFBOClient.prototype.synapseInfoQuery = function(rid){
     return {
       id: rid,
       uri: 'ffbo.na.get_syn_data'
@@ -359,7 +359,7 @@ moduleExporter("ClientSession", ["autobahn", "PropertyManager"], function(autoba
   }
 
 
-  ClientSession.prototype.startConnection = function(authid, key, url) {
+  FFBOClient.prototype.startConnection = function(authid, key, url) {
     function onchallenge(session, method, extra) {
       if (method === "wampcra") {
 	salted_key = autobahn.auth_cra.derive_key(
@@ -442,5 +442,5 @@ moduleExporter("ClientSession", ["autobahn", "PropertyManager"], function(autoba
     // Finally, open the connection
     connection.open();
   }
-  return ClientSession;
+  return FFBOClient;
 });
