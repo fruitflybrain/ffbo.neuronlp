@@ -41,28 +41,35 @@
   ClientSession.prototype.notifyError = function(message){}
 
   ClientSession.prototype.onSuccessCallback = function(result, queryID, callback){
+    if( !(typeof result == "object") || (result==undefined) ) {
+      if( queryID != undefined) this.status[queryID] = -1; //Error
+      return;
+    }
     try{
-      if(typeof(result) == "object" && 'info' in result && 'success' in result.info){
-	if( queryID !== undefined) this.status[queryID] = 1; //Success
+      if('info' in result && 'success' in result.info){
+	if( queryID != undefined) this.status[queryID] = 1; //Success
 	this.notifySuccess(result['info']['success']);
       }
-      if(typeof(result) == "object" && 'info' in result && 'error' in result.info){
+      if('info' in result && 'error' in result.info){
 	this.notifyError(result['info']['success'])
-	if( queryID !== undefined) this.status[queryID] = -1; //Error
+	if( queryID != undefined) this.status[queryID] = -1; //Error
       }
     }
     catch(err){
     }
-    if( 'data' in result ) callback(result.data);
+    if( typeof result == 'object' && result!= undefined  && 'data' in result )
+      if( callback != undefined) callback(result.data);
   }
 
   ClientSession.prototype.onProgressCallback = function(progress, queryID, callback){
-    callback(progress);
+    if( callback != undefined)
+      callback(progress);
   }
 
   ClientSession.prototype.onErrorCallback = function(err, queryID, callback){
-    if( queryID !== undefined) this.status[queryID] = -1; //Error
-    callback(err);
+    if( queryID != undefined) this.status[queryID] = -1; //Error
+    if( callback != undefined)
+      callback(err);
     this.notifyError(err.args[0]);
   }
 
@@ -80,25 +87,25 @@
     if(serverInfo.hasOwnProperty(0))
       serverInfo = serverInfo[0];
     if( typeof(serverInfo)=="object" && 'na' in serverInfo ){
-      if( this.naServerID !== undefined && !(this.naServerID in serverInfo.na ))
+      if( this.naServerID != undefined && !(this.naServerID in serverInfo.na ))
 	this.naServerID = undefined
       if( this.naServerID == undefined && Object.keys(serverInfo.na).length )
 	this.naServerID = Object.keys(serverInfo.na)[0]
     }
     if( typeof(serverInfo)=="object" && 'nlp' in serverInfo ){
-      if( this.nlpServerID !== undefined && !(this.nlpServerID in serverInfo.nlp ))
+      if( this.nlpServerID != undefined && !(this.nlpServerID in serverInfo.nlp ))
 	this.nlpServerID = undefined
       if( this.nlpServerID == undefined && Object.keys(serverInfo.nlp).length )
 	this.nlpServerID = Object.keys(serverInfo.nlp)[0]
     }
     if( typeof(serverInfo)=="object" && 'nk' in serverInfo ){
-      if( this.nkServerID !== undefined && !(this.nkServerID in serverInfo.nk ))
+      if( this.nkServerID != undefined && !(this.nkServerID in serverInfo.nk ))
 	this.nkServerID = undefined
       if( this.nkServerID == undefined && Object.keys(serverInfo.nk).length )
 	this.nkServerID = Object.keys(serverInfo.nk)[0]
     }
     if( typeof(serverInfo)=="object" && 'ep' in serverInfo ){
-      if( this.epServerID !== undefined && !(this.epServerID in serverInfo.ep ))
+      if( this.epServerID != undefined && !(this.epServerID in serverInfo.ep ))
 	this.epServerID = undefined
       if( this.epServerID == undefined && Object.keys(serverInfo.ep).length )
 	this.epServerID = Object.keys(serverInfo.ep)[0]
@@ -147,13 +154,11 @@
       return null;
     }
     uri = (msg.uri || "ffbo.na.query") + "." + this.naServerID;
-    callbacks = callbacks || {success: function(data){},
-			      error: function(data){}};;
-
+    callbacks = callbacks || {};
     queryID = queryID || this.guidGenerator();
     msg.queryID = queryID;
     if( !('threshold' in msg) ) msg.threshold = this.threshold
-    if( format !== undefined ) {msg.format = format}
+    if( format != undefined ) {msg.format = format}
     if( 'progress' in callbacks ){
       this.session.call(uri, [msg], {}, {receive_progress: true}).then(
 	 (function(result){
@@ -306,9 +311,9 @@
       metadata: metadata,
       uri: 'ffbo.na.create_tag'
     }
-    if( settings !== undefined) msg['settings'] = settings;
-    if( keywords !== undefined) msg['keywords'] = settings;
-    if( description !== undefined) msg['description'] = settings;
+    if( settings != undefined) msg['settings'] = settings;
+    if( keywords != undefined) msg['keywords'] = settings;
+    if( description != undefined) msg['description'] = settings;
     return msg
   }
 
