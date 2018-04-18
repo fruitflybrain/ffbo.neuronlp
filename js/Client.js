@@ -195,7 +195,7 @@
       setTimeout((function(){
 	delete this.status[e['prop']];
       }).bind(this), 10000);}).bind(this), queryID);
-    
+
     return queryID;
   }
 
