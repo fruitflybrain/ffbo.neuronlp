@@ -46,17 +46,18 @@
       return;
     }
     try{
-      if('info' in result && 'success' in result.info){
-	if( queryID != undefined) this.status[queryID] = 1; //Success
-	this.notifySuccess(result['info']['success']);
-      }
       if('info' in result && 'error' in result.info){
 	this.notifyError(result['info']['success'])
 	if( queryID != undefined) this.status[queryID] = -1; //Error
+	return;
       }
+      if('info' in result && 'success' in result.info)
+	this.notifySuccess(result['info']['success']);
     }
     catch(err){
     }
+    if( queryID != undefined) this.status[queryID] = 1; //Success
+
     if( typeof result == 'object' && result!= undefined  && 'data' in result )
       if( callback != undefined) callback(result.data);
   }
@@ -124,6 +125,7 @@
     }
     uri = 'ffbo.nlp.query.' + this.nlpServerID;
     queryID = this.guidGenerator()
+    this.status[queryID] = 0;
     this.session.call(uri , [query, this.language] ).then(
        (function(res){
 	 if( typeof(res) == "object" && Object.keys(res).length ){
@@ -132,11 +134,13 @@
 	 }
 	 else{
 	   this.notifyError("NLP module did not understand the query");
+	   this.status[queryID] = -1;
 	 }
 
        }).bind(this),
        function(err){
 	 this.notifyError(err);
+	 this.status[queryID] = -1;
        }
     );
     return queryID;
