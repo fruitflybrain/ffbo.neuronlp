@@ -1,46 +1,28 @@
-//define(["autobahn", "PropertyManager"], function(autobahn, PropertyManager){
-  function ClientSession() {
-    /**
-     * This is the ClientSession object that holds client session
-     */
+// Adapted from https://stackoverflow.com/a/30538574
+if( moduleExporter === undefined){
+  var moduleExporter = function(name, dependencies, definition) {
+    if (typeof module === 'object' && module && module.exports) {
+      dependencies = dependencies.map(require);
+      module.exports = definition.apply(context, dependencies);
+    } else if (typeof require === 'function') {
+      define(dependencies, definition);
+    } else {
+      window[name] = eval("definition(" + dependencies.toString() + ")");
+    }
+  };
+}
 
-    // Autobahn Session
-    this.session = undefined;
-    this.loginStatus = new PropertyManager(
-       {
-	 username: "",
-	 connected: false,
-	 sessionID: undefined,
-       });
+moduleExporter("ClientSession", ["autobahn", "PropertyManager"], function(autobahn, PropertyManager){
+  // NA server crossbar id
+  naServerID = undefined;
+  // NLP server crossbar id
+  nlpServerID = undefined;
+  // EP server crossbar id
+  epServerID = undefined;
+  // nk server crossbar id
+  nkServerID = undefined;
 
-
-    // NA server crossbar id
-    this.naServerID = undefined;
-    // NLP server crossbar id
-    this.nlpServerID = undefined;
-    // EP server crossbar id
-    this.epServerID = undefined;
-    // nk server crossbar id
-    this.nkServerID = undefined;
-
-    // Threshold for chunking data
-    this.threshold = 20;
-    // Language for NLP queries
-    this.language = "en";
-
-    this.status = new PropertyManager();
-  }
-
-  // Should be overloaded by application
-  ClientSession.prototype.receiveCommand = function(message){}
-
-  // Should be overloaded by application
-  ClientSession.prototype.notifySuccess = function(message){}
-
-  // Should be overloaded by application
-  ClientSession.prototype.notifyError = function(message){}
-
-  ClientSession.prototype.onSuccessCallback = function(result, queryID, callback){
+  onSuccessCallback = function(result, queryID, callback){
     if( !(typeof result == "object") || (result==undefined) ) {
       if( queryID != undefined) this.status[queryID] = -1; //Error
       return;
@@ -62,56 +44,90 @@
       if( callback != undefined) callback(result.data);
   }
 
-  ClientSession.prototype.onProgressCallback = function(progress, queryID, callback){
+  onProgressCallback = function(progress, queryID, callback){
     if( callback != undefined)
       callback(progress);
   }
 
-  ClientSession.prototype.onErrorCallback = function(err, queryID, callback){
+  onErrorCallback = function(err, queryID, callback){
     if( queryID != undefined) this.status[queryID] = -1; //Error
     if( callback != undefined)
       callback(err);
     this.notifyError(err.args[0]);
   }
 
-  ClientSession.prototype.guidGenerator = function() {
-    var S4 = function() {
-      return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
-    };
-    return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
-  }
-
-  ClientSession.prototype.updateServers = function(serverInfo){
+  updateServers = function(serverInfo){
     /** Update the Crossbar Session IDs of servers
      *  If current server drops, switched to a new server if available
      */
     if(serverInfo.hasOwnProperty(0))
       serverInfo = serverInfo[0];
     if( typeof(serverInfo)=="object" && 'na' in serverInfo ){
-      if( this.naServerID != undefined && !(this.naServerID in serverInfo.na ))
-	this.naServerID = undefined
-      if( this.naServerID == undefined && Object.keys(serverInfo.na).length )
-	this.naServerID = Object.keys(serverInfo.na)[0]
+      if( naServerID != undefined && !(naServerID in serverInfo.na ))
+	naServerID = undefined
+      if( naServerID == undefined && Object.keys(serverInfo.na).length )
+	naServerID = Object.keys(serverInfo.na)[0]
     }
     if( typeof(serverInfo)=="object" && 'nlp' in serverInfo ){
-      if( this.nlpServerID != undefined && !(this.nlpServerID in serverInfo.nlp ))
-	this.nlpServerID = undefined
-      if( this.nlpServerID == undefined && Object.keys(serverInfo.nlp).length )
-	this.nlpServerID = Object.keys(serverInfo.nlp)[0]
+      if( nlpServerID != undefined && !(nlpServerID in serverInfo.nlp ))
+	nlpServerID = undefined
+      if( nlpServerID == undefined && Object.keys(serverInfo.nlp).length )
+	nlpServerID = Object.keys(serverInfo.nlp)[0]
     }
     if( typeof(serverInfo)=="object" && 'nk' in serverInfo ){
-      if( this.nkServerID != undefined && !(this.nkServerID in serverInfo.nk ))
-	this.nkServerID = undefined
-      if( this.nkServerID == undefined && Object.keys(serverInfo.nk).length )
-	this.nkServerID = Object.keys(serverInfo.nk)[0]
+      if( nkServerID != undefined && !(nkServerID in serverInfo.nk ))
+	nkServerID = undefined
+      if( nkServerID == undefined && Object.keys(serverInfo.nk).length )
+	nkServerID = Object.keys(serverInfo.nk)[0]
     }
     if( typeof(serverInfo)=="object" && 'ep' in serverInfo ){
-      if( this.epServerID != undefined && !(this.epServerID in serverInfo.ep ))
-	this.epServerID = undefined
-      if( this.epServerID == undefined && Object.keys(serverInfo.ep).length )
-	this.epServerID = Object.keys(serverInfo.ep)[0]
+      if( epServerID != undefined && !(epServerID in serverInfo.ep ))
+	epServerID = undefined
+      if( epServerID == undefined && Object.keys(serverInfo.ep).length )
+	epServerID = Object.keys(serverInfo.ep)[0]
     }
   }
+
+  guidGenerator = function() {
+    var S4 = function() {
+      return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+    };
+    return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+  }
+
+
+  function ClientSession() {
+    /**
+     * This is the ClientSession object that holds client session
+     */
+
+    // Autobahn Session
+    this.session = undefined;
+    this.loginStatus = new PropertyManager(
+       {
+	 username: "",
+	 connected: false,
+	 sessionID: undefined,
+       });
+
+    // Threshold for chunking data
+    this.threshold = 20;
+    // Language for NLP queries
+    this.language = "en";
+
+    this.status = new PropertyManager();
+  }
+
+  // Should be overloaded by application
+  ClientSession.prototype.receiveCommand = function(message){}
+
+  // Should be overloaded by application
+  ClientSession.prototype.notifySuccess = function(message){}
+
+  // Should be overloaded by application
+  ClientSession.prototype.notifyError = function(message){}
+
+
 
   ClientSession.prototype.executeNLPquery = function (query, callbacks, format) {
     /**
@@ -119,12 +135,12 @@
      * If successfully interpreted by NLP modele,
      * sends NA query to NA server.
      */
-    if( this.nlpServerID === undefined ){
+    if( nlpServerID === undefined ){
       this.notifyError( "NLP Server not available" );
       return null;
     }
-    uri = 'ffbo.nlp.query.' + this.nlpServerID;
-    queryID = this.guidGenerator()
+    uri = 'ffbo.nlp.query.' + nlpServerID;
+    queryID = guidGenerator()
     this.status[queryID] = 0;
     this.session.call(uri , [query, this.language] ).then(
        (function(res){
@@ -153,26 +169,26 @@
      * be represented in NeuroArch JSON format. Optional fields include
      * format, threshold, temp, verb
      */
-    if( this.naServerID === undefined ){
+    if( naServerID === undefined ){
       this.notifyError( "Neuroarch Server not available" );
       return null;
     }
-    uri = (msg.uri || "ffbo.na.query") + "." + this.naServerID;
+    uri = (msg.uri || "ffbo.na.query") + "." + naServerID;
     callbacks = callbacks || {};
-    queryID = queryID || this.guidGenerator();
+    queryID = queryID || guidGenerator();
     msg.queryID = queryID;
     if( !('threshold' in msg) ) msg.threshold = this.threshold
     if( format != undefined ) {msg.format = format}
     if( 'progress' in callbacks ){
       this.session.call(uri, [msg], {}, {receive_progress: true}).then(
 	 (function(result){
-	   this.onSuccessCallback(result, queryID, callbacks.success);
+	   onSuccessCallback.bind(this)(result, queryID, callbacks.success);
 	 }).bind(this),
 	 (function(err){
-	   this.onErrorCallback(err, queryID, callbacks.error);
+	   onErrorCallback.bind(this)(err, queryID, callbacks.error);
 	 }).bind(this),
 	 (function(progress){
-	   this.onProgressCallback(progress, queryID, callbacks.progress);
+	   onProgressCallback.bind(this)(progress, queryID, callbacks.progress);
 	 }).bind(this));
     }
     else{
@@ -180,22 +196,22 @@
       if (format == undefined || format == 'morphology'){
 	this.session.call(uri, [msg], {}, {receive_progress: true}).then(
 	   (function(result){
-	     this.onSuccessCallback(result, queryID, callbacks.success);
+	     onSuccessCallback.bind(this)(result, queryID, callbacks.success);
 	   }).bind(this),
 	   (function(err){
-	     this.onErrorCallback(err, queryID, callbacks.error);
+	     onErrorCallback.bind(this)(err, queryID, callbacks.error);
 	   }).bind(this),
 	   (function(progress){
-	     this.onProgressCallback(progress, queryID, callbacks.success);
+	     onProgressCallback.bind(this)(progress, queryID, callbacks.success);
 	   }).bind(this));
       }
       else{
 	this.session.call(uri, [msg], {}).then(
 	   (function(result){
-	     this.onSuccessCallback(result, queryID, callbacks.success);
+	     onSuccessCallback.bind(this)(result, queryID, callbacks.success);
 	   }).bind(this),
 	   (function(err){
-	     this.onErrorCallback(err, queryID, callbacks.error);
+	     onErrorCallback.bind(this)(err, queryID, callbacks.error);
 	   }).bind(this));
       }
     }
@@ -379,7 +395,7 @@
       );
 
       session.register("ffbo.ui.receive_msg." + session.id, ( function (args) {
-	this.onSuccessCallback(args[0], null, function(){});
+	onSuccessCallback.bind(this)(args[0], null, function(){});
       } ).bind(this)).then(
 	 function(reg) {},
 	 function(err) {
@@ -387,7 +403,7 @@
 	 }
       );
 
-      session.subscribe("ffbo.server.update", this.updateServers.bind(this)).then(
+      session.subscribe("ffbo.server.update", updateServers).then(
 	 function(sub) {},
 	 function(err) {
            console.log("failed to subscribe to server update", err);
@@ -396,7 +412,7 @@
 
       session.call("ffbo.processor.server_information").then(
 	 ( function(res){
-	   this.updateServers([res]);
+	   updateServers([res]);
 	 } ).bind(this),
 	 function(err) {
            console.log("server retrieval error:", err);
@@ -417,15 +433,14 @@
       this.loginStatus.connected = false;
       this.loginStatus.sessionID = undefined;
       this.loginStatus.username = undefined;
-      this.naServerID = undefined;
-      this.nkServerID = undefined;
-      this.nlpServerID = undefined;
-      this.epServerID = undefined;
+      naServerID = undefined;
+      nkServerID = undefined;
+      nlpServerID = undefined;
+      epServerID = undefined;
     }).bind(this);
 
     // Finally, open the connection
     connection.open();
   }
-/*
   return ClientSession;
-}*/
+});

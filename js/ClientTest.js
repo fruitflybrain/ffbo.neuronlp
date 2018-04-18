@@ -1,4 +1,4 @@
-clientSession = new ClientSession();
+clientSession = new FFBOClient();
 clientSession.startConnection("guest", "guestpass", "wss://neuronlp.fruitflybrain.org:8888/ws")
 
 clientSession.notifySuccess = function(message){
