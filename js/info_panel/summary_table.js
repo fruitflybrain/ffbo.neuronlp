@@ -1,15 +1,17 @@
-var loader = function(name, dependencies, definition) {
-  if (typeof module === 'object' && module && module.exports) {
+// Adapted from https://stackoverflow.com/a/30538574                                                                                                                                                                                  
+if( moduleExporter === undefined){
+  var moduleExporter = function(name, dependencies, definition) {
+    if (typeof module === 'object' && module && module.exports) {
       dependencies = dependencies.map(require);
       module.exports = definition.apply(context, dependencies);
-  } else if (typeof require === 'function') {
-    define(dependencies, definition);
-  } else {
-    window[name] = definition();
-  }
-};
-
-loader("SummaryTable"
+    } else if (typeof require === 'function') {
+      define(dependencies, definition);
+    } else {
+      window[name] = eval("definition(" + dependencies.toString() + ")");
+    }
+  };
+}
+moduleExporter("SummaryTable",
   ['jquery','d3','app/overlay'],
   function($,d3,Overlay)
 {
@@ -33,6 +35,17 @@ loader("SummaryTable"
     this.remove()
     this.create(data);
   }
+
+
+  /**
+   * Update Summary Information 
+   */
+  Summary.prototype.update = function(data){
+    this.remove();
+    this.create(data);
+  }
+
+
 
   /**
    * Summary Information Remove
@@ -193,10 +206,6 @@ loader("SummaryTable"
   }
 
 
-  Summary.prototype.update = function(data){
-    this.remove();
-    this.create(data);
-  }
 
 
 

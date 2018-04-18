@@ -1,15 +1,17 @@
-var loader = function(name, dependencies, definition) {
-  if (typeof module === 'object' && module && module.exports) {
+// Adapted from https://stackoverflow.com/a/30538574                                                                                                                                                                                  
+if( moduleExporter === undefined){
+  var moduleExporter = function(name, dependencies, definition) {
+    if (typeof module === 'object' && module && module.exports) {
       dependencies = dependencies.map(require);
       module.exports = definition.apply(context, dependencies);
-  } else if (typeof require === 'function') {
-    define(dependencies, definition);
-  } else {
-    window[name] = definition();
-  }
-};
-
-loader("preprocess",[],function(){
+    } else if (typeof require === 'function') {
+      define(dependencies, definition);
+    } else {
+      window[name] = eval("definition(" + dependencies.toString() + ")");
+    }
+  };
+}
+moduleExporter("preprocess",[],function(){
   /** 
    * Preprocess data for Synaptic plot
    */

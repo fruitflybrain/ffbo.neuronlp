@@ -1,17 +1,18 @@
-var loader = function(name, dependencies, definition) {
-  if (typeof module === 'object' && module && module.exports) {
+// Adapted from https://stackoverflow.com/a/30538574                                                                                                                                                                                  
+if( moduleExporter === undefined){
+  var moduleExporter = function(name, dependencies, definition) {
+    if (typeof module === 'object' && module && module.exports) {
       dependencies = dependencies.map(require);
       module.exports = definition.apply(context, dependencies);
-  } else if (typeof require === 'function') {
-    define(dependencies, definition);
-  } else {
-    window[name] = definition();
-  }
-};
-
-loader("ConnTable"
-  [
-	'jquery',
+    } else if (typeof require === 'function') {
+      define(dependencies, definition);
+    } else {
+      window[name] = eval("definition(" + dependencies.toString() + ")");
+    }
+  };
+}
+moduleExporter("ConnTable",
+  ['jquery',
 	'd3',
 	'app/info_panel/pre_process'],
   function(
@@ -37,10 +38,18 @@ loader("ConnTable"
   }
 
   /**
-  * Update synpatic reference and table
+  * remove synpatic reference and table
+  */
+  ConnTable.prototype.update = function(data){
+    this.remove();
+    this.create(data);
+  }
+
+  /**
+  * remove synpatic reference and table
   */
   ConnTable.prototype.remove = function(data){
-    $(this.div_id).html("");
+    $(this.divId).html("");
   }
   /**
   * Update synpatic reference and table
