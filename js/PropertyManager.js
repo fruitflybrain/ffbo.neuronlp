@@ -34,8 +34,9 @@ moduleExporter("PropertyManager",[], function() {
 
       try{
         if(value.hasOwnProperty('_PropMan'))
-          value._PropMan_parent = {'prop': prop,
-                                   'obj':obj};
+          if(value._PropMan_parent === undefined)
+            value._PropMan_parent = {'prop': prop,
+                                     'obj':obj};
       }
       catch(err){}
 
@@ -86,6 +87,9 @@ moduleExporter("PropertyManager",[], function() {
           }
           catch(err) {console.log(err);}
         });
+      if(obj[prop].hasOwnProperty('_PropMan'))
+        if(obj[prop]._PropMan_parent !== undefined)
+          obj[prop]._PropMan_parent = undefined
       delete obj[prop];
       return true;
     },
