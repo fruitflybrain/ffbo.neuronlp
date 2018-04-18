@@ -1,0 +1,21 @@
+{
+   "success":{
+      "data":{
+         "synapse_details_1":{
+            "Data Source":[
+               "Janelia Medulla Connectome"
+            ],
+            "name":"L1_Mi1",
+            "Synapse Locations":{
+               "M5":46,
+               "M4":8,
+               "M1":95,
+               "M2":4
+            },
+            "N":153,
+            "uname":"L1-A--Mi1-A",
+            "class":"Synapse"
+         }
+      }
+   }
+}

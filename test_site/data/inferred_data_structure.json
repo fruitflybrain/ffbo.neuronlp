@@ -1,0 +1,182 @@
+{
+   "success":{
+      "data":{
+         "arborization_data":{
+            "dendrites":{
+               "OG":46
+            },
+            "axons":{
+               "LOB":91
+            }
+         },
+         "summary_1":{
+            "Data Source":[
+               "FlyCircuit"
+            ],
+            "name":"Gad1-F-200292",
+            "locality":false,
+            "flycircuit_data":{
+               "Lineage":"",
+               "Similar neurons":[
+                  {
+                     "r":"77.01%",
+                     "Name":"Cha-F-200400",
+                     "img":"/flycircuitSourceData/NeuronData/Cha-F-200400/Cha-F-200400_lsm.png",
+                     "pValue":"2.2e-16"
+                  },
+                  {
+                     "r":"76.67%",
+                     "Name":"Gad1-F-800219",
+                     "img":"/flycircuitSourceData/NeuronData/Gad1-F-800219/Gad1-F-800219_lsm.png",
+                     "pValue":"2.2e-16"
+                  },
+                  {
+                     "r":"76.18%",
+                     "Name":"fru-F-100060",
+                     "img":"/flycircuitSourceData/NeuronData/fru-F-100060/fru-F-100060_lsm.png",
+                     "pValue":"2.2e-16"
+                  },
+                  {
+                     "r":"74.81%",
+                     "Name":"Gad1-F-200187",
+                     "img":"/flycircuitSourceData/NeuronData/Gad1-F-200187/Gad1-F-200187_lsm.png",
+                     "pValue":"2.2e-16"
+                  }
+               ],
+               "Name":"Gad1-F-200292",
+               "Author":"AS Chiang (2014-11-13)",
+               "Polarity(Table.txt)":"Dendrite:LOB,OG Axon:LOB",
+               "Putative neurotransmitter":"GABA",
+               "Driver":"Gad1-Gal4",
+               "Cell body neighborhood":[
+                  {
+                     "Distance":"0 um",
+                     "Name":"Gad1-F-200292",
+                     "img":"/flycircuitSourceData/NeuronData/Gad1-F-200292/Gad1-F-200292_lsm.png"
+                  },
+                  {
+                     "Distance":"1.83 um",
+                     "Name":"Gad1-F-400375",
+                     "img":"/flycircuitSourceData/NeuronData/Gad1-F-400375/Gad1-F-400375_lsm.png"
+                  },
+                  {
+                     "Distance":"4 um",
+                     "Name":"Gad1-F-700023",
+                     "img":"/flycircuitSourceData/NeuronData/Gad1-F-700023/Gad1-F-700023_lsm.png"
+                  },
+                  {
+                     "Distance":"4.11 um",
+                     "Name":"Gad1-F-000314",
+                     "img":"/flycircuitSourceData/NeuronData/Gad1-F-000314/Gad1-F-000314_lsm.png"
+                  }
+               ],
+               "Spatial Distribution":[
+               ],
+               "Gender/Age":"female / Adult 5~15 days",
+               "Images":{
+                  "Skeleton (download)":"/lib/img/flycircuit/Gad1-F-200292_lineset1.png",
+                  "Segmentation":"/lib/img/flycircuit/Gad1-F-200292_neuron.png",
+                  "Original confocal image (Animation)":"/lib/img/flycircuit/Gad1-F-200292_lsm.png"
+               },
+               "Soma Coordinate":"X: -223, Y: -123, Z: -4",
+               "Putative birth time":"day 2",
+               "Stock":""
+            },
+            "uname":"Gad1-F-200292",
+            "Transmitters":[
+               "gaba"
+            ],
+            "class":"Neuron"
+         },
+         "synaptic_info_1":{
+            "pre":[
+               {
+                  "vfb_id":"VFB_00007606",
+                  "name":"Cha-F-200081",
+                  "locality":false,
+                  "has_syn_morph":0,
+                  "N":1,
+                  "uname":"Cha-F-200081",
+                  "rid":"#465:1791",
+                  "class":"Neuron",
+                  "has_morph":1
+               },
+               {
+                  "vfb_id":"VFB_00014132",
+                  "name":"Trh-F-600018",
+                  "locality":true,
+                  "has_syn_morph":0,
+                  "N":1,
+                  "uname":"Trh-F-600018",
+                  "rid":"#465:9482",
+                  "class":"Neuron",
+                  "has_morph":1
+               },
+               {
+                  "name":"Cha-F-900048",
+                  "locality":false,
+                  "has_syn_morph":0,
+                  "N":1,
+                  "uname":"Cha-F-900048",
+                  "rid":"#465:4051",
+                  "class":"Neuron",
+                  "has_morph":1
+               }
+            ],
+            "description":"<h3>SPIN</h3><p>Inferred synaptic connections using axonic/dendritic polarity predicted by SPIN:Skeleton-based Polarity Identification for Neurons. Please refer to <br><a href=\"http://link.springer.com/article/10.1007/s12021-014-9225-6\" target=\"_blank\">SPIN: A Method of Skeleton-based Polarity Identification for Neurons. Neurinformatics 12:487-507. Yi-Hsuan Lee, Yen-Nan Lin, Chao-Chun Chuang and Chung-Chuan Lo (2014)</a> <br>for more details on the SPIN algorithm.</p>\n\n<p>The polarity determined by spin was used to predict synaptic connections based on when an axonic segment of a neuron is within a specified distance to a dendritic segment of another neuron after registering to a standard brain template.</p>\n",
+            "post_sum":{
+               "Cha":35.69844789356984,
+               "5HT1A":1.330376940133038,
+               "VGlut":27.93791574279379,
+               "Trh":3.325942350332594,
+               "fru":11.529933481152993,
+               "Tdc2":0.221729490022173,
+               "Gad1":19.955654101995567
+            },
+            "post_N":451,
+            "pre_N":211,
+            "pre_sum":{
+               "VGlut":13.744075829383887,
+               "Trh":4.739336492890995,
+               "Gad1":34.59715639810427,
+               "TH":3.791469194312796,
+               "Cha":43.127962085308056
+            },
+            "post":[
+               {
+                  "vfb_id":"VFB_00010504",
+                  "name":"Gad1-F-500020",
+                  "locality":false,
+                  "has_syn_morph":0,
+                  "N":1,
+                  "uname":"Gad1-F-500020",
+                  "rid":"#465:6444",
+                  "class":"Neuron",
+                  "has_morph":1
+               },
+               {
+                  "name":"Cha-F-000415",
+                  "locality":false,
+                  "has_syn_morph":0,
+                  "N":1,
+                  "uname":"Cha-F-000415",
+                  "rid":"#465:1124",
+                  "class":"Neuron",
+                  "has_morph":1
+               },
+               {
+                  "vfb_id":"VFB_00010215",
+                  "name":"VGlut-F-200413",
+                  "locality":false,
+                  "has_syn_morph":0,
+                  "N":1,
+                  "uname":"VGlut-F-200413",
+                  "rid":"#465:11173",
+                  "class":"Neuron",
+                  "has_morph":1
+               }
+            ]
+         }
+      }
+   }
+}

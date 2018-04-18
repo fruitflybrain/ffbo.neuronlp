@@ -1,0 +1,104 @@
+{
+   "success":{
+      "data":{
+         "class":"Neuron",
+         "arborization":{}, // ? where does this go?
+         "summary":{
+            "Data Source":[],
+            "name":"Gad1-F-200292",
+            "locality":false,   // if it's local neuron
+            "flycircuit_data":{},
+            "uname":"Gad1-F-200292",
+            "Expresses":[],    // whether if it expresses a gene, e.g. fruitless
+            "Transgenic Lines": [],  // e.g. GAL4
+            "Transmitters":[], // 
+            "Synapse Locations":[]
+         },
+         "connnectivity":{
+            "description":"<h3>SPIN</h3><p>Inferred synaptic connections using axonic/dendritic polarity predicted by SPIN:Skeleton-based Polarity Identification for Neurons. Please refer to <br><a href=\"http://link.springer.com/article/10.1007/s12021-014-9225-6\" target=\"_blank\">SPIN: A Method of Skeleton-based Polarity Identification for Neurons. Neurinformatics 12:487-507. Yi-Hsuan Lee, Yen-Nan Lin, Chao-Chun Chuang and Chung-Chuan Lo (2014)</a> <br>for more details on the SPIN algorithm.</p>\n\n<p>The polarity determined by spin was used to predict synaptic connections based on when an axonic segment of a neuron is within a specified distance to a dendritic segment of another neuron after registering to a standard brain template.</p>\n",
+            "pre":{
+               "summary":{
+                  "N": 100,
+                  "profile": {               
+                     "VGlut":13.744075829383887,
+                     "Trh":4.739336492890995,
+                     "Gad1":34.59715639810427,
+                     "TH":3.791469194312796,
+                     "Cha":43.127962085308056
+                  },
+               },
+               "details":[
+                  { // inferred 
+                     "vfb_id":"VFB_00007606",
+                     "name":"Cha-F-200081",
+                     "locality":false,
+                     "has_syn_morph":0,
+                     "N":1,
+                     "uname":"Cha-F-200081",
+                     "rid":"#465:1791",
+                     "class":"Neuron",
+                     "has_morph":1
+                  },
+                  { // EM data - neuron & connector if has morph
+                     "name":"Mi4",
+                     "janelia_id":"44524",
+                     "has_syn_morph":0,
+                     "N":1,
+                     "uname":"Mi4",
+                     "rid":"#465:210",
+                     "class":"Neuron",
+                     "has_morph":1
+                  },
+                  { // EM data - ?
+                     "name":"Pm4_6",
+                     "syn_rid":"#474:21",
+                     "has_syn_morph":1,
+                     "N":1,
+                     "uname":"Pm4-6",
+                     "syn_uname":"Pm4-6--Mi1-A",
+                     "rid":"#465:400",
+                     "class":"Neuron",
+                     "has_morph":1
+                  }
+               ],
+            },
+            "post":{
+               "summary":{
+                  "N": 100,
+                  "profile": {               
+                     "VGlut":13.744075829383887,
+                     "Trh":4.739336492890995,
+                     "Gad1":34.59715639810427,
+                     "TH":3.791469194312796,
+                     "Cha":43.127962085308056
+                  },
+               },
+               "details":[
+                  {
+                     "vfb_id":"VFB_00007606",
+                     "name":"Cha-F-200081",
+                     "locality":false,
+                     "has_syn_morph":0,
+                     "N":1,
+                     "uname":"Cha-F-200081",
+                     "rid":"#465:1791",
+                     "class":"Neuron",
+                     "has_morph":1
+                  },
+                  {
+                     "vfb_id":"VFB_00014132",
+                     "name":"Trh-F-600018",
+                     "locality":true,
+                     "has_syn_morph":0,
+                     "N":1,
+                     "uname":"Trh-F-600018",
+                     "rid":"#465:9482",
+                     "class":"Neuron",
+                     "has_morph":1
+                  }
+               ],
+            }
+         }
+      }
+   }
+}
