@@ -1,13 +1,66 @@
-define(['d3','jquery'],function(d3,$){
+var loader = function(name, dependencies, definition) {
+  if (typeof module === 'object' && module && module.exports) {
+      dependencies = dependencies.map(require);
+      module.exports = definition.apply(context, dependencies);
+  } else if (typeof require === 'function') {
+    define(dependencies, definition);
+  } else {
+    window[name] = definition();
+  }
+};
+
+loader("ConnSVG",
+  [
+	'jquery',
+	'd3',
+	'app/info_panel/pre_process'],
+  function(
+  	$,
+  	d3,
+  	preprocess)
+{
+  // const svgWrapperId = "#svg-syn";
+  // const synProfileInfoWrapperId =  "#syn-profile-info";  
+  // const synProfileTextId =  "#syn-reference-text"; 
+
+  function ConnSVG(div_id,data){
+    this.divId = div_id;  // wrapper
+    this.tabId = "#info-panel-conn-table";  // table 
+    this.tabTextId = "#info-panel-conn-table-text";  // table 
+    this.svgId = "#info-panel-conn-svg";  // svg
+
+    this.remove();
+    this.create(data);
+    this.resize();
+  }
+
+  /** 
+   * Remove SVG
+   */
+  ConnSVG.prototype.remove = function(){
+    $(this.divId).html(""); // purge result
+  }
+
   /** 
    * Plot Synaptic Concentration Profile
    */
-  function generateSynProfile(d){
-    // verify data integrity
-    if(!('pre_sum' in data && 'post_sum' in data)) 
-      return;
-    var data = preprocessSynProfileData(d);
+  ConnSVG.prototype.create = function(data){
+    this.tableText = '<tr><td>Synaptic Profile Plot</td><td id="' + this.tabTextId.slice(1) + '" class="syn-reference">Click on/Hover over plot to extract detailed synaptic information</td></tr>';
+    // purge div and add table
+    $(this.divId).html("");
+    innerhtml = "";
+    innerhtml += '<table id="' + this.tabId.slice(1) + '" class="table table-inverse table-custom-striped">';
+    innerhtml += '<tbody>' + this.tableText.slice(1) + '</tbody>';
+    innerhtml += '</table>';  // table 
+    $(this.divId).html(innerhtml);
 
+    // verify data integrity
+    if(!('pre_sum' in data && 'post_sum' in data)){ 
+      return;
+    }
+    
+    // preprocess data
+    var data = preprocess.preprocessSynProfileData(data);
 
     // extract data
     var pre_sum = data['pre_sum'];    // presynaptic summary (in percentage)
@@ -17,12 +70,12 @@ define(['d3','jquery'],function(d3,$){
 
     // Total dimension for entire SVG div
     var height_tot = 150;
-    var width_tot = $("#syn-profile-svg").getBoundingClientRect().width;
-
+    var width_tot = $(this.divId)[0].getBoundingClientRect().width;
+    //var width_tot = 300;
     // Calculate SVG dimension
-    var margin = {top: 20, right: 40, bottom: 30, left: 80},
-    var width = width_tot - margin.left - margin.right,
-    var height = height_tot - margin.top - margin.bottom;
+    let margin = {top: 20, right: 40, bottom: 30, left: 80};
+    let width = width_tot - margin.left - margin.right;
+    let height = height_tot - margin.top - margin.bottom;
 
     // SVG x-axis setup
     var x = d3.scale.linear()
@@ -45,14 +98,14 @@ define(['d3','jquery'],function(d3,$){
                         .orient("left");
 
     
-    d3.select("#syn-profile-svg").html("");
 
     // create SVG
-    var svg = d3.select("#syn-profile-svg").append("svg")
-                                       .attr("width", width_tot)
-                                       .attr("height", height_tot)
-                                       .attr("viewBox", "0 0 " + width_tot +" "+ height_tot )
-                                       .append("g");
+    var svg = d3.select(this.divId).append("svg")
+                                     .attr("id",this.svgId.slice(1))
+                                     .attr("width", width_tot)
+                                     .attr("height", height_tot)
+                                     .attr("viewBox", "0 0 " + width_tot +" "+ height_tot )
+                                     .append("g");
 
     // extract data, create axis, sort in descending percentage
     var data_pre = d3.entries(pre_sum).map( function (d,i) {
@@ -156,72 +209,43 @@ define(['d3','jquery'],function(d3,$){
           });
 
 
+
     // add callback
-    addCallbackSynProfile();
-  }
-
-
-  /** 
-   * Preprocess data for Synaptic plot
-   */
-   function preprocessSynProfileData(d){
-    if (!d) {return};
-    combine_regexes = [/(Dm[0-9]+)_?[0-9]*/, /(Pm[0-9]+)_?[0-9]*/ ];
-    pre_sum = {};
-    post_sum = {};
-    // Pre_sum
-    if ('pre_sum' in d){
-      for (x in d['pre_sum']){
-        matched = 0;
-        for(i in combine_regexes){
-          re = combine_regexes[i];
-          if(re.exec(x)){
-            key = re.exec(x)[1];
-            if(key in pre_sum)
-              pre_sum[key] += d['pre_sum'][x];
-            else
-              pre_sum[key] = d['pre_sum'][x];
-            matched = 1;
-            break;
+    var tabTextId = this.tabTextId;
+    svg.selectAll("rect")
+        .on("click",function(d){
+          if (d['y']=='Presynaptic'){
+            var ref_data = {'type':d['y'],'neuron':d['neuron'],'percentage':d['x'], 'number':d['x']*pre_num/100};
+          }else{
+            var ref_data = {'type':d['y'],'neuron':d['neuron'],'percentage':d['x'],'number':d['x']*post_num/100};
           }
-        }
-        if (!matched)
-          pre_sum[x] = d['pre_sum'][x];
-      }
-      d['pre_sum'] = pre_sum;
-    }
-
-    //Post_sum
-    if ('post_sum' in d){
-      for (x in d['post_sum']){
-        matched = 0;
-        for(i in combine_regexes){
-          re = combine_regexes[i];
-          if(re.exec(x)){
-            key = re.exec(x)[1];
-            if(key in post_sum)
-              post_sum[key] += d['post_sum'][x];
-            else
-              post_sum[key] = d['post_sum'][x];
-            matched = 1;
-            break;
+          var reference_info = ref_data.type+" "+ref_data.neuron+": "+ (ref_data.percentage).toFixed(1) +"%("+Math.round(ref_data.number).toString() +")";
+          d3.select(tabTextId)
+              .text(reference_info)
+        })
+        .on("mouseover",function(d){
+          if (d['y']=='Presynaptic'){
+            var ref_data = {'type':d['y'],'neuron':d['neuron'],'percentage':d['x'], 'number':d['x']*pre_num/100};
+          }else{
+            var ref_data = {'type':d['y'],'neuron':d['neuron'],'percentage':d['x'],'number':d['x']*post_num/100};
           }
-        }
-        if (!matched)
-          post_sum[x] = d['post_sum'][x];
-      }
-      d['post_sum'] = post_sum;
-    }
-    return d;
+          var reference_info = ref_data.type+" "+ref_data.neuron+": "+ (ref_data.percentage).toFixed(1) +"%("+Math.round(ref_data.number).toString() +")";
+          d3.select(tabTextId)
+              .text(reference_info)
+        })
+        .on("mouseout",function(){
+          d3.select(tabTextId)
+              .text("Click on/Hover over plot to extract detailed synaptic information");
+        });
   }
 
 
   /**
    * Resize Synaptic Profile plot
    */
-  function resizeSynProfile(){
-    if(d3.select("#syn-profile-svg").select("svg")[0][0]){ //check if an svg file exists, if not getBBox will throw error
-      let svg = d3.select(".svg-syn svg").node();
+  ConnSVG.prototype.resize = function(){
+    if(d3.select(this.svgId)[0][0]){ //check if an svg file exists, if not getBBox will throw error
+      let svg = d3.select(this.svgId).node();
       let bbox =  svg.getBBox();
       let width_margin = 40;
       svg.setAttribute("viewBox", (bbox.x-width_margin/2)+" "+(bbox.y)+" "+(bbox.width+width_margin)+" "+(bbox.height));
@@ -232,53 +256,13 @@ define(['d3','jquery'],function(d3,$){
 
 
   /**
-   * Add callbacks to synaptic profile plot
-   */
-  function addCallbackSynProfile(){
-    d3.select("#syn-profile-svg")
-        .selectAll("rect")
-          .on("mouseover",function(d){
-            if (d['y']=='Presynaptic'){
-              let ref_data = {'type':d['y'],'neuron':d['neuron'],'percentage':d['x'], 'number':d['x']*pre_num/100};
-            }else{
-              let ref_data = {'type':d['y'],'neuron':d['neuron'],'percentage':d['x'],'number':d['x']*post_num/100};
-            }
-            addSynReference(ref_data);
-          })
-          .on("click",function(d){
-            if (d['y']=='Presynaptic'){
-              let ref_data = {'type':d['y'],'neuron':d['neuron'],'percentage':d['x'], 'number':d['x']*pre_num/100};
-            }else{
-              let ref_data = {'type':d['y'],'neuron':d['neuron'],'percentage':d['x'],'number':d['x']*post_num/100};
-            }
-            addSynReference(ref_data);
-          })
-          .on("mouseout",function(){
-            d3.select("#syn-profile-text")
-                .text("Click on/Hover over plot to extract detailed synaptic information");;
-          });
-  };
-
-
-  /**
-   * Update synaptic reference above profile plot
-   */
-  function addSynReference(d){
-    // d:type, neuron, percentage, number
-    let target= d3.select("#syn-profile-text");
-    let reference_info = d.type+" "+d.neuron+": "+ (d.percentage).toFixed(1) +"%("+Math.round(d.number).toString() +")";
-    target.text(reference_info);
-  }
-
-
-  /**
    * hook, used in FFBOMesh3D.onMouseClick() to update information panel
    */
-  function addSynHistogram(data){
-    let pre_N_list = data['pre'].map(function(d){
+  ConnSVG.prototype.addSynHistogram = function(data){
+    var pre_N_list = data['pre'].map(function(d){
       return d['N'];
     });
-    let post_N_list= data['post'].map(function(d){
+    var post_N_list= data['post'].map(function(d){
       return d['N'];
     });
 
@@ -289,14 +273,7 @@ define(['d3','jquery'],function(d3,$){
 
 
   /**
-   * Expose these methods 
-   * @generate: generate plot
-   * @resize: resize plot by parent div size
-   * @addSynHistogram: hook?
+   * Expose constructor for SVG
    */
-  return {
-    generate: generateSynProfile,
-    resize: resizeSynProfile,
-    addSynHistogram: addSynHistogram
-  }
-});
+  return ConnSVG;
+})

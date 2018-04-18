@@ -1,108 +1,61 @@
-define(['jquery',
-  'neu_table',
-  'syn_table',
-  'syn_plot',
-  'Modernizr',
-  'ffbomesh',
-  'client_session'],
-function($,
-  neuTable,
-  synTable,
-  synPlot,
-  Modernizr,
-  ffbomesh,
-  ClientSession)
+var loader = function(name, dependencies, definition) {
+  if (typeof module === 'object' && module && module.exports) {
+      dependencies = dependencies.map(require);
+      module.exports = definition.apply(context, dependencies);
+  } else if (typeof require === 'function') {
+    define(dependencies, definition);
+  } else {
+    window[name] = definition();
+  }
+};
+
+loader("InfoPanel",
+  [
+  'jquery',
+  'app/info_panel/summary_table',
+  'app/info_panel/conn_svg',
+  'app/info_panel/conn_table',
+  ],
+  function(
+    $,
+    SummaryTable,
+    ConnSVG,
+    ConnTable
+  )
 {
-  last_click = "";
-  synaptic_info = false;
-  const neuId = "#neu-id";
-  const infoPanelId = "#info-panel";
-  const neuColorId = "#neu_col";
-  const neuSummaryTableId = "#neu-info-summary";
-  const infoTableWrapperId = "#info-table-wrap";
-
+  // `instance` is used to ensure that infoPanel is a singleton
+  var instance;  
 
   /**
-   * Update Info Panel
+   * InfoPanel Constructor
    */
-  function updateInfoPanel(d) {
-      if(last_click == d[1]) 
-        return;
-      last_click = d[1];
-      $(neuId).attr('name',d[0]);
-      d = [ffbomesh.meshDict[last_click].name,
-                   last_click];
-      data = ClientSession.fetchDetailInfo(d);
-      $(infoPanelId).scrollTop(0);
+  function InfoPanel(div_id,neuData,synData){
 
-      neuTable.update(data);
-      synTable.update(data);
-      synPlot.generate(data);
-      synPlot.resize(data);
-  }
-  
+    $(div_id).html("");
+    innerhtml = "";
+    innerhtml += '<table id="info-panel-summary" class="table table-inverse table-custom-striped"></table>';  // summary
+    innerhtml += '<div id="info-panel-summary-extra"></div>';  // summary
+    innerhtml += '<div id="info-panel-conn"></div>';  // SVG
+    innerhtml += '<div id="info-panel-table"></div>'; 
+    $(div_id).html(innerhtml);
+
+
+    this.connSVG = new ConnSVG("#info-panel-conn",synData);
+    this.connTable = new ConnTable("#info-panel-table",synData,false,this.isInWorkspace);
+    this.summaryTable = new SummaryTable("#info-panel-summary","#info-panel-summary-extra",neuData,this.isInWorkspace); // neuron information table
+   }
+
   /**
-   * Update information if selected synapse
+   * Check if an object is in the workspace. 
+   * Overwrite by caller
    */
-  function updateInfoPanelSynapse(data){
-      if('label' in data){
-        $(neuId).attr('label',data['label']);
-      }else if('uname' in data){
-        $(neuId).attr('label',data['uname']);
-      }else if('uname' in data){
-        $(neuId).attr('label',data['name']);
-      }
-
-      $(neuId).html("Synapses between " + $(neuId).attr('label').replace("--", " and "));
-      var params = ['Data Source', 'Synapse Locations'];
-
-      html ='<tr class="experimental" ><td>Choose Color</td><td> <input class="color_inp"'
-      if(Modernizr.inputtypes.color)
-      html+='type="color"'
-      else
-      html+='type="text"'
-      n_id = last_click
-      html+='name="neu_col" id="' + neu_col.slice(1)+ '" value="#' + ffbomesh.meshDict[n_id].color.getHexString() + '"/></td></tr>';
-
-      for ( var i = 0; i < params.length; ++i ) {
-          if (params[i] in data) {
-              html += '<tr class="">'
-              html += '<td>' + params[i] + ':</td>'
-              s = JSON.stringify(data[params[i]]).replace(/[\[\]{}""]/g,"").replace(/\b\w+/g,function(s){return s.charAt(0).toUpperCase() + s.substr(1).toLowerCase();}).replace(",", ", ");
-              html += '<td>' + s + '</td>';
-              html += '</tr>';
-      }
-      }
-
-      var table = document.getElementById(neuSummaryTableId.slice(1));
-      table.innerHTML = '<tbody>' + html + '</tbody>';
-      
-      if(!Modernizr.inputtypes.color)
-      $("#neu_col").spectrum({
-          showInput: true,
-          showPalette: true,
-          showSelectionPalette: true,
-          showInitial: true,
-          localStorageKey: "spectrum.neuronlp",
-          showButtons: false,
-          move: function(c){
-          ffbomesh.setColor($(neuId).attr('uid'), c.toHexString());
-          }
-      });
-      else
-      $(neuColorId).on('change', function(){
-          ffbomesh.setColor($(neuId).attr('uid'), $(neuColorId)[0].value);
-      });
-      $(infoTableWrapperId).show()
-      $(neuSummaryTableId).show()   
+  InfoPanel.prototype.isInWorkspace = function(key){
+    return true;
   }
 
   /**
-   * Expose Method
+   * Return Constructor for InfoPanel
    */
-  return{
-    update: updateInfoPanel,
-    updateSyn: updateInfoPanelSynapse
-  }
-
+  return InfoPanel;
 });
+
