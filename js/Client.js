@@ -29,12 +29,12 @@ moduleExporter("FFBOClient", ["autobahn", "PropertyManager"], function(autobahn,
     }
     try{
       if('info' in result && 'error' in result.info){
-	this.notifyError(result['info']['success'])
-	if( queryID != undefined) this.status[queryID] = -1; //Error
-	return;
+        this.notifyError(result['info']['success'])
+        if( queryID != undefined) this.status[queryID] = -1; //Error
+        return;
       }
       if('info' in result && 'success' in result.info)
-	this.notifySuccess(result['info']['success']);
+        this.notifySuccess(result['info']['success']);
     }
     catch(err){
     }
@@ -64,27 +64,27 @@ moduleExporter("FFBOClient", ["autobahn", "PropertyManager"], function(autobahn,
       serverInfo = serverInfo[0];
     if( typeof(serverInfo)=="object" && 'na' in serverInfo ){
       if( naServerID != undefined && !(naServerID in serverInfo.na ))
-	naServerID = undefined
+        naServerID = undefined
       if( naServerID == undefined && Object.keys(serverInfo.na).length )
-	naServerID = Object.keys(serverInfo.na)[0]
+        naServerID = Object.keys(serverInfo.na)[0]
     }
     if( typeof(serverInfo)=="object" && 'nlp' in serverInfo ){
       if( nlpServerID != undefined && !(nlpServerID in serverInfo.nlp ))
-	nlpServerID = undefined
+        nlpServerID = undefined
       if( nlpServerID == undefined && Object.keys(serverInfo.nlp).length )
-	nlpServerID = Object.keys(serverInfo.nlp)[0]
+        nlpServerID = Object.keys(serverInfo.nlp)[0]
     }
     if( typeof(serverInfo)=="object" && 'nk' in serverInfo ){
       if( nkServerID != undefined && !(nkServerID in serverInfo.nk ))
-	nkServerID = undefined
+        nkServerID = undefined
       if( nkServerID == undefined && Object.keys(serverInfo.nk).length )
-	nkServerID = Object.keys(serverInfo.nk)[0]
+        nkServerID = Object.keys(serverInfo.nk)[0]
     }
     if( typeof(serverInfo)=="object" && 'ep' in serverInfo ){
       if( epServerID != undefined && !(epServerID in serverInfo.ep ))
-	epServerID = undefined
+        epServerID = undefined
       if( epServerID == undefined && Object.keys(serverInfo.ep).length )
-	epServerID = Object.keys(serverInfo.ep)[0]
+        epServerID = Object.keys(serverInfo.ep)[0]
     }
   }
 
@@ -105,9 +105,9 @@ moduleExporter("FFBOClient", ["autobahn", "PropertyManager"], function(autobahn,
     this.session = undefined;
     this.loginStatus = new PropertyManager(
        {
-	 username: "",
-	 connected: false,
-	 sessionID: undefined,
+         username: "",
+         connected: false,
+         sessionID: undefined,
        });
 
     // Threshold for chunking data
@@ -144,19 +144,19 @@ moduleExporter("FFBOClient", ["autobahn", "PropertyManager"], function(autobahn,
     this.status[queryID] = 0;
     this.session.call(uri , [query, this.language] ).then(
        (function(res){
-	 if( typeof(res) == "object" && Object.keys(res).length ){
-	   this.notifySuccess("NLP module successfully interpreted the query");
-	   this.executeNAquery(res, callbacks, format, queryID);
-	 }
-	 else{
-	   this.notifyError("NLP module did not understand the query");
-	   this.status[queryID] = -1;
-	 }
+         if( typeof(res) == "object" && Object.keys(res).length ){
+           this.notifySuccess("NLP module successfully interpreted the query");
+           this.executeNAquery(res, callbacks, format, queryID);
+         }
+         else{
+           this.notifyError("NLP module did not understand the query");
+           this.status[queryID] = -1;
+         }
 
        }).bind(this),
        function(err){
-	 this.notifyError(err);
-	 this.status[queryID] = -1;
+         this.notifyError(err);
+         this.status[queryID] = -1;
        }
     );
     return queryID;
@@ -181,44 +181,44 @@ moduleExporter("FFBOClient", ["autobahn", "PropertyManager"], function(autobahn,
     if( format != undefined ) {msg.format = format}
     if( 'progress' in callbacks ){
       this.session.call(uri, [msg], {}, {receive_progress: true}).then(
-	 (function(result){
-	   onSuccessCallback.bind(this)(result, queryID, callbacks.success);
-	 }).bind(this),
-	 (function(err){
-	   onErrorCallback.bind(this)(err, queryID, callbacks.error);
-	 }).bind(this),
-	 (function(progress){
-	   onProgressCallback.bind(this)(progress, queryID, callbacks.progress);
-	 }).bind(this));
+         (function(result){
+           onSuccessCallback.bind(this)(result, queryID, callbacks.success);
+         }).bind(this),
+         (function(err){
+           onErrorCallback.bind(this)(err, queryID, callbacks.error);
+         }).bind(this),
+         (function(progress){
+           onProgressCallback.bind(this)(progress, queryID, callbacks.progress);
+         }).bind(this));
     }
     else{
       // Forcing Progressive Results for Morphology Data
       if (format == undefined || format == 'morphology'){
-	this.session.call(uri, [msg], {}, {receive_progress: true}).then(
-	   (function(result){
-	     onSuccessCallback.bind(this)(result, queryID, callbacks.success);
-	   }).bind(this),
-	   (function(err){
-	     onErrorCallback.bind(this)(err, queryID, callbacks.error);
-	   }).bind(this),
-	   (function(progress){
-	     onProgressCallback.bind(this)(progress, queryID, callbacks.success);
-	   }).bind(this));
+        this.session.call(uri, [msg], {}, {receive_progress: true}).then(
+           (function(result){
+             onSuccessCallback.bind(this)(result, queryID, callbacks.success);
+           }).bind(this),
+           (function(err){
+             onErrorCallback.bind(this)(err, queryID, callbacks.error);
+           }).bind(this),
+           (function(progress){
+             onProgressCallback.bind(this)(progress, queryID, callbacks.success);
+           }).bind(this));
       }
       else{
-	this.session.call(uri, [msg], {}).then(
-	   (function(result){
-	     onSuccessCallback.bind(this)(result, queryID, callbacks.success);
-	   }).bind(this),
-	   (function(err){
-	     onErrorCallback.bind(this)(err, queryID, callbacks.error);
-	   }).bind(this));
+        this.session.call(uri, [msg], {}).then(
+           (function(result){
+             onSuccessCallback.bind(this)(result, queryID, callbacks.success);
+           }).bind(this),
+           (function(err){
+             onErrorCallback.bind(this)(err, queryID, callbacks.error);
+           }).bind(this));
       }
     }
     this.status[queryID] = 0;   // In Progress
     this.status.on("change", (function(e){
       setTimeout((function(){
-	delete this.status[e['prop']];
+        delete this.status[e['prop']];
       }).bind(this), 10000);}).bind(this), queryID);
 
     return queryID;
@@ -233,10 +233,10 @@ moduleExporter("FFBOClient", ["autobahn", "PropertyManager"], function(autobahn,
     return {
       format: "nx",
       query: [
-	{
+        {
           action: { method: { add_connecting_synapses: {} } },
           object: { state: 0 }
-	}
+        }
       ],
       temp: true
     }
@@ -256,10 +256,10 @@ moduleExporter("FFBOClient", ["autobahn", "PropertyManager"], function(autobahn,
     return {
       verb: "add",
       query: [
-	{
+        {
           action: { method: { query: { uname: uname } } },
           object: { class: "Neuron" }
-	}
+        }
       ]
     };
   }
@@ -286,10 +286,10 @@ moduleExporter("FFBOClient", ["autobahn", "PropertyManager"], function(autobahn,
     return {
       verb: "add",
       query: [
-	{
+        {
           action: { method: { query: { uname: uname } } },
           object: { class: "Synapse" }
-	}
+        }
       ]
     };
   }
@@ -301,10 +301,10 @@ moduleExporter("FFBOClient", ["autobahn", "PropertyManager"], function(autobahn,
     return {
       verb: "remove",
       query: [
-	{
+        {
           action: { method: { query: { uname: uname } } },
           object: { class: "Synapse" }
-	}
+        }
       ]
     };
   }
@@ -316,24 +316,21 @@ moduleExporter("FFBOClient", ["autobahn", "PropertyManager"], function(autobahn,
     if (! ['vfb_id', 'rid', 'uname'].includes(key) ) return null;
     return {
       query: [
-	{
+        {
           action: { method: { query: { key: value } } },
           object: { class: "Neuron" }
-	}
+        }
       ]
     };
   }
 
 
-  FFBOClient.prototype.createTagQuery = function(tag_name, metadata, settings, keywords, decription){
+  FFBOClient.prototype.createTagQuery = function(tag_name, metadata){
     msg = {
       tag: tag_name,
       metadata: metadata,
       uri: 'ffbo.na.create_tag'
     }
-    if( settings != undefined) msg['settings'] = settings;
-    if( keywords != undefined) msg['keywords'] = settings;
-    if( description != undefined) msg['description'] = settings;
     return msg
   }
 
@@ -362,16 +359,16 @@ moduleExporter("FFBOClient", ["autobahn", "PropertyManager"], function(autobahn,
   FFBOClient.prototype.startConnection = function(authid, key, url) {
     function onchallenge(session, method, extra) {
       if (method === "wampcra") {
-	salted_key = autobahn.auth_cra.derive_key(
+        salted_key = autobahn.auth_cra.derive_key(
            key,
            extra.salt,
            extra.iterations,
            extra.keylen
-	);
-	if (key == "guestpass" && authid == "guest") {
+        );
+        if (key == "guestpass" && authid == "guest") {
           salted_key = "C5/c598Gme4oALjmdhVC2H25OQPK0M2/tu8yrHpyghA=";
-	}
-	return autobahn.auth_cra.sign(salted_key, extra.challenge);
+        }
+        return autobahn.auth_cra.sign(salted_key, extra.challenge);
       }
     }
     connection = new autobahn.Connection({
@@ -386,37 +383,37 @@ moduleExporter("FFBOClient", ["autobahn", "PropertyManager"], function(autobahn,
       // Start registering procedures for remote calls.
 
       session.register("ffbo.ui.receive_cmd." + session.id, ( function (args) {
-	this.receiveCommand(args);
+        this.receiveCommand(args);
       } ).bind(this)).then(
-	 function(reg) {},
-	 function(err) {
+         function(reg) {},
+         function(err) {
            console.log("failed to register procedure ffbo.ui.receive_cmd." + session.id, err);
-	 }
+         }
       );
 
       session.register("ffbo.ui.receive_msg." + session.id, ( function (args) {
-	onSuccessCallback.bind(this)(args[0], null, function(){});
+        onSuccessCallback.bind(this)(args[0], null, function(){});
       } ).bind(this)).then(
-	 function(reg) {},
-	 function(err) {
+         function(reg) {},
+         function(err) {
            console.log("failed to register procedure ffbo.ui.receive_msg." + session.id, err);
-	 }
+         }
       );
 
       session.subscribe("ffbo.server.update", updateServers).then(
-	 function(sub) {},
-	 function(err) {
+         function(sub) {},
+         function(err) {
            console.log("failed to subscribe to server update", err);
-	 }
+         }
       );
 
       session.call("ffbo.processor.server_information").then(
-	 ( function(res){
-	   updateServers([res]);
-	 } ).bind(this),
-	 function(err) {
+         ( function(res){
+           updateServers([res]);
+         } ).bind(this),
+         function(err) {
            console.log("server retrieval error:", err);
-	 }
+         }
       );
 
       this.session = session
