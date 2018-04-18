@@ -87,9 +87,12 @@ moduleExporter("PropertyManager",[], function() {
           }
           catch(err) {console.log(err);}
         });
-      if(obj[prop].hasOwnProperty('_PropMan'))
-        if(obj[prop]._PropMan_parent !== undefined)
-          obj[prop]._PropMan_parent = undefined
+      try{
+        if(obj[prop].hasOwnProperty('_PropMan'))
+          if(obj[prop]._PropMan_parent !== undefined)
+            obj[prop]._PropMan_parent = undefined
+      }
+      catch(err) {}
       delete obj[prop];
       return true;
     },
