@@ -1,5 +1,5 @@
 clientSession = new ClientSession();
-clientSession.startConnection("guest", "guestPass", "wss://neuronlp.fruitflybrain.org:8888/ws")
+clientSession.startConnection("guest", "guestpass", "wss://neuronlp.fruitflybrain.org:8888/ws")
 
 clientSession.notifySuccess = function(message){
   console.log("Success: " + message);
@@ -16,29 +16,43 @@ clientSession.receiveCommand = function(message){
 
 function dataCallback(data){
   console.log("Data Received");
-  console.log("Data")
+  console.log(data)
 }
 
+clientSession.status.on("remove", function(e){
+  console.log("Removed status for Query with ID: " + e.prop)
+});
+
+function logAndMonitorQuery(queryID){
+  console.log("Query Fired: ID - " + queryID);
+  clientSession.status.on("change", function(e){
+    console.log("Query Status Changed, ID: " + e.prop + ", Value: ", e.value);
+  }, queryID)
+}
 function testNLPquery(query){
-  query = clientSession.translateNLPquery(query);
-  clientSession.executeNAquery(query, {success: dataCallback})
+  queryID = clientSession.executeNLPquery(query, {success: dataCallback});
+  logAndMonitorQuery(queryID)
 }
 
 function testConnectivity(){
   query = clientSession.connectivityQuery();
-  clientSession.executeNAquery(query, {success: dataCallback})
+  queryID = clientSession.executeNAquery(query, {success: dataCallback})
+  logAndMonitorQuery(queryID)
 }
 
 function testAddByUname(uname){
   query = clientSession.addByUnameQuery(uname);
-  clientSession.executeNAquery(query, {success: dataCallback})
+  queryID = clientSession.executeNAquery(query, {success: dataCallback})
+  logAndMonitorQuery(queryID)
 }
 
 function testNeuronInfo(rid){
   query = clientSession.neuronInfoQuery(rid);
-  clientSession.executeNAquery(query, {success: dataCallback})
+  queryID = clientSession.executeNAquery(query, {success: dataCallback})
+  logAndMonitorQuery(queryID)
 }
 function testRetrieveTag(tag){
   query = clientSession.retrieveTagQuery(tag);
-  clientSession.executeNAquery(query, {success: dataCallback})
+  queryID = clientSession.executeNAquery(query, {success: dataCallback})
+  logAndMonitorQuery(queryID)
 }
