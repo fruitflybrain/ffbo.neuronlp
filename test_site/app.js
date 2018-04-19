@@ -13,7 +13,7 @@ requirejs.config({
   baseUrl: '../js',
   paths: {
     // app: 'app',
-    mesh3d: '../lib/js/mesh3d',
+    mesh3d: '//neuronlp.fruitflybrain.org:8888/lib/js/mesh3d',
     autobahn: '//cdn.rawgit.com/crossbario/autobahn-js-built/master/autobahn.min',
     d3: 'lib/d3.min',
     jquery: '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min',
