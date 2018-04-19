@@ -31,32 +31,6 @@ moduleExporter("ConnSVG",
     this.tabTextId = "#info-panel-conn-table-text";  // table 
     this.svgId = "#info-panel-conn-svg";  // svg
 
-    this.remove();
-    this.create(data);
-    this.resize();
-  }
-
-
-  /** 
-   * Update SVG
-   */
-  ConnSVG.prototype.update = function(data){
-    this.remove();
-    this.create(data);
-    this.resize(data);
-  }
-
-  /** 
-   * Remove SVG
-   */
-  ConnSVG.prototype.remove = function(){
-    $(this.divId).html(""); // purge result
-  }
-
-  /** 
-   * Plot Synaptic Concentration Profile
-   */
-  ConnSVG.prototype.create = function(data){
     this.tableText = '<tr><td>Synaptic Profile Plot</td><td id="' + this.tabTextId.slice(1) + '" class="syn-reference">Click on/Hover over plot to extract detailed synaptic information</td></tr>';
     // purge div and add table
     $(this.divId).html("");
@@ -65,11 +39,41 @@ moduleExporter("ConnSVG",
     innerhtml += '<tbody>' + this.tableText.slice(1) + '</tbody>';
     innerhtml += '</table>';  // table 
     $(this.divId).html(innerhtml);
+  }
 
+  /** 
+   * Purge all subcomponents
+   */
+  ConnSVG.prototype.purge = function(){
+    $(this.tabId + " tbody").html('<tr><td>Synaptic Profile Plot</td><td id="' + this.tabTextId.slice(1) + '" class="syn-reference">Click on/Hover over plot to extract detailed synaptic information</td></tr>');
+    $(this.svgId).remove();
+  }
+
+  /** 
+   * Hide all subcomponents
+   */
+  ConnSVG.prototype.hide = function(){
+    $(this.tabId).hide(); 
+    $(this.svgId).hide(); 
+  }
+
+  /** 
+   * Show all subcomponents
+   */
+  ConnSVG.prototype.show = function(){
+    $(this.tabId).show(); 
+    $(this.svgId).show(); 
+  }
+
+  /** 
+   * Update SVG
+   */
+  ConnSVG.prototype.update = function(data){
     // verify data integrity
     if(!('pre_sum' in data && 'post_sum' in data)){ 
       return;
     }
+    this.purge();
     
     // preprocess data
     var data = preprocess.preprocessSynProfileData(data);
@@ -249,6 +253,7 @@ moduleExporter("ConnSVG",
           d3.select(tabTextId)
               .text("Click on/Hover over plot to extract detailed synaptic information");
         });
+    this.resize();
   }
 
 

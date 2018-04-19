@@ -25,22 +25,21 @@ function (
   FFBOClient,
   InfoPanel,
 ){
-  var infoPanel;
-  $.getJSON('./data/data.json',function(d){
-    var synData = d['success']['data']["synaptic_info_2"];
-    var neuData = d['success']['data']["summary_2"];
-    infoPanel = new InfoPanel("#info-panel", neuData, synData);
-
-  
-  }); 
-  
-  //var infoPanel = new InfoPanel("#info-panel");
-
+  var infoPanel = new InfoPanel("#info-panel");
   var client = new FFBOClient();
   client.startConnection("guest", "guestpass", "wss://neuronlp.fruitflybrain.org:8888/ws")
 
   window["fetchNeuronInfo"] = function(rid){
-    client.executeNAquery(client.neuronInfoQuery(rid), {success: infoPanel.update})
+    client.executeNAquery(client.neuronInfoQuery(rid), 
+                          {success: function(d){
+                            console.log(d);
+                            if ("summary_1" in d) {
+                              infoPanel.update(d["summary_1"],d["synaptic_info_1"]);
+                            }else{
+                              infoPanel.update(d["summary_2"],d["synaptic_info_2"]);
+                            }
+                            
+                          }});
   }
   window["fetchSynapseInfo"] = function(rid){
     client.executeNAquery(client.synapseInfoQuery(rid), {success: infoPanel.update})

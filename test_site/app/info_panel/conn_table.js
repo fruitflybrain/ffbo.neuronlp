@@ -24,37 +24,13 @@ moduleExporter("ConnTable",
   // const synProfileInfoWrapperId =  "#syn-profile-info";  
   // const synProfileTextId =  "#syn-reference-text"; 
 
-  function ConnTable(div_id,data,inferred,func_isInWorkspace){
+  function ConnTable(div_id,func_isInWorkspace){
     this.divId = div_id;  // wrapper
     this.preTabId = "#info-panel-table-pre";  // table 
     this.postTabId = "#info-panel-table-post";  // table 
     this.overlayId = "#info-panel-overlay"
-
-    this.inferred = inferred;
     this.isInWorkspace = func_isInWorkspace;
 
-    this.remove()
-    this.create(data);
-  }
-
-  /**
-  * remove synpatic reference and table
-  */
-  ConnTable.prototype.update = function(data){
-    this.remove();
-    this.create(data);
-  }
-
-  /**
-  * remove synpatic reference and table
-  */
-  ConnTable.prototype.remove = function(data){
-    $(this.divId).html("");
-  }
-  /**
-  * Update synpatic reference and table
-  */
-  ConnTable.prototype.create = function(data){
     // purge div and add table
     $(this.divId).html("");
     innerhtml = "";
@@ -69,9 +45,51 @@ moduleExporter("ConnTable",
     innerhtml += '<tbody></tbody></table>';  
 
     $(this.divId).html(innerhtml);
+  }
 
+  /**
+  * remove synpatic reference and table
+  */
+  ConnTable.prototype.update = function(data){
+    this.remove();
+    this.create(data);
+  }
 
-    if (this.inferred){
+  /**
+  * purge all subcomponents
+  */
+  ConnTable.prototype.purge = function(data){
+    $(this.preTabId).html("");
+    $(this.postTabId).html("");
+    $(this.overlayId).html("");
+  }
+
+  /**
+  * hide all subcomponents
+  */
+  ConnTable.prototype.hide = function(data){
+    $(this.preTabId).hide();
+    $(this.postTabId).hide();
+    $(this.overlayId).hide();
+  }
+
+  /**
+  * show all subcomponents
+  */
+  ConnTable.prototype.show = function(data){
+    $(this.preTabId).show();
+    $(this.postTabId).show();
+    $(this.overlayId).show();
+  }
+
+  /**
+  * Update synpatic reference and table
+  */
+  ConnTable.prototype.update = function(data,inferred){
+    // show synaptic table
+    $(this.divId).show();
+
+    if (inferred){
       const btnMoreInfo = '<a id="inferred-details-pre" class="info-panel-more-info inferred-more-info"> <i class="fa fa-info-circle" aria-hidden="true"></i></a>';
       $(this.divId + " h4").html('Inferred Presynaptic Partners' + btnMoreInfo);
       $(this.divId + " h4").html('Inferred Postsynaptic Partners'+ btnMoreInfo);
@@ -93,10 +111,160 @@ moduleExporter("ConnTable",
     }
 
     // create table
-    this.createSynTable(data);    
+    this.updateTable(data,'pre');    
+    this.updateTable(data,'post');    
   }
 
+  /**
+    * Update synaptic partners table
+    *  @data
+    *  @connDir: 'pre'/'post'  
+    */
+  ConnTable.prototype.updateTable = function(data,connDir){
+    if(!(connDir in data)){
+      return
+    }
+    if (connDir === 'pre'){
+      // pre/post tbody
+      var table = $(this.preTabId + " tbody")[0];
+      // reset table
+      $(this.preTabId + " tbody tr").remove();
+    }else{
+      // pre/post tbody
+      var table = $(this.postTabId + " tbody")[0];
+      // reset table
+      $(this.postTabId + " tbody tr").remove();
 
+    }
+    // flags for detecting if neuron or synapses have been added
+    let neuron_add = false;
+    let synapse_add = false;
+    for(x in data[connDir]){
+      d = data[connDir][x];
+      name = "";
+      N = "";
+
+      if('label' in d){
+        name = d['label'];
+      }else if('uname' in d) {
+        name = d['uname'];
+      }else if('name' in d) {
+        name = d['name'];
+      }else {
+        name = d['rid'];
+      }
+      if('N' in d) {
+        N = d['N'];
+      }
+      var row = table.insertRow(0);
+      var c1 = row.insertCell(0);
+      var c2 = row.insertCell(1);
+      var c3 = row.insertCell(2);
+      c3.className = (connDir==='pre') ? 'neuron_add_pre': 'neuron_add_post'; // remove the . character
+      var c4 = row.insertCell(3);
+      c4.className = (connDir==='pre') ? 'synapse_add_pre': 'synapse_add_post';
+
+      c1.innerHTML = name;
+      c2.innerHTML = N;
+
+      // generate add/remove button for each neuron
+      if(d['has_morph'] && 'uname' in d){
+        var btn = document.createElement('button');
+        btn.className = 'btn';
+        btn.id = (connDir==='pre') ? 'btn-pre-add-' + d['uname'] : 'btn-post-add-' + d['uname'];
+        btn.name = d['uname'];
+
+        btn.innerText = '+';
+        btn.className += ' btn-add btn-success';
+        btn.onclick = function(){
+          toggleBtn(this);
+        };
+
+
+        //<TODO> this method should be called by renderer
+        //
+        // if(d['rid'] in ffbomesh.meshDict){
+        //   btn.innerText = '-';
+        //   btn.className += ' btn-remove btn-danger';
+        //   btn.onclick = function(){
+        //     toggleBtn(this);
+        //   };
+        // }
+        // else{
+        //   btn.innerText = '+';
+        //   btn.className += ' btn-add btn-success';
+        //   btn.onclick = function(){
+        //     toggleBtn(this);
+        //   };
+        // }
+
+        c3.appendChild(btn);
+        neuron_add = true;
+      }
+      if(d['has_syn_morph'] && 'syn_uname' in d){
+        var btn = document.createElement('button')
+        btn.className = 'btn'
+        btn.id = (connDir==='pre') ? 'btn-pre-syn-add-' + d['syn_uname'] : 'btn-post-syn-add-' + d['syn_uname'];
+        btn.name = d['syn_uname']
+
+        btn.innerText = '+';
+        btn.className += ' btn-add btn-success';
+        btn.onclick = function(){
+          toggleSynBtn(this);
+        };
+
+        //<TODO> This method should be called by renderer
+        //
+        // if(d['syn_rid'] in ffbomesh.meshDict){
+        //   btn.innerText = '-';
+        //   btn.className += ' btn-remove btn-danger';
+        //   btn.onclick = function(){
+        //     toggleSynBtn(this);
+        //   };
+        // }
+        // else{
+        //   btn.innerText = '+';
+        //   btn.className += ' btn-add btn-success';
+        //   btn.onclick = function(){
+        //     toggleSynBtn(this);
+        //   };
+        // }
+
+        c4.appendChild(btn);
+        synapse_add = true;
+      }
+
+    }
+    if (neuron_add){
+      $('.neuron_add_'+connDir).show();
+    } else{
+      $('.neuron_add_'+connDir).hide();
+    }
+
+    if (synapse_add){
+      $('.synapse_add_'+connDir).show();
+    } else{
+      $('.synapse_add_'+connDir).hide();
+    }
+
+    // refresh list 
+    this.updateList();
+
+    // add callback
+    $("#presyn-srch").on('keyup change',(function(){  
+      this.filterByName(this.preTabId.slice(1),document.getElementById("presyn-srch").value);
+    }).bind(this));
+    $("#presyn-N").on('keyup change', (function (){
+      this.filterByNum(this.preTabId.slice(1),document.getElementById("presyn-N").value);
+    }).bind(this));
+    $("#postsyn-srch").on('keyup change', (function (){
+      this.filterByName(this.postTabId.slice(1),document.getElementById("postsyn-srch").value);
+    }).bind(this));
+    $("#postsyn-N").on('keyup change', (function (){
+      this.filterByNum(this.postTabId.slice(1),document.getElementById("postsyn-N").value);
+    }).bind(this));
+
+  }
 
   /**
    * Update synaptic partners table

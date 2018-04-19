@@ -21,98 +21,172 @@ moduleExporter("SummaryTable",
    * @data: initial data to instantiate Summary Table
    * @func_isInWorkspace: hook to function to determine is neuron is in workspace
    */
-  function Summary(div_id,extra_div_id, data, func_isInWorkspace){
+  function Summary(div_id, func_isInWorkspace){
     this.divId = div_id;  // wrapper
-    this.extraDivId = extra_div_id;  // wrapper
     this.neuNameId = "#neu-id";
-
     this.externalLinkId = "#vfb-link";
     this.colorId = "#neu_col";
-  
-
     this.isInWorkspace = func_isInWorkspace;
 
-    this.remove()
-    this.create(data);
+    this.overlay = new Overlay("#img-viewer-overlay",'<img id="full-img"><h2 id="img-viewer-caption"></h2>');
+
+    this.objName = 'Object Name';
+    this.objType = 'Object Type';
+
+    this.reset();
   }
 
-
-  /**
-   * Update Summary Information 
+  /*
+   * Reset Summary Table
    */
-  Summary.prototype.update = function(data){
-    this.remove();
-    this.create(data);
-  }
-
-
-
-  /**
-   * Summary Information Remove
-   */
-  Summary.prototype.remove = function (){
-    $(this.divId).html(""); // purge result
-  }
-
-  /**
-   * Summary Information Create
-   */
-  Summary.prototype.create = function(data){
+  Summary.prototype.reset = function (){
     // purge div and add table
     $(this.divId).html("");
     var innerhtml = "";
-    innerhtml += '<tbody><tr><td>Neuron:</td><td id="' + this.neuNameId.slice(1) + '"></td><td>External Link</td><td id="' + this.externalLinkId.slice(1) + '"></td></tr>';
-    innerhtml += '</tbody>'
+    innerhtml += '<tbody></tbody>';
     $(this.divId).html(innerhtml);
+  }
+
+
+  /**
+   * Summary Information show
+   */
+  Summary.prototype.show = function (){
+    $(this.divId).show();
+    $(this.extraDivId).show();
+  }
+  /**
+   * Summary Information hide
+   */
+  Summary.prototype.hide = function (){
+    $(this.divId).hide();
+    $(this.extraDivId).hide();
+  }
+
+  /**
+   * Summary Information Update
+   * >   {
+            "class": "Neuron",
+            "Data Source":[],
+            "name":"Gad1-F-200292",
+            "locality":false,   // if it's local neuron
+            "flycircuit_data":{},
+            "uname":"Gad1-F-200292",
+            "Expresses":[],    // whether if it expresses a gene, e.g. fruitless
+            "Transgenic Lines": [],  // e.g. GAL4
+            "Transmitters":[], // 
+            "Synapse Locations":[],
+            "External Link":[],
+         }
+   *
+   *
+   */
+  Summary.prototype.update = function(data){
+
+    this.reset();
     $(this.divId).show(); // show summary information
-    
-
+  
+    var objName = data['uname'];
+    var objType = data['class'];
     // extract name of object into this.name
-    if('label' in data){
-      this.name = data['label'];  
-    }else if('uname' in data){
-      this.name = data['uname'];
-    }else if('name' in data){
-      this.name = data['name'];
+    // if('label' in data){
+    //   this.objName = data['label'];  
+    // }else if('uname' in data){
+    //   this.name = data['uname'];
+    // }else if('name' in data){
+    //   this.name = data['name'];
+    // }
+
+    let tableHtml = "";
+    tableHtml += '<tr><td>'+objType+'</td><td>' + objName + '</td></tr>';
+
+    if ("External Link" in data){
+      //<TODO>
+          // // add External Link if necessary
+      // if('vfb_id' in data && data['vfb_id']){
+      //   $(this.externalLinkId).html("<a target='_blank' href='http://virtualflybrain.org/reports/" + data['vfb_id'] + "'>VFB link</a>")
+      //   $(this.externalLinkId).show();
+      // }
     }
+    
 
-    $(this.neuNameId).attr('label',this.name);
-    $(this.neuNameId).text(this.name);
-
-
-    // add External Link if necessary
-    if('vfb_id' in data && data['vfb_id']){
-      $(this.externalLinkId).text("<a target='_blank' href='http://virtualflybrain.org/reports/" + data['vfb_id'] + "'>VFB link</a>")
-      $(this.externalLinkId).show();
-    }
-
-    // add 
-    var params = ['Data Source', 'Transgenic Lines'];
-    var html = '';
-
+    // add color functionality
     if(this.isInWorkspace(this.name)){
-      html+='<tr class="experimental" ><td>Choose Color</td><td> <input class="color_inp"'
+      tableHtml+='<tr class="experimental" ><td>Choose Color</td><td> <input class="color_inp"'
       if(Modernizr.inputtypes.color){
-        html+='type="color"';
+        tableHtml+='type="color"';
       }else{
-        html+='type="text"';
+        tableHtml+='type="text"';
       }
-      // n_id = $(neuId).attr('uid');
-      html+='name="neu_col" id="' + this.colorId.slice(1)+ '" value="#' + "123141" + '"/></td></tr>'; //<TODO> remove ffbomesh dependency
-      //html+='name="neu_col" id="' + neuColorId.slice(1)+ '" value="#' + ffbomesh.meshDict[n_id].color.getHexString() + '"/></td></tr>';
+      tableHtml+='name="neu_col" id="' + this.colorId.slice(1)+ '" value="#' + "123141" + '"/></td></tr>'; //<TODO> remove ffbomesh dependency
     }
-    for ( var i = 0; i < params.length; ++i ) {
-      if (params[i] in data) {
-        html += '<tr class="">'
-        html += '<td>' + params[i] + ':</td>'
-        s = data[params[i]].toString().replace(/\b\w+/g,function(s){return s.charAt(0).toUpperCase() + s.substr(1).toLowerCase();});
-        html += '<td>' + s + '</td>';
-        html += '</tr>';
+
+    // add additional params 
+    var params = ['Data Source', 'Transgenic Lines'];
+    for ( p in params) {
+      if (params[p] in data) {
+        tableHtml += '<tr class="">'
+        tableHtml += '<td>' + params[p] + ':</td>'
+        s = data[params[p]].toString().replace(/\b\w+/g,function(s){return s.charAt(0).toUpperCase() + s.substr(1).toLowerCase();});
+        tableHtml += '<td>' + s + '</td>';
+        tableHtml += '</tr>';
       }
     }
     
-    $(this.divId).append(html);
+    $(this.divId).html(tableHtml);
     
+    // flycircuit data
+    if ('flycircuit' in data['Data Source']){
+      var extraData = data['flycircuit_data'];
+      if (!('error' in extraData)){
+        var params = ["Author","Driver","Gender/Age","Lineage", "Putative birth time", "Putative neurotransmitter", "Soma Coordinate", "Stock"];
+
+        Object.entries(params).forEach(
+          ([idx, p]) => {
+            if (idx % 2 === 0){
+              tableHtml += "<tr><td>" + p + "</td><td>" + extraData[p] +"</td>" ;
+            }else{
+              tableHtml += "<td>" + p + "</td><td>" + extraData[p] +"</td></tr>" ;
+            }
+          }
+        );
+
+        tableHtml += '<div class="row">';
+        tableHtml += '<div class="col-md-4"><h4>Confocal Image</h4><img class="clickable-image" style="width:100%" alt="not available" onerror="imgError(this);"></div>';
+
+        tableHtml += '<div class="col-md-4"><h4>Segmentation</h4><img class="clickable-image" style="width:100%" alt="not available" onerror="imgError(this);"></div>';
+        tableHtml += '<div class="col-md-4"><h4>Skeleton</h4><img class="clickable-image" style="width:100%" alt="not available" onerror="imgError(this);"></div>';
+        tableHtml += '</div>';
+
+
+        imagesPanel.children[0].children[1].src = extraData["Images"]["Original confocal image (Animation)"];
+        imagesPanel.children[1].children[1].src = extraData["Images"]["Segmentation"];
+        imagesPanel.children[2].children[1].src = extraData["Images"]["Skeleton (download)"];
+
+
+      //   imagesPanel.children[0].children[1].onclick = function(){
+      //     $('#full-img')[0].src = this.src;
+      //     $("#img-viewer-caption").html('Original confocal image');
+      //     this.overlay.show();
+      // //mm_menu_right.close();
+      //   }
+
+      //   imagesPanel.children[1].children[1].onclick = function(){
+      //     $('#full-img')[0].src = this.src;
+      //     $("#img-viewer-caption").html('Segmentation');
+      //     this.overlay.show();
+      //   }
+
+      //   imagesPanel.children[2].children[1].onclick = function(){
+      //     $('#full-img')[0].src = this.src;
+      //     $("#img-viewer-caption").html('Skeleton');
+      //     this.overlay.show();
+      //   }
+      }
+    }
+}
+
+
     // Color Change - show palette
     if(this.isInWorkspace(this.name)){
       if(!Modernizr.inputtypes.color)
@@ -136,75 +210,8 @@ moduleExporter("SummaryTable",
       }
     }
 
-    // flycircuit data
-    if ('flycircuit_data' in data){
-      var extraData = data['flycircuit_data'];
-      if (!('error' in extraData)){
-        this.createExtraInformation(extraData);
-      }
-    }
+
   }
-
-
-  /**
-   * Create pane for extra information. 
-   * @extraData: e.g. data['flycircuit_data']
-   */
-  Summary.prototype.createExtraInformation = function(extraData) {
-    '<table class="table table-inverse"></table><div></div>'
-    var innerhtml = "";
-    innerhtml += '<table class="table table-inverse">'
-    innerhtml += "<tr><td></td><td></td><td></td><td></td></tr>";
-    innerhtml += "<tr><td></td><td></td><td></td><td></td></tr>";
-    innerhtml += "<tr><td></td><td></td><td></td><td></td></tr>";
-    innerhtml += "<tr><td></td><td></td><td></td><td></td></tr>";
-    innerhtml += '</table>';
-    innerhtml += '<div class="row">';
-    innerhtml += '<div class="col-md-4"><h4>Confocal Image</h4><img class="clickable-image" style="width:100%" alt="not available" onerror="imgError(this);"></div>';
-    innerhtml += '<div class="col-md-4"><h4>Segmentation</h4><img class="clickable-image" style="width:100%" alt="not available" onerror="imgError(this);"></div>';
-    innerhtml += '<div class="col-md-4"><h4>Skeleton</h4><img class="clickable-image" style="width:100%" alt="not available" onerror="imgError(this);"></div>'
-    innerhtml += '</div>';
-
-    this.overlay = new Overlay("#img-viewer-overlay",'<img id="full-img"><h2 id="img-viewer-caption"></h2>');
-    $(this.extraDivId).html(innerhtml);
-
-    
-    var div =  document.getElementById(this.extraDivId.slice(1));
-    div.style.display = "block";
-    var table = div.children[0];
-    var imagesPanel = div.children[1];
-
-    var params = ["Author","Driver","Gender/Age","Lineage", "Putative birth time", "Putative neurotransmitter", "Soma Coordinate", "Stock"];
-
-    for ( var i = 0; i < params.length; ++i ) {
-      var tr_idx = Math.floor(i/2);
-      var td_idx = i % 2;
-      table.children[0].children[tr_idx].children[2*td_idx].innerHTML = params[i];
-      table.children[0].children[tr_idx].children[2*td_idx+1].innerHTML = extraData[params[i]].toString();
-    }
-    imagesPanel.children[0].children[1].src = extraData["Images"]["Original confocal image (Animation)"];
-    imagesPanel.children[0].children[1].onclick = function(){
-      $('#full-img')[0].src = this.src;
-      $("#img-viewer-caption").html('Original confocal image');
-      this.overlay.show();
-      //mm_menu_right.close();
-    }
-
-    imagesPanel.children[1].children[1].src = extraData["Images"]["Segmentation"];
-    imagesPanel.children[1].children[1].onclick = function(){
-      $('#full-img')[0].src = this.src;
-      $("#img-viewer-caption").html('Segmentation');
-      this.overlay.show();
-    }
-
-    imagesPanel.children[2].children[1].src = extraData["Images"]["Skeleton (download)"];
-    imagesPanel.children[2].children[1].onclick = function(){
-      $('#full-img')[0].src = this.src;
-      $("#img-viewer-caption").html('Skeleton');
-      this.overlay.show();
-    }
-  }
-
 
 
 

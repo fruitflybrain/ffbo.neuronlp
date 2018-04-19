@@ -9,7 +9,7 @@ var loader = function(name, dependencies, definition) {
   }
 };
 
-define("Overlay",
+loader("Overlay",
   ['jquery','d3'],
   function($,d3)
 {
