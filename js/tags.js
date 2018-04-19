@@ -16,7 +16,7 @@ moduleExporter('Tags', ['perfectScrollbar', 'tagEditor', 'jquery'], function(per
   $ = $ || window.$;
   perfectScrollbar = perfectScrollbar || window.perfectScrollbar;
   tagEditor = tagEditor || window.tagEditor;
-  
+
   function Tags(inDiv, tagsConfigUpdate = { tag: '#tag', tagSubmit: '#tagSubmit', tagModal: '#tagModal', tagSearchMenu: '#tagSearchMenu', tagTagEditor: '#tagTagEditor'}) {
     this.tagsConfig = { tag: '#tag', tagSubmit: '#tagSubmit', tagModal: '#tagModal', tagSearchMenu: '#tagSearchMenu', tagTagEditor: '#tagTagEditor', createTag: '.createtag', loadTag: '.loadtag'};
     this.tagsConfig = Object.assign({}, this.tagsConfig, tagsConfigUpdate);
@@ -75,47 +75,33 @@ moduleExporter('Tags', ['perfectScrollbar', 'tagEditor', 'jquery'], function(per
       this.inDiv.append(a);
       $(this.tagsConfig['tagSubmit']).click(function () {
         if ($(this.tagsConfig['tagSubmit']).text() == 'Create tag')
-          window.currentTag.createTag($(this.tagsConfig['tag']).val());
+          this.createTag($(this.tagsConfig['tag']).val());
         else
-          window.currentTag.retrieveTag($(this.tagsConfig['tag']).val());
+          this.retrieveTag($(this.tagsConfig['tag']).val());
         $(this.tagsConfig['tagModal']).modal('hide');
       });
       $(this.tagsConfig['tag']).keyup(function (event) {
         if (event.keyCode == 13) {
           if ($(this.tagsConfig['tagSubmit']).text() == 'Create tag')
-            window.currentTag.createTag($(this.tagsConfig['tag']).val());
+            this.createTag($(this.tagsConfig['tag']).val());
           else
-            window.currentTag.retrieveTag($(this.tagsConfig['tag']).val());
+            this.retrieveTag($(this.tagsConfig['tag']).val());
           $(this.tagsConfig['tagModal']).modal('hide');
         }
       });
 
       $(this.tagsConfig['tagSearchMenu']).perfectScrollbar();
 
-      $(this.tagsConfig['tagSubmit']).click(function () {
-        if ($(this.tagsConfig['tagSubmit']).text() == 'Create tag')
-          window.tags.createTag($(this.tagsConfig['tag']).val());
-        else {
-          if ($(this.tagsConfig['tag']).val().length > 0)
-            window.tags.retrieveTag($(this.tagsConfig['tag']).val());
-          else {
-            var thisdata = tag_data[parseInt($('.tag-el.active').attr('data')) - 1];
-            window.tags.retrieveTag(thisdata['name']);
-          }
-        }
-        $(this.tagsConfig['tagModal']).modal('hide');
-      });
-
       $(this.tagsConfig['tag']).keyup(function (event) {
         if (event.keyCode == 13) {
           if ($(this.tagsConfig['tagSubmit']).text() == 'Create tag')
-            window.tags.createTag($(this.tagsConfig['tag']).val());
+            this.createTag($(this.tagsConfig['tag']).val());
           else {
             if ($(this.tagsConfig['tag']).val().length > 0)
-              window.tags.retrieveTag($(this.tagsConfig['tag']).val());
+              this.retrieveTag($(this.tagsConfig['tag']).val());
             else {
               var thisdata = tag_data[parseInt($('.tag-el.active').attr('data')) - 1];
-              window.tags.retrieveTag(thisdata['name']);
+              this.retrieveTag(thisdata['name']);
             }
           }
           $(this.tagsConfig['tagModal']).modal('hide');
@@ -153,56 +139,11 @@ moduleExporter('Tags', ['perfectScrollbar', 'tagEditor', 'jquery'], function(per
     }
 
 
+    // Should be Overloaded by application
+    this.createTag = function(tagName) {}
 
-    this.createTag = function(currentClient, fffbomesh, tag) {
-      /**
-       * Creates a tag with the given string.
-       */
-      msg = {}
-      msg['tag'] = tag;
-      msg['metadata'] = ffbomesh.export_state();
-
-      Client.sendStandardNA(msg, Client.addNAServer('ffbo.na.create_tag'));
-    }
-
-    this.retrieveData = function (currentClient, ffbomesh, metadata, reset = true) {
-      /**
-       * Retrieves data during the retrieval of a tag.
-       */
-      if (reset) {
-        neuList = [];
-        ffbomesh.reset();
-        resetNeuronButton();
-        $('#neu-id').attr('name', '');
-        $('#neu-id').attr('uid', '');
-        $('#neu-id').text('FlyCircuit DB: ');
-        $("#flycircuit-iframe").attr('src', '');
-      }
-      msg = {}
-      msg['data_callback_uri'] = 'ffbo.ui.receive_partial';
-      msg['username'] = username;
-      var na_servers = document.getElementById("na_servers");
-      var na_server = na_servers.options[na_servers.selectedIndex].value;
-      msg['server'] = na_server;
-      msg['query'] = "{'command':'retrieve':{'state':0}}"
-      msg["threshold"] = 20
-      if (ffbomesh.neurons_3d)
-        msg["threshold"] = 1
-      currentClient.sendStandardNA(msg, 'ffbo.processor.neuroarch_query', function (res) { $(".overlay-background").hide(); metadata = res['data']; Notify('Retrieved Tag.'); ffbomesh.resume();});
-    }
-
-    this.retrieveTag = function(currentClient, ffbomesh, metadata) {
-      /**
-       * Retrieves a tag from Neuroarch with the given name.
-       */
-      msg = {}
-      msg['tag'] = tag;
-
-      $('.overlay-background').show();
-      $(".overlay-background").show();
-      Notify("Fetching connectivity data");
-      currentClient.sendStandardNA(msg, addNAServer('ffbo.na.retrieve_tag'), function(res) {$(".overlay-background").hide(); Notify('Retrieving Tag.'); this.retrieveData(currentClient, ffbomesh, metadata);});
-    }
+    // Should be Overloaded by application
+    this.retrieveTag = function(tagName) {}
 
     function addTagToBrowser(tagData) {
       /**
