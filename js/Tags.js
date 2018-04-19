@@ -154,7 +154,7 @@ function addTagBrowser(x, tag_data) {
 
 // Test
 
-current_tags = $('#tag_tag_editor').getTags();
+current_tags = $('#tag_tag_editor').tagEditor('getTags')[0].tags;
 
 var ex_tag = {'name': 'Alpha Lobe', 'desc': 'This tag shows the alpha lobe of the mushroom body.', 'tags': ['mushroom body', 'alpha lobe'], 'extra': 'This tag has been created by the FFBO team.'};
 
