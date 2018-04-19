@@ -12,7 +12,7 @@ if( moduleExporter === undefined){
   };
 }
 
-modeuleExporter("Overlay",
+moduleExporter("Overlay",
   ['jquery','d3'],
   function($,d3)
 {
