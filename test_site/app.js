@@ -26,6 +26,7 @@ function (
   InfoPanel,
 ){
   var infoPanel = new InfoPanel("#info-panel");
+  // window["infoPanel"] = infoPanel;
   var client = new FFBOClient();
   client.startConnection("guest", "guestpass", "wss://neuronlp.fruitflybrain.org:8888/ws")
 
@@ -42,7 +43,13 @@ function (
                           }});
   }
   window["fetchSynapseInfo"] = function(rid){
-    client.executeNAquery(client.synapseInfoQuery(rid), {success: infoPanel.update})
+    client.executeNAquery(client.synapseInfoQuery(rid),                           
+                          {success: function(d){
+                            console.log(d);
+                            if ("synapse_details_1" in d) {
+                              infoPanel.update(d["synapse_details_1"],undefined);
+                            }
+                          }})
   }
 
 });

@@ -23,28 +23,35 @@ moduleExporter("SummaryTable",
    */
   function Summary(div_id, func_isInWorkspace){
     this.divId = div_id;  // wrapper
-    this.neuNameId = "#neu-id";
-    this.externalLinkId = "#vfb-link";
     this.colorId = "#neu_col";
     this.isInWorkspace = func_isInWorkspace;
+    this.overlay = new Overlay("img-viewer-overlay",'<img id="full-img"><h2 id="img-viewer-caption"></h2>');
 
-    this.overlay = new Overlay("#img-viewer-overlay",'<img id="full-img"><h2 id="img-viewer-caption"></h2>');
-
-    this.objName = 'Object Name';
-    this.objType = 'Object Type';
-
+    this.htmlTemplate = createTemplate(this);
+    this.dom = document.getElementById(this.divId.slice(1));
     this.reset();
   }
+
+  /**
+   * Create HTML template
+   */
+  function createTemplate(obj){
+    var template = "";
+    template += '<table class="table table-inverse table-custom-striped"><tbody></tbody></table>';
+    template += '<div id="info-panel-extra-img" class="row">';
+    template += '<div class="col-md-4" style="display:none"><h4>Confocal Image</h4><img class="clickable-image" style="width:100%" alt="not available" onerror="imgError(this);"></div>';
+    template += '<div class="col-md-4" style="display:none"><h4>Segmentation</h4><img class="clickable-image" style="width:100%" alt="not available" onerror="imgError(this);"></div>';
+    template += '<div class="col-md-4" style="display:none"><h4>Skeleton</h4><img class="clickable-image" style="width:100%" alt="not available" onerror="imgError(this);"></div>';
+    template += '</div>';
+    return template;
+  }  
 
   /*
    * Reset Summary Table
    */
   Summary.prototype.reset = function (){
     // purge div and add table
-    $(this.divId).html("");
-    var innerhtml = "";
-    innerhtml += '<tbody></tbody>';
-    $(this.divId).html(innerhtml);
+    this.dom.innerHTML = this.htmlTemplate;
   }
 
 
@@ -65,20 +72,6 @@ moduleExporter("SummaryTable",
 
   /**
    * Summary Information Update
-   * >   {
-            "class": "Neuron",
-            "Data Source":[],
-            "name":"Gad1-F-200292",
-            "locality":false,   // if it's local neuron
-            "flycircuit_data":{},
-            "uname":"Gad1-F-200292",
-            "Expresses":[],    // whether if it expresses a gene, e.g. fruitless
-            "Transgenic Lines": [],  // e.g. GAL4
-            "Transmitters":[], // 
-            "Synapse Locations":[],
-            "External Link":[],
-         }
-   *
    *
    */
   Summary.prototype.update = function(data){
@@ -86,83 +79,69 @@ moduleExporter("SummaryTable",
     this.reset();
     $(this.divId).show(); // show summary information
   
-    var objName = data['uname'];
-    var objType = data['class'];
-    // extract name of object into this.name
-    // if('label' in data){
-    //   this.objName = data['label'];  
-    // }else if('uname' in data){
-    //   this.name = data['uname'];
-    // }else if('name' in data){
-    //   this.name = data['name'];
-    // }
-
+    let basicKeys = ['Class','Name','vfbId','Data Source'];
+    let additionalKeys = ['Transmitters','Expresses','Transgenic Lines'];
+    
     let tableHtml = "";
-    tableHtml += '<tr><td>'+objType+'</td><td>' + objName + '</td></tr>';
 
-    if ("External Link" in data){
-      //<TODO>
-          // // add External Link if necessary
-      // if('vfb_id' in data && data['vfb_id']){
-      //   $(this.externalLinkId).html("<a target='_blank' href='http://virtualflybrain.org/reports/" + data['vfb_id'] + "'>VFB link</a>")
-      //   $(this.externalLinkId).show();
-      // }
+    for (key of basicKeys){
+      if (data[key]) {  // make sure data field is valid
+        if (key === 'vfbId'){
+          let vfbBtn = "<a target='_blank' href='http://virtualflybrain.org/reports/" + data[key] + "'>VFB link</a>"
+          tableHtml += '<tr><td>External Link:</td><td>' + vfbBtn + '</td></tr>';
+          continue;
+        }
+        tableHtml += '<tr><td>' + key + ':</td><td>' + data[key] + '</td></tr>';
+      }
     }
-    
-
+    for (key of additionalKeys){
+      if (data[key]) {  // make sure data field is valid
+        tableHtml += '<tr><td>' + key + ':</td><td>' + data[key] + '</td></tr>';
+      }
+    }
     // add color functionality
-    if(this.isInWorkspace(this.name)){
-      tableHtml+='<tr class="experimental" ><td>Choose Color</td><td> <input class="color_inp"'
-      if(Modernizr.inputtypes.color){
-        tableHtml+='type="color"';
-      }else{
-        tableHtml+='type="text"';
-      }
-      tableHtml+='name="neu_col" id="' + this.colorId.slice(1)+ '" value="#' + "123141" + '"/></td></tr>'; //<TODO> remove ffbomesh dependency
-    }
-
-    // add additional params 
-    var params = ['Data Source', 'Transgenic Lines'];
-    for ( p in params) {
-      if (params[p] in data) {
-        tableHtml += '<tr class="">'
-        tableHtml += '<td>' + params[p] + ':</td>'
-        s = data[params[p]].toString().replace(/\b\w+/g,function(s){return s.charAt(0).toUpperCase() + s.substr(1).toLowerCase();});
-        tableHtml += '<td>' + s + '</td>';
-        tableHtml += '</tr>';
-      }
-    }
+    // if(this.isInWorkspace(this.name)){
+    //   tableHtml+='<tr class="experimental" ><td>Choose Color</td><td> <input class="color_inp"'
+    //   if(Modernizr.inputtypes.color){
+    //     tableHtml+='type="color"';
+    //   }else{
+    //     tableHtml+='type="text"';
+    //   }
+    //   tableHtml+='name="neu_col" id="' + this.colorId.slice(1)+ '" value="#' + "123141" + '"/></td></tr>'; //<TODO> remove ffbomesh dependency
+    // }
     
-    $(this.divId).html(tableHtml);
+    $(this.divId + " tbody").html(tableHtml);
     
     // flycircuit data
-    if ('flycircuit' in data['Data Source']){
-      var extraData = data['flycircuit_data'];
+    if (data['Data Source'].indexOf("FlyCircuit") > -1) { // see if flycircuit is in 
+      let extraTableHtml = "";
+      var extraData = data['Flycircuit Data']
       if (!('error' in extraData)){
         var params = ["Author","Driver","Gender/Age","Lineage", "Putative birth time", "Putative neurotransmitter", "Soma Coordinate", "Stock"];
 
         Object.entries(params).forEach(
           ([idx, p]) => {
             if (idx % 2 === 0){
-              tableHtml += "<tr><td>" + p + "</td><td>" + extraData[p] +"</td>" ;
+              extraTableHtml += "<tr><td>" + p + ":</td><td>" + extraData[p] +"</td>" ;
             }else{
-              tableHtml += "<td>" + p + "</td><td>" + extraData[p] +"</td></tr>" ;
+              extraTableHtml += "<td>" + p + ":</td><td>" + extraData[p] +"</td></tr>" ;
             }
           }
         );
 
-        tableHtml += '<div class="row">';
-        tableHtml += '<div class="col-md-4"><h4>Confocal Image</h4><img class="clickable-image" style="width:100%" alt="not available" onerror="imgError(this);"></div>';
+        $(this.divId+ " tbody").append(extraTableHtml);
 
-        tableHtml += '<div class="col-md-4"><h4>Segmentation</h4><img class="clickable-image" style="width:100%" alt="not available" onerror="imgError(this);"></div>';
-        tableHtml += '<div class="col-md-4"><h4>Skeleton</h4><img class="clickable-image" style="width:100%" alt="not available" onerror="imgError(this);"></div>';
-        tableHtml += '</div>';
+        // set source for images
+        $("#info-panel-extra-img >div>img")[0].src = extraData["Images"]["Original confocal image (Animation)"];
+        $("#info-panel-extra-img >div>img")[1].src = extraData["Images"]["Segmentation"];
+        $("#info-panel-extra-img >div>img")[2].src = extraData["Images"]["Skeleton (download)"];
 
-
-        imagesPanel.children[0].children[1].src = extraData["Images"]["Original confocal image (Animation)"];
-        imagesPanel.children[1].children[1].src = extraData["Images"]["Segmentation"];
-        imagesPanel.children[2].children[1].src = extraData["Images"]["Skeleton (download)"];
-
+        $("#info-panel-extra-img >div")[0].show();
+        $("#info-panel-extra-img >div")[1].show();
+        $("#info-panel-extra-img >div")[2].show();
+        $("#info-panel-extra-img").show();
+        
+        
 
       //   imagesPanel.children[0].children[1].onclick = function(){
       //     $('#full-img')[0].src = this.src;
@@ -184,8 +163,6 @@ moduleExporter("SummaryTable",
       //   }
       }
     }
-}
-
 
     // Color Change - show palette
     if(this.isInWorkspace(this.name)){

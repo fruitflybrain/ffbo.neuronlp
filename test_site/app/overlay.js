@@ -25,11 +25,11 @@ loader("Overlay",
     this.divId = div_id;
     this.content = content;
 
-    this.div = document.createElement("div");
-    this.div.setAttribute("id",this.divId);
-    this.div.setAttribute("class","overlay");
-    this.div.innerHTML = this.content;
-    document.body.appendChild(this.div);
+    this.dom = document.createElement("div");
+    this.dom.setAttribute("id",this.divId);
+    this.dom.setAttribute("class","overlay");
+    this.dom.innerHTML = this.content;
+    document.body.appendChild(this.dom);
   }
 
 
