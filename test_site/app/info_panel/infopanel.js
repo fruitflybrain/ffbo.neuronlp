@@ -79,8 +79,14 @@ moduleExporter("InfoPanel",
       delete this.summaryTable;
     }
 
+    overwriteCallbacks = {'isInWorkspace': this.isInWorkspace,
+                          'addObjById': this.addObjById}
+
     this.connSVG = new ConnSVG(this.connSVGId);
-    this.connTable = new ConnTable(this.connTableId,this.isInWorkspace);//,synData,false,this.isInWorkspace);
+    this.connTable = new ConnTable(this.connTableId,
+                                   {'isInWorkspace': this.isInWorkspace,
+                                    'addObjById': this.addObjById}
+                                  );
     this.summaryTable = new SummaryTable(this.summaryTableId,this.isInWorkspace); // neuron information table
   }
 
@@ -108,6 +114,16 @@ moduleExporter("InfoPanel",
   InfoPanel.prototype.isInWorkspace = function(id){
     return false;
   }
+
+  /**
+   * Add an object into the workspace. 
+   * 
+   * @param {string} id -  id of target object (neuron/synapse)
+   */
+  InfoPanel.prototype.addObjById = function(id){
+    return;
+  }
+
 
   /**
   * Update Info Panel
@@ -175,6 +191,22 @@ moduleExporter("InfoPanel",
 
       connData['pre']['details'] = synData['pre'];
       connData['post']['details'] = synData['post'];
+
+      for (x in connData['pre']['details']){
+        if (connData['pre']['details'][x]['has_syn_morph'] == 0){
+          connData['pre']['details'][x]['inferred']=1;
+        }else{
+          connData['pre']['details'][x]['inferred']=0;
+        }
+      }
+      for (x in connData['post']['details']){
+        if (connData['post']['details'][x]['has_syn_morph'] == 0){
+          connData['post']['details'][x]['inferred']=1;
+        }else{
+          connData['post']['details'][x]['inferred']=0;
+        }
+      }
+
     }
     return {
       summary:summaryData,

@@ -25,7 +25,7 @@ moduleExporter("SummaryTable",
     this.divId = div_id;  // wrapper
     this.colorId = "#neu_col";
     this.isInWorkspace = func_isInWorkspace;
-    this.overlay = new Overlay("img-viewer-overlay",'<img id="full-img"><h2 id="img-viewer-caption"></h2>');
+    this.overlay = new Overlay("#img-viewer-overlay",'<img id="full-img"><h2 id="img-viewer-caption"></h2>');
 
     this.htmlTemplate = createTemplate(this);
     this.dom = document.getElementById(this.divId.slice(1));
@@ -136,9 +136,9 @@ moduleExporter("SummaryTable",
         $("#info-panel-extra-img >div>img")[1].src = extraData["Images"]["Segmentation"];
         $("#info-panel-extra-img >div>img")[2].src = extraData["Images"]["Skeleton (download)"];
 
-        $("#info-panel-extra-img >div")[0].show();
-        $("#info-panel-extra-img >div")[1].show();
-        $("#info-panel-extra-img >div")[2].show();
+        $("#info-panel-extra-img >div").show();
+        $("#info-panel-extra-img >div").show();
+        $("#info-panel-extra-img >div").show();
         $("#info-panel-extra-img").show();
         
         

@@ -26,10 +26,10 @@ moduleExporter("ConnTable",
   * Connectivity Table inside Info Panel
   * @constuctor
   * @param {string} div_id - id for div element in which the connectivity table is held
-  * @param {function} func_isInWorkspace - function to check if an element (button in this case) is in mesh workspace
+  * @param {obj} overwriteCallbacks - function ['isInWorkspace',addObjById]
   * @param {dict} [nameConfig={}] - configuration of children divs. The 3 children divs in ConnTable are `['preTabId','postTabId','overlayId']`
   */
-  function ConnTable(div_id,func_isInWorkspace, nameConfig={}){
+  function ConnTable(div_id,overwriteCallbacks, nameConfig={}){
     this.divId = div_id;  // wrapper
 
     // nameConfig = nameConfig || {};
@@ -49,8 +49,13 @@ moduleExporter("ConnTable",
       writable: false
     })
 
-    this.isInWorkspace = func_isInWorkspace;
-    this.overlay = new Overlay(this.overlayId.slice(1),"");
+    //callback functions
+    this.isInWorkspace = overwriteCallbacks.isInWorkspace;
+    this.addObjById = overwriteCallbacks.addObjById;
+
+    overlayText = '<h2>Inferred Synaptic Partners</h2><p>Inferred synaptic partners are marked by &dagger; </p><h3>SPIN</h3><p>Inferred synaptic connections using axonic/dendritic polarity predicted by SPIN:Skeleton-based Polarity Identification for Neurons. Please refer to <br><a href="http://link.springer.com/article/10.1007/s12021-014-9225-6" target="_blank">SPIN: A Method of Skeleton-based Polarity Identification for Neurons. Neurinformatics 12:487-507. Yi-Hsuan Lee, Yen-Nan Lin, Chao-Chun Chuang and Chung-Chuan Lo (2014)</a> <br>for more details on the SPIN algorithm.</p>';
+    overlayText += '<p>The polarity determined by spin was used to predict synaptic connections based on when an axonic segment of a neuron is within a specified distance to a dendritic segment of another neuron after registering to a standard brain template.</p>';
+    this.overlay = new Overlay(this.overlayId, overlayText);
 
     this.htmlTemplate = createTemplate(this);
     this.dom = document.getElementById(this.divId.slice(1));
@@ -110,33 +115,23 @@ moduleExporter("ConnTable",
   * @param {obj} data - connectivity data, must be in the format specified by `InfoPanel.reformatData()` method
   * @param {boolean} inferred - whether the connectivity is inferred or not
   */
-  ConnTable.prototype.update = function(data,inferred){
+  ConnTable.prototype.update = function(data){
     // show synaptic table
     if (data === undefined){
       return;
     }
     this.reset();
 
-    if (inferred){
-      const btnMoreInfo = '<a id="inferred-details-pre" class="info-panel-more-info inferred-more-info"> <i class="fa fa-info-circle" aria-hidden="true"></i></a>';
-      $(this.divId + " h4").html('Inferred Presynaptic Partners' + btnMoreInfo);
-      $(this.divId + " h4").html('Inferred Postsynaptic Partners'+ btnMoreInfo);
 
-      $(".inferred-more-info").click(function(){
-        info = "<h2>Inferred Synaptic Partners</h2>";
-        $(this.overlayId + " .container").html(info + data['description']);
+    const btnMoreInfo = '<a id="inferred-details-pre" class="info-panel-more-info inferred-more-info"> <i class="fa fa-info-circle" aria-hidden="true"></i></a>';
+    $(this.divId + " h4").html("Presynaptic Partners"+ btnMoreInfo);
+    $(this.divId + " h4").html("Postsynaptic Partners"+ btnMoreInfo);
 
-        //mm_menu_right.close();// ?where is this
-
-        // setTimeout( function() {
-        //   closeAllOverlay(true);
-        //   $(infoOverlay).slideDown(500);
-        // }, 500);
-      });
-    }else{
-      $(this.divId + " h4").html("Presynaptic Partners");
-      $(this.divId + " h4").html("Postsynaptic Partners");
-    }
+    $(".inferred-more-info").click(function(){
+      // info = "<h2>Inferred Synaptic Partners</h2>";
+      // this.overlay.update(info + data['description']); //<TODO> overwrite in the future
+      this.overlay.show();
+    });
 
     // create table
     this.updateTable(data,'pre');    
@@ -169,7 +164,7 @@ moduleExporter("ConnTable",
     // flags for detecting if neuron or synapses have been added
     let neuron_add = false;
     let synapse_add = false;
-    for(x in data[connDir]['details']){
+    for(x in data[connDir]['details']){ // loop through all partners
       d = data[connDir]['details'][x];
       name = "";
       N = "";
@@ -194,7 +189,12 @@ moduleExporter("ConnTable",
       var c4 = row.insertCell(3);
       c4.className = (connDir==='pre') ? 'synapse_add_pre': 'synapse_add_post';
 
-      c1.innerHTML = name;
+      if ( d['inferred'] == 1 ){
+        c1.innerHTML = "&dagger;" + name;  
+      }else{
+        c1.innerHTML = name;  
+      }
+      
       c2.innerHTML = N;
 
       // generate add/remove button for each neuron
@@ -213,6 +213,7 @@ moduleExporter("ConnTable",
         }
         btn.onclick = function(){
           toggleBtn(this);
+          this.addObjById(btn.name);
         };
 
         c3.appendChild(btn);
@@ -233,6 +234,7 @@ moduleExporter("ConnTable",
         }
         btn.onclick = function(){
           toggleSynBtn(this);
+          this.addObjById(btn.name);
         };
 
         c4.appendChild(btn);
@@ -280,12 +282,10 @@ moduleExporter("ConnTable",
   */
   function toggleBtn(btn){
     if(btn.className.includes('add')){
-      // ClientSession.addByUname(btn.name);
       btn.innerText = "-";
       btn.className = "btn btn-remove btn-danger";
     }
     else{
-      // ClientSession.removeByUname(btn.name);
       btn.innerText = "+";
       btn.className = "btn btn-add btn-success";
     }
@@ -296,11 +296,9 @@ moduleExporter("ConnTable",
   */
   function toggleSynBtn(btn){
     if(btn.className.includes('add')){
-      // ClientSession.addSynapseByUname(btn.name);
       btn.innerText = "-";
       btn.className = "btn btn-remove btn-danger";
     } else{
-      // ClientSession.removeSynapseByUname(btn.name);
       btn.innerText = "+";
       btn.className = "btn btn-add btn-success";
     }
