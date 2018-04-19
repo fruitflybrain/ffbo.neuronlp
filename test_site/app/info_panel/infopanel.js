@@ -15,9 +15,9 @@ if( moduleExporter === undefined){
 moduleExporter("InfoPanel",
   [
   'jquery',
-  'app/info_panel/summary_table',
-  'app/info_panel/conn_svg',
-  'app/info_panel/conn_table',
+  'app/info_panel/summarytable',
+  'app/info_panel/connsvg',
+  'app/info_panel/conntable',
   ],
   function(
     $,
@@ -28,8 +28,11 @@ moduleExporter("InfoPanel",
 {
 
   /**
-   * InfoPanel Constructor
-   */
+  * InfoPanel
+  * @constuctor
+  * @param {string} div_id - id for div element in which the connectivity table is held
+  * @param {dict} [nameConfig={}] - configuration of children divs. The 3 children divs in ConnTable are `['connSVGId','connTableId','summaryTableId']`
+  */
   function InfoPanel(div_id, nameConfig={}){
     this.divId = div_id;
 
@@ -61,7 +64,7 @@ moduleExporter("InfoPanel",
    }
 
   /*
-   * Reset Summary Table
+   * Reset to detaul HTML
    */
   InfoPanel.prototype.reset = function (){
     // purge div and add table
@@ -81,8 +84,11 @@ moduleExporter("InfoPanel",
     this.summaryTable = new SummaryTable(this.summaryTableId,this.isInWorkspace); // neuron information table
   }
 
+
   /**
    * Create HTML template
+   * 
+   * @param {object} obj - synonymous to `this`, refers to instance of ConnTable
    */
   function createTemplate(obj){
     var template = "";
@@ -96,16 +102,19 @@ moduleExporter("InfoPanel",
 
   /**
    * Check if an object is in the workspace. 
-   * Overwrite by caller
+   * 
+   * @param {string} id -  id of target object (neuron/synapse)
    */
-  InfoPanel.prototype.isInWorkspace = function(key){
+  InfoPanel.prototype.isInWorkspace = function(id){
     return false;
   }
 
   /**
-   * Check if an object is in the workspace. 
-   * Overwrite by caller
-   */
+  * Update Info Panel
+  * 
+  * @param {obj} neuData - neuron Data
+  * @param {obj} synData - synapse Data
+  */
   InfoPanel.prototype.update = function(neuData,synData){
     let new_name;
     if('label' in neuData){
@@ -129,6 +138,12 @@ moduleExporter("InfoPanel",
     }
   }
 
+  /**
+  * reformat
+  * 
+  * @param {obj} neuData - neuron Data
+  * @param {obj} synData - synapse Data
+  */
   function reformatData(neuData,synData){
 
 

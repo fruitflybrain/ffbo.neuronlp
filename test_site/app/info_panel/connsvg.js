@@ -15,7 +15,7 @@ moduleExporter("ConnSVG",
   [
 	'jquery',
 	'd3',
-	'app/info_panel/pre_process'],
+	'app/info_panel/preprocess'],
   function(
   	$,
   	d3,

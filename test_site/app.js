@@ -18,7 +18,7 @@ requirejs.config({
 requirejs([
   'jquery',
   'app/Client',
-  'app/info_panel/info_panel'
+  'app/info_panel/infopanel'
 ],
 function (
   $,

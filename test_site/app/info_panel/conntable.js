@@ -14,7 +14,7 @@ if( moduleExporter === undefined){
 moduleExporter("ConnTable",
   ['jquery',
 	'd3',
-	'app/info_panel/pre_process',
+	'app/info_panel/preprocess',
   'app/overlay'],
   function(
   	$,
@@ -22,10 +22,13 @@ moduleExporter("ConnTable",
   	preprocess,
     Overlay)
 {
-  // const svgWrapperId = "#svg-syn";
-  // const synProfileInfoWrapperId =  "#syn-profile-info";  
-  // const synProfileTextId =  "#syn-reference-text"; 
-
+  /**
+  * Connectivity Table inside Info Panel
+  * @constuctor
+  * @param {string} div_id - id for div element in which the connectivity table is held
+  * @param {function} func_isInWorkspace - function to check if an element (button in this case) is in mesh workspace
+  * @param {dict} [nameConfig={}] - configuration of children divs. The 3 children divs in ConnTable are `['preTabId','postTabId','overlayId']`
+  */
   function ConnTable(div_id,func_isInWorkspace, nameConfig={}){
     this.divId = div_id;  // wrapper
 
@@ -57,6 +60,8 @@ moduleExporter("ConnTable",
 
   /**
    * Create HTML template
+   * 
+   * @param {object} obj - synonymous to `this`, refers to instance of ConnTable
    */
   function createTemplate(obj){
     var template = "";
@@ -73,8 +78,8 @@ moduleExporter("ConnTable",
     return template;
   }  
 
-  /*
-   * Reset Connectivity Table
+  /**
+   * Reset to default HTML 
    */
   ConnTable.prototype.reset = function (){
     // purge div and add table
@@ -82,16 +87,16 @@ moduleExporter("ConnTable",
   }
 
   /**
-  * hide all subcomponents
+  * Hide all subcomponents
   */
-  ConnTable.prototype.hide = function(data){
+  ConnTable.prototype.hide = function(){
     $(this.preTabId).hide();
     $(this.postTabId).hide();
     $(this.divId).hide();
   }
 
   /**
-  * show all subcomponents
+  * Show all subcomponents
   */
   ConnTable.prototype.show = function(data){
     $(this.preTabId).show();
@@ -101,11 +106,13 @@ moduleExporter("ConnTable",
 
   /**
   * Update synpatic reference and table
+  * 
+  * @param {obj} data - connectivity data, must be in the format specified by `InfoPanel.reformatData()` method
+  * @param {boolean} inferred - whether the connectivity is inferred or not
   */
   ConnTable.prototype.update = function(data,inferred){
     // show synaptic table
     if (data === undefined){
-      this.hide();
       return;
     }
     this.reset();
@@ -138,9 +145,10 @@ moduleExporter("ConnTable",
   }
 
   /**
-    * Update synaptic partners table
-    *  @data
-    *  @connDir: 'pre'/'post'  
+    * Update synaptic partners table, child method of `ConnTable.update()`
+    * 
+    *  @param {obj} data - inherited from caller `ConnTable.update()` method
+    *  @param {string} connDir - Connectivity direction `['pre'/'post']`
     */
   ConnTable.prototype.updateTable = function(data,connDir){
     if(!(connDir in data)){
@@ -245,7 +253,10 @@ moduleExporter("ConnTable",
     }
 
     // refresh list 
-    this.updateList();
+    this.filterByName(this.preTabId.slice(1),document.getElementById("presyn-srch").value);
+    this.filterByNum(this.preTabId.slice(1),document.getElementById("presyn-N").value);
+    this.filterByName(this.postTabId.slice(1),document.getElementById("postsyn-srch").value);
+    this.filterByNum(this.postTabId.slice(1),document.getElementById("postsyn-N").value);
 
     // add callback
     $("#presyn-srch").on('keyup change',(function(){  
@@ -261,14 +272,6 @@ moduleExporter("ConnTable",
       this.filterByNum(this.postTabId.slice(1),document.getElementById("postsyn-N").value);
     }).bind(this));
 
-  }
-
-  ConnTable.prototype.updateList = function(){
-    // filter by name and number
-    this.filterByName(this.preTabId.slice(1),document.getElementById("presyn-srch").value);
-    this.filterByNum(this.preTabId.slice(1),document.getElementById("presyn-N").value);
-    this.filterByName(this.postTabId.slice(1),document.getElementById("postsyn-srch").value);
-    this.filterByNum(this.postTabId.slice(1),document.getElementById("postsyn-N").value);
   }
 
 
@@ -337,7 +340,10 @@ moduleExporter("ConnTable",
 
 
   /**
-  * Dynamic table
+  * Filter Connectivity Table by Name
+  *
+  * @param {string} tableId - id of table being filtered
+  * @param {string} text - text used for filtering
   */
   ConnTable.prototype.filterByName = function(tableId, text){
     var filter, table, tr, td, i;
@@ -361,7 +367,10 @@ moduleExporter("ConnTable",
   }
 
   /**
-  * Dynamic table
+  * Filter Connectivity Table by Number
+  *
+  * @param {string} tableId - id of table being filtered
+  * @param {string} N - filter neurons with number of connectivty `> N`
   */
   ConnTable.prototype.filterByNum = function(tableId,N){
     // Declare variables
