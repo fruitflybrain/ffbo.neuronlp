@@ -7,7 +7,7 @@ if( moduleExporter === undefined){
     } else if (typeof require === 'function') {
       define(dependencies, definition);
     } else {
-      window[name] = eval("definition(" + dependencies.toString() + ")");
+      window[name] = definition();
     }
   };
 }
@@ -21,6 +21,9 @@ moduleExporter("FFBOClient", ["autobahn", "PropertyManager"], function(autobahn,
   epServerID = undefined;
   // nk server crossbar id
   nkServerID = undefined;
+
+  autobahn = autobahn || window.autobahn;
+  PropertyManager = PropertyManager || window.PropertyManager;
 
   onSuccessCallback = function(result, queryID, callback){
     if( !(typeof result == "object") || (result==undefined) ) {
