@@ -28,17 +28,17 @@ moduleExporter("ConnSVG",
   function ConnSVG(div_id,data,nameConfig={}){
     this.divId = div_id;  // wrapper
     Object.defineProperty(this,"tabId",{
-      value: nameConfig.tabId || "#info-panel-conn-table",
+      value: nameConfig.tabId || "info-panel-conn-table",
       configurable: false,
       writable: false
     })
     Object.defineProperty(this,"tabTextId",{
-      value: nameConfig.tabTextId || "#info-panel-conn-table-text",
+      value: nameConfig.tabTextId || "info-panel-conn-table-text",
       configurable: false,
       writable: false
     })
     Object.defineProperty(this,"svgId",{
-      value: nameConfig.svgId || "#info-panel-conn-svg",
+      value: nameConfig.svgId || "info-panel-conn-svg",
       configurable: false,
       writable: false
     })
@@ -47,7 +47,7 @@ moduleExporter("ConnSVG",
     this.svg = undefined;
 
     this.htmlTemplate = createTemplate(this);
-    this.dom = document.getElementById(this.divId.slice(1));
+    this.dom = document.getElementById(this.divId);
     this.reset();
   }
 
@@ -56,10 +56,10 @@ moduleExporter("ConnSVG",
    */
   function createTemplate(obj){
     var template = "";
-    let tableText = '<tr><td>Synaptic Profile Plot</td><td id="' + obj.tabTextId.slice(1) + '" class="syn-reference">Click on/Hover over plot to extract detailed synaptic information</td></tr>';
+    let tableText = '<tr><td>Synaptic Profile Plot</td><td id="' + obj.tabTextId + '" class="syn-reference">Click on/Hover over plot to extract detailed synaptic information</td></tr>';
     template = "";
-    template += '<table id="' + obj.tabId.slice(1) + '" class="table table-inverse table-custom-striped">';
-    template += '<tbody>' + tableText.slice(1) + '</tbody>';
+    template += '<table id="' + obj.tabId + '" class="table table-inverse table-custom-striped">';
+    template += '<tbody>' + tableText + '</tbody>';
     template += '</table>';  // table 
 
     return template;
@@ -81,16 +81,16 @@ moduleExporter("ConnSVG",
    * Hide all subcomponents
    */
   ConnSVG.prototype.hide = function(){
-    $(this.tabId).hide(); 
-    $(this.svgId).hide(); 
+    $('#'+this.tabId).hide(); 
+    $('#'+this.svgId).hide(); 
   }
 
   /** 
    * Show all subcomponents
    */
   ConnSVG.prototype.show = function(){
-    $(this.tabId).show(); 
-    $(this.svgId).show(); 
+    $('#'+this.tabId).show(); 
+    $('#'+this.svgId).show(); 
   }
 
   /** 
@@ -116,7 +116,7 @@ moduleExporter("ConnSVG",
 
     // Total dimension for entire SVG div
     var height_tot = 150;
-    var width_tot = $(this.divId)[0].getBoundingClientRect().width;
+    var width_tot = $('#'+this.divId)[0].getBoundingClientRect().width;
     //var width_tot = 300;
     // Calculate SVG dimension
     let margin = {top: 20, right: 40, bottom: 30, left: 80};
@@ -146,8 +146,8 @@ moduleExporter("ConnSVG",
     
 
     // create SVG
-    this.svg = d3.select(this.divId).append("svg")
-                                     .attr("id",this.svgId.slice(1))
+    this.svg = d3.select('#'+this.divId).append("svg")
+                                     .attr("id",this.svgId)
                                      .attr("width", width_tot)
                                      .attr("height", height_tot)
                                      .attr("viewBox", "0 0 " + width_tot +" "+ height_tot )

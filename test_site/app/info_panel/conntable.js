@@ -34,17 +34,17 @@ moduleExporter("ConnTable",
 
     // nameConfig = nameConfig || {};
     Object.defineProperty(this,"preTabId",{
-      value: nameConfig.preTabId || "#info-panel-table-pre" ,
+      value: nameConfig.preTabId || "info-panel-table-pre" ,
       configurable: false,
       writable: false
     })
     Object.defineProperty(this,"postTabId",{
-      value: nameConfig.postTabId || "#info-panel-table-post" ,
+      value: nameConfig.postTabId || "info-panel-table-post" ,
       configurable: false,
       writable: false
     })
     Object.defineProperty(this,"overlayId",{
-      value: nameConfig.overlayId || "#info-panel-overlay" ,
+      value: nameConfig.overlayId || "info-panel-overlay" ,
       configurable: false,
       writable: false
     })
@@ -58,7 +58,7 @@ moduleExporter("ConnTable",
     this.overlay = new Overlay(this.overlayId, overlayText);
 
     this.htmlTemplate = createTemplate(this);
-    this.dom = document.getElementById(this.divId.slice(1));
+    this.dom = document.getElementById(this.divId);
     this.reset();
   }
 
@@ -71,13 +71,13 @@ moduleExporter("ConnTable",
   function createTemplate(obj){
     var template = "";
     template = "";
-    template += '<div id ="' + obj.overlayId.slice(1) + '" class="overlay"></div>'
+    template += '<div id ="' + obj.overlayId + '" class="overlay"></div>'
     template += '<h4>Presynaptic Partners</h4>';
-    template += '<table id="' + obj.preTabId.slice(1) + '" class="table table-inverse table-custom-striped">';
+    template += '<table id="' + obj.preTabId + '" class="table table-inverse table-custom-striped">';
     template += '<thead><tr class=""><th>Neuron</th> <th>Number of Synapses</th> <th class="neuron_add_pre">+/- Neuron</th><th class="synapse_add_pre">+/- Synapses</th></tr><tr class=""><th><span class="info-input-span"> Filter by name <br></span><input type="text" id="presyn-srch" value="" class="info-input"/></th> <th><span class="info-input-span"> N greater than <br></span><input type="number" id="presyn-N" value="5" class="info-input selectable"/></th> <th class="neuron_add_pre"></th><th class="synapse_add_pre"></th></tr></thead>';
     template += '<tbody></tbody></table>';  
     template += '<h4>Postsynaptic Partners</h4>'
-    template += '<table id="' + obj.postTabId.slice(1) + '" class="table table-inverse table-custom-striped">';
+    template += '<table id="' + obj.postTabId + '" class="table table-inverse table-custom-striped">';
     template += '<thead><tr  class=""><th>Neuron</th> <th>Number of Synapses</th> <th class="neuron_add_post">+/- Neuron</th><th class="synapse_add_post">+/- Synapses</th></tr><tr class=""><th><span class="info-input-span"> Filter by name <br></span><input type="text" id="postsyn-srch" value="" class="info-input"/></th> <th><span class="info-input-span"> N greater than <br></span><input type="number" id="postsyn-N" value="5" class="info-input selectable"/></th> <th class="neuron_add_post"></th><th class="synapse_add_post"></th></tr></thead>';
     template += '<tbody></tbody></table>';  
     return template;
@@ -95,18 +95,18 @@ moduleExporter("ConnTable",
   * Hide all subcomponents
   */
   ConnTable.prototype.hide = function(){
-    $(this.preTabId).hide();
-    $(this.postTabId).hide();
-    $(this.divId).hide();
+    $('#'+this.preTabId).hide();
+    $('#'+this.postTabId).hide();
+    $('#'+this.divId).hide();
   }
 
   /**
   * Show all subcomponents
   */
   ConnTable.prototype.show = function(data){
-    $(this.preTabId).show();
-    $(this.postTabId).show();
-    $(this.divId).show();
+    $('#'+this.preTabId).show();
+    $('#'+this.postTabId).show();
+    $('#'+this.divId).show();
   }
 
   /**
@@ -124,8 +124,8 @@ moduleExporter("ConnTable",
 
 
     const btnMoreInfo = '<a id="inferred-details-pre" class="info-panel-more-info inferred-more-info"> <i class="fa fa-info-circle" aria-hidden="true"></i></a>';
-    $(this.divId + " h4").html("Presynaptic Partners"+ btnMoreInfo);
-    $(this.divId + " h4").html("Postsynaptic Partners"+ btnMoreInfo);
+    $('#'+this.divId + " h4").html("Presynaptic Partners"+ btnMoreInfo);
+    $('#'+this.divId + " h4").html("Postsynaptic Partners"+ btnMoreInfo);
 
     $(".inferred-more-info").click(function(){
       // info = "<h2>Inferred Synaptic Partners</h2>";
@@ -151,14 +151,14 @@ moduleExporter("ConnTable",
     }
     if (connDir === 'pre'){
       // pre/post tbody
-      var table = $(this.preTabId + " tbody")[0];
+      var table = $('#'+this.preTabId + " tbody")[0];
       // reset table
-      $(this.preTabId + " tbody tr").remove();
+      $('#'+this.preTabId + " tbody tr").remove();
     }else{
       // pre/post tbody
-      var table = $(this.postTabId + " tbody")[0];
+      var table = $('#'+this.postTabId + " tbody")[0];
       // reset table
-      $(this.postTabId + " tbody tr").remove();
+      $('#'+this.postTabId + " tbody tr").remove();
 
     }
     // flags for detecting if neuron or synapses have been added
@@ -255,23 +255,23 @@ moduleExporter("ConnTable",
     }
 
     // refresh list 
-    this.filterByName(this.preTabId.slice(1),document.getElementById("presyn-srch").value);
-    this.filterByNum(this.preTabId.slice(1),document.getElementById("presyn-N").value);
-    this.filterByName(this.postTabId.slice(1),document.getElementById("postsyn-srch").value);
-    this.filterByNum(this.postTabId.slice(1),document.getElementById("postsyn-N").value);
+    this.filterByName(this.preTabId,document.getElementById("presyn-srch").value);
+    this.filterByNum(this.preTabId,document.getElementById("presyn-N").value);
+    this.filterByName(this.postTabId,document.getElementById("postsyn-srch").value);
+    this.filterByNum(this.postTabId,document.getElementById("postsyn-N").value);
 
     // add callback
     $("#presyn-srch").on('keyup change',(function(){  
-      this.filterByName(this.preTabId.slice(1),document.getElementById("presyn-srch").value);
+      this.filterByName(this.preTabId,document.getElementById("presyn-srch").value);
     }).bind(this));
     $("#presyn-N").on('keyup change', (function (){
-      this.filterByNum(this.preTabId.slice(1),document.getElementById("presyn-N").value);
+      this.filterByNum(this.preTabId,document.getElementById("presyn-N").value);
     }).bind(this));
     $("#postsyn-srch").on('keyup change', (function (){
-      this.filterByName(this.postTabId.slice(1),document.getElementById("postsyn-srch").value);
+      this.filterByName(this.postTabId,document.getElementById("postsyn-srch").value);
     }).bind(this));
     $("#postsyn-N").on('keyup change', (function (){
-      this.filterByNum(this.postTabId.slice(1),document.getElementById("postsyn-N").value);
+      this.filterByNum(this.postTabId,document.getElementById("postsyn-N").value);
     }).bind(this));
 
   }

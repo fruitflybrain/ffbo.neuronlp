@@ -23,12 +23,12 @@ moduleExporter("SummaryTable",
    */
   function Summary(div_id, func_isInWorkspace){
     this.divId = div_id;  // wrapper
-    this.colorId = "#neu_col";
+    this.colorId = "neu_col";
     this.isInWorkspace = func_isInWorkspace;
-    this.overlay = new Overlay("#img-viewer-overlay",'<img id="full-img"><h2 id="img-viewer-caption"></h2>');
+    this.overlay = new Overlay("img-viewer-overlay",'<img id="full-img"><h2 id="img-viewer-caption"></h2>');
 
     this.htmlTemplate = createTemplate(this);
-    this.dom = document.getElementById(this.divId.slice(1));
+    this.dom = document.getElementById(this.divId);
     this.reset();
   }
 
@@ -59,15 +59,15 @@ moduleExporter("SummaryTable",
    * Summary Information show
    */
   Summary.prototype.show = function (){
-    $(this.divId).show();
-    $(this.extraDivId).show();
+    $('#'+this.divId).show();
+    $('#'+this.extraDivId).show();
   }
   /**
    * Summary Information hide
    */
   Summary.prototype.hide = function (){
-    $(this.divId).hide();
-    $(this.extraDivId).hide();
+    $('#'+this.divId).hide();
+    $('#'+this.extraDivId).hide();
   }
 
   /**
@@ -77,7 +77,7 @@ moduleExporter("SummaryTable",
   Summary.prototype.update = function(data){
 
     this.reset();
-    $(this.divId).show(); // show summary information
+    $('#'+this.divId).show(); // show summary information
   
     let basicKeys = ['Class','Name','vfbId','Data Source'];
     let additionalKeys = ['Transmitters','Expresses','Transgenic Lines'];
@@ -110,7 +110,7 @@ moduleExporter("SummaryTable",
     //   tableHtml+='name="neu_col" id="' + this.colorId.slice(1)+ '" value="#' + "123141" + '"/></td></tr>'; //<TODO> remove ffbomesh dependency
     // }
     
-    $(this.divId + " tbody").html(tableHtml);
+    $('#'+this.divId + " tbody").html(tableHtml);
     
     // flycircuit data
     if (data['Data Source'].indexOf("FlyCircuit") > -1) { // see if flycircuit is in 

@@ -25,7 +25,7 @@ function (
   FFBOClient,
   InfoPanel,
 ){
-  var infoPanel = new InfoPanel("#info-panel");
+  var infoPanel = new InfoPanel("info-panel");
   window["infoPanel"] = infoPanel;
   var client = new FFBOClient();
   client.startConnection("guest", "guestpass", "wss://neuronlp.fruitflybrain.org:8888/ws")

@@ -19,14 +19,14 @@ loader("Overlay",
    * @content: HTML string for content of ovelay
    */
   function Overlay(div_id, content){
-    if (document.getElementById(div_id.slice(1))){
+    if (document.getElementById(div_id)){
       return;
     }
     this.divId = div_id;
     this.content = content;
 
     this.dom = document.createElement("div");
-    this.dom.setAttribute("id",this.divId.slice(1));
+    this.dom.setAttribute("id",this.divId);
     this.dom.setAttribute("class","overlay");
     this.dom.innerHTML = '<div class="container">' + this.content + '</div>';
     document.body.appendChild(this.dom);
@@ -35,24 +35,24 @@ loader("Overlay",
 
   Overlay.prototype.close = function(){
     setTimeout( function() {
-      $(this.divId).slideUp(500);
-      $(this.divId).hide();
-      $(this.divId).css("display","none");
+      $('#'+this.divId).slideUp(500);
+      $('#'+this.divId).hide();
+      $('#'+this.divId).css("display","none");
     }, 500);
   }  
 
 
   Overlay.prototype.show = function(){
     setTimeout( function() {
-      $(this.divId).slideDown(500);
-      $(this.divId).show();
-      $(this.divId).css("display","block");
+      $('#'+this.divId).slideDown(500);
+      $('#'+this.divId).show();
+      $('#'+this.divId).css("display","block");
     }, 500);
   }
 
 
   Overlay.prototype.update = function(content){
-    $(this.divId + " .container").html(content);
+    $('#'+this.divId + " .container").html(content);
   }
 	return Overlay;
 });

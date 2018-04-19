@@ -38,30 +38,46 @@ moduleExporter("InfoPanel",
 
     // nameConfig = nameConfig || {};
     Object.defineProperty(this,"connSVGId",{
-      value: nameConfig.connSVGId || "#info-panel-conn",
+      value: nameConfig.connSVGId || "info-panel-conn",
       configurable: false,
       writable: false
-    })
+    });
     Object.defineProperty(this,"connTableId",{
-      value: nameConfig.connTableId || "#info-panel-table",
+      value: nameConfig.connTableId || "info-panel-table",
       configurable: false,
       writable: false
-    })
+    });
     Object.defineProperty(this,"summaryTableId",{
-      value: nameConfig.summaryTableId || "#info-panel-summary",
+      value: nameConfig.summaryTableId || "info-panel-summary",
       configurable: false,
       writable: false
-    })
+    });
 
     this.connSVG = undefined; 
     this.connTable = undefined;
     this.summaryTable = undefined;
 
     this.htmlTemplate = createTemplate(this);
-    this.dom = document.getElementById(this.divId.slice(1));
+    this.dom = document.getElementById(this.divId);
     this.reset();
 
    }
+
+  /**
+   * Create HTML template
+   * 
+   * @param {object} obj - synonymous to `this`, refers to instance of ConnTable
+   */
+  function createTemplate(obj){
+    var template = "";
+    template += '<div id="'+ obj.summaryTableId+ '"></div>';  // summary
+    // innerhtml += '<div id="info-panel-summary-extra"></div>';  // summary
+    template += '<div id="' + obj.connSVGId + '"></div>';  // SVG
+    template += '<div id="' + obj.connTableId + '"></div>';
+    template += '<div class="slider-bar ui-draggable ui-draggable-handle" draggable="true" id="info_panel_dragger"></div>';
+    return template;
+  }  
+
 
   /*
    * Reset to detaul HTML
@@ -91,20 +107,6 @@ moduleExporter("InfoPanel",
   }
 
 
-  /**
-   * Create HTML template
-   * 
-   * @param {object} obj - synonymous to `this`, refers to instance of ConnTable
-   */
-  function createTemplate(obj){
-    var template = "";
-    template += '<div id="info-panel-summary"></div>';  // summary
-    // innerhtml += '<div id="info-panel-summary-extra"></div>';  // summary
-    template += '<div id="info-panel-conn"></div>';  // SVG
-    template += '<div id="info-panel-table"></div>';
-    template += '<div class="slider-bar ui-draggable ui-draggable-handle" draggable="true" id="info_panel_dragger"></div>';
-    return template;
-  }  
 
   /**
    * Check if an object is in the workspace. 
