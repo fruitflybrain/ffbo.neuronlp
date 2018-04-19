@@ -1,19 +1,22 @@
-var loader = function(name, dependencies, definition) {
-  if (typeof module === 'object' && module && module.exports) {
+// Adapted from https://stackoverflow.com/a/30538574
+if( moduleExporter === undefined){
+  var moduleExporter = function(name, dependencies, definition) {
+    if (typeof module === 'object' && module && module.exports) {
       dependencies = dependencies.map(require);
       module.exports = definition.apply(context, dependencies);
-  } else if (typeof require === 'function') {
-    define(dependencies, definition);
-  } else {
-    window[name] = definition();
-  }
-};
+    } else if (typeof require === 'function') {
+      define(dependencies, definition);
+    } else {
+      window[name] = definition();
+    }
+  };
+}
 
-loader("Overlay",
+modeuleExporter("Overlay",
   ['jquery','d3'],
   function($,d3)
 {
-  /** 
+  /**
    * Overlay Constructor
    * @div_id: a id for overlay object
    * @content: HTML string for content of ovelay
@@ -39,7 +42,7 @@ loader("Overlay",
       $('#'+this.divId).hide();
       $('#'+this.divId).css("display","none");
     }, 500);
-  }  
+  }
 
 
   Overlay.prototype.show = function(){
@@ -54,5 +57,5 @@ loader("Overlay",
   Overlay.prototype.update = function(content){
     $('#'+this.divId + " .container").html(content);
   }
-	return Overlay;
+  return Overlay;
 });

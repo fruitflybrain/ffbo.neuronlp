@@ -1,4 +1,4 @@
-// Adapted from https://stackoverflow.com/a/30538574                                                                                                                                                                                  
+// Adapted from https://stackoverflow.com/a/30538574
 if( moduleExporter === undefined){
   var moduleExporter = function(name, dependencies, definition) {
     if (typeof module === 'object' && module && module.exports) {
@@ -7,19 +7,20 @@ if( moduleExporter === undefined){
     } else if (typeof require === 'function') {
       define(dependencies, definition);
     } else {
-      window[name] = eval("definition(" + dependencies.toString() + ")");
+      window[name] = definition();
     }
   };
 }
+
 moduleExporter("ConnTable",
   ['jquery',
-	'd3',
-	'app/info_panel/preprocess',
-  'app/overlay'],
+  'd3',
+  'info_panel/preprocess',
+  'overlay'],
   function(
-  	$,
-  	d3,
-  	preprocess,
+    $,
+    d3,
+    preprocess,
     Overlay)
 {
   /**
@@ -65,7 +66,7 @@ moduleExporter("ConnTable",
 
   /**
    * Create HTML template
-   * 
+   *
    * @param {object} obj - synonymous to `this`, refers to instance of ConnTable
    */
   function createTemplate(obj){
@@ -75,16 +76,16 @@ moduleExporter("ConnTable",
     template += '<h4>Presynaptic Partners</h4>';
     template += '<table id="' + obj.preTabId + '" class="table table-inverse table-custom-striped">';
     template += '<thead><tr class=""><th>Neuron</th> <th>Number of Synapses</th> <th class="neuron_add_pre">+/- Neuron</th><th class="synapse_add_pre">+/- Synapses</th></tr><tr class=""><th><span class="info-input-span"> Filter by name <br></span><input type="text" id="presyn-srch" value="" class="info-input"/></th> <th><span class="info-input-span"> N greater than <br></span><input type="number" id="presyn-N" value="5" class="info-input selectable"/></th> <th class="neuron_add_pre"></th><th class="synapse_add_pre"></th></tr></thead>';
-    template += '<tbody></tbody></table>';  
+    template += '<tbody></tbody></table>';
     template += '<h4>Postsynaptic Partners</h4>'
     template += '<table id="' + obj.postTabId + '" class="table table-inverse table-custom-striped">';
     template += '<thead><tr  class=""><th>Neuron</th> <th>Number of Synapses</th> <th class="neuron_add_post">+/- Neuron</th><th class="synapse_add_post">+/- Synapses</th></tr><tr class=""><th><span class="info-input-span"> Filter by name <br></span><input type="text" id="postsyn-srch" value="" class="info-input"/></th> <th><span class="info-input-span"> N greater than <br></span><input type="number" id="postsyn-N" value="5" class="info-input selectable"/></th> <th class="neuron_add_post"></th><th class="synapse_add_post"></th></tr></thead>';
-    template += '<tbody></tbody></table>';  
+    template += '<tbody></tbody></table>';
     return template;
-  }  
+  }
 
   /**
-   * Reset to default HTML 
+   * Reset to default HTML
    */
   ConnTable.prototype.reset = function (){
     // purge div and add table
@@ -111,7 +112,7 @@ moduleExporter("ConnTable",
 
   /**
   * Update synpatic reference and table
-  * 
+  *
   * @param {obj} data - connectivity data, must be in the format specified by `InfoPanel.reformatData()` method
   * @param {boolean} inferred - whether the connectivity is inferred or not
   */
@@ -134,14 +135,14 @@ moduleExporter("ConnTable",
     });
 
     // create table
-    this.updateTable(data,'pre');    
+    this.updateTable(data,'pre');
     this.updateTable(data,'post');
     this.show();
   }
 
   /**
     * Update synaptic partners table, child method of `ConnTable.update()`
-    * 
+    *
     *  @param {obj} data - inherited from caller `ConnTable.update()` method
     *  @param {string} connDir - Connectivity direction `['pre'/'post']`
     */
@@ -190,11 +191,11 @@ moduleExporter("ConnTable",
       c4.className = (connDir==='pre') ? 'synapse_add_pre': 'synapse_add_post';
 
       if ( d['inferred'] == 1 ){
-        c1.innerHTML = "&dagger;" + name;  
+        c1.innerHTML = "&dagger;" + name;
       }else{
-        c1.innerHTML = name;  
+        c1.innerHTML = name;
       }
-      
+
       c2.innerHTML = N;
 
       // generate add/remove button for each neuron
@@ -254,14 +255,14 @@ moduleExporter("ConnTable",
       $('.synapse_add_'+connDir).hide();
     }
 
-    // refresh list 
+    // refresh list
     this.filterByName(this.preTabId,document.getElementById("presyn-srch").value);
     this.filterByNum(this.preTabId,document.getElementById("presyn-N").value);
     this.filterByName(this.postTabId,document.getElementById("postsyn-srch").value);
     this.filterByNum(this.postTabId,document.getElementById("postsyn-N").value);
 
     // add callback
-    $("#presyn-srch").on('keyup change',(function(){  
+    $("#presyn-srch").on('keyup change',(function(){
       this.filterByName(this.preTabId,document.getElementById("presyn-srch").value);
     }).bind(this));
     $("#presyn-N").on('keyup change', (function (){

@@ -1,4 +1,4 @@
-// Adapted from https://stackoverflow.com/a/30538574                                                                                                                                                                                  
+// Adapted from https://stackoverflow.com/a/30538574
 if( moduleExporter === undefined){
   var moduleExporter = function(name, dependencies, definition) {
     if (typeof module === 'object' && module && module.exports) {
@@ -7,23 +7,24 @@ if( moduleExporter === undefined){
     } else if (typeof require === 'function') {
       define(dependencies, definition);
     } else {
-      window[name] = eval("definition(" + dependencies.toString() + ")");
+      window[name] = definition();
     }
   };
 }
+
 moduleExporter("ConnSVG",
   [
-	'jquery',
-	'd3',
-	'app/info_panel/preprocess'],
+  'jquery',
+  'd3',
+  'info_panel/preprocess'],
   function(
-  	$,
-  	d3,
-  	preprocess)
+    $,
+    d3,
+    preprocess)
 {
   // const svgWrapperId = "#svg-syn";
-  // const synProfileInfoWrapperId =  "#syn-profile-info";  
-  // const synProfileTextId =  "#syn-reference-text"; 
+  // const synProfileInfoWrapperId =  "#syn-profile-info";
+  // const synProfileTextId =  "#syn-reference-text";
 
   function ConnSVG(div_id,data,nameConfig={}){
     this.divId = div_id;  // wrapper
@@ -60,10 +61,10 @@ moduleExporter("ConnSVG",
     template = "";
     template += '<table id="' + obj.tabId + '" class="table table-inverse table-custom-striped">';
     template += '<tbody>' + tableText + '</tbody>';
-    template += '</table>';  // table 
+    template += '</table>';  // table
 
     return template;
-  }  
+  }
 
   /*
    * Reset Summary Table
@@ -72,28 +73,28 @@ moduleExporter("ConnSVG",
     // purge div and add table
     this.dom.innerHTML = this.htmlTemplate;
     if (this.svg){
-      this.svg.remove(); 
-      this.svg = undefined; 
+      this.svg.remove();
+      this.svg = undefined;
     }
   }
 
-  /** 
+  /**
    * Hide all subcomponents
    */
   ConnSVG.prototype.hide = function(){
-    $('#'+this.tabId).hide(); 
-    $('#'+this.svgId).hide(); 
+    $('#'+this.tabId).hide();
+    $('#'+this.svgId).hide();
   }
 
-  /** 
+  /**
    * Show all subcomponents
    */
   ConnSVG.prototype.show = function(){
-    $('#'+this.tabId).show(); 
-    $('#'+this.svgId).show(); 
+    $('#'+this.tabId).show();
+    $('#'+this.svgId).show();
   }
 
-  /** 
+  /**
    * Update SVG
    */
   ConnSVG.prototype.update = function(data){
@@ -104,7 +105,7 @@ moduleExporter("ConnSVG",
     }
     this.reset();
     this.show();
-    
+
     // preprocess data
     // var data = preprocess.preprocessSynProfileData(data);
 
@@ -143,7 +144,7 @@ moduleExporter("ConnSVG",
                         .scale(y)
                         .orient("left");
 
-    
+
 
     // create SVG
     this.svg = d3.select('#'+this.divId).append("svg")
@@ -155,7 +156,7 @@ moduleExporter("ConnSVG",
     // extract data, create axis, sort in descending percentage
     var data_pre = d3.entries(pre_sum).map( function (d,i) {
       return {
-        y: 'Presynaptic', 
+        y: 'Presynaptic',
         x: d['value'],
         neuron: d['key']
       };
