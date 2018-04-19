@@ -67,43 +67,74 @@
 
     <!-- <div id="welcomepage"></div> -->
 
-    <div id="login-container" style="display: none; cursor: default;">
-        <form name="Login_Form" class="form-signin">
-            <h4 class="form-signin-heading">Welcome to NeuroNLP</h4>
-            <hr class="colorgraph"><br>
+  <div id="login-container" style="display: none; cursor: default;">
+      <form name="Login_Form" class="form-signin">
+          <h4 class="form-signin-heading">Welcome to NeuroNLP</h4>
+          <hr class="colorgraph"><br>
 
-            <div id="input-group-username" class="input-group input-group-auth">
-                <span class="input-group-addon">Username</span>
-                <input id="txt_user" type="text" class="form-control" name="Username" placeholder="Username" required="" autofocus="" />
-            </div>
-            <div id="input-group-password" class="input-group input-group-auth">
-                <span class="input-group-addon">Password</span>
-                <input id="txt_password" type="password" class="form-control" name="Password" placeholder="Password" required=""/>
-            </div>
+          <div id="input-group-username" class="input-group input-group-auth">
+              <span class="input-group-addon">Username</span>
+              <input id="txt_user" type="text" class="form-control" name="Username" placeholder="Username" required="" autofocus="" />
+          </div>
+          <div id="input-group-password" class="input-group input-group-auth">
+              <span class="input-group-addon">Password</span>
+              <input id="txt_password" type="password" class="form-control" name="Password" placeholder="Password" required=""/>
+          </div>
 
-            <button class="btn btn-lg btn-primary btn-block"  name="Submit" value="Login" type="button" id="loginBtn">Login</button>
-	    <a onclick="start_guest_connection();" style="float: left;margin-top:10px" >Continue as Guest</a>
-	    <a href="register.html" style="float: right;margin-top:10px" >Register </a>
-            <h5 id="auth_feedback" class="form-signin-feedback" style="margin-top:30px">&nbsp;</h5>
-        </form>
-    </div>
-    <div class="modal" id="tagModal" tabindex="-1" role="dialog" aria-labelledby="tagLabel" aria-hidden="true">
-      <div class="modal-dialog">
-	<div class="modal-content">
-	  <div class="modal-header">
-	    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&#10005;</span></button>
-	    <h4 class="modal-title" id="tagLabel">Enter tag</h4>
-	  </div>
-	  <div class="modal-body">
-	    <input type="text" name="tag" id="tag" style="width:100%">
-	  </div>
-	  <div class="modal-footer">
-	    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	    <button type="button" class="btn btn-primary" id="tagSubmit"></button>
-	  </div>
-	</div>
+          <button class="btn btn-lg btn-primary btn-block"  name="Submit" value="Login" type="button" id="loginBtn">Login</button>
+    <a onclick="start_guest_connection();" style="float: left;margin-top:10px" >Continue as Guest</a>
+    <a href="register.html" style="float: right;margin-top:10px" >Register </a>
+          <h5 id="auth_feedback" class="form-signin-feedback" style="margin-top:30px">&nbsp;</h5>
+      </form>
+  </div>
+  
+  <div class="modal" id="tagModal" tabindex="-1" role="dialog" aria-labelledby="tagLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&#10005;</span>
+          </button>
+          <h4 class="modal-title" id="tagLabel">Create A Tag</h4>
+        </div>
+        <div class="modal-body createtag">
+          <h5 type="text" id="tag_name" style="float: left; width:60%">Tag Name</h5>
+          <textarea type="text" name="tag" class="tag-text" rows="1" id="tag_name_input" style="display: block; width:100%; resize: none;"></textarea>
+          <h5 type="text" id="tag_desc" style="float: left; width:60%">Tag Description</h5>
+          <textarea type="text" name="tag" class="tag-text" rows="3" id="tag_desc_input" style="display: block; width:100%; resize: none;"></textarea>
+          <h5 type="text" id="tag_keys" style="float: left; width:100%">Tag Keywords</h5>
+  
+          <div id="tag_tag_editor" style="float: left; width:100%"></div>
+          <!-- <input type="text" name="tag" id="tag_keys_input" style="display: block; width:100%"> -->
+        </div>
+        <div class="modal-body loadtag">
+          <h5 type="text" id="tag_name" style="float: left; width:60%">Retrieve a Tag by Name</h5>
+          <textarea type="text" name="tag" rows="1" id="retrieve_tag_name_input" style="display: block; width:100%; resize: none; max-width: 100%;"></textarea>
+          <h5 type="text" id="tag_desc" style="display: block; width:60%">Browse Tags</h5>
+          <br />
+          <div id="tags-search-menu" class="list-group" style="overflow:scroll; height:400px; overflow-x: hidden; max-width: 100%;">
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start tag-el active">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Mushroom Body Alpha Lobe</h5>
+                <div class="tags-aggregate">
+                  <span class="badge badge-primary">alpha-lobe</span>
+                  <span class="badge badge-primary">mushroom-body</span>
+                </div>
+              </div>
+              <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+              &nbsp;&nbsp;
+              <small>This Tag is currently featured.</small>
+            </a>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="tagSubmit"></button>
+        </div>
       </div>
     </div>
+  </div>
+
   <div id="wrapper">
 
     <!-- Page Content -->
