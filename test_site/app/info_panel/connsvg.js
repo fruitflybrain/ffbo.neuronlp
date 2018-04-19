@@ -15,7 +15,7 @@ moduleExporter("ConnSVG",
   [
 	'jquery',
 	'd3',
-	'app/info_panel/pre_process'],
+	'app/info_panel/preprocess'],
   function(
   	$,
   	d3,
@@ -25,64 +25,98 @@ moduleExporter("ConnSVG",
   // const synProfileInfoWrapperId =  "#syn-profile-info";  
   // const synProfileTextId =  "#syn-reference-text"; 
 
-  function ConnSVG(div_id,data){
+  function ConnSVG(div_id,data,nameConfig={}){
     this.divId = div_id;  // wrapper
-    this.tabId = "#info-panel-conn-table";  // table 
-    this.tabTextId = "#info-panel-conn-table-text";  // table 
-    this.svgId = "#info-panel-conn-svg";  // svg
+    Object.defineProperty(this,"tabId",{
+      value: nameConfig.tabId || "info-panel-conn-table",
+      configurable: false,
+      writable: false
+    })
+    Object.defineProperty(this,"tabTextId",{
+      value: nameConfig.tabTextId || "info-panel-conn-table-text",
+      configurable: false,
+      writable: false
+    })
+    Object.defineProperty(this,"svgId",{
+      value: nameConfig.svgId || "info-panel-conn-svg",
+      configurable: false,
+      writable: false
+    })
 
-    this.remove();
-    this.create(data);
-    this.resize();
+
+    this.svg = undefined;
+
+    this.htmlTemplate = createTemplate(this);
+    this.dom = document.getElementById(this.divId);
+    this.reset();
   }
 
+  /**
+   * Create HTML template
+   */
+  function createTemplate(obj){
+    var template = "";
+    let tableText = '<tr><td>Synaptic Profile Plot</td><td id="' + obj.tabTextId + '" class="syn-reference">Click on/Hover over plot to extract detailed synaptic information</td></tr>';
+    template = "";
+    template += '<table id="' + obj.tabId + '" class="table table-inverse table-custom-striped">';
+    template += '<tbody>' + tableText + '</tbody>';
+    template += '</table>';  // table 
+
+    return template;
+  }  
+
+  /*
+   * Reset Summary Table
+   */
+  ConnSVG.prototype.reset = function (){
+    // purge div and add table
+    this.dom.innerHTML = this.htmlTemplate;
+    if (this.svg){
+      this.svg.remove(); 
+      this.svg = undefined; 
+    }
+  }
+
+  /** 
+   * Hide all subcomponents
+   */
+  ConnSVG.prototype.hide = function(){
+    $('#'+this.tabId).hide(); 
+    $('#'+this.svgId).hide(); 
+  }
+
+  /** 
+   * Show all subcomponents
+   */
+  ConnSVG.prototype.show = function(){
+    $('#'+this.tabId).show(); 
+    $('#'+this.svgId).show(); 
+  }
 
   /** 
    * Update SVG
    */
   ConnSVG.prototype.update = function(data){
-    this.remove();
-    this.create(data);
-    this.resize(data);
-  }
-
-  /** 
-   * Remove SVG
-   */
-  ConnSVG.prototype.remove = function(){
-    $(this.divId).html(""); // purge result
-  }
-
-  /** 
-   * Plot Synaptic Concentration Profile
-   */
-  ConnSVG.prototype.create = function(data){
-    this.tableText = '<tr><td>Synaptic Profile Plot</td><td id="' + this.tabTextId.slice(1) + '" class="syn-reference">Click on/Hover over plot to extract detailed synaptic information</td></tr>';
-    // purge div and add table
-    $(this.divId).html("");
-    innerhtml = "";
-    innerhtml += '<table id="' + this.tabId.slice(1) + '" class="table table-inverse table-custom-striped">';
-    innerhtml += '<tbody>' + this.tableText.slice(1) + '</tbody>';
-    innerhtml += '</table>';  // table 
-    $(this.divId).html(innerhtml);
-
     // verify data integrity
-    if(!('pre_sum' in data && 'post_sum' in data)){ 
+    if(data === undefined || data['pre'] === undefined || data['post'] === undefined){
+      this.hide();
       return;
     }
+    this.reset();
+    this.show();
     
     // preprocess data
-    var data = preprocess.preprocessSynProfileData(data);
+    // var data = preprocess.preprocessSynProfileData(data);
 
     // extract data
-    var pre_sum = data['pre_sum'];    // presynaptic summary (in percentage)
-    var post_sum = data['post_sum'];  // postsynaptic summary (in percentage)
-    var pre_num = data['pre_N'];      // presynaptic number (total number)
-    var post_num = data['post_N'];    // postsynaptic number (total number)
+    var pre_sum = data['pre']['summary']['Profile'];    // presynaptic summary (in percentage)
+    var post_sum = data['post']['summary']['Profile'];  // postsynaptic summary (in percentage)
+    var pre_num = data['pre']['summary']['Number'];      // presynaptic number (total number)
+    var post_num = data['post']['summary']['Number'];;    // postsynaptic number (total number)
 
     // Total dimension for entire SVG div
     var height_tot = 150;
-    var width_tot = $(this.divId)[0].getBoundingClientRect().width;
+    var width_tot = $('#'+this.divId)[0].getBoundingClientRect().width;
     //var width_tot = 300;
     // Calculate SVG dimension
     let margin = {top: 20, right: 40, bottom: 30, left: 80};
@@ -112,12 +146,11 @@ moduleExporter("ConnSVG",
     
 
     // create SVG
-    var svg = d3.select(this.divId).append("svg")
-                                     .attr("id",this.svgId.slice(1))
+    this.svg = d3.select('#'+this.divId).append("svg")
+                                     .attr("id",this.svgId)
                                      .attr("width", width_tot)
                                      .attr("height", height_tot)
                                      .attr("viewBox", "0 0 " + width_tot +" "+ height_tot )
-                                     .append("g");
 
     // extract data, create axis, sort in descending percentage
     var data_pre = d3.entries(pre_sum).map( function (d,i) {
@@ -154,9 +187,9 @@ moduleExporter("ConnSVG",
     });
 
 
-    var bar1 = svg.append('g')
+    var bar1 = this.svg.append('g')
                     .attr("class", "syn-column pre");
-    var bar2 = svg.append('g')
+    var bar2 = this.svg.append('g')
                     .attr("class", "syn-column post");
 
     bar1.selectAll("rect")
@@ -190,20 +223,20 @@ moduleExporter("ConnSVG",
           });
 
 
-    svg.append("g")
+    this.svg.append("g")
          .attr("class", "syn-axis x")
          .attr("transform", "translate(0" + margin.left + "," + (height+margin.top) + ")")
          .call(xAxis);
 
-    svg.append("g")
+    this.svg.append("g")
          .attr("class", "syn-axis y")
          .attr("transform", "translate(" + margin.left + "," + margin.top  + ")")
          .call(yAxis);
 
-    svg.select(".syn-axis.x")
+    this.svg.select(".syn-axis.x")
          .selectAll("text")
 
-    svg.select(".syn-axis.y")
+    this.svg.select(".syn-axis.y")
          .selectAll(".tick")
          .select("text")
          .attr("transform","rotate(-30)")
@@ -220,11 +253,9 @@ moduleExporter("ConnSVG",
             }
           });
 
-
-
     // add callback
     var tabTextId = this.tabTextId;
-    svg.selectAll("rect")
+    this.svg.selectAll("rect")
         .on("click",function(d){
           if (d['y']=='Presynaptic'){
             var ref_data = {'type':d['y'],'neuron':d['neuron'],'percentage':d['x'], 'number':d['x']*pre_num/100};
@@ -249,6 +280,9 @@ moduleExporter("ConnSVG",
           d3.select(tabTextId)
               .text("Click on/Hover over plot to extract detailed synaptic information");
         });
+
+    this.svg.dom = this.svg[0][0]; // save html object
+    this.resize();
   }
 
 
@@ -256,11 +290,10 @@ moduleExporter("ConnSVG",
    * Resize Synaptic Profile plot
    */
   ConnSVG.prototype.resize = function(){
-    if(d3.select(this.svgId)[0][0]){ //check if an svg file exists, if not getBBox will throw error
-      let svg = d3.select(this.svgId).node();
-      let bbox =  svg.getBBox();
+    if(this.svg){ //check if an svg file exists, if not getBBox will throw error
+      let bbox =  this.svg.dom.getBBox();
       let width_margin = 40;
-      svg.setAttribute("viewBox", (bbox.x-width_margin/2)+" "+(bbox.y)+" "+(bbox.width+width_margin)+" "+(bbox.height));
+      this.svg.dom.setAttribute("viewBox", (bbox.x-width_margin/2)+" "+(bbox.y)+" "+(bbox.width+width_margin)+" "+(bbox.height));
     }else{
       return;
     }
