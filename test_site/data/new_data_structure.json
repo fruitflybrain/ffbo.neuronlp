@@ -36,6 +36,7 @@
 	     'has_syn_morph':bool,
 	     'name':string,
 	     'uname':string,
+	     'syn_uname':string,
 	     'rid': string, // test if something is in workspace (for neurons)
 	     'syn_rid': string, // test if something is in workspace (for synapses)
 	     'number': int // number of connectors
