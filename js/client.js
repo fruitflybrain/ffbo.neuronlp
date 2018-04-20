@@ -260,8 +260,8 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
       verb: "add",
       query: [
         {
-          action: { method: { query: { uname: uname } } },
-          object: { class: "Neuron" }
+          action: { method: { query: { uname: unieame } } },
+          object: { class: ["Neuron", "Synapse"] }
         }
       ]
     };
@@ -269,44 +269,14 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
 
   FFBOClient.prototype.removeByUnameQuery = function(uname){
     /**
-     * Query to remove a neuron by its name.
+     * Query to remove a neuron or synapse by its uname.
      */
     return {
       verb: "remove",
       query: [
         {
           action: { method: { query: { uname: uname } } },
-          object: { class: "Neuron" }
-        }
-      ]
-    };
-  }
-
-  FFBOClient.prototype.addSynapseByUnameQuery = function(uname){
-    /**
-     * Query to add a Synapse by its name.
-     */
-    return {
-      verb: "add",
-      query: [
-        {
-          action: { method: { query: { uname: uname } } },
-          object: { class: "Synapse" }
-        }
-      ]
-    };
-  }
-
-  FFBOClient.prototype.removeSynapseByUnameQuery = function(uname){
-    /**
-     * Query to remove a Synapse by its name.
-     */
-    return {
-      verb: "remove",
-      query: [
-        {
-          action: { method: { query: { uname: uname } } },
-          object: { class: "Synapse" }
+          object: { class: ["Neuron", "Synapse"] }
         }
       ]
     };
