@@ -12,7 +12,7 @@ if( moduleExporter === undefined){
   };
 }
 
-moduleExporter("FFBOClient", ["autobahn", "PropertyManager"], function(autobahn, PropertyManager){
+moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn, PropertyManager){
   // NA server crossbar id
   naServerID = undefined;
   // NLP server crossbar id
