@@ -26,23 +26,24 @@ moduleExporter("ConnSVG",
   // const synProfileInfoWrapperId =  "#syn-profile-info";
   // const synProfileTextId =  "#syn-reference-text";
 
-  function ConnSVG(div_id,data,nameConfig={}){
+  function ConnSVG(div_id,parentObj,nameConfig={}){
     this.divId = div_id;  // wrapper
+    this.parentObj = parentObj;
     Object.defineProperty(this,"tabId",{
       value: nameConfig.tabId || "info-panel-conn-table",
       configurable: false,
       writable: false
-    })
+    });
     Object.defineProperty(this,"tabTextId",{
       value: nameConfig.tabTextId || "info-panel-conn-table-text",
       configurable: false,
       writable: false
-    })
+    });
     Object.defineProperty(this,"svgId",{
       value: nameConfig.svgId || "info-panel-conn-svg",
       configurable: false,
       writable: false
-    })
+    });
 
 
     this.svg = undefined;
@@ -66,7 +67,7 @@ moduleExporter("ConnSVG",
     return template;
   }
 
-  /*
+  /**
    * Reset Summary Table
    */
   ConnSVG.prototype.reset = function (){
@@ -76,7 +77,7 @@ moduleExporter("ConnSVG",
       this.svg.remove();
       this.svg = undefined;
     }
-  }
+  };
 
   /**
    * Hide all subcomponents
@@ -84,7 +85,7 @@ moduleExporter("ConnSVG",
   ConnSVG.prototype.hide = function(){
     $('#'+this.tabId).hide();
     $('#'+this.svgId).hide();
-  }
+  };
 
   /**
    * Show all subcomponents
@@ -92,16 +93,24 @@ moduleExporter("ConnSVG",
   ConnSVG.prototype.show = function(){
     $('#'+this.tabId).show();
     $('#'+this.svgId).show();
-  }
+  };
 
+
+  function verifyDataIntegrity(data){
+    let integrity = 1;
+    return integrity  && data && ('pre' in data) && ('post' in data);
+  }
   /**
    * Update SVG
    */
   ConnSVG.prototype.update = function(data){
     // verify data integrity
-    if(data === undefined || data['pre'] === undefined || data['post'] === undefined){
+
+    if (verifyDataIntegrity == false){
       return;
     }
+  
+
     this.reset();
     this.show();
 
@@ -109,10 +118,10 @@ moduleExporter("ConnSVG",
     // var data = preprocess.preprocessSynProfileData(data);
 
     // extract data
-    var pre_sum = data['pre']['summary']['Profile'];    // presynaptic summary (in percentage)
-    var post_sum = data['post']['summary']['Profile'];  // postsynaptic summary (in percentage)
-    var pre_num = data['pre']['summary']['Number'];      // presynaptic number (total number)
-    var post_num = data['post']['summary']['Number'];;    // postsynaptic number (total number)
+    var pre_sum = data['pre']['summary']['profile'];    // presynaptic summary (in percentage)
+    var post_sum = data['post']['summary']['profile'];  // postsynaptic summary (in percentage)
+    var pre_num = data['pre']['summary']['number'];      // presynaptic number (total number)
+    var post_num = data['post']['summary']['number'];;    // postsynaptic number (total number)
 
     // Total dimension for entire SVG div
     var height_tot = 150;
@@ -160,7 +169,7 @@ moduleExporter("ConnSVG",
         neuron: d['key']
       };
     });
-    data_pre.sort(function(a,b){ return a.x > b.x ? 1 : -1;})
+    data_pre.sort(function(a,b){ return a.x > b.x ? 1 : -1;});
 
     var data_post = d3.entries(post_sum).map(function (d,i) {
       return {
@@ -169,7 +178,7 @@ moduleExporter("ConnSVG",
         neuron:d['key']
       };
     });
-    data_post.sort(function(a,b){ return a.x > b.x ? 1 : -1;})
+    data_post.sort(function(a,b){ return a.x > b.x ? 1 : -1;});
 
     data_pre.map(function(d,i){
       if (i==0){
@@ -256,28 +265,28 @@ moduleExporter("ConnSVG",
     // add callback
     var tabTextId = this.tabTextId;
     this.svg.selectAll("rect")
-        .on("click",function(d){
+        .on("click", (d) => {
           if (d['y']=='Presynaptic'){
             var ref_data = {'type':d['y'],'neuron':d['neuron'],'percentage':d['x'], 'number':d['x']*pre_num/100};
           }else{
             var ref_data = {'type':d['y'],'neuron':d['neuron'],'percentage':d['x'],'number':d['x']*post_num/100};
           }
           var reference_info = ref_data.type+" "+ref_data.neuron+": "+ (ref_data.percentage).toFixed(1) +"%("+Math.round(ref_data.number).toString() +")";
-          d3.select(tabTextId)
+          d3.select("#"+tabTextId)
               .text(reference_info)
         })
-        .on("mouseover",function(d){
+        .on("mouseover", (d) => {
           if (d['y']=='Presynaptic'){
             var ref_data = {'type':d['y'],'neuron':d['neuron'],'percentage':d['x'], 'number':d['x']*pre_num/100};
           }else{
             var ref_data = {'type':d['y'],'neuron':d['neuron'],'percentage':d['x'],'number':d['x']*post_num/100};
           }
           var reference_info = ref_data.type+" "+ref_data.neuron+": "+ (ref_data.percentage).toFixed(1) +"%("+Math.round(ref_data.number).toString() +")";
-          d3.select(tabTextId)
+          d3.select("#"+tabTextId)
               .text(reference_info)
         })
-        .on("mouseout",function(){
-          d3.select(tabTextId)
+        .on("mouseout",() => {
+          d3.select("#"+tabTextId)
               .text("Click on/Hover over plot to extract detailed synaptic information");
         });
 
@@ -303,18 +312,18 @@ moduleExporter("ConnSVG",
   /**
    * hook, used in FFBOMesh3D.onMouseClick() to update information panel
    */
-  ConnSVG.prototype.addSynHistogram = function(data){
-    var pre_N_list = data['pre'].map(function(d){
-      return d['N'];
-    });
-    var post_N_list= data['post'].map(function(d){
-      return d['N'];
-    });
+  // ConnSVG.prototype.addSynHistogram = function(data){
+  //   var pre_N_list = data['pre'].map(function(d){
+  //     return d['N'];
+  //   });
+  //   var post_N_list= data['post'].map(function(d){
+  //     return d['N'];
+  //   });
 
-    var hist_pre = d3.layout.histogram()(pre_N_list);
-    var hist_post = d3.layout.histogram()(post_N_list);
-    var max_pre = Max(hist_pre);
-  }
+  //   var hist_pre = d3.layout.histogram()(pre_N_list);
+  //   var hist_post = d3.layout.histogram()(post_N_list);
+  //   var max_pre = Max(hist_pre);
+  // }
 
 
   /**

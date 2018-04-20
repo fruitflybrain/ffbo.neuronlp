@@ -78,7 +78,7 @@ moduleExporter("InfoPanel",[
   }
 
 
-  /*
+  /**
    * Reset to detaul HTML
    */
   InfoPanel.prototype.reset = function (){
@@ -93,15 +93,16 @@ moduleExporter("InfoPanel",[
     if (this.summaryTable === undefined){
       delete this.summaryTable;
     }
-    overwriteCallbacks = {'isInWorkspace': this.isInWorkspace,
-                          'addObjById': this.addObjById};
-
-    this.connSVG = new ConnSVG(this.connSVGId);
-    this.connTable = new ConnTable(this.connTableId,
-                                   {'isInWorkspace': this.isInWorkspace,
-                                    'addObjById': this.addObjById}
-                                  );
-    this.summaryTable = new SummaryTable(this.summaryTableId,this.isInWorkspace); // neuron information table
+    functionHooks = {'isInWorkspace': this.isInWorkspace,
+                     'addByUname': this.addByUname,
+		     'removeByUname': this.removeByUname,
+		     'getAttr': this.getAttr,
+		     'setAttr': this.setAttr,
+		    };
+    
+    this.connSVG = new ConnSVG(this.connSVGId, this);
+    this.connTable = new ConnTable(this.connTableId, this);
+    this.summaryTable = new SummaryTable(this.summaryTableId, this); // neuron information table
   };
 
 
@@ -109,18 +110,47 @@ moduleExporter("InfoPanel",[
   /**
    * Check if an object is in the workspace.
    *
-   * @param {string} id -  id of target object (neuron/synapse)
+   * @param {string} rid -  rid of target object (neuron/synapse)
+   * @returns {bool} if object in workspace 
    */
-  InfoPanel.prototype.isInWorkspace = function(id){
+  InfoPanel.prototype.isInWorkspace = function(rid){
     return false;
   };
   
   /**
    * Add an object into the workspace.
    *
-   * @param {string} id -  id of target object (neuron/synapse)
+   * @param {string} uname -  uname of target object (neuron/synapse)
    */
-  InfoPanel.prototype.addObjById = function(id){
+  InfoPanel.prototype.addByUname = function(uname){
+    return;
+  };
+  
+  /**
+   * Remove an object into the workspace.
+   *
+   * @param {string} uname -  uname of target object (neuron/synapse)
+   */
+  InfoPanel.prototype.removeByUname = function(uname){
+    return;
+  };
+  
+  /**
+   * Get attribute of an object in the workspace.
+   *
+   * @param {string} rid -  rid of target object
+   * @returns {value} return Value as expected by the attribute
+   */
+  InfoPanel.prototype.getAttr = function(rid,attr){
+    return undefined;
+  };
+  
+  /**
+   * Set attribute of an object in the workspace.
+   *
+   * @param {string} rid -  rid of target object
+   */
+  InfoPanel.prototype.getAttr = function(rid,attr,value){
     return;
   };
 
@@ -132,6 +162,7 @@ moduleExporter("InfoPanel",[
   * @param {obj} synData - synapse Data
   */
   InfoPanel.prototype.update = function(data){
+//    this.reset(); // <TODO> need to change this
     let classOfObj = data['summary']['class'];
     let new_name = ('uname' in data['summary']) ? data['summary']['uname']: data['summar']['name'];
 
@@ -139,9 +170,14 @@ moduleExporter("InfoPanel",[
       return;
     }else{
       this.name = new_name;
-      
-      this.connSVG.update(data['connectivity']);
-      this.connTable.update(data['connectivity']);
+
+      if ('connectivity' in data){ // synapse data does not have connectivity
+	this.connSVG.update(data['connectivity']);
+	this.connTable.update(data['connectivity']);
+      }else{
+	this.connSVG.hide();
+	this.connTable.hide();
+      }
       this.summaryTable.update(data['summary']);
     }
   };

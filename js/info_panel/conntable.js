@@ -27,10 +27,10 @@ moduleExporter("ConnTable",
   * Connectivity Table inside Info Panel
   * @constuctor
   * @param {string} div_id - id for div element in which the connectivity table is held
-  * @param {obj} overwriteCallbacks - function ['isInWorkspace',addObjById]
+  * @param {obj} parentObj - parent object (infopanel)
   * @param {dict} [nameConfig={}] - configuration of children divs. The 3 children divs in ConnTable are `['preTabId','postTabId','overlayId']`
   */
-  function ConnTable(div_id,overwriteCallbacks, nameConfig={}){
+  function ConnTable(div_id,parentObj, nameConfig={}){
     this.divId = div_id;  // wrapper
 
     // nameConfig = nameConfig || {};
@@ -38,26 +38,25 @@ moduleExporter("ConnTable",
       value: nameConfig.preTabId || "info-panel-table-pre" ,
       configurable: false,
       writable: false
-    })
+    });
     Object.defineProperty(this,"postTabId",{
       value: nameConfig.postTabId || "info-panel-table-post" ,
       configurable: false,
       writable: false
-    })
+    });
     Object.defineProperty(this,"overlayId",{
       value: nameConfig.overlayId || "info-panel-overlay" ,
       configurable: false,
       writable: false
-    })
-
+    });
+    
+    this.parentObj = parentObj
     //callback functions
-    this.isInWorkspace = overwriteCallbacks.isInWorkspace;
-    this.addObjById = overwriteCallbacks.addObjById;
 
     overlayText = '<h2>Inferred Synaptic Partners</h2><p>Inferred synaptic partners are marked by &dagger; </p><h3>SPIN</h3><p>Inferred synaptic connections using axonic/dendritic polarity predicted by SPIN:Skeleton-based Polarity Identification for Neurons. Please refer to <br><a href="http://link.springer.com/article/10.1007/s12021-014-9225-6" target="_blank">SPIN: A Method of Skeleton-based Polarity Identification for Neurons. Neurinformatics 12:487-507. Yi-Hsuan Lee, Yen-Nan Lin, Chao-Chun Chuang and Chung-Chuan Lo (2014)</a> <br>for more details on the SPIN algorithm.</p>';
     overlayText += '<p>The polarity determined by spin was used to predict synaptic connections based on when an axonic segment of a neuron is within a specified distance to a dendritic segment of another neuron after registering to a standard brain template.</p>';
+    
     this.overlay = new Overlay(this.overlayId, overlayText);
-
     this.htmlTemplate = createTemplate(this);
     this.dom = document.getElementById(this.divId);
     this.reset();
@@ -72,12 +71,12 @@ moduleExporter("ConnTable",
   function createTemplate(obj){
     var template = "";
     template = "";
-    template += '<div id ="' + obj.overlayId + '" class="overlay"></div>'
+    template += '<div id ="' + obj.overlayId + '" class="overlay"></div>';
     template += '<h4>Presynaptic Partners</h4>';
     template += '<table id="' + obj.preTabId + '" class="table table-inverse table-custom-striped">';
     template += '<thead><tr class=""><th>Neuron</th> <th>Number of Synapses</th> <th class="neuron_add_pre">+/- Neuron</th><th class="synapse_add_pre">+/- Synapses</th></tr><tr class=""><th><span class="info-input-span"> Filter by name <br></span><input type="text" id="presyn-srch" value="" class="info-input"/></th> <th><span class="info-input-span"> N greater than <br></span><input type="number" id="presyn-N" value="5" class="info-input selectable"/></th> <th class="neuron_add_pre"></th><th class="synapse_add_pre"></th></tr></thead>';
     template += '<tbody></tbody></table>';
-    template += '<h4>Postsynaptic Partners</h4>'
+    template += '<h4>Postsynaptic Partners</h4>';
     template += '<table id="' + obj.postTabId + '" class="table table-inverse table-custom-striped">';
     template += '<thead><tr  class=""><th>Neuron</th> <th>Number of Synapses</th> <th class="neuron_add_post">+/- Neuron</th><th class="synapse_add_post">+/- Synapses</th></tr><tr class=""><th><span class="info-input-span"> Filter by name <br></span><input type="text" id="postsyn-srch" value="" class="info-input"/></th> <th><span class="info-input-span"> N greater than <br></span><input type="number" id="postsyn-N" value="5" class="info-input selectable"/></th> <th class="neuron_add_post"></th><th class="synapse_add_post"></th></tr></thead>';
     template += '<tbody></tbody></table>';
@@ -110,6 +109,13 @@ moduleExporter("ConnTable",
     $('#'+this.divId).show();
   }
 
+
+  
+  function verifyDataIntegrity(data){
+    let integrity = 1;
+    return integrity  && data && ('pre' in data) && ('post' in data);
+  }
+  
   /**
   * Update synpatic reference and table
   *
@@ -118,11 +124,11 @@ moduleExporter("ConnTable",
   */
   ConnTable.prototype.update = function(data){
     // show synaptic table
-    if (data === undefined){
+    if (verifyDataIntegrity(data) == false){
       return;
     }
     this.reset();
-
+    this.show();
 
     const btnMoreInfo = '<a id="inferred-details-pre" class="info-panel-more-info inferred-more-info"> <i class="fa fa-info-circle" aria-hidden="true"></i></a>';
     $('#'+this.divId + " h4").html("Presynaptic Partners"+ btnMoreInfo);
@@ -137,7 +143,6 @@ moduleExporter("ConnTable",
     // create table
     this.updateTable(data,'pre');
     this.updateTable(data,'post');
-    this.show();
   }
 
   /**
@@ -167,21 +172,9 @@ moduleExporter("ConnTable",
     let synapse_add = false;
     for(x in data[connDir]['details']){ // loop through all partners
       d = data[connDir]['details'][x];
-      name = "";
-      N = "";
+      name = ('uname' in d) ? d['uname'] : d['name'];
+      N = ('number' in d) ? d['number'] : "";
 
-      if('label' in d){
-        name = d['label'];
-      }else if('uname' in d) {
-        name = d['uname'];
-      }else if('name' in d) {
-        name = d['name'];
-      }else {
-        name = d['rid'];
-      }
-      if('N' in d) {
-        N = d['N'];
-      }
       var row = table.insertRow(0);
       var c1 = row.insertCell(0);
       var c2 = row.insertCell(1);
@@ -199,45 +192,44 @@ moduleExporter("ConnTable",
       c2.innerHTML = N;
 
       // generate add/remove button for each neuron
-      if(d['has_morph'] && 'uname' in d){
-        var btn = document.createElement('button');
+      if(d['has_morph'] && ('uname' in d)){
+        let btn = document.createElement('button');
         btn.className = 'btn';
         btn.id = (connDir==='pre') ? 'btn-pre-add-' + d['uname'] : 'btn-post-add-' + d['uname'];
         btn.name = d['uname'];
 
-        if (this.isInWorkspace(d['rid'])){
+        if (this.parentObj.isInWorkspace(d['rid'])){
           btn.innerText = '-';
           btn.className += ' btn-remove btn-danger';
         }else{
           btn.innerText = '+';
           btn.className += ' btn-add btn-success';
         }
-        btn.onclick = function(){
-          toggleBtn(this);
-          this.addObjById(btn.name);
+        btn.onclick = () => {
+	  this.toggleBtn(btn);
         };
 
         c3.appendChild(btn);
         neuron_add = true;
       }
       if(d['has_syn_morph'] && 'syn_uname' in d){
-        var btn = document.createElement('button')
-        btn.className = 'btn'
+        let btn = document.createElement('button');
+        btn.className = 'btn';
         btn.id = (connDir==='pre') ? 'btn-pre-syn-add-' + d['syn_uname'] : 'btn-post-syn-add-' + d['syn_uname'];
-        btn.name = d['syn_uname']
+        btn.name = d['syn_uname'];
 
-        if (this.isInWorkspace(d['syn_rid'])){
+        if (this.parentObj.isInWorkspace(d['syn_rid'])){
           btn.innerText = '-';
           btn.className += ' btn-remove btn-danger';
         }else{
           btn.innerText = '+';
           btn.className += ' btn-add btn-success';
         }
-        btn.onclick = function(){
-          toggleSynBtn(this);
-          this.addObjById(btn.name);
+	
+        btn.onclick = () => {
+	  this.toggleBtn(btn);
         };
-
+ 
         c4.appendChild(btn);
         synapse_add = true;
       }
@@ -278,32 +270,31 @@ moduleExporter("ConnTable",
   }
 
 
-  /** <TODO> resolve issue with callback.
+  /** 
   * Add/Remove neuron upon buttonclick in info panel and toggle button
   */
-  function toggleBtn(btn){
+  ConnTable.prototype.toggleBtn = function(btn){
     if(btn.className.includes('add')){
       btn.innerText = "-";
       btn.className = "btn btn-remove btn-danger";
+      this.parentObj.addByUname(btn.name);
     }
     else{
       btn.innerText = "+";
       btn.className = "btn btn-add btn-success";
+      this.parentObj.removeByUname(btn.name);
     }
   }
 
-  /**
-  * Add/Remove synapse upon buttonclick in info panel and toggle button
-  */
-  function toggleSynBtn(btn){
-    if(btn.className.includes('add')){
-      btn.innerText = "-";
-      btn.className = "btn btn-remove btn-danger";
-    } else{
-      btn.innerText = "+";
-      btn.className = "btn btn-add btn-success";
-    }
-  }
+  // function toggleSynBtn(btn){
+  //   if(btn.className.includes('add')){
+  //     btn.innerText = "-";
+  //     btn.className = "btn btn-remove btn-danger";
+  //   } else{
+  //     btn.innerText = "+";
+  //     btn.className = "btn btn-add btn-success";
+  //   }
+  // }
 
 
   /**
@@ -311,29 +302,31 @@ moduleExporter("ConnTable",
   */
   function hasClass(el, className){
     if (el.classList)
-      return el.classList.contains(className)
+      return el.classList.contains(className);
     else
-      return !!el.className.match(new RegExp('(\\s|^)' + className + '(\\s|$)'))
+      return !!el.className.match(new RegExp('(\\s|^)' + className + '(\\s|$)'));
   }
 
   /**
   * Pure JS class helpers
   */
   function addClass(el, className){
-    if (el.classList)
-      el.classList.add(className)
-    else if (!hasClass(el, className)) el.className += " " + className
+    if (el.classList){
+      el.classList.add(className);
+    }else if (!hasClass(el, className)){
+      el.className += " " + className;
+    }
   }
 
   /**
   * Pure JS class helpers
   */
   function removeClass(el, className){
-    if (el.classList)
-      el.classList.remove(className)
-    else if (hasClass(el, className)){
-      var reg = new RegExp('(\\s|^)' + className + '(\\s|$)')
-      el.className=el.className.replace(reg, ' ')
+    if (el.classList){
+      el.classList.remove(className);
+    }else if (hasClass(el, className)){
+      var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
+      el.className=el.className.replace(reg, ' ');
     }
   }
 
@@ -354,11 +347,11 @@ moduleExporter("ConnTable",
       td = tr[i].getElementsByTagName("td")[0];
       if (td) {
         if (td.innerHTML.toLowerCase().indexOf(filter) > -1) {
-          removeClass(tr[i],"filtered-name")
+          removeClass(tr[i],"filtered-name");
           if(!hasClass(tr[i],"filtered-N"))
             tr[i].style.display = "";
         } else {
-          addClass(tr[i],"filtered-name")
+          addClass(tr[i],"filtered-name");
           tr[i].style.display = "none";
         }
       }
@@ -382,11 +375,11 @@ moduleExporter("ConnTable",
       td = tr[i].getElementsByTagName("td")[1];
       if (td) {
         if (Number(td.innerHTML) > Number(N)) {
-          removeClass(tr[i],"filtered-N")
+          removeClass(tr[i],"filtered-N");
           if(!hasClass(tr[i],"filtered-name"))
             tr[i].style.display = "";
         } else {
-          addClass(tr[i],"filtered-N")
+          addClass(tr[i],"filtered-N");
           tr[i].style.display = "none";
         }
       }

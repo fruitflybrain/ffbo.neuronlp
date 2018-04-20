@@ -18,14 +18,16 @@ moduleExporter("SummaryTable",
 {
   /**
    * Summary Information Constructor
-   * @div_id: ID for div in which to create Summary Table
-   * @data: initial data to instantiate Summary Table
-   * @func_isInWorkspace: hook to function to determine is neuron is in workspace
+   * @constructor
+   * @param {string} div_id -  ID for div in which to create Summary Table
+   * @param {obj} parentObj -  parentObject
    */
-  function Summary(div_id, func_isInWorkspace){
+  function Summary(div_id, parentObj){
     this.divId = div_id;  // wrapper
+    this.parentObj = parentObj;
+    
     this.colorId = "neu_col";
-    this.isInWorkspace = func_isInWorkspace;
+        
     this.overlay = new Overlay("img-viewer-overlay",'<img id="full-img"><h2 id="img-viewer-caption"></h2>');
 
     this.htmlTemplate = createTemplate(this);
@@ -72,55 +74,121 @@ moduleExporter("SummaryTable",
   }
 
   /**
+   * Convert snake_case to Sentence Case
+   *
+   * @param {string} word_in_snake - Word in snake_case
+   */
+  
+  function snakeToSentence(word_in_snake){
+    return word_in_snake.split("_")
+                         .map(word => word.charAt(0).toUpperCase()+word.slice(1))
+                         .join(" ");
+  }
+  
+  /**
+   * Verify integrity of data
+   */
+  function verifyDataIntegrity(data){
+    let integrity = 1;
+    return integrity  && data ;
+  }
+  
+  /**
    * Summary Information Update
    *
    */
   Summary.prototype.update = function(data){
 
+    if (verifyDataIntegrity(data) == false){
+      return;
+    }
+    
     this.reset();
     $('#'+this.divId).show(); // show summary information
 
-    let basicKeys = ['Class','Name','vfbId','Data Source'];
-    let additionalKeys = ['Transmitters','Expresses','Transgenic Lines'];
 
-    let tableHtml = "";
+    // extra name and color
+    var objName = ('uname' in data) ? data['uname'] : data['name'];
+    if (data['class'] === 'synapse'){
+      objName = "Synapse between" + objName.split("--")[0]+ "and" + objName.split("--")[1];
+    }
+    var objRId = data['rid'];
+    var objColor = this.parentObj.getAttr(objRId,'color');
+    
+    var tableHtml = '<tr><td>Name :</td><td>' + objName + '</td>';
+    
+    if (objColor){
+      // add choose color
+      tableHtml += '<td>Choose Color</td><td> <input class="color_inp"';
+      if(Modernizr.inputtypes.color){
+        tableHtml+='type="color"';
+      }else{
+        tableHtml+='type="text"';
+      }
+      tableHtml+='name="neu_col" id="' + this.colorId+ '" value="#' + objColor  + '"/></td></tr>';
+      
+      // set callback <TODO> check this 
+      if(!Modernizr.inputtypes.color){
+        $('#'+this.colorId).spectrum({
+          showInput: true,
+          showPalette: true,
+          showSelectionPalette: true,
+          showInitial: true,
+          localStorageKey: "spectrum.neuronlp",
+          showButtons: false,
+          move: (function(c){
+            console.log('move');
+            this.parentObj.setAttr(objRId,'color', c.toHexString());
+          }).bind(this)
+        });
+      }
+      else{
+        $('#'+this.colorId).onchange = () => {
+	  console.log("move");
+	  this.parentObj.setAttr(objRId,'color', c.toHexString());
+        };
+      }
 
-    for (key of basicKeys){
+    }else{
+      tableHtml += '</tr>';
+    }
+      
+    let displayKeys = ['class','vfb_id','data_source','transgenic_lines','transmitters','expresses'];
+    var displayCtr = 0;
+    for (key of displayKeys){
       if (data[key]) {  // make sure data field is valid
-        if (key === 'vfbId'){
-          let vfbBtn = "<a target='_blank' href='http://virtualflybrain.org/reports/" + data[key] + "'>VFB link</a>"
-          tableHtml += '<tr><td>External Link:</td><td>' + vfbBtn + '</td></tr>';
-          continue;
-        }
-        tableHtml += '<tr><td>' + key + ':</td><td>' + data[key] + '</td></tr>';
+	displayCtr += 1;
+
+	if (displayCtr % 2 == 0 ){
+	  tableHtml += '</tr><tr>';
+	}else{
+	  tableHtml += '<tr>';
+	}
+	
+        if (key === 'vfb_id'){
+          let vfbBtn = "<a target='_blank' href='http://virtualflybrain.org/reports/" + data[key] + "'>VFB link</a>";
+          tableHtml += '<td>External Link:</td><td>' + vfbBtn + '</td>';
+        }else{
+	  tableHtml += '<td>' + snakeToSentence(key) + ':</td><td>' + data[key] + '</td>';
+	}
       }
     }
-    for (key of additionalKeys){
-      if (data[key]) {  // make sure data field is valid
-        tableHtml += '<tr><td>' + key + ':</td><td>' + data[key] + '</td></tr>';
-      }
+    // check if we ended on an odd number
+    if (tableHtml.substr(tableHtml.length-5) !== '</tr>'){
+      tableHtml += '</tr>';
     }
-    // add color functionality
-    // if(this.isInWorkspace(this.name)){
-    //   tableHtml+='<tr class="experimental" ><td>Choose Color</td><td> <input class="color_inp"'
-    //   if(Modernizr.inputtypes.color){
-    //     tableHtml+='type="color"';
-    //   }else{
-    //     tableHtml+='type="text"';
-    //   }
-    //   tableHtml+='name="neu_col" id="' + this.colorId.slice(1)+ '" value="#' + "123141" + '"/></td></tr>'; //<TODO> remove ffbomesh dependency
-    // }
+    
+    
 
     $('#'+this.divId + " tbody").html(tableHtml);
 
     // flycircuit data
-    if (data['Data Source'].indexOf("FlyCircuit") > -1) { // see if flycircuit is in
+    if (('data_source' in data) && (data['data_source'].indexOf("FlyCircuit") > -1)) { // see if flycircuit is in
       let extraTableHtml = "";
-      var extraData = data['Flycircuit Data']
+      var extraData = data['flycircuit_data'];
       if (!('error' in extraData)){
-        var params = ["Author","Driver","Gender/Age","Lineage", "Putative birth time", "Putative neurotransmitter", "Soma Coordinate", "Stock"];
-
-        Object.entries(params).forEach(
+	// Fetch Key:value pair for flycircuit_data and add to table
+        Object.entries(Object.keys(extraData)).forEach(
           ([idx, p]) => {
             if (idx % 2 === 0){
               extraTableHtml += "<tr><td>" + p + ":</td><td>" + extraData[p] +"</td>" ;
@@ -133,62 +201,43 @@ moduleExporter("SummaryTable",
         $(this.divId+ " tbody").append(extraTableHtml);
 
         // set source for images
-        $("#info-panel-extra-img >div>img")[0].src = extraData["Images"]["Original confocal image (Animation)"];
-        $("#info-panel-extra-img >div>img")[1].src = extraData["Images"]["Segmentation"];
-        $("#info-panel-extra-img >div>img")[2].src = extraData["Images"]["Skeleton (download)"];
+	if (extraData["Images"]["Original confocal image (Animation)"]){
+	  $("#info-panel-extra-img >div>img")[0].src = extraData["Images"]["Original confocal image (Animation)"];
+	  $("#info-panel-extra-img >div>img")[0].onclick = function(){
+            $('#full-img')[0].src = this.src;
+            $("#img-viewer-caption").html('Original confocal image');
+            this.overlay.show();
+          };
+	}else{
+	  $("#info-panel-extra-img >div>img").hide(); // <TODO> check this
+	}
+	
+	if (extraData["Images"]["Segmentation"]){
+	  $("#info-panel-extra-img >div>img")[1].src = extraData["Images"]["Segmentation"];
+	  $("#info-panel-extra-img >div>img")[1].onclick = function(){
+            $('#full-img')[1].src = this.src;
+            $("#img-viewer-caption").html('Segmentation');
+            this.overlay.show();
+          };
+	}else{
+	  $("#info-panel-extra-img >div>img").hide(); // <TODO> check this
+	}
+	
+	if (extraData["Images"]["Skeleton (download)"]){
+	  $("#info-panel-extra-img >div>img")[2].src = extraData["Images"]["Skeleton (download)"];
+	  $("#info-panel-extra-img >div>img")[2].onclick = function(){
+            $('#full-img')[2].src = this.src;
+            $("#img-viewer-caption").html('Skeleton');
+            this.overlay.show();
+          };
+	}else{
+	  $("#info-panel-extra-img >div>img").hide(); // <TODO> check this
+	}
 
-        $("#info-panel-extra-img >div").show();
-        $("#info-panel-extra-img >div").show();
-        $("#info-panel-extra-img >div").show();
         $("#info-panel-extra-img").show();
-
-
-
-      //   imagesPanel.children[0].children[1].onclick = function(){
-      //     $('#full-img')[0].src = this.src;
-      //     $("#img-viewer-caption").html('Original confocal image');
-      //     this.overlay.show();
-      // //mm_menu_right.close();
-      //   }
-
-      //   imagesPanel.children[1].children[1].onclick = function(){
-      //     $('#full-img')[0].src = this.src;
-      //     $("#img-viewer-caption").html('Segmentation');
-      //     this.overlay.show();
-      //   }
-
-      //   imagesPanel.children[2].children[1].onclick = function(){
-      //     $('#full-img')[0].src = this.src;
-      //     $("#img-viewer-caption").html('Skeleton');
-      //     this.overlay.show();
-      //   }
       }
     }
-
-    // Color Change - show palette
-    if(this.isInWorkspace(this.name)){
-      if(!Modernizr.inputtypes.color)
-        $(this.colorId).spectrum({
-          showInput: true,
-          showPalette: true,
-          showSelectionPalette: true,
-          showInitial: true,
-          localStorageKey: "spectrum.neuronlp",
-          showButtons: false,
-          move: function(c){
-            console.log('move');
-            //ffbomesh.setColor($(neuId).attr('uid'), c.toHexString());
-          }
-        });
-      else{
-        $(this.colorId).on('change', function(){
-          console.log('move');
-          //ffbomesh.setColor($(neuId).attr('uid'), $(neuColorId)[0].value);
-        });
-      }
-    }
-
-
+    
   }
 
 
