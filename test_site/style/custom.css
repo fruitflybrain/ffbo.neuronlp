@@ -1955,3 +1955,12 @@ Arch Demo
     font-style: italic;
 }
 
+#vis-3d {
+  position: fixed;
+  left: calc( 50% );
+  top: 60px;
+  width: calc( 50% - 15px );
+  height: calc( 100% - 120px );
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}

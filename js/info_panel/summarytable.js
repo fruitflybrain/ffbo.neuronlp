@@ -1,4 +1,4 @@
-// Adapted from https://stackoverflow.com/a/30538574                                                                                                                                                                                  
+// Adapted from https://stackoverflow.com/a/30538574
 if( moduleExporter === undefined){
   var moduleExporter = function(name, dependencies, definition) {
     if (typeof module === 'object' && module && module.exports) {
@@ -7,12 +7,13 @@ if( moduleExporter === undefined){
     } else if (typeof require === 'function') {
       define(dependencies, definition);
     } else {
-      window[name] = eval("definition(" + dependencies.toString() + ")");
+      window[name] = definition();
     }
   };
 }
+
 moduleExporter("SummaryTable",
-  ['jquery','d3','app/overlay'],
+  ['jquery','d3','overlay'],
   function($,d3,Overlay)
 {
   /**
@@ -44,7 +45,7 @@ moduleExporter("SummaryTable",
     template += '<div class="col-md-4" style="display:none"><h4>Skeleton</h4><img class="clickable-image" style="width:100%" alt="not available" onerror="imgError(this);"></div>';
     template += '</div>';
     return template;
-  }  
+  }
 
   /*
    * Reset Summary Table
@@ -78,10 +79,10 @@ moduleExporter("SummaryTable",
 
     this.reset();
     $('#'+this.divId).show(); // show summary information
-  
+
     let basicKeys = ['Class','Name','vfbId','Data Source'];
     let additionalKeys = ['Transmitters','Expresses','Transgenic Lines'];
-    
+
     let tableHtml = "";
 
     for (key of basicKeys){
@@ -109,11 +110,11 @@ moduleExporter("SummaryTable",
     //   }
     //   tableHtml+='name="neu_col" id="' + this.colorId.slice(1)+ '" value="#' + "123141" + '"/></td></tr>'; //<TODO> remove ffbomesh dependency
     // }
-    
+
     $('#'+this.divId + " tbody").html(tableHtml);
-    
+
     // flycircuit data
-    if (data['Data Source'].indexOf("FlyCircuit") > -1) { // see if flycircuit is in 
+    if (data['Data Source'].indexOf("FlyCircuit") > -1) { // see if flycircuit is in
       let extraTableHtml = "";
       var extraData = data['Flycircuit Data']
       if (!('error' in extraData)){
@@ -140,8 +141,8 @@ moduleExporter("SummaryTable",
         $("#info-panel-extra-img >div").show();
         $("#info-panel-extra-img >div").show();
         $("#info-panel-extra-img").show();
-        
-        
+
+
 
       //   imagesPanel.children[0].children[1].onclick = function(){
       //     $('#full-img')[0].src = this.src;
@@ -195,5 +196,3 @@ moduleExporter("SummaryTable",
 
   return Summary;
 });
-
-

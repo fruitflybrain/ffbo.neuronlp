@@ -67,43 +67,28 @@
 
     <!-- <div id="welcomepage"></div> -->
 
-    <div id="login-container" style="display: none; cursor: default;">
-        <form name="Login_Form" class="form-signin">
-            <h4 class="form-signin-heading">Welcome to NeuroNLP</h4>
-            <hr class="colorgraph"><br>
+  <div id="login-container" style="display: none; cursor: default;">
+      <form name="Login_Form" class="form-signin">
+          <h4 class="form-signin-heading">Welcome to NeuroNLP</h4>
+          <hr class="colorgraph"><br>
 
-            <div id="input-group-username" class="input-group input-group-auth">
-                <span class="input-group-addon">Username</span>
-                <input id="txt_user" type="text" class="form-control" name="Username" placeholder="Username" required="" autofocus="" />
-            </div>
-            <div id="input-group-password" class="input-group input-group-auth">
-                <span class="input-group-addon">Password</span>
-                <input id="txt_password" type="password" class="form-control" name="Password" placeholder="Password" required=""/>
-            </div>
+          <div id="input-group-username" class="input-group input-group-auth">
+              <span class="input-group-addon">Username</span>
+              <input id="txt_user" type="text" class="form-control" name="Username" placeholder="Username" required="" autofocus="" />
+          </div>
+          <div id="input-group-password" class="input-group input-group-auth">
+              <span class="input-group-addon">Password</span>
+              <input id="txt_password" type="password" class="form-control" name="Password" placeholder="Password" required=""/>
+          </div>
 
-            <button class="btn btn-lg btn-primary btn-block"  name="Submit" value="Login" type="button" id="loginBtn">Login</button>
-	    <a onclick="start_guest_connection();" style="float: left;margin-top:10px" >Continue as Guest</a>
-	    <a href="register.html" style="float: right;margin-top:10px" >Register </a>
-            <h5 id="auth_feedback" class="form-signin-feedback" style="margin-top:30px">&nbsp;</h5>
-        </form>
-    </div>
-    <div class="modal" id="tagModal" tabindex="-1" role="dialog" aria-labelledby="tagLabel" aria-hidden="true">
-      <div class="modal-dialog">
-	<div class="modal-content">
-	  <div class="modal-header">
-	    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&#10005;</span></button>
-	    <h4 class="modal-title" id="tagLabel">Enter tag</h4>
-	  </div>
-	  <div class="modal-body">
-	    <input type="text" name="tag" id="tag" style="width:100%">
-	  </div>
-	  <div class="modal-footer">
-	    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	    <button type="button" class="btn btn-primary" id="tagSubmit"></button>
-	  </div>
-	</div>
-      </div>
-    </div>
+          <button class="btn btn-lg btn-primary btn-block"  name="Submit" value="Login" type="button" id="loginBtn">Login</button>
+    <a onclick="start_guest_connection();" style="float: left;margin-top:10px" >Continue as Guest</a>
+    <a href="register.html" style="float: right;margin-top:10px" >Register </a>
+          <h5 id="auth_feedback" class="form-signin-feedback" style="margin-top:30px">&nbsp;</h5>
+      </form>
+  </div>
+  
+
   <div id="wrapper">
 
     <!-- Page Content -->

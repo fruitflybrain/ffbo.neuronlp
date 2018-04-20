@@ -1,4 +1,4 @@
-// Adapted from https://stackoverflow.com/a/30538574                                                                                                                                                                                  
+// Adapted from https://stackoverflow.com/a/30538574
 if( moduleExporter === undefined){
   var moduleExporter = function(name, dependencies, definition) {
     if (typeof module === 'object' && module && module.exports) {
@@ -7,12 +7,13 @@ if( moduleExporter === undefined){
     } else if (typeof require === 'function') {
       define(dependencies, definition);
     } else {
-      window[name] = eval("definition(" + dependencies.toString() + ")");
+      window[name] = definition();
     }
   };
 }
+
 moduleExporter("preprocess",[],function(){
-  /** 
+  /**
    * Preprocess data for Synaptic plot
    */
    function preprocessSynProfileData(d){

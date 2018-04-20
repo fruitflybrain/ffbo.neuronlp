@@ -1,4 +1,4 @@
-// Adapted from https://stackoverflow.com/a/30538574                                                                                                                                                                                  
+// Adapted from https://stackoverflow.com/a/30538574
 if( moduleExporter === undefined){
   var moduleExporter = function(name, dependencies, definition) {
     if (typeof module === 'object' && module && module.exports) {
@@ -7,17 +7,16 @@ if( moduleExporter === undefined){
     } else if (typeof require === 'function') {
       define(dependencies, definition);
     } else {
-      window[name] = eval("definition(" + dependencies.toString() + ")");
+      window[name] = definition();
     }
   };
 }
 
-moduleExporter("InfoPanel",
-  [
+moduleExporter("InfoPanel",[
   'jquery',
-  'app/info_panel/summarytable',
-  'app/info_panel/connsvg',
-  'app/info_panel/conntable',
+  'info_panel/summarytable',
+  'info_panel/connsvg',
+  'info_panel/conntable',
   ],
   function(
     $,
@@ -53,7 +52,7 @@ moduleExporter("InfoPanel",
       writable: false
     });
 
-    this.connSVG = undefined; 
+    this.connSVG = undefined;
     this.connTable = undefined;
     this.summaryTable = undefined;
 
@@ -65,7 +64,7 @@ moduleExporter("InfoPanel",
 
   /**
    * Create HTML template
-   * 
+   *
    * @param {object} obj - synonymous to `this`, refers to instance of ConnTable
    */
   function createTemplate(obj){
@@ -76,7 +75,7 @@ moduleExporter("InfoPanel",
     template += '<div id="' + obj.connTableId + '"></div>';
     template += '<div class="slider-bar ui-draggable ui-draggable-handle" draggable="true" id="info_panel_dragger"></div>';
     return template;
-  }  
+  }
 
 
   /*
@@ -109,8 +108,8 @@ moduleExporter("InfoPanel",
 
 
   /**
-   * Check if an object is in the workspace. 
-   * 
+   * Check if an object is in the workspace.
+   *
    * @param {string} id -  id of target object (neuron/synapse)
    */
   InfoPanel.prototype.isInWorkspace = function(id){
@@ -118,8 +117,8 @@ moduleExporter("InfoPanel",
   }
 
   /**
-   * Add an object into the workspace. 
-   * 
+   * Add an object into the workspace.
+   *
    * @param {string} id -  id of target object (neuron/synapse)
    */
   InfoPanel.prototype.addObjById = function(id){
@@ -129,14 +128,14 @@ moduleExporter("InfoPanel",
 
   /**
   * Update Info Panel
-  * 
+  *
   * @param {obj} neuData - neuron Data
   * @param {obj} synData - synapse Data
   */
   InfoPanel.prototype.update = function(neuData,synData){
     let new_name;
     if('label' in neuData){
-      new_name = neuData['label'];  
+      new_name = neuData['label'];
     }else if('uname' in neuData){
       new_name = neuData['uname'];
     }else if('name' in neuData){
@@ -158,7 +157,7 @@ moduleExporter("InfoPanel",
 
   /**
   * reformat
-  * 
+  *
   * @param {obj} neuData - neuron Data
   * @param {obj} synData - synapse Data
   */
@@ -239,4 +238,3 @@ moduleExporter("InfoPanel",
    */
   return InfoPanel;
 });
-
