@@ -90,8 +90,6 @@ require([
    FFBOMesh3D,
    InfoPanel
 ){
-  var infoPanel;
-
   var lpuList = [
     'al_l', 'al_r', 'ammc_l', 'ammc_r', 'cal_l', 'cal_r', 'ccp_l', 'ccp_r',
     'cmp_l', 'cmp_r', 'cvlp_l', 'cvlp_r', 'dlp_l', 'dlp_r', 'dmp_l', 'dmp_r',
@@ -102,15 +100,15 @@ require([
     'sog_r', 'spp_l', 'spp_r', 'vlp_l', 'vlp_r', 'vmp_l', 'vmp_r'
   ];
 
-  lpuJSON = {}
+  lpuJSON = {};
   for (var i=0; i < lpuList.length; i++ ) {
     var x = lpuList[i].split("_");
     var side = "";
     if (x.length > 1) {
       if (x[1] == "r")
-        side = "Right "
+        side = "Right ";
       else
-        side = "Left "
+        side = "Left ";
     }
     lpuJSON[lpuList[i]] = {
       'filename': 'https://raw.githubusercontent.com/fruitflybrain/ffbo.lib/master/mesh/' + lpuList[i] + '.json',
@@ -123,11 +121,35 @@ require([
 
   var ffbomesh = new FFBOMesh3D('vis-3d', {"ffbo_json": lpuJSON, "showAfterLoadAll": true}, {"globalCenter": {'x': 0, 'y':-250, 'z':0}});
   infoPanel = new InfoPanel("info-panel");
-  infoPanel.addObjById = (id) => { testNLPquery("add " + id);}
+
+  infoPanel.addByUname = (uname) => {
+    query = client.addByUnameQuery(uname);
+    queryID = client.executeNAquery(query, {success: dataCallback});
+    logAndMonitorQuery(queryID);    
+  };
+  
+  infoPanel.removeByUname = (uname) => {
+    query = client.removeByUnameQuery(uname);
+    queryID = client.executeNAquery(query);
+    logAndMonitorQuery(queryID);
+  };
+  
+  infoPanel.getAttr = (id,attr) => {
+    if (attr !== 'color') {
+      return undefined;
+    }
+    return ffbomesh.meshDict[id].color.getHexString();
+  };
+  infoPanel.setAttr = (id,attr,value) => {
+    if (attr !== 'color') {
+      return;
+    }
+    ffbomesh.setColor(id, value.toHexString());
+  };
   // var infoPanel = new InfoPanel("#info-panel");
 
   var client = new FFBOClient();
-  client.startConnection("guest", "guestpass", "wss://neuronlp.fruitflybrain.org:8888/ws")
+  client.startConnection("guest", "guestpass", "wss://neuronlp.fruitflybrain.org:8888/ws");
 
   window["fetchNeuronInfo"] = function(rid){
     client.executeNAquery(client.neuronInfoQuery(rid),
@@ -147,7 +169,7 @@ require([
                             if ("synapse_details_1" in d) {
                               infoPanel.update(d["synapse_details_1"],undefined);
                             }
-                          }})
+                          }});
 
   }
   window["client"] = client;
@@ -155,8 +177,8 @@ require([
   function logAndMonitorQuery(queryID){
     console.log("Query Fired: ID - " + queryID);
     client.status.on("change", function(e){
-    console.log("Query Status Changed, ID: " + e.prop + ", Value: ", e.value);
-  }, queryID)
+      console.log("Query Status Changed, ID: " + e.prop + ", Value: ", e.value);
+    }, queryID);
   }
 
   window["testNLPquery"] = function(query){
@@ -172,12 +194,12 @@ require([
   }
 
   client.receiveCommand = function(message){
-    console.log("Command Received")
+    console.log("Command Received");
     console.log(message);
     if(!'commands' in message)
       return;
     if('reset' in message['commands']){
-      ffbomesh.reset()
+      ffbomesh.reset();
       delete message.commands.reset;
     }
     for(var cmd in message["commands"])
@@ -186,16 +208,16 @@ require([
 
   window["ffbomesh"] = ffbomesh;
   function dataCallback(data){
-    ffbomesh.addJson({ffbo_json: data, type: 'morphology_json'})
+    ffbomesh.addJson({ffbo_json: data, type: 'morphology_json'});
   }
 
   ffbomesh.on('click',   function(e){
     query = client.infoQuery(e.value);
-    queryID = clientSession.executeNAquery(query, {success: function(data){
-      data['rid'] = e.value;
-      infoPanel.update(data)
-    }})
-    logAndMonitorQuery(queryID)
+    queryID = client.executeNAquery(query, {success: function(data){
+      data['summary']['rid'] = e.value;
+      infoPanel.update(data);
+    }});
+    logAndMonitorQuery(queryID);
   })
 
   window.addByUname = function(uname){

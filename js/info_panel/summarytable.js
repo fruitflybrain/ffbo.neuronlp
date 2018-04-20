@@ -20,16 +20,14 @@ moduleExporter("SummaryTable",
    * Summary Information Constructor
    * @constructor
    * @param {string} div_id -  ID for div in which to create Summary Table
-   * @param {obj} data -  initial data to instantiate Summary Table
-   * @param {obj} functionHooks -  object of hook to functions
+   * @param {obj} parentObj -  parentObject
    */
-  function Summary(div_id, functionHooks){
+  function Summary(div_id, parentObj){
     this.divId = div_id;  // wrapper
-    this.colorId = "neu_col";
-    this.isInWorkspace = functionHooks.isInWorkspace;
-    this.setAttr = functionHooks.setAttr;
-    this.getAttr = functionHooks.getAttr;
+    this.parentObj = parentObj;
     
+    this.colorId = "neu_col";
+        
     this.overlay = new Overlay("img-viewer-overlay",'<img id="full-img"><h2 id="img-viewer-caption"></h2>');
 
     this.htmlTemplate = createTemplate(this);
@@ -92,7 +90,7 @@ moduleExporter("SummaryTable",
    */
   function verifyDataIntegrity(data){
     let integrity = 1;
-    return integrity  && data && ('pre' in data) && ('post' in data);
+    return integrity  && data ;
   }
   
   /**
@@ -111,8 +109,11 @@ moduleExporter("SummaryTable",
 
     // extra name and color
     var objName = ('uname' in data) ? data['uname'] : data['name'];
+    if (data['class'] === 'synapse'){
+      objName = "Synapse between" + objName.split("--")[0]+ "and" + objName.split("--")[1];
+    }
     var objRId = data['rid'];
-    var objColor = this.getAttr(objRId,'color');
+    var objColor = this.parentObj.getAttr(objRId,'color');
     
     var tableHtml = '<tr><td>Name :</td><td>' + objName + '</td>';
     
@@ -128,7 +129,7 @@ moduleExporter("SummaryTable",
       
       // set callback <TODO> check this 
       if(!Modernizr.inputtypes.color){
-        $(this.colorId).spectrum({
+        $('#'+this.colorId).spectrum({
           showInput: true,
           showPalette: true,
           showSelectionPalette: true,
@@ -137,14 +138,15 @@ moduleExporter("SummaryTable",
           showButtons: false,
           move: (function(c){
             console.log('move');
-            this.setAttr(objRId,'color', c.toHexString());
+            this.parentObj.setAttr(objRId,'color', c.toHexString());
           }).bind(this)
         });
       }
       else{
-        $(this.colorId).on('change', (function(){
-	  this.setAttr(objRId,'color', c.toHexString());
-        }).bind(this));
+        $('#'+this.colorId).onchange = () => {
+	  console.log("move");
+	  this.parentObj.setAttr(objRId,'color', c.toHexString());
+        };
       }
 
     }else{
@@ -186,7 +188,7 @@ moduleExporter("SummaryTable",
       var extraData = data['flycircuit_data'];
       if (!('error' in extraData)){
 	// Fetch Key:value pair for flycircuit_data and add to table
-        Object.entries(Objec.keys(extraData)).forEach(
+        Object.entries(Object.keys(extraData)).forEach(
           ([idx, p]) => {
             if (idx % 2 === 0){
               extraTableHtml += "<tr><td>" + p + ":</td><td>" + extraData[p] +"</td>" ;
