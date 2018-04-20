@@ -13,8 +13,8 @@ if( moduleExporter === undefined){
 }
 
 moduleExporter("SummaryTable",
-  ['jquery','d3','overlay'],
-  function($,d3,Overlay)
+	       ['jquery','d3','overlay','modernizr'],
+	       function($,d3,Overlay,Modernizr)
 {
   /**
    * Summary Information Constructor
