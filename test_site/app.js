@@ -13,9 +13,10 @@ requirejs.config({
   baseUrl: '../js',
   paths: {
     // app: 'app',
-    mesh3d: 'https://neuronlp.fruitflybrain.org:8888/lib/js/mesh3d',
+    mesh3d: '//neuronlp.fruitflybrain.org:8888/lib/js/mesh3d',
+    infopanel: "info_panel/infopanel",
     autobahn: '//cdn.rawgit.com/crossbario/autobahn-js-built/master/autobahn.min',
-    d3: 'lib/d3.min',
+    d3: '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min',
     jquery: '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min',
     detector: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/Detector',
     simplifymodifier: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/utils/SceneUtils',
@@ -39,11 +40,21 @@ requirejs.config({
     adaptivetonemappingpass: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/postprocessing/AdaptiveToneMappingPass',
     trackballcontrols: '//cdn.rawgit.com/fruitflybrain/ffbo.lib/VisualizationUpdates/js/three/libs/TrackballControls',
     lightshelper: '//cdn.rawgit.com/fruitflybrain/ffbo.lib/VisualizationUpdates/js/lightshelper',
-    modernizr: "lib/modernizr",
-    infopanel: "info_panel/infopanel",
-    d3: "https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3"
+    modernizr: "//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min",
+    d3: "//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3",
+    jqueryui: "//code.jquery.com/ui/1.12.1/jquery-ui",
+    perfectscrollbar: "//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.7.0/js/perfect-scrollbar.jquery.min",
+    "jquery.mobile": "//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min",
+    spectrum: "//cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min",
+    "jquery.mmenu": "//cdnjs.cloudflare.com/ajax/libs/jQuery.mmenu/7.0.3/jquery.mmenu.all",
+    bootsrapslider: "//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min",
+    swiper: "//cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.2/js/swiper.min",
+    bootstrap: "//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min",
+    blockui: "//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min"
+    /* Notify, bootbox, colormaps, demos, mouse, vis_set, ResizeSensor, read_vars, colormaps */
   },
   shim: {
+    bootstrap: {deps: ['jquery']},
     modernizr: {exports: 'Modernizr'},
     detector: {deps: ['three'], exports: 'Detector'},
     trackballcontrols: {deps: ['three']},
@@ -81,7 +92,12 @@ require([
   'three',
   'detector',
   'mesh3d',
-  'infopanel'
+  'infopanel',
+  'bootstrap',
+  'jquery.mobile',
+  'jqueryui',
+  'jquery.mmenu',
+  'blockui'
 ], function (
    $,
    FFBOClient,
@@ -90,6 +106,10 @@ require([
    FFBOMesh3D,
    InfoPanel
 ){
+
+  $.mobile.ajaxEnabled = false;
+
+  var infoPanel;
   var lpuList = [
     'al_l', 'al_r', 'ammc_l', 'ammc_r', 'cal_l', 'cal_r', 'ccp_l', 'ccp_r',
     'cmp_l', 'cmp_r', 'cvlp_l', 'cvlp_r', 'dlp_l', 'dlp_r', 'dmp_l', 'dmp_r',
@@ -231,5 +251,22 @@ require([
     queryID = client.executeNAquery(query);
     logAndMonitorQuery(queryID);
   }
+  var srchInput = document.getElementById('srch_box');
+  var srchBtn = document.getElementById('srch_box_btn');
+  //add event listener
+  srchBtn.addEventListener('click', function(event) {
+    query = document.getElementById('srch_box').value;
+    $("#search-wrapper").block({ message: null });
+    srchInput.blur();
+    queryID = client.executeNLPquery(query, {success: dataCallback});
+    logAndMonitorQuery(queryID);
+    client.status.on("change", function(e){ $("#search-wrapper").unblock() }, queryID);
+  });
+
+  srchInput.addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode == 13)
+      srchBtn.click();
+  });
 
 });
