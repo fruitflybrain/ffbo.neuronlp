@@ -14,8 +14,9 @@ requirejs.config({
   paths: {
     // app: 'app',
     mesh3d: '//neuronlp.fruitflybrain.org:8888/lib/js/mesh3d',
+    infopanel: "info_panel/infopanel",
     autobahn: '//cdn.rawgit.com/crossbario/autobahn-js-built/master/autobahn.min',
-    d3: 'lib/d3.min',
+    d3: '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min',
     jquery: '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min',
     detector: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/Detector',
     simplifymodifier: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/utils/SceneUtils',
@@ -39,9 +40,15 @@ requirejs.config({
     adaptivetonemappingpass: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/postprocessing/AdaptiveToneMappingPass',
     trackballcontrols: '//cdn.rawgit.com/fruitflybrain/ffbo.lib/VisualizationUpdates/js/three/libs/TrackballControls',
     lightshelper: '//cdn.rawgit.com/fruitflybrain/ffbo.lib/VisualizationUpdates/js/lightshelper',
-    modernizr: "lib/modernizr",
-    infopanel: "info_panel/infopanel",
-    d3: "https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3"
+    modernizr: "//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min",
+    d3: "https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3",
+    jquery-ui: "//code.jquery.com/ui/1.12.1/jquery-ui",
+    perfectscrollbar: "//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.7.0/js/perfect-scrollbar.jquery.min",
+    jquery.mobile: "//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min",
+    spectrum: "//cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min",
+    jquery.mmenu: "//cdnjs.cloudflare.com/ajax/libs/jQuery.mmenu/7.0.3/jquery.mmenu.all",
+    bootsrapslider: "//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min",
+    swiper: "//cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.2/js/swiper.min"
   },
   shim: {
     modernizr: {exports: 'Modernizr'},
@@ -123,7 +130,7 @@ require([
 
   var ffbomesh = new FFBOMesh3D('vis-3d', {"ffbo_json": lpuJSON, "showAfterLoadAll": true}, {"globalCenter": {'x': 0, 'y':-250, 'z':0}});
   infoPanel = new InfoPanel("info-panel");
-
+  
   // var infoPanel = new InfoPanel("#info-panel");
 
   var client = new FFBOClient();
