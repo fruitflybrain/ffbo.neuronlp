@@ -196,8 +196,11 @@ moduleExporter("SummaryTable",
             }
           }
         );
+	if (extraTableHtml.substr(extraTableHtml.length-5) !== '</tr>'){
+	  extraTableHtml += '</tr>';
+	}
 
-        $(this.divId+ " tbody").append(extraTableHtml);
+        $('#'+this.divId+ " tbody").append(extraTableHtml);
 
         // set source for images
 	if (extraData["Images"]["Original confocal image (Animation)"]){
