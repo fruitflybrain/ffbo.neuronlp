@@ -261,7 +261,7 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
       query: [
         {
           action: { method: { query: { uname: uname } } },
-          object: { class: "Neuron" }
+          object: { class: ["Neuron", "Synapse"] }
         }
       ]
     };
@@ -269,44 +269,14 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
 
   FFBOClient.prototype.removeByUnameQuery = function(uname){
     /**
-     * Query to remove a neuron by its name.
+     * Query to remove a neuron or synapse by its uname.
      */
     return {
       verb: "remove",
       query: [
         {
           action: { method: { query: { uname: uname } } },
-          object: { class: "Neuron" }
-        }
-      ]
-    };
-  }
-
-  FFBOClient.prototype.addSynapseByUnameQuery = function(uname){
-    /**
-     * Query to add a Synapse by its name.
-     */
-    return {
-      verb: "add",
-      query: [
-        {
-          action: { method: { query: { uname: uname } } },
-          object: { class: "Synapse" }
-        }
-      ]
-    };
-  }
-
-  FFBOClient.prototype.removeSynapseByUnameQuery = function(uname){
-    /**
-     * Query to remove a Synapse by its name.
-     */
-    return {
-      verb: "remove",
-      query: [
-        {
-          action: { method: { query: { uname: uname } } },
-          object: { class: "Synapse" }
+          object: { class: ["Neuron", "Synapse"] }
         }
       ]
     };
@@ -344,20 +314,12 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
     }
   }
 
-  FFBOClient.prototype.neuronInfoQuery = function(rid){
+  FFBOClient.prototype.infoQuery = function(rid){
     return {
       id: rid,
       uri: 'ffbo.na.get_data'
     }
   }
-
-  FFBOClient.prototype.synapseInfoQuery = function(rid){
-    return {
-      id: rid,
-      uri: 'ffbo.na.get_syn_data'
-    }
-  }
-
 
   FFBOClient.prototype.startConnection = function(authid, key, url) {
     function onchallenge(session, method, extra) {
@@ -386,7 +348,7 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
       // Start registering procedures for remote calls.
 
       session.register("ffbo.ui.receive_cmd." + session.id, ( function (args) {
-        this.receiveCommand(args);
+        this.receiveCommand(args[0]);
       } ).bind(this)).then(
          function(reg) {},
          function(err) {

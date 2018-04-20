@@ -174,11 +174,40 @@ require([
   client.receiveCommand = function(message){
     console.log("Command Received")
     console.log(message);
+    if(!'commands' in message)
+      return;
+    if('reset' in message['commands']){
+      ffbomesh.reset()
+      delete message.commands.reset;
+    }
+    for(var cmd in message["commands"])
+      ffbomesh.execCommand({"commands":[cmd],"neurons": message["commands"][cmd][0],"args":message['commands'][cmd][1]});
   }
 
+  window["ffbomesh"] = ffbomesh;
   function dataCallback(data){
     ffbomesh.addJson({ffbo_json: data, type: 'morphology_json'})
   }
 
+  ffbomesh.on('click',   function(e){
+    query = client.infoQuery(e.value);
+    queryID = clientSession.executeNAquery(query, {success: function(data){
+      data['rid'] = e.value;
+      infoPanel.update(data)
+    }})
+    logAndMonitorQuery(queryID)
+  })
+
+  window.addByUname = function(uname){
+    query = client.addByUnameQuery(uname);
+    queryID = client.executeNAquery(query, {success: dataCallback});
+    logAndMonitorQuery(queryID);
+  }
+
+  window.removeByUname = function(uname){
+    query = client.removeByUnameQuery(uname);
+    queryID = client.executeNAquery(query);
+    logAndMonitorQuery(queryID);
+  }
 
 });
