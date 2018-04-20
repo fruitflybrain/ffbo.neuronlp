@@ -41,16 +41,19 @@ requirejs.config({
     trackballcontrols: '//cdn.rawgit.com/fruitflybrain/ffbo.lib/VisualizationUpdates/js/three/libs/TrackballControls',
     lightshelper: '//cdn.rawgit.com/fruitflybrain/ffbo.lib/VisualizationUpdates/js/lightshelper',
     modernizr: "//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min",
-    d3: "https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3",
-    jquery-ui: "//code.jquery.com/ui/1.12.1/jquery-ui",
+    d3: "//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3",
+    jqueryui: "//code.jquery.com/ui/1.12.1/jquery-ui",
     perfectscrollbar: "//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.7.0/js/perfect-scrollbar.jquery.min",
-    jquery.mobile: "//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min",
+    "jquery.mobile": "//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min",
     spectrum: "//cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min",
-    jquery.mmenu: "//cdnjs.cloudflare.com/ajax/libs/jQuery.mmenu/7.0.3/jquery.mmenu.all",
+    "jquery.mmenu": "//cdnjs.cloudflare.com/ajax/libs/jQuery.mmenu/7.0.3/jquery.mmenu.all",
     bootsrapslider: "//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min",
-    swiper: "//cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.2/js/swiper.min"
+    swiper: "//cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.2/js/swiper.min",
+    bootstrap: "//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min"
+    /* Notify, bootbox, colormaps, demos, blockui, mouse, vis_set, ResizeSensor, read_vars, colormaps */
   },
   shim: {
+    bootstrap: {deps: ['jquery']},
     modernizr: {exports: 'Modernizr'},
     detector: {deps: ['three'], exports: 'Detector'},
     trackballcontrols: {deps: ['three']},
@@ -88,7 +91,11 @@ require([
   'three',
   'detector',
   'mesh3d',
-  'infopanel'
+  'infopanel',
+  'bootstrap',
+  'jquery.mobile',
+  'jqueryui',
+  'jquery.mmenu'
 ], function (
    $,
    FFBOClient,
@@ -97,6 +104,8 @@ require([
    FFBOMesh3D,
    InfoPanel
 ){
+  $.mobile.ajaxEnabled = false;
+
   var infoPanel;
 
   var lpuList = [
@@ -198,7 +207,7 @@ require([
 
   ffbomesh.on('click',   function(e){
     query = client.infoQuery(e.value);
-    queryID = clientSession.executeNAquery(query, {success: function(data){
+    queryID = client.executeNAquery(query, {success: function(data){
       data['rid'] = e.value;
       infoPanel.update(data)
     }})
