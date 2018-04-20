@@ -232,6 +232,8 @@ require([
   }
 
   ffbomesh.on('click',   function(e){
+    $("#info-intro").hide()
+    $("#info-panel").show()
     query = client.infoQuery(e.value);
     queryID = client.executeNAquery(query, {success: function(data){
       data['summary']['rid'] = e.value;
