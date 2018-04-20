@@ -93,9 +93,8 @@ moduleExporter("InfoPanel",[
     if (this.summaryTable === undefined){
       delete this.summaryTable;
     }
-
     overwriteCallbacks = {'isInWorkspace': this.isInWorkspace,
-                          'addObjById': this.addObjById}
+                          'addObjById': this.addObjById};
 
     this.connSVG = new ConnSVG(this.connSVGId);
     this.connTable = new ConnTable(this.connTableId,
@@ -103,7 +102,7 @@ moduleExporter("InfoPanel",[
                                     'addObjById': this.addObjById}
                                   );
     this.summaryTable = new SummaryTable(this.summaryTableId,this.isInWorkspace); // neuron information table
-  }
+  };
 
 
 
@@ -114,8 +113,8 @@ moduleExporter("InfoPanel",[
    */
   InfoPanel.prototype.isInWorkspace = function(id){
     return false;
-  }
-
+  };
+  
   /**
    * Add an object into the workspace.
    *
@@ -123,7 +122,7 @@ moduleExporter("InfoPanel",[
    */
   InfoPanel.prototype.addObjById = function(id){
     return;
-  }
+  };
 
 
   /**
@@ -132,89 +131,20 @@ moduleExporter("InfoPanel",[
   * @param {obj} neuData - neuron Data
   * @param {obj} synData - synapse Data
   */
-  InfoPanel.prototype.update = function(neuData,synData){
-    let new_name;
-    if('label' in neuData){
-      new_name = neuData['label'];
-    }else if('uname' in neuData){
-      new_name = neuData['uname'];
-    }else if('name' in neuData){
-      new_name = neuData['name'];
-    }
-
-    let data = reformatData(neuData,synData);
-
+  InfoPanel.prototype.update = function(data){
+    let classOfObj = data['summary']['class'];
+    let new_name = ('uname' in data['summary']) ? data['summary']['uname']: data['summar']['name'];
 
     if (this.name === new_name) {
       return;
     }else{
       this.name = new_name;
-      this.connSVG.update(data.conn);
-      this.connTable.update(data.conn,inferred=true);
-      this.summaryTable.update(data.summary);
+      
+      this.connSVG.update(data['connectivity']);
+      this.connTable.update(data['connectivity']);
+      this.summaryTable.update(data['summary']);
     }
-  }
-
-  /**
-  * reformat
-  *
-  * @param {obj} neuData - neuron Data
-  * @param {obj} synData - synapse Data
-  */
-  function reformatData(neuData,synData){
-
-
-    var summaryData = {};
-    summaryData['Class'] =  neuData['class'];
-    summaryData['vfbId'] = neuData['vfb_id'];
-    summaryData['Data Source'] = neuData['Data Source'];
-    summaryData['Name'] = ('uname' in neuData) ? neuData['uname']: ('label' in neuData)? neuData['label']:neuData['name'];
-    summaryData['Flycircuit Data'] = neuData['flycircuit_data'];
-    summaryData['Transmitters'] = neuData['Transmitters'];
-    summaryData['Expresses'] = undefined;
-    summaryData['Transgenic Lines'] = undefined;
-    summaryData['Synapse Locations'] = undefined;
-
-
-    if (synData === undefined){
-      var connData = undefined;
-    }
-    else{
-      var connData = {};
-      connData['description'] = synData['description'];
-      connData['pre'] = {'summary':{},'details':[]};
-      connData['post'] = {'summary':{},'details':[]};
-
-      connData['pre']['summary']['Number'] = synData['pre_N'];
-      connData['pre']['summary']['Profile'] = synData['pre_sum'];
-      connData['post']['summary']['Number'] = synData['post_N'];
-      connData['post']['summary']['Profile'] = synData['post_sum'];
-
-      connData['pre']['details'] = synData['pre'];
-      connData['post']['details'] = synData['post'];
-
-      for (x in connData['pre']['details']){
-        if (connData['pre']['details'][x]['has_syn_morph'] == 0){
-          connData['pre']['details'][x]['inferred']=1;
-        }else{
-          connData['pre']['details'][x]['inferred']=0;
-        }
-      }
-      for (x in connData['post']['details']){
-        if (connData['post']['details'][x]['has_syn_morph'] == 0){
-          connData['post']['details'][x]['inferred']=1;
-        }else{
-          connData['post']['details'][x]['inferred']=0;
-        }
-      }
-
-    }
-    return {
-      summary:summaryData,
-      conn: connData
-    }
-  }
-
+  };
 
   /**
    * show infopanel
@@ -223,7 +153,7 @@ moduleExporter("InfoPanel",[
     this.connSVG.show();
     this.connTable.show();
     this.summaryTable.show();
-  }
+  };
 
   /**
    * hide infopanel
@@ -232,7 +162,7 @@ moduleExporter("InfoPanel",[
     this.connSVG.hide();
     this.connTable.hide();
     this.summaryTable.hide();
-  }
+  };
   /**
    * Return Constructor for InfoPanel
    */

@@ -100,7 +100,6 @@ moduleExporter("ConnSVG",
   ConnSVG.prototype.update = function(data){
     // verify data integrity
     if(data === undefined || data['pre'] === undefined || data['post'] === undefined){
-      this.hide();
       return;
     }
     this.reset();
