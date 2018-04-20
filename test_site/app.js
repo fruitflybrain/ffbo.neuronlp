@@ -13,7 +13,7 @@ requirejs.config({
   baseUrl: '../js',
   paths: {
     // app: 'app',
-    mesh3d: '//neuronlp.fruitflybrain.org:8888/lib/js/mesh3d',
+    mesh3d: 'https://neuronlp.fruitflybrain.org:8888/lib/js/mesh3d',
     autobahn: '//cdn.rawgit.com/crossbario/autobahn-js-built/master/autobahn.min',
     d3: 'lib/d3.min',
     jquery: '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min',
@@ -123,7 +123,7 @@ require([
 
   var ffbomesh = new FFBOMesh3D('vis-3d', {"ffbo_json": lpuJSON, "showAfterLoadAll": true}, {"globalCenter": {'x': 0, 'y':-250, 'z':0}});
   infoPanel = new InfoPanel("info-panel");
-
+  infoPanel.addObjById = (id) => { testNLPquery("add " + id);}
   // var infoPanel = new InfoPanel("#info-panel");
 
   var client = new FFBOClient();
