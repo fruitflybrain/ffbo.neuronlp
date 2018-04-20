@@ -344,20 +344,12 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
     }
   }
 
-  FFBOClient.prototype.neuronInfoQuery = function(rid){
+  FFBOClient.prototype.infoQuery = function(rid){
     return {
       id: rid,
       uri: 'ffbo.na.get_data'
     }
   }
-
-  FFBOClient.prototype.synapseInfoQuery = function(rid){
-    return {
-      id: rid,
-      uri: 'ffbo.na.get_syn_data'
-    }
-  }
-
 
   FFBOClient.prototype.startConnection = function(authid, key, url) {
     function onchallenge(session, method, extra) {
@@ -386,7 +378,7 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
       // Start registering procedures for remote calls.
 
       session.register("ffbo.ui.receive_cmd." + session.id, ( function (args) {
-        this.receiveCommand(args);
+        this.receiveCommand(args[0]);
       } ).bind(this)).then(
          function(reg) {},
          function(err) {
