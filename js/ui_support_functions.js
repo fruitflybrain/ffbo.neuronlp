@@ -1,3 +1,23 @@
+
+/*
+ * handy functions to get around '#' and ':'. Note that NA rid contains '#' and
+ * ':', and these two signs are used in jQuery selection...
+ */
+function uidDecode(id) {
+
+    id = id.replace(/#/g,'hashtag');
+    id = id.replace(/:/g,'colon');
+    return id;
+}
+function uidEncode(id) {
+
+    if (id.indexOf("hashtag") > -1)
+        id = id.replace("hashtag","#");
+    if (id.indexOf("colon") > -1)
+        id = id.replace("colon",":");
+    return id;
+}
+
 /*
  * prepare LPU mesh data
  */
@@ -22,13 +42,125 @@ for (var i=0; i < lpuList.length; i++ ) {
         side = "Left "
     }
     lpuJSON[lpuList[i]] = {
-    'filename': '/lib/mesh/' + lpuList[i] + '.json',
+    'filename': '../ffbo.lib/mesh/' + lpuList[i] + '.json',
     'label': side + x[0].toUpperCase(),
     'highlight': false,
     'background': true,
     'color': new THREE.Color( 0.15, 0.01, 0.15)
   };
 }
+
+
+var ffbomesh = new FFBOMesh3D('vis-3d', {"ffbo_json": lpuJSON, "showAfterLoadAll": true}, {"globalCenter": {'x': 0, 'y':-250, 'z':0}});
+ffbomesh.createUIBtn("showSettings", "fa-cog", "Settings")
+ffbomesh.createUIBtn("takeScreenshot", "fa-camera", "Download Screenshot")
+ffbomesh.createUIBtn("showInfo", "fa-info-circle", "GUI guideline")
+ffbomesh.createUIBtn("resetView", "fa-refresh", "Reset View")
+ffbomesh.createUIBtn("resetVisibleView", "fa-align-justify", "Centre View To Visible Objects")
+ffbomesh.createUIBtn("show_all", "fa-eye", "Unhide All")
+ffbomesh.createUIBtn("hide_all", "fa-eye-slash", "Hide All")
+ffbomesh.createUIBtn("removeUnpin", "fa-trash", "Remove Unpinned Neurons")
+ffbomesh.createUIBtn("DownData", "fa-download", "Download Connectivity")
+
+ffbomesh.on('resetView', (function() {ffbomesh.resetView()}));
+ffbomesh.on('resetVisibleView', (function() {ffbomesh.resetVisibleView()}));
+// ffbomesh.on('dblclick', updatePinNeuron);
+ffbomesh.on('showInfo', (function() {closeAllOverlay(true); $("#gui-3d").show()}));
+ffbomesh.on('removeUnpin', (function() {$("#btn-pin-keep").trigger("click")}));
+ffbomesh.on('hide_all', (function() {ffbomesh.hideAll()}));
+ffbomesh.on('show_all', (function() {ffbomesh.showAll()}));
+ffbomesh.on('takeScreenshot', (function() {ffbomesh._take_screenshot=true;}));
+
+
+
+var FFBODynamicMenu = function(){
+
+  var _this = this;
+
+  this.addNeuron = function(id, label) {
+    var btnId = "btn-" + uidDecode(id);
+    $("#single-neu").find( ".mm-listview" )
+      .append(
+        "<li id='li-" + btnId + "'>" +
+          "<a id='" + btnId + "'role='button' class='btn-single-ob btn-single-neu'>&FilledSmallSquare; " + label + "</a>" +
+        "</li>");
+    $("#" + btnId).click( function() {
+        _this.dispatch.resume();
+        var id = $(this).attr("id").substring(4);
+        id = uidEncode(id);
+        _this.dispatch.toggle(id);
+        _this.dispatch.highlight(id);
+    })
+    .mouseenter( function() {
+        var id = $(this).attr("id").substring(4);
+        id = uidEncode(id);
+        _this.dispatch.highlight(id);
+    })
+    .mouseleave( function() {
+        _this.dispatch.resume();
+    });
+  }
+
+  this.removeNeuron = function(id) {
+    var liBtnId = "li-btn-" + uidDecode(id);
+    $("#" + liBtnId).remove();
+  }
+
+  this.toggleVisibility = function(id, visibility) {
+    var btn = $("#btn-" + uidDecode(id));
+    var label = btn.html().substring(2);
+    var symbol = (visibility) ? '&FilledSmallSquare; ' : '&EmptySmallSquare; ';
+    btn.html(symbol + label);
+  }
+
+  this.updatePinnedNeuron = function(id, label, pinned) {
+    id = uidDecode(id);
+    var pinBtnId = "btn-pin-" + id;
+    if (pinned) {
+      $("#single-pin").find( ".mm-listview" ).append(
+        "<li><a id='" + pinBtnId + "'role='button' class='btn-single-pin'>" + label + "</a></li>");
+      $("#" + pinBtnId)
+        .dblclick( function() {
+          $(this).remove();
+        })
+        .click( function() {
+            var id = $(this).attr("id").substring(8);
+            updateInfoPanel([$(this).text(), uidEncode(id)]);
+        })
+        .mouseenter( function() {
+            var id = $(this).attr("id").substring(8);
+            id = uidEncode(id);
+            _this.dispatch.highlight(id);
+        })
+        .mouseleave( function() {
+            _this.dispatch.resume();
+        })
+    } else {
+        $("#" + pinBtnId).remove();
+    }
+  }
+
+  this.dispatch = {
+    highlight: function(){},
+    resume: function(){},
+    toggle: function(){},
+    hideAll: function(){},
+    showAll: function(){},
+  }
+}
+
+
+var dynamicMenu = new FFBODynamicMenu();
+
+dynamicMenu.dispatch.highlight = function(id) {ffbomesh.highlight(id, true)};
+dynamicMenu.dispatch.resume = function(id) {ffbomesh.highlight(undefined)};
+dynamicMenu.dispatch.toggle = function(id) {ffbomesh.toggleVis(id)};
+
+ffbomesh.on('add', function(e) { if(!e.value.background) dynamicMenu.addNeuron(e.prop, e.value.label)});
+ffbomesh.on('remove', function(e) { if(!e.value.background) dynamicMenu.removeNeuron(e.prop)});
+ffbomesh.on('visible', (function(e) {
+  if(this.states.highlight[0] !== e.path[1]) dynamicMenu.toggleVisibility(e.path[1], e.value)}).bind(ffbomesh));
+ffbomesh.on('pinned', function(e) { dynamicMenu.updatePinnedNeuron(e.path[0], e.obj.label, e.value)});
 
 
 function closeAllOverlay(e) {
@@ -108,23 +240,25 @@ function onShowOverview() {
 /*
  * pin/unpin the information panel
  */
-
-$("#btn-info-pin").click( function() {
-    $(this).children().toggleClass("fa-compress fa-expand");
-    $("#info_panel_dragger").toggle();
-    $("#info-panel").toggleClass("vis-info-sm vis-info-pin");
-    $("#vis-3d").toggleClass("vis-3d-lg vis-3d-hf");
-    $(this).toggleClass('btn-clicked btn-unclicked');
-    setTimeout( function(){
-      ffbomesh.onWindowResize();
-      }, 500
-    );
-});
+//
+// $("#btn-info-pin").click( function() {
+//     $(this).children().toggleClass("fa-compress fa-expand");
+//     $("#info_panel_dragger").toggle();
+//     $("#info-panel").toggleClass("vis-info-sm vis-info-pin");
+//     $("#vis-3d").toggleClass("vis-3d-lg vis-3d-hf");
+//     $(this).toggleClass('btn-clicked btn-unclicked');
+//     setTimeout( function(){
+//       ffbomesh.onWindowResize();
+//       }, 500
+//     );
+// });
 
 function imgError(image) {
+	/*
     setTimeout(function (){
         image.src = image.src;
      }, 1000);
+     */
 }
 
 
@@ -148,7 +282,7 @@ $("#btn-neu-none").click( function() {
     $('.btn-single-neu').each( function() {
         var id = $(this).attr("id").substring(4);
         id = uidEncode(id);
-        if (ffbomesh.pinned.has(id))
+        if (ffbomesh.uiVars.pinnedObjects.has(id))
             return;
         var x = $(this).html().substring(1);
         $(this).html('&EmptySmallSquare; ' + x );
@@ -160,24 +294,7 @@ $("#btn-neu-none").click( function() {
 });
 
 
-/*
- * handy functions to get around '#' and ':'. Note that NA rid contains '#' and
- * ':', and these two signs are used in jQuery selection...
- */
-function uidDecode(id) {
 
-    id = id.replace(/#/g,'hashtag');
-    id = id.replace(/:/g,'colon');
-    return id;
-}
-function uidEncode(id) {
-
-    if (id.indexOf("hashtag") > -1)
-        id = id.replace("hashtag","#");
-    if (id.indexOf("colon") > -1)
-        id = id.replace("colon",":");
-    return id;
-}
 /*
  * Show/Hide a single neuron or LPU mesh
  */
@@ -185,20 +302,20 @@ function toggleOBJ(id, visibility) {
     var btn = $("#btn-" + id);
     var btn_text = btn.html().substring(1);
     id = uidEncode(id);
-    if (ffbomesh.pinned.has(id))
+    if (ffbomesh.uiVars.pinnedObjects.has(id))
         return;
-    var condition = (visibility === undefined) ? btn.hasClass("unselected") : visibility;
-    if ( condition ){
-         btn.html('&FilledSmallSquare; ' + btn_text)
-         btn.addClass("selected");
-         btn.removeClass("unselected");
-         ffbomesh.show(id);
-    } else {
-         btn.html('&EmptySmallSquare; ' + btn_text)
-         btn.addClass("unselected");
-         btn.removeClass("selected");
-         ffbomesh.hide(id);
-    }
+    // var condition = (visibility === undefined) ? btn.hasClass("unselected") : visibility;
+    // if ( condition ){
+    //      btn.html('&FilledSmallSquare; ' + btn_text)
+    //      btn.addClass("selected");
+    //      btn.removeClass("unselected");
+    //      ffbomesh.show(id);
+    // } else {
+    //      btn.html('&EmptySmallSquare; ' + btn_text)
+    //      btn.addClass("unselected");
+    //      btn.removeClass("selected");
+    //      ffbomesh.hide(id);
+    // }
 }
 /*
  * Remove all buttons bound to neurons (evoked after 'reset')
@@ -311,14 +428,14 @@ $("#btn-pin-unpinall").click( function() {
 })
 $("#btn-pin-keep").click( function() {
     //if($.isEmptyObject(Array.from(ffbomesh.pinned))) return;
-    if($.isEmptyObject(Array.from(ffbomesh.pinned))){
+    if($.isEmptyObject(Array.from(ffbomesh.uiVars.pinnedObjects))){
 	Notify('There are no pinned neurons in the scene. Click on <i class="fa fa-info-circle" aria-hidden="true"></i> for information on how to pin neurons', null, null, 'danger');
 	return;
     }
     var na_servers = document.getElementById("na_servers");
     var na_server = na_servers.options[na_servers.selectedIndex].value;
     msg = {};
-    msg["query"] = [{"action": {"method": {"has":{"rid":Array.from(ffbomesh.pinned)}}}, "object":{"state":0}}];
+    msg["query"] = [{"action": {"method": {"has":{"rid":Array.from(ffbomesh.uiVars.pinnedObjects)}}}, "object":{"state":0}}];
     msg["verb"] = "keep";
     msg["data_callback_uri"] = "ffbo.ui.receive_partial"
     client_session.call('ffbo.na.query.'+na_server, [msg], {}, {
@@ -354,63 +471,12 @@ $("#btn-pin-keep").click( function() {
     );
 
 })
-function updatePinNeuron(id, name, pin) {
-    id = uidDecode(id);
-    if (pin) {
-        $("#single-pin").find( ".mm-listview" ).append("<li><a id='" + "btn-pin-" + id + "'role='button' class='btn-single-pin'>" + name + "</a></li>");
-        //$("#btn-" + id).hide();
-        $("#btn-pin-" + id)
-        .dblclick( function() {
-            $(this).remove();
-            var id = $(this).attr("id").substring(8);
-            $("#btn-" + id).show();
-            id = uidEncode(id);
-            ffbomesh.togglePin(id);
-        })
-        .click( function() {
-            var id = $(this).attr("id").substring(8);
-            updateInfoPanel([$(this).text(), uidEncode(id)]);
-        })
-        .mouseenter( function() {
-            var id = $(this).attr("id").substring(8);
-            id = uidEncode(id);
-            ffbomesh.highlight(id);
-        })
-        .mouseleave( function() {
-            ffbomesh.resume();
-        })
-    } else {
-        $("#btn-pin-"+id).remove();
-        $("#btn-" + id).show();
-    }
-}
 /*
 var element = $("#vis-3d");
 new ResizeSensor(element, function() {
     ffbomesh.onWindowResize();
 });
 */
-var ffbomesh = new FFBOMesh3D('vis-3d', {"ffbo_json": lpuJSON, "showAfterLoadAll": true}, {"globalCenter": {'x': 0, 'y':-250, 'z':0}});
-ffbomesh.createUIBtn("showSettings", "fa-cog", "Settings")
-ffbomesh.createUIBtn("takeScreenshot", "fa-camera", "Download Screenshot")
-ffbomesh.createUIBtn("showInfo", "fa-info-circle", "GUI guideline")
-ffbomesh.createUIBtn("resetView", "fa-refresh", "Reset View")
-ffbomesh.createUIBtn("resetVisibleView", "fa-align-justify", "Centre View To Visible Objects")
-ffbomesh.createUIBtn("show_all", "fa-eye", "Unhide All")
-ffbomesh.createUIBtn("hide_all", "fa-eye-slash", "Hide All")
-ffbomesh.createUIBtn("removeUnpin", "fa-trash", "Remove Unpinned Neurons")
-ffbomesh.createUIBtn("DownData", "fa-download", "Download Connectivity")
-
-ffbomesh.dispatch['resetView'] = (function() {ffbomesh.resetView()})
-ffbomesh.dispatch['resetVisibleView'] = (function() {ffbomesh.resetVisibleView()})
-ffbomesh.dispatch['dblclick'] = updatePinNeuron;
-ffbomesh.dispatch['showInfo'] = (function() {closeAllOverlay(true); $("#gui-3d").show()});
-ffbomesh.dispatch['removeUnpin'] = (function() {$("#btn-pin-keep").trigger("click")});
-ffbomesh.dispatch['hide_all'] = (function() {ffbomesh.hideAll()});
-ffbomesh.dispatch['show_all'] = (function() {ffbomesh.showAll()});
-ffbomesh.dispatch['takeScreenshot'] = (function() {ffbomesh._take_screenshot=true;});
-
-
 ffbomesh.dispatch['showAll'] = function(){
     $('.btn-single-neu').each( function() {
         var x = $(this).html().substring(1);
@@ -420,13 +486,13 @@ ffbomesh.dispatch['showAll'] = function(){
     })
 	for (var id in lpuJSON)
             toggleOBJ(id, true);
-	}			       
+	}
 
 ffbomesh.dispatch['hideAll'] = function(){
     $('.btn-single-neu').each( function() {
         var id = $(this).attr("id").substring(4);
         id = uidEncode(id);
-        if (ffbomesh.pinned.has(id))
+        if (ffbomesh.uiVars.pinnedObjects.has(id))
             return;
         var x = $(this).html().substring(1);
         $(this).html('&EmptySmallSquare; ' + x );
@@ -445,7 +511,7 @@ function populate_server_lists(directory) {
     if("ep" in directory)
 	for(var id in directory["ep"])
 	    ep_server_id = id
-    
+
     var valid_server_type = ['na', 'nlp'];
     for (var type in directory) {
         if (valid_server_type.indexOf(type) > -1) {
@@ -467,24 +533,23 @@ function populate_server_lists(directory) {
 var neuList = [];
 
 function processFFBOjson(data) {
-    var newNeuList = [];
-    for (key in data['ffbo_json']) {
-        var x = data['ffbo_json'][key];
-	if('uname' in x){
-	    x['label'] = x['uname'];
-	    newNeuList.push({'id': key, 'name': x['uname']});
-	}
-	else{
-            newNeuList.push({'id': key, 'name': x['name']});
-	}
-    }
-    newNeuList.sort(function(a, b) {return a.name > b.name ? 1: -1;}); 
-    neuList = neuList.concat( newNeuList.map( a => a.id ) );
-    generateNeuronButton(newNeuList);
+  //   var newNeuList = [];
+  //   for (key in data['ffbo_json']) {
+  //       var x = data['ffbo_json'][key];
+	// if('uname' in x){
+	//     x['label'] = x['uname'];
+	//     newNeuList.push({'id': key, 'name': x['uname']});
+	// }
+	// else{
+  //           newNeuList.push({'id': key, 'name': x['name']});
+	// }
+  //   }
+  //   newNeuList.sort(function(a, b) {return a.name > b.name ? 1: -1;});
+  //   neuList = neuList.concat( newNeuList.map( a => a.id ) );
+    // generateNeuronButton(newNeuList);
     ffbomesh.addJson(data);
-    $("#num-of-neuron").text("Number of Neurons: " + neuList.length);
-
 }
+
 
 
 
@@ -501,7 +566,7 @@ srchBtn.addEventListener('click', function(event) {
     $("#search-wrapper").block({ message: null });
     srchInput.blur();
     send_query();
-    
+
 });
 
 srchInput.addEventListener("keyup", function(event) {
@@ -635,7 +700,7 @@ function retrieve_data(reset=true){
     if(reset){
 	neuList = [];
 	ffbomesh.reset();
-	resetNeuronButton();
+	// resetNeuronButton();
 	$('#neu-id').attr('name','');
 	$('#neu-id').attr('uid','');
 	$('#neu-id').text('FlyCircuit DB: ');
@@ -664,7 +729,6 @@ function retrieve_data(reset=true){
 		    if(!($.isEmptyObject(metadata))){
 			ffbomesh.import_state(metadata);
 			metadata={};
-			Notify('Tag retrieved succesfully')
 		    }
 
 		    if('info' in res['success'])
@@ -674,8 +738,6 @@ function retrieve_data(reset=true){
 				'type': 'morphology_json'};
 			processFFBOjson(data)
 		    }
-		    $('.overlay-background').hide();
-		    ffbomesh.resume();
 		}
 	    }
 	    $("body").trigger('demoproceed', ['success']);
@@ -724,7 +786,6 @@ function retrieve_tag(tag){
     msg = {}
     msg['tag'] = tag;
 
-    $('.overlay-background').show();
     client_session.call('ffbo.na.retrieve_tag.'+na_server, [msg], {}).then(
 	function(res) {
 	    console.log(res)
@@ -736,8 +797,7 @@ function retrieve_tag(tag){
 			$("#search-wrapper").unblock();
 		    }
 		    else if('success' in res['info']){
-			//Notify(res['info']['success']);
-			Notify('Retreiving Tag');
+			Notify(res['info']['success']);
 			if('data' in res){
 			    metadata = res['data'];
 			}

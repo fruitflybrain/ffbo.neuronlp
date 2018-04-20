@@ -46,8 +46,14 @@ function testAddByUname(uname){
   logAndMonitorQuery(queryID)
 }
 
-function testNeuronInfo(rid){
-  query = clientSession.neuronInfoQuery(rid);
+function testRemoveByUname(uname){
+  query = clientSession.addByUnameQuery(uname);
+  queryID = clientSession.executeNAquery(query, {success: dataCallback})
+  logAndMonitorQuery(queryID)
+}
+
+function testInfo(rid){
+  query = clientSession.infoQuery(rid);
   queryID = clientSession.executeNAquery(query, {success: dataCallback})
   logAndMonitorQuery(queryID)
 }
