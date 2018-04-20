@@ -155,14 +155,13 @@ moduleExporter("SummaryTable",
       
     let displayKeys = ['class','vfb_id','data_source','transgenic_lines','transmitters','expresses'];
     var displayCtr = 0;
+    tableHtml += '<tr>';
     for (key of displayKeys){
       if (data[key]) {  // make sure data field is valid
 	displayCtr += 1;
 
 	if (displayCtr % 2 == 0 ){
 	  tableHtml += '</tr><tr>';
-	}else{
-	  tableHtml += '<tr>';
 	}
 	
         if (key === 'vfb_id'){
