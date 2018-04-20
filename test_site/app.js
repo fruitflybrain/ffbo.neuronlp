@@ -203,4 +203,11 @@ require([
     queryID = client.executeNAquery(query, {success: dataCallback});
     logAndMonitorQuery(queryID);
   }
+
+  window.removeByUname = function(uname){
+    query = client.removeByUnameQuery(uname);
+    queryID = client.executeNAquery(query);
+    logAndMonitorQuery(queryID);
+  }
+
 });
