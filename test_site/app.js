@@ -197,5 +197,10 @@ require([
     }})
     logAndMonitorQuery(queryID)
   })
-  
+
+  window.addByUname = function(uname){
+    query = client.addByUnameQuery(uname);
+    queryID = client.executeNAquery(query, {success: dataCallback});
+    logAndMonitorQuery(queryID);
+  }
 });

@@ -260,7 +260,7 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
       verb: "add",
       query: [
         {
-          action: { method: { query: { uname: unieame } } },
+          action: { method: { query: { uname: uname } } },
           object: { class: ["Neuron", "Synapse"] }
         }
       ]
