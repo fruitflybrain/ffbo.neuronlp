@@ -123,7 +123,10 @@ require([
 
   var ffbomesh = new FFBOMesh3D('vis-3d', {"ffbo_json": lpuJSON, "showAfterLoadAll": true}, {"globalCenter": {'x': 0, 'y':-250, 'z':0}});
   infoPanel = new InfoPanel("info-panel");
-  infoPanel.addObjById = (id) => { testNLPquery("add " + id);}
+  infoPanel.addByUname = (id) => { testNLPquery("add " + id);}
+  infoPanel.removeByUname = (id) => { testNLPquery("add " + id);}
+  infoPanel.getAttr = (id) => { testNLPquery("add " + id);}
+  infoPanel.setAttr = (id) => { testNLPquery("add " + id);}
   // var infoPanel = new InfoPanel("#info-panel");
 
   var client = new FFBOClient();
