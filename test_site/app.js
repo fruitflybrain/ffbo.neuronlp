@@ -49,8 +49,9 @@ requirejs.config({
     "jquery.mmenu": "//cdnjs.cloudflare.com/ajax/libs/jQuery.mmenu/7.0.3/jquery.mmenu.all",
     bootsrapslider: "//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min",
     swiper: "//cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.2/js/swiper.min",
-    bootstrap: "//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min"
-    /* Notify, bootbox, colormaps, demos, blockui, mouse, vis_set, ResizeSensor, read_vars, colormaps */
+    bootstrap: "//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min",
+    blockui: "//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min"
+    /* Notify, bootbox, colormaps, demos, mouse, vis_set, ResizeSensor, read_vars, colormaps */
   },
   shim: {
     bootstrap: {deps: ['jquery']},
@@ -95,7 +96,8 @@ require([
   'bootstrap',
   'jquery.mobile',
   'jqueryui',
-  'jquery.mmenu'
+  'jquery.mmenu',
+  'blockui'
 ], function (
    $,
    FFBOClient,
@@ -225,5 +227,22 @@ require([
     queryID = client.executeNAquery(query);
     logAndMonitorQuery(queryID);
   }
+  var srchInput = document.getElementById('srch_box');
+  var srchBtn = document.getElementById('srch_box_btn');
+  //add event listener
+  srchBtn.addEventListener('click', function(event) {
+    query = document.getElementById('srch_box').value;
+    $("#search-wrapper").block({ message: null });
+    srchInput.blur();
+    queryID = client.executeNLPquery(query, {success: dataCallback});
+    logAndMonitorQuery(queryID);
+    client.status.on("change", function(e){ $("#search-wrapper").unblock() }, queryID);
+  });
+
+  srchInput.addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode == 13)
+      srchBtn.click();
+  });
 
 });
