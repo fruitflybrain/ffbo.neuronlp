@@ -109,13 +109,15 @@ moduleExporter("SummaryTable",
 
     // extra name and color
     var objName = ('uname' in data) ? data['uname'] : data['name'];
-    if (data['class'] === 'synapse'){
-      objName = "Synapse between" + objName.split("--")[0]+ "and" + objName.split("--")[1];
+    if (data['class'] === 'Synapse'){
+      objName = "Synapse between" + objName.split("--")[0]+ " and " + objName.split("--")[1];
     }
     var objRId = data['rid'];
     var objColor = this.parentObj.getAttr(objRId,'color');
     
     var tableHtml = '<tr><td>Name :</td><td>' + objName + '</td>';
+    
+
     
     if (objColor){
       // add choose color
@@ -127,77 +129,107 @@ moduleExporter("SummaryTable",
       }
       tableHtml+='name="neu_col" id="' + this.colorId+ '" value="#' + objColor  + '"/></td></tr>';
       
-      // set callback <TODO> check this 
-      if(!Modernizr.inputtypes.color){
-        $('#'+this.colorId).spectrum({
-          showInput: true,
-          showPalette: true,
-          showSelectionPalette: true,
-          showInitial: true,
-          localStorageKey: "spectrum.neuronlp",
-          showButtons: false,
-          move: (function(c){
-            console.log('move');
-            this.parentObj.setAttr(objRId,'color', c.toHexString());
-          }).bind(this)
-        });
-      }
-      else{
-        $('#'+this.colorId).onchange = () => {
-	  console.log("move");
-	  this.parentObj.setAttr(objRId,'color', c.toHexString());
-        };
-      }
-
     }else{
-      tableHtml += '</tr>';
+      tableHtml += '<td></td></tr>';
     }
       
     let displayKeys = ['class','vfb_id','data_source','transgenic_lines','transmitters','expresses'];
     var displayCtr = 0;
     tableHtml += '<tr>';
-    for (key of displayKeys){
-      if (data[key]) {  // make sure data field is valid
-	displayCtr += 1;
 
-	if (displayCtr % 2 == 0 ){
-	  tableHtml += '</tr><tr>';
-	}
-	
-        if (key === 'vfb_id'){
-          let vfbBtn = "<a target='_blank' href='http://virtualflybrain.org/reports/" + data[key] + "'>VFB link</a>";
-          tableHtml += '<td>External Link:</td><td>' + vfbBtn + '</td>';
-        }else{
-	  tableHtml += '<td>' + snakeToSentence(key) + ':</td><td>' + data[key] + '</td>';
-	}
+    let keyCounter = 0;
+    for (let key of displayKeys){
+      if (!(key in data) || data[key] == 0){
+	continue;
       }
+
+      let fieldName = snakeToSentence(key);
+      let fieldValue = data[key];
+      
+      if (fieldName === 'vfb_id'){
+        let vfbBtn = "<a target='_blank' href='http://virtualflybrain.org/reports/" + data[key] + "'>VFB link</a>";
+	fieldName = 'External Link';
+	fieldValue = vfbBtn;
+      }
+      
+      
+      if (keyCounter % 2 === 0){
+        tableHtml += "<tr><td>" + fieldName + ":</td><td>" + fieldValue +"</td>" ;
+      }else{
+        tableHtml += "<td>" + fieldName + ":</td><td>" + fieldValue +"</td></tr>" ;
+      }
+      keyCounter += 1;
     }
-    // check if we ended on an odd number
+    
     if (tableHtml.substr(tableHtml.length-5) !== '</tr>'){
-      tableHtml += '</tr>';
+      tableHtml += '<td></td><td></td></tr>';
     }
-    
-    
+
+    // for (let key of displayKeys){
+    //   if (data[key]) {  // make sure data field is valid	
+    //     if (key === 'vfb_id'){
+    //       let vfbBtn = "<a target='_blank' href='http://virtualflybrain.org/reports/" + data[key] + "'>VFB link</a>";
+    //       tableHtml += '<td>External Link:</td><td>' + vfbBtn + '</td>';
+    //     }else{
+    // 	  tableHtml += '<td>' + snakeToSentence(key) + ':</td><td>' + data[key] + '</td>';
+    // 	}
+    // 	displayCtr += 1;
+    // 	if (displayCtr % 2 == 0 ){
+    // 	  tableHtml += '</tr><tr>';
+    // 	}
+
+    //   }
+    // }
+    // // check if we ended on an odd number
+    // if (tableHtml.substr(tableHtml.length-5) !== '</tr>'){
+    //   tableHtml += '<td></td></tr>';
+    // }
+       
 
     $('#'+this.divId + " tbody").html(tableHtml);
-
+    
+    // set callback <TODO> check this 
+    if(!Modernizr.inputtypes.color){
+      $('#'+this.colorId).spectrum({
+        showInput: true,
+        showPalette: true,
+        showSelectionPalette: true,
+        showInitial: true,
+        localStorageKey: "spectrum.neuronlp",
+        showButtons: false,
+        move: (c) => {
+          this.parentObj.setAttr(objRId,'color', c.toHexString());	    
+          }
+      });
+    }
+    else{
+      $('#'+this.colorId).on('change',(c) => {
+	this.parentObj.setAttr(objRId,'color', $('#'+this.colorId)[0].value);
+      });
+    }
+    
     // flycircuit data
     if (('data_source' in data) && (data['data_source'].indexOf("FlyCircuit") > -1)) { // see if flycircuit is in
       let extraTableHtml = "";
       var extraData = data['flycircuit_data'];
+      let extraKeys = ["Lineage", "Author", "Driver", "Gender/Age",  "Soma Coordinate", "Putative birth time", "Stock"];
       if (!('error' in extraData)){
-	// Fetch Key:value pair for flycircuit_data and add to table
-        Object.entries(Object.keys(extraData)).forEach(
-          ([idx, p]) => {
-            if (idx % 2 === 0){
-              extraTableHtml += "<tr><td>" + p + ":</td><td>" + extraData[p] +"</td>" ;
-            }else{
-              extraTableHtml += "<td>" + p + ":</td><td>" + extraData[p] +"</td></tr>" ;
-            }
+	// Fetch Key:value pair for flycircuit_data and add to
+	let keyCounter = 0;
+	for (let key of extraKeys){
+	  if (!(key in extraData) || extraData[key] == 0){
+	    continue;
+	  }
+	  if (keyCounter % 2 === 0){
+            extraTableHtml += "<tr><td>" + key + ":</td><td>" + extraData[key] +"</td>" ;
+          }else{
+            extraTableHtml += "<td>" + key + ":</td><td>" + extraData[key] +"</td></tr>" ;
           }
-        );
+	  keyCounter += 1;
+	}
+	
 	if (extraTableHtml.substr(extraTableHtml.length-5) !== '</tr>'){
-	  extraTableHtml += '</tr>';
+	  extraTableHtml += '<td></td><td></td></tr>';
 	}
 
         $('#'+this.divId+ " tbody").append(extraTableHtml);

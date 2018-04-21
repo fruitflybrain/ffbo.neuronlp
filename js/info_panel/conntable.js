@@ -50,7 +50,7 @@ moduleExporter("ConnTable",
       writable: false
     });
     
-    this.parentObj = parentObj
+    this.parentObj = parentObj;
     //callback functions
 
     overlayText = '<h2>Inferred Synaptic Partners</h2><p>Inferred synaptic partners are marked by &dagger; </p><h3>SPIN</h3><p>Inferred synaptic connections using axonic/dendritic polarity predicted by SPIN:Skeleton-based Polarity Identification for Neurons. Please refer to <br><a href="http://link.springer.com/article/10.1007/s12021-014-9225-6" target="_blank">SPIN: A Method of Skeleton-based Polarity Identification for Neurons. Neurinformatics 12:487-507. Yi-Hsuan Lee, Yen-Nan Lin, Chao-Chun Chuang and Chung-Chuan Lo (2014)</a> <br>for more details on the SPIN algorithm.</p>';
@@ -134,11 +134,11 @@ moduleExporter("ConnTable",
     $('#'+this.divId + " h4").html("Presynaptic Partners"+ btnMoreInfo);
     $('#'+this.divId + " h4").html("Postsynaptic Partners"+ btnMoreInfo);
 
-    $(".inferred-more-info").click(function(){
+    $(".inferred-more-info").onclick = () => {
       // info = "<h2>Inferred Synaptic Partners</h2>";
       // this.overlay.update(info + data['description']); //<TODO> overwrite in the future
       this.overlay.show();
-    });
+    };
 
     // create table
     this.updateTable(data,'pre');
@@ -153,7 +153,7 @@ moduleExporter("ConnTable",
     */
   ConnTable.prototype.updateTable = function(data,connDir){
     if(!(connDir in data)){
-      return
+      return;
     }
     if (connDir === 'pre'){
       // pre/post tbody
@@ -275,14 +275,19 @@ moduleExporter("ConnTable",
   */
   ConnTable.prototype.toggleBtn = function(btn){
     if(btn.className.includes('add')){
-      btn.innerText = "-";
-      btn.className = "btn btn-remove btn-danger";
+      $('button[name="' + btn.name + '"]').each((idx,dom) => {
+	dom.innerText = "-";
+	dom.className = "btn btn-remove btn-danger";
+      });
       this.parentObj.addByUname(btn.name);
-      //$('button[name="' + btn.name + '"]').
+      
     }
     else{
-      btn.innerText = "+";
-      btn.className = "btn btn-add btn-success";
+      $('button[name="' + btn.name + '"]').each((idx,dom) => {
+	dom.innerText = "+";
+	dom.className = "btn btn-add btn-success";
+      });
+
       this.parentObj.removeByUname(btn.name);
       //$('button[name="' + btn.name + '"]').
     }

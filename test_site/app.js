@@ -13,7 +13,7 @@ requirejs.config({
   baseUrl: '../js',
   paths: {
     // app: 'app',
-    mesh3d: '//neuronlp.fruitflybrain.org:8888/lib/js/mesh3d',
+    mesh3d: 'https://neuronlp.fruitflybrain.org:8888/lib/js/mesh3d',
     infopanel: "info_panel/infopanel",
     autobahn: '//cdn.rawgit.com/crossbario/autobahn-js-built/master/autobahn.min',
     d3: '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min',
@@ -172,6 +172,10 @@ require([
   // ffbomesh.addJson({"ffbo_json": lpuJSON, "showAfterLoadAll": true});
 
 
+  infoPanel.isInWorkspace = (rid) => {
+    return (rid in ffbomesh.meshDict);
+  };
+
   infoPanel.addByUname = (uname) => {
     queryID = client.addByUname(uname, {success: dataCallback});
     logAndMonitorQuery(queryID);
@@ -192,8 +196,9 @@ require([
     if (attr !== 'color') {
       return;
     }
-    ffbomesh.setColor(id, value.toHexString());
+    ffbomesh.setColor(id, value);
   };
+
   // var infoPanel = new InfoPanel("#info-panel");
 
   function onShowTutorialVideo() {
@@ -290,8 +295,8 @@ require([
   }
 
   ffbomesh.on('click',   function(e){
-    $("#info-intro").hide()
-    $("#info-panel").show()
+    $("#info-intro").hide();
+    $("#info-panel").show();
     queryID = client.getInfo(e.value, {success: function(data){
       data['summary']['rid'] = e.value;
       infoPanel.update(data);
