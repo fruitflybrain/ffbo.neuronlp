@@ -93,6 +93,7 @@ require([
   'detector',
   'mesh3d',
   'infopanel',
+  'dynamicmenu',
   'bootstrap',
   'jquery.mobile',
   'jqueryui',
@@ -104,12 +105,15 @@ require([
    THREE,
    Detector,
    FFBOMesh3D,
-   InfoPanel
+   InfoPanel,
+   FFBODynamicMenu
 ){
 
   $.mobile.ajaxEnabled = false;
 
   var infoPanel;
+
+
   var lpuList = [
     'al_l', 'al_r', 'ammc_l', 'ammc_r', 'cal_l', 'cal_r', 'ccp_l', 'ccp_r',
     'cmp_l', 'cmp_r', 'cvlp_l', 'cvlp_r', 'dlp_l', 'dlp_r', 'dmp_l', 'dmp_r',
@@ -142,18 +146,42 @@ require([
   var ffbomesh = new FFBOMesh3D('vis-3d', {"ffbo_json": lpuJSON, "showAfterLoadAll": true}, {"globalCenter": {'x': 0, 'y':-250, 'z':0}});
   infoPanel = new InfoPanel("info-panel");
 
+  var dynamicNeuronMenu = new FFBODynamicMenu({singleObjSel: '#single-neu > .mm-listview', pinnedObjSel: '#single-pin > .mm-listview'});
+  // var dynamicNeuropilMenu = new FFBODynamicMenu({singleObjSel: '#single-lpu > .mm-listview'});
+
+  dynamicNeuronMenu.dispatch.highlight = function(id) {ffbomesh.highlight(id, true)};
+  dynamicNeuronMenu.dispatch.resume = function(id) {ffbomesh.highlight(undefined)};
+  dynamicNeuronMenu.dispatch.toggle = function(id) {ffbomesh.toggleVis(id)};
+  dynamicNeuronMenu.dispatch.unpin = function(id) {ffbomesh.unpin(id)};
+
+  // dynamicNeuropilMenu.dispatch.toggle = function(id) {ffbomesh.toggleVis(id)};
+
+  ffbomesh.on('add',
+              function(e) {
+                if(!e.value.background)
+                  dynamicNeuronMenu.addNeuron(e.prop, e.value.label);
+                // else
+                // dynamicNeuropilMenu.addNeuron(e.prop, e.value.label)
+              });
+  ffbomesh.on('remove', function(e) { if(!e.value.background) dynamicNeuronMenu.removeNeuron(e.prop)});
+  ffbomesh.on('visible', (function(e) {
+    if(this.states.highlight[0] !== e.path[1]) dynamicNeuronMenu.toggleVisibility(e.path[1], e.value)}).bind(ffbomesh));
+  ffbomesh.on('pinned', function(e) { dynamicNeuronMenu.updatePinnedNeuron(e.path[0], e.obj.label, e.value)});
+
+
+  // ffbomesh.addJson({"ffbo_json": lpuJSON, "showAfterLoadAll": true});
+
+
   infoPanel.addByUname = (uname) => {
-    query = client.addByUnameQuery(uname);
-    queryID = client.executeNAquery(query, {success: dataCallback});
-    logAndMonitorQuery(queryID);    
-  };
-  
-  infoPanel.removeByUname = (uname) => {
-    query = client.removeByUnameQuery(uname);
-    queryID = client.executeNAquery(query);
+    queryID = client.addByUname(uname, {success: dataCallback});
     logAndMonitorQuery(queryID);
   };
-  
+
+  infoPanel.removeByUname = (uname) => {
+    queryID = client.removeByUname(uname);
+    logAndMonitorQuery(queryID);
+  };
+
   infoPanel.getAttr = (id,attr) => {
     if (attr !== 'color') {
       return undefined;
@@ -168,30 +196,63 @@ require([
   };
   // var infoPanel = new InfoPanel("#info-panel");
 
+  function onShowTutorialVideo() {
+    mm_menu_right.close();
+    setTimeout( function() {
+      closeAllOverlay(true);
+      $("#video-panel").slideDown(500);
+    }, 500);
+  }
+
+
+  function onShowNeuroNLP() {
+    mm_menu_right.close();
+    setTimeout( function() {
+      closeAllOverlay(true);
+      $("#neuronlp-switch").slideDown(500);
+    }, 500);
+  }
+
+  function onShowIntro() {
+    mm_menu_right.close();
+    setTimeout( function() {
+      closeAllOverlay(true);
+      $("#intro-panel").slideDown(500);
+    }, 500);
+  }
+  function onShowOverview() {
+    mm_menu_right.close();
+    setTimeout( function() {
+      closeAllOverlay(true);
+      $("#overview-panel").slideDown(500);
+    }, 500);
+  }
+  function onShowAnnounce() {
+    mm_menu_right.close();
+    setTimeout( function() {
+      closeAllOverlay(true);
+      $("#announce-panel").slideDown(500);
+    }, 500);
+  }
+
+
+  function mimicMouseOver(selector, flag) {
+    if (flag) {
+      mm_menu_right.open();
+      $("a[href='#toggle_get_started']")[0].click()
+    }
+    $(selector).addClass("hover");
+  };
+
+
+  function mimicMouseOut(selector) {
+    $(selector).removeClass("hover");
+  };
+
+
   var client = new FFBOClient();
   client.startConnection("guest", "guestpass", "wss://neuronlp.fruitflybrain.org:8888/ws");
 
-  window["fetchNeuronInfo"] = function(rid){
-    client.executeNAquery(client.neuronInfoQuery(rid),
-                          {success: function(d){
-                            console.log(d);
-                            if ("summary_1" in d) {
-                              infoPanel.update(d["summary_1"],d["synaptic_info_1"]);
-                            }else{
-                              infoPanel.update(d["summary_2"],d["synaptic_info_2"]);
-                            }
-                          }});
-  }
-  window["fetchSynapseInfo"] = function(rid){
-    client.executeNAquery(client.synapseInfoQuery(rid),
-                          {success: function(d){
-                            console.log(d);
-                            if ("synapse_details_1" in d) {
-                              infoPanel.update(d["synapse_details_1"],undefined);
-                            }
-                          }});
-
-  }
   window["client"] = client;
 
   function logAndMonitorQuery(queryID){
@@ -201,10 +262,6 @@ require([
     }, queryID);
   }
 
-  window["testNLPquery"] = function(query){
-    queryID = client.executeNLPquery(query, {success: dataCallback});
-    logAndMonitorQuery(queryID);
-  }
   client.notifySuccess = function(message){
     console.log("Success: " + message);
   }
@@ -227,6 +284,7 @@ require([
   }
 
   window["ffbomesh"] = ffbomesh;
+
   function dataCallback(data){
     ffbomesh.addJson({ffbo_json: data, type: 'morphology_json'});
   }
@@ -234,25 +292,13 @@ require([
   ffbomesh.on('click',   function(e){
     $("#info-intro").hide()
     $("#info-panel").show()
-    query = client.infoQuery(e.value);
-    queryID = client.executeNAquery(query, {success: function(data){
+    queryID = client.getInfo(e.value, {success: function(data){
       data['summary']['rid'] = e.value;
       infoPanel.update(data);
     }});
     logAndMonitorQuery(queryID);
   })
 
-  window.addByUname = function(uname){
-    query = client.addByUnameQuery(uname);
-    queryID = client.executeNAquery(query, {success: dataCallback});
-    logAndMonitorQuery(queryID);
-  }
-
-  window.removeByUname = function(uname){
-    query = client.removeByUnameQuery(uname);
-    queryID = client.executeNAquery(query);
-    logAndMonitorQuery(queryID);
-  }
   var srchInput = document.getElementById('srch_box');
   var srchBtn = document.getElementById('srch_box_btn');
   //add event listener
@@ -262,7 +308,11 @@ require([
     srchInput.blur();
     queryID = client.executeNLPquery(query, {success: dataCallback});
     logAndMonitorQuery(queryID);
-    client.status.on("change", function(e){ $("#search-wrapper").unblock() }, queryID);
+    client.status.on("change", function(e){
+      $("#search-wrapper").unblock();
+      srchInput.focus();
+      srchInput.value = "";
+    }, queryID);
   });
 
   srchInput.addEventListener("keyup", function(event) {
@@ -271,4 +321,46 @@ require([
       srchBtn.click();
   });
 
+  $(document).ready(function() {
+    $("#ui_menu_nav").mmenu({
+      onClick: {
+        close: false
+      },
+      "extensions": ["effect-menu-zoom"],
+      offCanvas: {
+        pageSelector: "#page-content-wrapper",
+        position  : "right",
+        direction:"left",
+      },
+      navbar: {
+        title: "FFBO UI Menu"
+      }
+    },{
+      offCanvas: {
+        pageSelector: "#page-content-wrapper",
+      }
+    });
+    mm_menu_right = $("#ui_menu_nav").data( "mmenu" );
+
+
+    onGettingStarted = function() {
+      mm_menu_right.open();
+      $("a[href='#toggle_get_started']")[0].click()
+    }
+    onToggleTag = function() {
+      mm_menu_right.open();
+      $("a[href='#toggle_tag']")[0].click()
+    }
+    onToggleNeuClick = function() {
+      mm_menu_right.open();
+      $("a[href='#toggle_neuron']")[0].click()
+    }
+    onToggleLPUClick = function() {
+      mm_menu_right.open();
+      $("a[href='#toggle_neuropil']")[0].click()
+    }
+    openRightMenu = function() {
+      mm_menu_right.open();
+    }
+  });
 });

@@ -229,11 +229,11 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
 
   /* Helper functions to generate commonly used NA queries */
 
-  FFBOClient.prototype.connectivityQuery = function(){
+  FFBOClient.prototype.getConnectivity = function(callbacks, format){
     /**
      * Query to retrieve Connectivity Data
      */
-    return {
+    return this.executeNAquery({
       format: "nx",
       query: [
         {
@@ -242,7 +242,7 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
         }
       ],
       temp: true
-    }
+    }, callbacks, format);
     // Setting 'temp': true won't append results to the state memory, keeping front end interactions independent of this query
     // Passing keyword args to a method would be done something like this 'add_connecting_synapses': {'include_inferred': false}
     // Memory can be used to refer to intermediate results. For example, the following is the translation of show neurons in eb
@@ -252,11 +252,11 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
   }
 
 
-  FFBOClient.prototype.addByUnameQuery = function(uname){
+  FFBOClient.prototype.addByUname = function(uname, callbacks, format){
     /**
      * Query to add a neuron by its name.
      */
-    return {
+    return this.executeNAquery({
       verb: "add",
       query: [
         {
@@ -264,14 +264,14 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
           object: { class: ["Neuron", "Synapse"] }
         }
       ]
-    };
+    }, callbacks, format);
   }
 
-  FFBOClient.prototype.removeByUnameQuery = function(uname){
+  FFBOClient.prototype.removeByUname = function(uname, callbacks, format){
     /**
      * Query to remove a neuron or synapse by its uname.
      */
-    return {
+    return this.executeNAquery({
       verb: "remove",
       query: [
         {
@@ -279,46 +279,45 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
           object: { class: ["Neuron", "Synapse"] }
         }
       ]
-    };
+    }, callbacks, format);
   }
 
-  FFBOClient.prototype.retrieveNeuronQuery = function(key, value, session) {
+  FFBOClient.prototype.retrieveNeuron = function(key, value, callbacks, format) {
     /**
      *Query to retrieve a single neuron based on a key-value pair (key could be rid or vfb_id or uname)
      */
     if (! ['vfb_id', 'rid', 'uname'].includes(key) ) return null;
-    return {
+    return this.executeNAquery({
       query: [
         {
           action: { method: { query: { key: value } } },
           object: { class: "Neuron" }
         }
       ]
-    };
+    }, callbacks, format);
   }
 
 
-  FFBOClient.prototype.createTagQuery = function(tag_name, metadata){
-    msg = {
+  FFBOClient.prototype.createTag = function(tag_name, metadata){
+    return this.executeNAquery({
       tag: tag_name,
       metadata: metadata,
       uri: 'ffbo.na.create_tag'
-    }
-    return msg
+    }, callbacks, format);
   }
 
-  FFBOClient.prototype.retrieveTagQuery = function(tag_name){
-    return {
+  FFBOClient.prototype.retrieveTag = function(tag_name, callbacks, format){
+    return this.executeNAquery({
       tag: tag_name,
       uri: 'ffbo.na.retrieve_tag'
-    }
+    }, callbacks, format);
   }
 
-  FFBOClient.prototype.infoQuery = function(rid){
-    return {
+  FFBOClient.prototype.getInfo = function(rid, callbacks, format){
+    return this.executeNAquery({
       id: rid,
       uri: 'ffbo.na.get_data'
-    }
+    }, callbacks, format);
   }
 
   FFBOClient.prototype.startConnection = function(authid, key, url) {
