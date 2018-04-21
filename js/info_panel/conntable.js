@@ -278,11 +278,13 @@ moduleExporter("ConnTable",
       btn.innerText = "-";
       btn.className = "btn btn-remove btn-danger";
       this.parentObj.addByUname(btn.name);
+      //$('button[name="' + btn.name + '"]').
     }
     else{
       btn.innerText = "+";
       btn.className = "btn btn-add btn-success";
       this.parentObj.removeByUname(btn.name);
+      //$('button[name="' + btn.name + '"]').
     }
   }
 

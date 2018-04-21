@@ -13,8 +13,8 @@ if( moduleExporter === undefined){
 }
 
 moduleExporter("SummaryTable",
-  ['jquery','d3','overlay'],
-  function($,d3,Overlay)
+	       ['jquery','d3','overlay','modernizr'],
+	       function($,d3,Overlay,Modernizr)
 {
   /**
    * Summary Information Constructor
@@ -155,14 +155,13 @@ moduleExporter("SummaryTable",
       
     let displayKeys = ['class','vfb_id','data_source','transgenic_lines','transmitters','expresses'];
     var displayCtr = 0;
+    tableHtml += '<tr>';
     for (key of displayKeys){
       if (data[key]) {  // make sure data field is valid
 	displayCtr += 1;
 
 	if (displayCtr % 2 == 0 ){
 	  tableHtml += '</tr><tr>';
-	}else{
-	  tableHtml += '<tr>';
 	}
 	
         if (key === 'vfb_id'){
@@ -197,8 +196,11 @@ moduleExporter("SummaryTable",
             }
           }
         );
+	if (extraTableHtml.substr(extraTableHtml.length-5) !== '</tr>'){
+	  extraTableHtml += '</tr>';
+	}
 
-        $(this.divId+ " tbody").append(extraTableHtml);
+        $('#'+this.divId+ " tbody").append(extraTableHtml);
 
         // set source for images
 	if (extraData["Images"]["Original confocal image (Animation)"]){
