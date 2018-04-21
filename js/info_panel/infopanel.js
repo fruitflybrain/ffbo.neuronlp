@@ -93,12 +93,6 @@ moduleExporter("InfoPanel",[
     if (this.summaryTable === undefined){
       delete this.summaryTable;
     }
-    functionHooks = {'isInWorkspace': this.isInWorkspace,
-                     'addByUname': this.addByUname,
-		     'removeByUname': this.removeByUname,
-		     'getAttr': this.getAttr,
-		     'setAttr': this.setAttr,
-		    };
     
     this.connSVG = new ConnSVG(this.connSVGId, this);
     this.connTable = new ConnTable(this.connTableId, this);
