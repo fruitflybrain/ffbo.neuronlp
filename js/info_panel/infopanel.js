@@ -100,9 +100,9 @@ moduleExporter("InfoPanel",[
 		     'setAttr': this.setAttr,
 		    };
     
-    this.connSVG = new ConnSVG(this.connSVGId);
-    this.connTable = new ConnTable(this.connTableId,functionHooks);
-    this.summaryTable = new SummaryTable(this.summaryTableId,functionHooks); // neuron information table
+    this.connSVG = new ConnSVG(this.connSVGId, this);
+    this.connTable = new ConnTable(this.connTableId, this);
+    this.summaryTable = new SummaryTable(this.summaryTableId, this); // neuron information table
   };
 
 
@@ -162,6 +162,7 @@ moduleExporter("InfoPanel",[
   * @param {obj} synData - synapse Data
   */
   InfoPanel.prototype.update = function(data){
+//    this.reset(); // <TODO> need to change this
     let classOfObj = data['summary']['class'];
     let new_name = ('uname' in data['summary']) ? data['summary']['uname']: data['summar']['name'];
 
@@ -169,9 +170,14 @@ moduleExporter("InfoPanel",[
       return;
     }else{
       this.name = new_name;
-      
-      this.connSVG.update(data['connectivity']);
-      this.connTable.update(data['connectivity']);
+
+      if ('connectivity' in data){ // synapse data does not have connectivity
+	this.connSVG.update(data['connectivity']);
+	this.connTable.update(data['connectivity']);
+      }else{
+	this.connSVG.hide();
+	this.connTable.hide();
+      }
       this.summaryTable.update(data['summary']);
     }
   };

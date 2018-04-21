@@ -27,10 +27,10 @@ moduleExporter("ConnTable",
   * Connectivity Table inside Info Panel
   * @constuctor
   * @param {string} div_id - id for div element in which the connectivity table is held
-  * @param {obj} functionHooks - function hooks 
+  * @param {obj} parentObj - parent object (infopanel)
   * @param {dict} [nameConfig={}] - configuration of children divs. The 3 children divs in ConnTable are `['preTabId','postTabId','overlayId']`
   */
-  function ConnTable(div_id,functionHooks, nameConfig={}){
+  function ConnTable(div_id,parentObj, nameConfig={}){
     this.divId = div_id;  // wrapper
 
     // nameConfig = nameConfig || {};
@@ -49,10 +49,9 @@ moduleExporter("ConnTable",
       configurable: false,
       writable: false
     });
-
+    
+    this.parentObj = parentObj
     //callback functions
-    this.isInWorkspace = functionHooks.isInWorkspace;
-    this.addByUname = functionHooks.addByUname;
 
     overlayText = '<h2>Inferred Synaptic Partners</h2><p>Inferred synaptic partners are marked by &dagger; </p><h3>SPIN</h3><p>Inferred synaptic connections using axonic/dendritic polarity predicted by SPIN:Skeleton-based Polarity Identification for Neurons. Please refer to <br><a href="http://link.springer.com/article/10.1007/s12021-014-9225-6" target="_blank">SPIN: A Method of Skeleton-based Polarity Identification for Neurons. Neurinformatics 12:487-507. Yi-Hsuan Lee, Yen-Nan Lin, Chao-Chun Chuang and Chung-Chuan Lo (2014)</a> <br>for more details on the SPIN algorithm.</p>';
     overlayText += '<p>The polarity determined by spin was used to predict synaptic connections based on when an axonic segment of a neuron is within a specified distance to a dendritic segment of another neuron after registering to a standard brain template.</p>';
@@ -194,12 +193,12 @@ moduleExporter("ConnTable",
 
       // generate add/remove button for each neuron
       if(d['has_morph'] && ('uname' in d)){
-        var btn = document.createElement('button');
+        let btn = document.createElement('button');
         btn.className = 'btn';
         btn.id = (connDir==='pre') ? 'btn-pre-add-' + d['uname'] : 'btn-post-add-' + d['uname'];
         btn.name = d['uname'];
 
-        if (this.isInWorkspace(d['rid'])){
+        if (this.parentObj.isInWorkspace(d['rid'])){
           btn.innerText = '-';
           btn.className += ' btn-remove btn-danger';
         }else{
@@ -207,19 +206,19 @@ moduleExporter("ConnTable",
           btn.className += ' btn-add btn-success';
         }
         btn.onclick = () => {
-	  toggleBtn(btn,this); // <TODO> check what `this` is
+	  this.toggleBtn(btn);
         };
 
         c3.appendChild(btn);
         neuron_add = true;
       }
       if(d['has_syn_morph'] && 'syn_uname' in d){
-        var btn = document.createElement('button');
+        let btn = document.createElement('button');
         btn.className = 'btn';
         btn.id = (connDir==='pre') ? 'btn-pre-syn-add-' + d['syn_uname'] : 'btn-post-syn-add-' + d['syn_uname'];
         btn.name = d['syn_uname'];
 
-        if (this.isInWorkspace(d['syn_rid'])){
+        if (this.parentObj.isInWorkspace(d['syn_rid'])){
           btn.innerText = '-';
           btn.className += ' btn-remove btn-danger';
         }else{
@@ -228,7 +227,7 @@ moduleExporter("ConnTable",
         }
 	
         btn.onclick = () => {
-	  toggleBtn(btn,this);
+	  this.toggleBtn(btn);
         };
  
         c4.appendChild(btn);
@@ -274,16 +273,16 @@ moduleExporter("ConnTable",
   /** 
   * Add/Remove neuron upon buttonclick in info panel and toggle button
   */
-  function toggleBtn(btn,obj){
+  ConnTable.prototype.toggleBtn = function(btn){
     if(btn.className.includes('add')){
       btn.innerText = "-";
       btn.className = "btn btn-remove btn-danger";
-      obj.removeByUname(btn.name);
+      this.parentObj.addByUname(btn.name);
     }
     else{
       btn.innerText = "+";
       btn.className = "btn btn-add btn-success";
-      obj.addByUname(btn.name);
+      this.parentObj.removeByUname(btn.name);
     }
   }
 

@@ -26,8 +26,9 @@ moduleExporter("ConnSVG",
   // const synProfileInfoWrapperId =  "#syn-profile-info";
   // const synProfileTextId =  "#syn-reference-text";
 
-  function ConnSVG(div_id,data,nameConfig={}){
+  function ConnSVG(div_id,parentObj,nameConfig={}){
     this.divId = div_id;  // wrapper
+    this.parentObj = parentObj;
     Object.defineProperty(this,"tabId",{
       value: nameConfig.tabId || "info-panel-conn-table",
       configurable: false,
@@ -264,28 +265,28 @@ moduleExporter("ConnSVG",
     // add callback
     var tabTextId = this.tabTextId;
     this.svg.selectAll("rect")
-        .on("click",function(d){
+        .on("click", (d) => {
           if (d['y']=='Presynaptic'){
             var ref_data = {'type':d['y'],'neuron':d['neuron'],'percentage':d['x'], 'number':d['x']*pre_num/100};
           }else{
             var ref_data = {'type':d['y'],'neuron':d['neuron'],'percentage':d['x'],'number':d['x']*post_num/100};
           }
           var reference_info = ref_data.type+" "+ref_data.neuron+": "+ (ref_data.percentage).toFixed(1) +"%("+Math.round(ref_data.number).toString() +")";
-          d3.select(tabTextId)
+          d3.select("#"+tabTextId)
               .text(reference_info)
         })
-        .on("mouseover",function(d){
+        .on("mouseover", (d) => {
           if (d['y']=='Presynaptic'){
             var ref_data = {'type':d['y'],'neuron':d['neuron'],'percentage':d['x'], 'number':d['x']*pre_num/100};
           }else{
             var ref_data = {'type':d['y'],'neuron':d['neuron'],'percentage':d['x'],'number':d['x']*post_num/100};
           }
           var reference_info = ref_data.type+" "+ref_data.neuron+": "+ (ref_data.percentage).toFixed(1) +"%("+Math.round(ref_data.number).toString() +")";
-          d3.select(tabTextId)
+          d3.select("#"+tabTextId)
               .text(reference_info)
         })
-        .on("mouseout",function(){
-          d3.select(tabTextId)
+        .on("mouseout",() => {
+          d3.select("#"+tabTextId)
               .text("Click on/Hover over plot to extract detailed synaptic information");
         });
 
