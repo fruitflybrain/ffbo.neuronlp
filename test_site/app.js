@@ -46,7 +46,7 @@ requirejs.config({
     perfectscrollbar: "//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.7.0/js/perfect-scrollbar.jquery.min",
     "jquery.mobile": "//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min",
     spectrum: "//cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min",
-    "jquery.mmenu": "//cdnjs.cloudflare.com/ajax/libs/jQuery.mmenu/7.0.3/jquery.mmenu.all",
+    "jquery.mmenu": "//cdn.rawgit.com/FrDH/jQuery.mmenu/v7.0.3/dist/jquery.mmenu.all",
     bootsrapslider: "//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min",
     swiper: "//cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.2/js/swiper.min",
     bootstrap: "//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min",
@@ -94,10 +94,10 @@ require([
   'mesh3d',
   'infopanel',
   'dynamicmenu',
+  'ui',
   'bootstrap',
   'jquery.mobile',
   'jqueryui',
-  'jquery.mmenu',
   'blockui'
 ], function (
    $,
@@ -106,13 +106,15 @@ require([
    Detector,
    FFBOMesh3D,
    InfoPanel,
-   FFBODynamicMenu
+   FFBODynamicMenu,
+   NeuroNLPUI
 ){
 
   $.mobile.ajaxEnabled = false;
-
-  var infoPanel;
-
+  window.NeuroNLPUI = new NeuroNLPUI();
+  var infoPanel = new InfoPanel("info-panel");
+  var dynamicNeuronMenu = new FFBODynamicMenu({singleObjSel: '#single-neu > .mm-listview', pinnedObjSel: '#single-pin > .mm-listview'});
+  // var dynamicNeuropilMenu = new FFBODynamicMenu({singleObjSel: '#single-lpu > .mm-listview'});
 
   var lpuList = [
     'al_l', 'al_r', 'ammc_l', 'ammc_r', 'cal_l', 'cal_r', 'ccp_l', 'ccp_r',
@@ -144,10 +146,9 @@ require([
   }
 
   var ffbomesh = new FFBOMesh3D('vis-3d', {"ffbo_json": lpuJSON, "showAfterLoadAll": true}, {"globalCenter": {'x': 0, 'y':-250, 'z':0}});
-  infoPanel = new InfoPanel("info-panel");
 
-  var dynamicNeuronMenu = new FFBODynamicMenu({singleObjSel: '#single-neu > .mm-listview', pinnedObjSel: '#single-pin > .mm-listview'});
-  // var dynamicNeuropilMenu = new FFBODynamicMenu({singleObjSel: '#single-lpu > .mm-listview'});
+
+
 
   dynamicNeuronMenu.dispatch.highlight = function(id) {ffbomesh.highlight(id, true)};
   dynamicNeuronMenu.dispatch.resume = function(id) {ffbomesh.highlight(undefined)};
@@ -200,61 +201,6 @@ require([
   };
 
   // var infoPanel = new InfoPanel("#info-panel");
-
-  function onShowTutorialVideo() {
-    mm_menu_right.close();
-    setTimeout( function() {
-      closeAllOverlay(true);
-      $("#video-panel").slideDown(500);
-    }, 500);
-  }
-
-
-  function onShowNeuroNLP() {
-    mm_menu_right.close();
-    setTimeout( function() {
-      closeAllOverlay(true);
-      $("#neuronlp-switch").slideDown(500);
-    }, 500);
-  }
-
-  function onShowIntro() {
-    mm_menu_right.close();
-    setTimeout( function() {
-      closeAllOverlay(true);
-      $("#intro-panel").slideDown(500);
-    }, 500);
-  }
-  function onShowOverview() {
-    mm_menu_right.close();
-    setTimeout( function() {
-      closeAllOverlay(true);
-      $("#overview-panel").slideDown(500);
-    }, 500);
-  }
-  function onShowAnnounce() {
-    mm_menu_right.close();
-    setTimeout( function() {
-      closeAllOverlay(true);
-      $("#announce-panel").slideDown(500);
-    }, 500);
-  }
-
-
-  function mimicMouseOver(selector, flag) {
-    if (flag) {
-      mm_menu_right.open();
-      $("a[href='#toggle_get_started']")[0].click()
-    }
-    $(selector).addClass("hover");
-  };
-
-
-  function mimicMouseOut(selector) {
-    $(selector).removeClass("hover");
-  };
-
-
   var client = new FFBOClient();
   client.startConnection("guest", "guestpass", "wss://neuronlp.fruitflybrain.org:8888/ws");
 
@@ -326,46 +272,4 @@ require([
       srchBtn.click();
   });
 
-  $(document).ready(function() {
-    $("#ui_menu_nav").mmenu({
-      onClick: {
-        close: false
-      },
-      "extensions": ["effect-menu-zoom"],
-      offCanvas: {
-        pageSelector: "#page-content-wrapper",
-        position  : "right",
-        direction:"left",
-      },
-      navbar: {
-        title: "FFBO UI Menu"
-      }
-    },{
-      offCanvas: {
-        pageSelector: "#page-content-wrapper",
-      }
-    });
-    mm_menu_right = $("#ui_menu_nav").data( "mmenu" );
-
-
-    onGettingStarted = function() {
-      mm_menu_right.open();
-      $("a[href='#toggle_get_started']")[0].click()
-    }
-    onToggleTag = function() {
-      mm_menu_right.open();
-      $("a[href='#toggle_tag']")[0].click()
-    }
-    onToggleNeuClick = function() {
-      mm_menu_right.open();
-      $("a[href='#toggle_neuron']")[0].click()
-    }
-    onToggleLPUClick = function() {
-      mm_menu_right.open();
-      $("a[href='#toggle_neuropil']")[0].click()
-    }
-    openRightMenu = function() {
-      mm_menu_right.open();
-    }
-  });
 });

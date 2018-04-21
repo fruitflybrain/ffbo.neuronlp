@@ -15,16 +15,13 @@
          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap-theme.min.css"> -->
 
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/hamburgers/0.5.0/hamburgers.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jQuery.mmenu/7.0.3/jquery.mmenu.all.css"/>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jQuery.mmenu/7.0.3/extensions/positioning/jquery.mmenu.positioning.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/FrDH/jQuery.mmenu/v7.0.3/dist/jquery.mmenu.all.css"/>
     <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.7.0/css/perfect-scrollbar.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.2/css/swiper.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/css/bootstrap-slider.min.css">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-
     <script data-main="app" src="lib/require.js"></script>
     <link rel="stylesheet" type="text/css" href="/lib/css/ffbo.theme_settings.css">
     <link rel="stylesheet" id="current_theme" type="text/css" href="/lib/css/ffbo.default_theme.css">
@@ -48,11 +45,11 @@
               <div class="navbar-brand">
                 <a href="http://fruitflybrain.org" target="_blank"><img src="/img/ffbo_logo.png" role="button"></a>
                 <span style="font-family:var(--title-font-family); font-size: 20px; color:var(--navbar-text-color);">NeuroNLP</span>
-                <a onclick="onShowNeuroNLP()">
+                <a onclick="NeuroNLPUI.onShowNeuroNLP()">
                   <span>.Adult</span>
                 </a>
               </div>
-              <button id="ui_menu_btn" type="button" class="navbar-toggle collapsed" onclick="openRightMenu()" style="z-index:1">
+              <button id="ui_menu_btn" type="button" class="navbar-toggle collapsed" onclick="NeuroNLPUI.openRightMenu()" style="z-index:1">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -74,10 +71,10 @@
             </div>
             <div class="navbar-collapse collapse">
               <ul class="nav navbar-nav navbar-right">
-                <li id="btn-getting-started"><a onclick="onGettingStarted()">Get Started</a></li>
-                <li id="btn-tags" ><a onclick="onToggleTag()">Tags</a></li>
-                <li id="btn-neuron"><a onclick="onToggleNeuClick()">Toggle Neurons</a></li>
-                <li id="btn-neuropils"><a onclick="onToggleLPUClick()">Toggle Neuropils</a></li>
+                <li id="btn-getting-started"><a onclick="NeuroNLPUI.onGettingStarted()">Get Started</a></li>
+                <li id="btn-tags" ><a onclick="NeuroNLPUI.onToggleTag()">Tags</a></li>
+                <li id="btn-neuron"><a onclick="NeuroNLPUI.onToggleNeuClick()">Toggle Neurons</a></li>
+                <li id="btn-neuropils"><a onclick="NeuroNLPUI.onToggleLPUClick()">Toggle Neuropils</a></li>
               </ul>
             </div>
             <nav id="ui_menu_nav">
@@ -85,17 +82,17 @@
                 <li>
                   <span>Get Started</span>
                   <ul id="toggle_get_started">
-                    <li id="btn-overview"><a onclick="onShowOverview()">Overview</a></li>
-                    <li id="btn-news"><a onclick="onShowAnnounce()">News</a></li>
-                    <li><a onclick="onShowDemo()">Demos</a></li>
-                    <li><a onclick="onShowTutorialVideo()">Tutorial Video</a></li>
+                    <li id="btn-overview"><a onclick="NeuroNLPUI.onShowOverview()">Overview</a></li>
+                    <li id="btn-news"><a onclick="NeuroNLPUI.onShowAnnounce()">News</a></li>
+                    <li><a onclick="NeuroNLPUI.onShowDemo()">Demos</a></li>
+                    <li><a onclick="NeuroNLPUI.onShowTutorialVideo()">Tutorial Video</a></li>
                   </ul>
                 </li>
                 <li>
                   <span>Tags</span>
                   <ul id="toggle_tag">
-                    <li><a onclick="onCreateTag()">Create Tag</a></li>
-                    <li><a onclick="onRetrieveTag()">Load Tag</a></li>
+                    <li><a onclick="NeuroNLPUI.onCreateTag()">Create Tag</a></li>
+                    <li><a onclick="NeuroNLPUI.onRetrieveTag()">Load Tag</a></li>
                   </ul>
                 </li>
                 <li>
@@ -152,32 +149,32 @@
               <p>
                 Check out the Overview for a brief description of the layout and menus.
               </p>
-              <a onmouseover="mimicMouseOver('#btn-getting-started')" onmouseout="mimicMouseOut('#btn-getting-started')" onclick="onShowOverview()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Open Overview!</a>
+              <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-getting-started')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-getting-started')" onclick="NeuroNLPUI.onShowOverview()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Open Overview!</a>
               <br><br>
               <h4>News</h4>
               <p>
                 Updates and annoucements for <u style="text-decoration:none; font-family:'Rajdhani',sans-serif; color:grey;">NeuroNLP.Adult</u>.
               </p>
-              <a onmouseover="mimicMouseOver('#btn-getting-started')" onmouseout="mimicMouseOut('#btn-getting-started')" onclick="onShowAnnounce()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> See What's New!</a>
+              <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-getting-started')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-getting-started')" onclick="NeuroNLPUI.onShowAnnounce()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> See What's New!</a>
               <br><br>
               <h4>Quick Demos</h4>
               <p>
                 Want to get started? Go check out some real-time "Demos" for NLP queries and GUI usage!
               </p>
-              <a  onmouseover="mimicMouseOver('#btn-getting-started')" onmouseout="mimicMouseOut('#btn-getting-started')" onclick="onShowDemo()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Try Demos!</a>
+              <a  onmouseover="NeuroNLPUI.mimicMouseOver('#btn-getting-started')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-getting-started')" onclick="NeuroNLPUI.onShowDemo()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Try Demos!</a>
               <br><br>
               <h4>Tutorial Video</h4>
               <p>
                 Want to learn more? Go watch the "Tutorial Video" covering details and features of NeuroNLP!
               </p>
-              <a  onmouseover="mimicMouseOver('#btn-getting-started')" onmouseout="mimicMouseOut('#btn-getting-started')" onclick="onShowTutorialVideo()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Watch Tutorial Video!</a>
+              <a  onmouseover="NeuroNLPUI.mimicMouseOver('#btn-getting-started')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-getting-started')" onclick="NeuroNLPUI.onShowTutorialVideo()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Watch Tutorial Video!</a>
               <br><br>
               <h4>Sharing Query Results</h4>
               <p>
                 Sharing query results is easy with the "Tags" feature. Try
                 create your own tags!
               </p>
-              <a onmouseover="mimicMouseOver('#btn-tags')" onmouseout="mimicMouseOut('#btn-tags')"  onclick="onToggleTag()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Try Tags!</a>
+              <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-tags')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-tags')"  onclick="NeuroNLPUI.onToggleTag()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Try Tags!</a>
             </div>
             <div id ="info-panel" style="display: none">
             </div>
@@ -188,7 +185,7 @@
 
         <div id="vis-3d" class="vis-3d vis-3d-hf"></div>
 
-        <div class="overlay-background" onclick="closeAllOverlay()"></div>
+        <div class="overlay-background" onclick="NeuroNLPUI.closeAllOverlay()"></div>
 
         <div id="demo-panel" class='overlay'>
           <ul class="list-inline">
@@ -309,56 +306,6 @@
               <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><input id="bloomstrength" data-slider-id='blm_st_slider' type="text" data-slider-min="0" data-slider-max="2.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
 
             </div>
-            <!--
-                <table id="vis_set_table" class="table table-inverse table-custom-striped">
-                  <tbody>
-                    <tr class="">
-                      <td>3D Neuron Rendering (Doesn't affect neurons already in workspace)</td>
-                      <td><input type="checkbox" id="3d_rendering" class="switch_checkbox" />
-                        <label for="3d_rendering" class="switch_checkbox_label"></label></td>
-                    </tr>
-                    <tr id="3d_mode" class="" style="display:none">
-                      <td>3D Neuron Rendering Mode</td>
-                      <td></td>
-                    </tr>
-                    <tr class="">
-                      <td>Default Opacity</td>
-                      <td><input id="default_opacity" data-slider-id='def_op_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></td>
-                    </tr>
-                    <tr class="">
-                      <td>Ambient Light</td>
-                      <td><input id="ambientlight" data-slider-id='amb_lght_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></td>
-                    </tr>
-                    <tr class="">
-                      <td>Fast approXimate Anti-Aliasing </td>
-                      <td><input type="checkbox" id="fxaa" class="switch_checkbox"/>
-                        <label for="fxaa" class="switch_checkbox_label"></label></td>
-                    </tr>
-                    <tr>
-                      <td colspan="2" style="text-align:left;padding-right:10px">
-                        Bloom Pass Settings
-                        <table id="bloom_pass" class="table-custom-striped">
-                          <tbody>
-                            <tr>
-                              <td>Radius</td>
-                              <td style="padding-right:0px"><input id="bloomradius" data-slider-id='blm_rad_slider' type="text" data-slider-min="0.05" data-slider-max="10.0" data-slider-step="0.05" data-slider-value="0.8"/></td>
-                            </tr>
-                            <tr>
-                              <td>Threshold</td>
-                              <td style="padding-right:0px"><input id="bloomthreshold" data-slider-id='blm_th_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></td>
-                            </tr>
-                            <tr>
-                              <td>Strength</td>
-                              <td style="padding-right:0px"><input id="bloomstrength" data-slider-id='blm_st_slider' type="text" data-slider-min="0" data-slider-max="2.0" data-slider-step="0.01" data-slider-value="0.8"/></td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-
-                    </tr>
-                    <tr><td></td><td></td></tr>
-                  </tbody>
-                </table> -->
           </div>
         </div>
         <div id="video-panel" class='overlay'>
