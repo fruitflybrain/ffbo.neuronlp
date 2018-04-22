@@ -12,11 +12,11 @@ if( moduleExporter === undefined){
   };
 }
 
-moduleExporter("NeuroNLPUI", ["jquery", "notify", "jquery.mmenu"], function($, Notify){
+moduleExporter("NeuroNLPUI", ["jquery", "jquery.mmenu"], function($){
   function NeuroNLPUI(){
     var mm_menu_right = undefined;
 
-    function onShowTutorialVideo() {
+    this.onShowTutorialVideo = () => {
       mm_menu_right.close();
       setTimeout( function() {
         closeAllOverlay(true);
@@ -24,7 +24,7 @@ moduleExporter("NeuroNLPUI", ["jquery", "notify", "jquery.mmenu"], function($, N
       }, 500);
     }
 
-    function onShowNeuroNLP() {
+    this.onShowNeuroNLP = () => {
       mm_menu_right.close();
       setTimeout( function() {
         closeAllOverlay(true);
@@ -32,21 +32,21 @@ moduleExporter("NeuroNLPUI", ["jquery", "notify", "jquery.mmenu"], function($, N
       }, 500);
     }
 
-    function onShowIntro() {
+    this.onShowIntro = () => {
       mm_menu_right.close();
       setTimeout( function() {
         closeAllOverlay(true);
         $("#intro-panel").slideDown(500);
       }, 500);
     }
-    function onShowOverview() {
+    this.onShowOverview = () => {
       mm_menu_right.close();
       setTimeout( function() {
         closeAllOverlay(true);
         $("#overview-panel").slideDown(500);
       }, 500);
     }
-    function onShowAnnounce() {
+    this.onShowAnnounce = () => {
       mm_menu_right.close();
       setTimeout( function() {
         closeAllOverlay(true);
@@ -55,7 +55,7 @@ moduleExporter("NeuroNLPUI", ["jquery", "notify", "jquery.mmenu"], function($, N
     }
 
 
-    function mimicMouseOver(selector, flag) {
+    this.mimicMouseOver = (selector, flag) => {
       if (flag) {
         mm_menu_right.open();
         $("a[href='#toggle_get_started']")[0].click()
@@ -64,27 +64,28 @@ moduleExporter("NeuroNLPUI", ["jquery", "notify", "jquery.mmenu"], function($, N
     };
 
 
-    function mimicMouseOut(selector) {
+    this.mimicMouseOut = (selector) => {
       $(selector).removeClass("hover");
     };
 
-    onGettingStarted = function() {
+    this.onGettingStarted = function() {
       mm_menu_right.open();
       $("a[href='#toggle_get_started']")[0].click()
     }
-    onToggleTag = function() {
+    this.onToggleTag = function() {
       mm_menu_right.open();
       $("a[href='#toggle_tag']")[0].click()
     }
-    onToggleNeuClick = function() {
+    this.onToggleNeuClick = function() {
+      mm_menu_right.initPanels($('#single-neu'));
       mm_menu_right.open();
       $("a[href='#toggle_neuron']")[0].click()
     }
-    onToggleLPUClick = function() {
+    this.onToggleLPUClick = function() {
       mm_menu_right.open();
       $("a[href='#toggle_neuropil']")[0].click()
     }
-    openRightMenu = function() {
+    this.openRightMenu = function() {
       mm_menu_right.open();
     }
 
@@ -93,15 +94,22 @@ moduleExporter("NeuroNLPUI", ["jquery", "notify", "jquery.mmenu"], function($, N
         onClick: {
           close: false
         },
-        "extensions": ["effect-menu-zoom"],
-        offCanvas: {
-          pageSelector: "#page-content-wrapper",
-          position  : "right",
-          direction:"left",
-        },
+        "extensions": ["effect-menu-zoom", "position-right", "position-front"],
         navbar: {
           title: "FFBO UI Menu"
-        }
+        },// We can add tabs here as well
+        navbars: [
+          {
+            "position": "top",
+            "content": [
+              "searchfield"
+            ]
+          }
+        ],
+        searchfield: {
+          panel: true,
+          showSubPanels: false
+        },
       },{
         offCanvas: {
           pageSelector: "#page-content-wrapper",
