@@ -77,7 +77,7 @@ moduleExporter("NeuroNLPUI", ["jquery", "jquery.mmenu"], function($){
       $("a[href='#toggle_tag']")[0].click()
     }
     this.onToggleNeuClick = function() {
-      mm_menu_right.initPanels($('#single-neu'));
+      //mm_menu_right.initPanels($('#single-neu'));
       mm_menu_right.open();
       $("a[href='#toggle_neuron']")[0].click()
     }
