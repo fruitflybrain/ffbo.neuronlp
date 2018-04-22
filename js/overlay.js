@@ -13,13 +13,13 @@ if( moduleExporter === undefined){
 }
 
 moduleExporter("Overlay",
-  ['jquery','d3'],
-  function($,d3)
+	       ['d3','jquery'],
+	       function(d3,$)
 {
   /**
    * Overlay Constructor
-   * @div_id: a id for overlay object
-   * @content: HTML string for content of ovelay
+   * @param {string} div_id - a id for overlay object
+   * @param {string} content - HTML string for content of ovelay
    */
   function Overlay(div_id, content){
     if (document.getElementById(div_id)){
@@ -36,6 +36,9 @@ moduleExporter("Overlay",
   }
 
 
+  /**
+   * SlideUp animation for closing overlay
+   */
   Overlay.prototype.close = function(){
     setTimeout( function() {
       $('#'+this.divId).slideUp(500);
@@ -44,7 +47,9 @@ moduleExporter("Overlay",
     }, 500);
   }
 
-
+  /**
+   * SlideDown animation for opening overlay
+   */
   Overlay.prototype.show = function(){
     setTimeout( function() {
       $('#'+this.divId).slideDown(500);
@@ -53,9 +58,16 @@ moduleExporter("Overlay",
     }, 500);
   }
 
-
+  /**
+   * Update Overlay content
+   * @param {string} content - new content for overlay
+   */
   Overlay.prototype.update = function(content){
     $('#'+this.divId + " .container").html(content);
-  }
+  };
+
+  /**
+   * Return Overlay Constructor
+   */
   return Overlay;
 });

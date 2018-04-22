@@ -203,7 +203,7 @@ require([
 
   ffbomesh.on('click',   function(e){
     $("#info-intro").hide();
-    $("#info-panel").show();
+    //$("#info-panel").show();
     queryID = client.getInfo(e.value, {success: function(data){
       data['summary']['rid'] = e.value;
       infoPanel.update(data);
