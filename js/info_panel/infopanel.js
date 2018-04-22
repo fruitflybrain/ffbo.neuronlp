@@ -59,7 +59,6 @@ moduleExporter("InfoPanel",[
     this.htmlTemplate = createTemplate(this);
     this.dom = document.getElementById(this.divId);
     this.reset();
-
    }
 
   /**
@@ -156,12 +155,14 @@ moduleExporter("InfoPanel",[
   * @param {obj} synData - synapse Data
   */
   InfoPanel.prototype.update = function(data){
-//    this.reset(); // <TODO> need to change this
     let classOfObj = data['summary']['class'];
     let new_name = ('uname' in data['summary']) ? data['summary']['uname']: data['summar']['name'];
 
     if (this.name === new_name) {
-      return;
+      /** do not update if the object already exists, just show */
+      this.show();
+      this.resize();
+      return; 
     }else{
       this.name = new_name;
 
@@ -173,6 +174,9 @@ moduleExporter("InfoPanel",[
 	this.connTable.hide();
       }
       this.summaryTable.update(data['summary']);
+      
+      this.show();
+      this.resize();
     }
   };
 
@@ -180,6 +184,7 @@ moduleExporter("InfoPanel",[
    * show infopanel
    */
   InfoPanel.prototype.show = function(){
+    $('#'+this.divId).show();
     this.connSVG.show();
     this.connTable.show();
     this.summaryTable.show();
@@ -192,7 +197,18 @@ moduleExporter("InfoPanel",[
     this.connSVG.hide();
     this.connTable.hide();
     this.summaryTable.hide();
+    $('#'+this.divId).hide();
   };
+  
+  /**
+   * resize infopanel
+   */
+  InfoPanel.prototype.resize = function(){
+    this.connSVG.resize();
+    this.connTable.resize();
+    this.summaryTable.resize();
+  };
+
   /**
    * Return Constructor for InfoPanel
    */

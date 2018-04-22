@@ -17,18 +17,34 @@ moduleExporter("SummaryTable",
 	       function($,d3,Overlay,Modernizr)
 {
   /**
-   * Summary Information Constructor
+   * SummaryTable Information Constructor
    * @constructor
-   * @param {string} div_id -  ID for div in which to create Summary Table
+   * @param {string} div_id -  ID for div in which to create SummaryTable
    * @param {obj} parentObj -  parentObject
+   * @param {dict} [nameConfig={}] - configuration of children divs. The 3 children divs in ConnTable are `['colorId','extraImgId','overlayId']`
    */
-  function Summary(div_id, parentObj){
+    function SummaryTable(div_id, parentObj, nameConfig={}){
     this.divId = div_id;  // wrapper
-    this.parentObj = parentObj;
-    
-    this.colorId = "neu_col";
-        
-    this.overlay = new Overlay("img-viewer-overlay",'<img id="full-img"><h2 id="img-viewer-caption"></h2>');
+      this.parentObj = parentObj;
+      
+    // nameConfig = nameConfig || {};
+    Object.defineProperty(this, "colorId",{
+      value: nameConfig.colorId || "info-panel-summary-neu-col",
+      configurable: false,
+      writable: false
+    });
+    Object.defineProperty(this, "extraImgId",{
+      value: nameConfig.extraImgId || "info-panel-extra-img",
+      configurable: false,
+      writable: false
+    });
+    Object.defineProperty(this,"overlayId",{
+      value: nameConfig.overlayId || "img-viewer-overlay",
+      configurable: false,
+      writable: false
+    });
+      
+    this.overlay = new Overlay(this.overlayId,'<img id="full-img"><h2 id="img-viewer-caption"></h2>');
 
     this.htmlTemplate = createTemplate(this);
     this.dom = document.getElementById(this.divId);
@@ -37,11 +53,12 @@ moduleExporter("SummaryTable",
 
   /**
    * Create HTML template
+   * @param {obj} obj - SummaryTable Instance
    */
   function createTemplate(obj){
     var template = "";
     template += '<table class="table table-inverse table-custom-striped"><tbody></tbody></table>';
-    template += '<div id="info-panel-extra-img" class="row">';
+    template += '<div id="' + obj.extraImgId + '" class="row">';
     template += '<div class="col-md-4" style="display:none"><h4>Confocal Image</h4><img class="clickable-image" style="width:100%" alt="not available" onerror="imgError(this);"></div>';
     template += '<div class="col-md-4" style="display:none"><h4>Segmentation</h4><img class="clickable-image" style="width:100%" alt="not available" onerror="imgError(this);"></div>';
     template += '<div class="col-md-4" style="display:none"><h4>Skeleton</h4><img class="clickable-image" style="width:100%" alt="not available" onerror="imgError(this);"></div>';
@@ -50,27 +67,31 @@ moduleExporter("SummaryTable",
   }
 
   /*
-   * Reset Summary Table
+   * Reset SummaryTable Table
    */
-  Summary.prototype.reset = function (){
+  SummaryTable.prototype.reset = function (){
     // purge div and add table
     this.dom.innerHTML = this.htmlTemplate;
   }
 
 
   /**
-   * Summary Information show
+   * SummaryTable Information show
    */
-  Summary.prototype.show = function (){
+  SummaryTable.prototype.show = function (){
     $('#'+this.divId).show();
     $('#'+this.extraDivId).show();
   }
   /**
-   * Summary Information hide
+   * SummaryTable Information hide
    */
-  Summary.prototype.hide = function (){
+  SummaryTable.prototype.hide = function (){
     $('#'+this.divId).hide();
     $('#'+this.extraDivId).hide();
+  }
+
+  SummaryTable.prototype.resize = function(){
+    return;
   }
 
   /**
@@ -94,10 +115,10 @@ moduleExporter("SummaryTable",
   }
   
   /**
-   * Summary Information Update
+   * SummaryTable Information Update
    *
    */
-  Summary.prototype.update = function(data){
+  SummaryTable.prototype.update = function(data){
 
     if (verifyDataIntegrity(data) == false){
       return;
@@ -277,5 +298,5 @@ moduleExporter("SummaryTable",
 
 
 
-  return Summary;
+  return SummaryTable;
 });

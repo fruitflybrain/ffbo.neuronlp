@@ -24,12 +24,12 @@ moduleExporter("ConnTable",
     Overlay)
 {
   /**
-  * Connectivity Table inside Info Panel
-  * @constuctor
-  * @param {string} div_id - id for div element in which the connectivity table is held
-  * @param {obj} parentObj - parent object (infopanel)
-  * @param {dict} [nameConfig={}] - configuration of children divs. The 3 children divs in ConnTable are `['preTabId','postTabId','overlayId']`
-  */
+   * Connectivity Table inside Info Panel
+   * @constructor
+   * @param {string} div_id - id for div element in which the connectivity table is held
+   * @param {obj} parentObj - parent object (infopanel)
+   * @param {dict} [nameConfig={}] - configuration of children divs. The 3 children divs in ConnTable are `['preTabId','postTabId','overlayId']`
+   */
   function ConnTable(div_id,parentObj, nameConfig={}){
     this.divId = div_id;  // wrapper
 
@@ -103,12 +103,15 @@ moduleExporter("ConnTable",
   /**
   * Show all subcomponents
   */
-  ConnTable.prototype.show = function(data){
+  ConnTable.prototype.show = function(){
     $('#'+this.preTabId).show();
     $('#'+this.postTabId).show();
     $('#'+this.divId).show();
   }
 
+  ConnTable.prototype.resize = function(){
+    return;
+  }
 
   
   function verifyDataIntegrity(data){
