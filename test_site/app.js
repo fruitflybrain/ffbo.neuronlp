@@ -114,64 +114,26 @@ require([
   window.NeuroNLPUI = new NeuroNLPUI();
   var infoPanel = new InfoPanel("info-panel");
   var dynamicNeuronMenu = new FFBODynamicMenu({singleObjSel: '#single-neu > .mm-listview', pinnedObjSel: '#single-pin > .mm-listview'});
-  // var dynamicNeuropilMenu = new FFBODynamicMenu({singleObjSel: '#single-lpu > .mm-listview'});
-
-  var lpuList = [
-    'al_l', 'al_r', 'ammc_l', 'ammc_r', 'cal_l', 'cal_r', 'ccp_l', 'ccp_r',
-    'cmp_l', 'cmp_r', 'cvlp_l', 'cvlp_r', 'dlp_l', 'dlp_r', 'dmp_l', 'dmp_r',
-    'eb', 'fb', 'fspp_l', 'fspp_r', 'idfp_l', 'idfp_r', 'idlp_l', 'idlp_r',
-    'lat_l', 'lat_r', 'lh_l', 'lh_r', 'lob_l', 'lob_r', 'lop_l', 'lop_r',
-    'mb_l', 'mb_r', 'med_l', 'med_r', 'nod_l', 'nod_r', 'og_l', 'og_r',
-    'optu_l', 'optu_r', 'pan_l', 'pan_r', 'pb', 'sdfp_l', 'sdfp_r', 'sog_l',
-    'sog_r', 'spp_l', 'spp_r', 'vlp_l', 'vlp_r', 'vmp_l', 'vmp_r'
-  ];
-
-  lpuJSON = {};
-  for (var i=0; i < lpuList.length; i++ ) {
-    var x = lpuList[i].split("_");
-    var side = "";
-    if (x.length > 1) {
-      if (x[1] == "r")
-        side = "Right ";
-      else
-        side = "Left ";
-    }
-    lpuJSON[lpuList[i]] = {
-      'filename': 'https://raw.githubusercontent.com/fruitflybrain/ffbo.lib/master/mesh/' + lpuList[i] + '.json',
-      'label': side + x[0].toUpperCase(),
-      'highlight': false,
-      'background': true,
-      'color': new THREE.Color( 0.15, 0.01, 0.15)
-    };
-  }
-
-  var ffbomesh = new FFBOMesh3D('vis-3d', {"ffbo_json": lpuJSON, "showAfterLoadAll": true}, {"globalCenter": {'x': 0, 'y':-250, 'z':0}});
-
-
-
+  var dynamicNeuropilMenu = new FFBODynamicMenu({singleObjSel: '#toggle_neuropil > .mm-listview'});
+  var ffbomesh = new FFBOMesh3D('vis-3d', undefined, {"globalCenter": {'x': 0, 'y':-250, 'z':0}});
 
   dynamicNeuronMenu.dispatch.highlight = function(id) {ffbomesh.highlight(id, true)};
   dynamicNeuronMenu.dispatch.resume = function(id) {ffbomesh.highlight(undefined)};
   dynamicNeuronMenu.dispatch.toggle = function(id) {ffbomesh.toggleVis(id)};
   dynamicNeuronMenu.dispatch.unpin = function(id) {ffbomesh.unpin(id)};
-
-  // dynamicNeuropilMenu.dispatch.toggle = function(id) {ffbomesh.toggleVis(id)};
+  dynamicNeuropilMenu.dispatch.toggle = function(id) {ffbomesh.toggleVis(id)};
 
   ffbomesh.on('add',
-              function(e) {
-                if(!e.value.background)
-                  dynamicNeuronMenu.addNeuron(e.prop, e.value.label);
-                // else
-                // dynamicNeuropilMenu.addNeuron(e.prop, e.value.label)
-              });
+    function(e) {
+      if(!e.value.background)
+        dynamicNeuronMenu.addNeuron(e.prop, e.value.label);
+      else
+        dynamicNeuropilMenu.addNeuron(e.prop, e.value.label)
+    });
   ffbomesh.on('remove', function(e) { if(!e.value.background) dynamicNeuronMenu.removeNeuron(e.prop)});
   ffbomesh.on('visible', (function(e) {
     if(this.states.highlight[0] !== e.path[1]) dynamicNeuronMenu.toggleVisibility(e.path[1], e.value)}).bind(ffbomesh));
   ffbomesh.on('pinned', function(e) { dynamicNeuronMenu.updatePinnedNeuron(e.path[0], e.obj.label, e.value)});
-
-
-  // ffbomesh.addJson({"ffbo_json": lpuJSON, "showAfterLoadAll": true});
-
 
   infoPanel.isInWorkspace = (rid) => {
     return (rid in ffbomesh.meshDict);
@@ -200,7 +162,6 @@ require([
     ffbomesh.setColor(id, value);
   };
 
-  // var infoPanel = new InfoPanel("#info-panel");
   var client = new FFBOClient();
   client.startConnection("guest", "guestpass", "wss://neuronlp.fruitflybrain.org:8888/ws");
 
@@ -272,4 +233,25 @@ require([
       srchBtn.click();
   });
 
+  ffbomesh.createUIBtn("showSettings", "fa-cog", "Settings")
+  ffbomesh.createUIBtn("takeScreenshot", "fa-camera", "Download Screenshot")
+  ffbomesh.createUIBtn("showInfo", "fa-info-circle", "GUI guideline")
+  ffbomesh.createUIBtn("resetView", "fa-refresh", "Reset View")
+  ffbomesh.createUIBtn("resetVisibleView", "fa-align-justify", "Centre View To Visible Objects")
+  ffbomesh.createUIBtn("show_all", "fa-eye", "Show All")
+  ffbomesh.createUIBtn("hide_all", "fa-eye-slash", "Hide All")
+  ffbomesh.createUIBtn("removeUnpin", "fa-trash", "Remove Unpinned Neurons")
+  ffbomesh.createUIBtn("DownData", "fa-download", "Download Connectivity")
+
+  ffbomesh.on('resetView', (function() {ffbomesh.resetView()}));
+  ffbomesh.on('resetVisibleView', (function() {ffbomesh.resetVisibleView()}));
+  ffbomesh.on('showInfo', (function() {closeAllOverlay(true); $("#gui-3d").show()}));
+  ffbomesh.on('removeUnpin', (function() {$("#btn-pin-keep").trigger("click")}));
+  ffbomesh.on('hide_all', (function() {ffbomesh.hideAll()}));
+  ffbomesh.on('show_all', (function() {ffbomesh.showAll()}));
+  ffbomesh.on('takeScreenshot', (function() {ffbomesh._take_screenshot=true;}));
+
+  $.getJSON("config.json", function(json) {
+    ffbomesh.addJson({"ffbo_json": json, "showAfterLoadAll": true});
+  });
 });
