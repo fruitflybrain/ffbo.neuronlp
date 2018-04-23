@@ -92,7 +92,7 @@ moduleExporter("InfoPanel",[
     if (this.summaryTable !== undefined){
       delete this.summaryTable;
     }
-    
+
     this.connSVG = new ConnSVG(this.connSVGId, this);
     this.connTable = new ConnTable(this.connTableId, this);
     this.summaryTable = new SummaryTable(this.summaryTableId, this); // neuron information table
@@ -104,12 +104,12 @@ moduleExporter("InfoPanel",[
    * Check if an object is in the workspace.
    *
    * @param {string} rid -  rid of target object (neuron/synapse)
-   * @returns {bool} if object in workspace 
+   * @returns {bool} if object in workspace
    */
   InfoPanel.prototype.isInWorkspace = function(rid){
     return false;
   };
-  
+
   /**
    * Add an object into the workspace.
    *
@@ -118,7 +118,7 @@ moduleExporter("InfoPanel",[
   InfoPanel.prototype.addByUname = function(uname){
     return;
   };
-  
+
   /**
    * Remove an object into the workspace.
    *
@@ -127,7 +127,7 @@ moduleExporter("InfoPanel",[
   InfoPanel.prototype.removeByUname = function(uname){
     return;
   };
-  
+
   /**
    * Get attribute of an object in the workspace.
    *
@@ -137,33 +137,32 @@ moduleExporter("InfoPanel",[
   InfoPanel.prototype.getAttr = function(rid,attr){
     return undefined;
   };
-  
+
   /**
-   * Render Add/Remove buttons to a specific type. all buttons with the 
+   * Render Add/Remove buttons to a specific type. all buttons with the
    * same name will be set
    *
    * @param {string} btnId - Id of button to be rendered
    * @param {bool} state - new state of button (true false)
-   * @example 
+   * @example
    * infoPanel.renderAddRemoveBtn("pre-add-mi1-5",true);
    */
-  InfoPanel.prototype.renderAddRemoveBtn = function(btnId,state){
-    let btn = $('#'+btnId)[0];
-    if (state == true){
-      $('button[name="' + btn.name + '"]').each(
+  InfoPanel.prototype.renderAddRemoveBtn = function(btnName,state){
+    //let btn = $('#'+btnId)[0];
+    if (! state){
+      $('button[name="' + btnName + '"]').each(
         (idx,dom) => {
-	  dom.innerText = "+";
-	  dom.className = "btn btn-add btn-success";
+    dom.innerText = "+";
+    dom.className = "btn btn-add btn-success";
         });
     }else{
-      $('button[name="' + btn.name + '"]').each(
+      $('button[name="' + btnName + '"]').each(
         (idx,dom) => {
-	  dom.innerText = "-";
-	  dom.className = "btn btn-remove btn-danger";
+    dom.innerText = "-";
+    dom.className = "btn btn-remove btn-danger";
         });
     }
-  };   
-  
+  };
   /**
   * Update Info Panel
   *
@@ -178,19 +177,19 @@ moduleExporter("InfoPanel",[
       /** do not update if the object already exists, just show */
       this.show();
       this.resize();
-      return; 
+      return;
     }else{
       this.name = new_name;
 
       if ('connectivity' in data){ // synapse data does not have connectivity
-	this.connSVG.update(data['connectivity']);
-	this.connTable.update(data['connectivity']);
+  this.connSVG.update(data['connectivity']);
+  this.connTable.update(data['connectivity']);
       }else{
-	this.connSVG.hide();
-	this.connTable.hide();
+  this.connSVG.hide();
+  this.connTable.hide();
       }
       this.summaryTable.update(data['summary']);
-      
+
       this.show();
       this.resize();
     }
@@ -215,7 +214,7 @@ moduleExporter("InfoPanel",[
     this.summaryTable.hide();
     $('#'+this.divId).hide();
   };
-  
+
   /**
    * resize infopanel
    */

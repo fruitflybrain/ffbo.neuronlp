@@ -50,8 +50,9 @@ requirejs.config({
     bootsrapslider: "//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min",
     swiper: "//cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.2/js/swiper.min",
     bootstrap: "//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min",
-    blockui: "//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min"
-    /* Notify, bootbox, colormaps, demos, mouse, vis_set, ResizeSensor, read_vars, colormaps */
+    blockui: "//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min",
+    tageditor: "//cdnjs.cloudflare.com/ajax/libs/tag-editor/1.0.20/jquery.tag-editor.min"
+    /* Notify, bootbox, colormaps, demos, mouse, vis_set, ResizeSensor, read_vars, colorm[aps */
   },
   shim: {
     bootstrap: {deps: ['jquery']},
@@ -77,7 +78,8 @@ requirejs.config({
     bloompass: {deps: ['three']},
     unrealbloompass: {deps: ['three']},
     adaptivetonemappingpass: {deps: ['three']},
-    lightshelper: {deps: ['three']}
+    lightshelper: {deps: ['three']},
+    tageditor: {deps: ['jquery']},
   }
 });
 
@@ -95,6 +97,7 @@ require([
   'infopanel',
   'dynamicmenu',
   'ui',
+  'tags',
   'bootstrap',
   'jquery.mobile',
   'jqueryui',
@@ -107,7 +110,8 @@ require([
    FFBOMesh3D,
    InfoPanel,
    FFBODynamicMenu,
-   NeuroNLPUI
+   NeuroNLPUI,
+   Tags
 ){
 
   $.mobile.ajaxEnabled = false;
@@ -117,62 +121,17 @@ require([
   var dynamicNeuronMenu = new FFBODynamicMenu({singleObjSel: '#single-neu > .mm-listview', pinnedObjSel: '#single-pin > .mm-listview'});
   var dynamicNeuropilMenu = new FFBODynamicMenu({singleObjSel: '#toggle_neuropil > .mm-listview'});
   var ffbomesh = new FFBOMesh3D('vis-3d', undefined, {"globalCenter": {'x': 0, 'y':-250, 'z':0}});
-
-  dynamicNeuronMenu.dispatch.highlight = function(id) {ffbomesh.highlight(id, true)};
-  dynamicNeuronMenu.dispatch.resume = function(id) {ffbomesh.highlight(undefined)};
-  dynamicNeuronMenu.dispatch.toggle = function(id) {ffbomesh.toggleVis(id)};
-  dynamicNeuronMenu.dispatch.unpin = function(id) {ffbomesh.unpin(id)};
-  dynamicNeuropilMenu.dispatch.toggle = function(id) {ffbomesh.toggleVis(id)};
-
-  ffbomesh.on('add',
-    function(e) {
-      if(!e.value.background)
-        dynamicNeuronMenu.addNeuron(e.prop, e.value.label);
-      else
-        dynamicNeuropilMenu.addNeuron(e.prop, e.value.label)
-    });
-  ffbomesh.on('remove', function(e) { if(!e.value.background) dynamicNeuronMenu.removeNeuron(e.prop)});
-  ffbomesh.on('visible', (function(e) {
-    if(this.states.highlight[0] !== e.path[1]) dynamicNeuronMenu.toggleVisibility(e.path[1], e.value)}).bind(ffbomesh));
-  ffbomesh.on('pinned', function(e) { dynamicNeuronMenu.updatePinnedNeuron(e.path[0], e.obj.label, e.value)});
-
-  infoPanel.isInWorkspace = (rid) => {
-    return (rid in ffbomesh.meshDict);
-  };
-
-  infoPanel.addByUname = (uname) => {
-    queryID = client.addByUname(uname, {success: dataCallback});
-    logAndMonitorQuery(queryID);
-  };
-
-  infoPanel.removeByUname = (uname) => {
-    queryID = client.removeByUname(uname);
-    logAndMonitorQuery(queryID);
-  };
-
-  infoPanel.getAttr = (id,attr) => {
-    if (attr !== 'color') {
-      return undefined;
-    }
-    return ffbomesh.meshDict[id].color.getHexString();
-  };
-  infoPanel.setAttr = (id,attr,value) => {
-    if (attr !== 'color') {
-      return;
-    }
-    ffbomesh.setColor(id, value);
-  };
-
+  var tagsPanel = new Tags($('#wrapper'));
   var client = new FFBOClient();
   client.startConnection("guest", "guestpass", "wss://neuronlp.fruitflybrain.org:8888/ws");
 
-  window["client"] = client;
+  window.client = client;
+  window.tagsPanel = tagsPanel;
+  window.ffbomesh = ffbomesh;
+  tagsPanel.initialize();
 
-  function logAndMonitorQuery(queryID){
-    console.log("Query Fired: ID - " + queryID);
-    client.status.on("change", function(e){
-      console.log("Query Status Changed, ID: " + e.prop + ", Value: ", e.value);
-    }, queryID);
+  function dataCallback(data){
+    ffbomesh.addJson({ffbo_json: data, type: 'morphology_json'});
   }
 
   client.notifySuccess = function(message){
@@ -196,11 +155,31 @@ require([
       ffbomesh.execCommand({"commands":[cmd],"neurons": message["commands"][cmd][0],"args":message['commands'][cmd][1]});
   }
 
-  window["ffbomesh"] = ffbomesh;
 
-  function dataCallback(data){
-    ffbomesh.addJson({ffbo_json: data, type: 'morphology_json'});
-  }
+  infoPanel.isInWorkspace = (rid) => {
+    return (rid in ffbomesh.meshDict);
+  };
+
+  infoPanel.addByUname = (uname) => {
+    queryID = client.addByUname(uname, {success: dataCallback});
+  };
+
+  infoPanel.removeByUname = (uname) => {
+    queryID = client.removeByUname(uname);
+  };
+
+  infoPanel.getAttr = (id,attr) => {
+    if (attr !== 'color') {
+      return undefined;
+    }
+    return ffbomesh.meshDict[id].color.getHexString();
+  };
+  infoPanel.setAttr = (id,attr,value) => {
+    if (attr !== 'color') {
+      return;
+    }
+    ffbomesh.setColor(id, value);
+  };
 
   ffbomesh.on('click',   function(e){
     $("#info-intro").hide();
@@ -209,8 +188,38 @@ require([
       data['summary']['rid'] = e.value;
       infoPanel.update(data);
     }});
-    logAndMonitorQuery(queryID);
   })
+
+  dynamicNeuronMenu.dispatch.highlight = function(id) {ffbomesh.highlight(id, true)};
+  dynamicNeuronMenu.dispatch.resume = function(id) {ffbomesh.highlight(undefined)};
+  dynamicNeuronMenu.dispatch.toggle = function(id) {ffbomesh.toggleVis(id)};
+  dynamicNeuronMenu.dispatch.unpin = function(id) {ffbomesh.unpin(id)};
+  dynamicNeuropilMenu.dispatch.toggle = function(id) {ffbomesh.toggleVis(id)};
+
+
+  ffbomesh.on('add',
+    function(e) {
+      if(!e.value.background)
+        dynamicNeuronMenu.addNeuron(e.prop, e.value.label);
+      else
+        dynamicNeuropilMenu.addNeuron(e.prop, e.value.label)
+      infoPanel.renderAddRemoveBtn(e.value.label, true)
+    });
+  ffbomesh.on('remove', function(e) {
+    if(!e.value.background)
+      dynamicNeuronMenu.removeNeuron(e.prop)
+    infoPanel.renderAddRemoveBtn(e.value.label, false)
+  });
+  ffbomesh.on('visible', (function(e) {
+    if(this.states.highlight[0] !== e.path[1]) dynamicNeuronMenu.toggleVisibility(e.path[1], e.value)}).bind(ffbomesh));
+  ffbomesh.on('pinned', function(e) { dynamicNeuronMenu.updatePinnedNeuron(e.path[0], e.obj.label, e.value)});
+
+
+  function updateThreshold(e) {client.threshold = e.value ? 1 : 20;}
+  updateThreshold({value: ffbomesh.settings.neurons_3d})
+  ffbomesh.settings.on('change', updateThreshold, 'neurons_3d')
+
+
 
   var srchInput = document.getElementById('srch_box');
   var srchBtn = document.getElementById('srch_box_btn');
@@ -220,7 +229,6 @@ require([
     $("#search-wrapper").block({ message: null });
     srchInput.blur();
     queryID = client.executeNLPquery(query, {success: dataCallback});
-    logAndMonitorQuery(queryID);
     client.status.on("change", function(e){
       $("#search-wrapper").unblock();
       srchInput.focus();
