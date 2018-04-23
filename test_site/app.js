@@ -46,7 +46,7 @@ requirejs.config({
     perfectscrollbar: "//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.7.0/js/perfect-scrollbar.jquery.min",
     "jquery.mobile": "//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min",
     spectrum: "//cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min",
-    "jquery.mmenu": "//cdn.rawgit.com/FrDH/jQuery.mmenu/v7.0.3/dist/jquery.mmenu.all",
+    "jquery.mmenu": "/lib/js/jquery.mmenu.all",
     bootsrapslider: "//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min",
     swiper: "//cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.2/js/swiper.min",
     bootstrap: "//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min",
@@ -134,6 +134,7 @@ require([
   var tagsPanel = new Tags($('#wrapper'));
   var client = new FFBOClient();
   client.startConnection("guest", "guestpass", "wss://neuronlp.fruitflybrain.org:8888/ws");
+  mm_menu_right = $("#ui_menu_nav").data( "mmenu" );
 
 
 
@@ -165,6 +166,7 @@ require([
     }
     for(var cmd in message["commands"])
       ffbomesh.execCommand({"commands":[cmd],"neurons": message["commands"][cmd][0],"args":message['commands'][cmd][1]});
+    mm_menu_right.initPanels($('#single-neu'));
   }
 
 

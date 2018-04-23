@@ -84,11 +84,13 @@ moduleExporter("NeuroNLPUI", ["jquery", "jquery.mmenu"], function($){
       $("a[href='#toggle_tag']")[0].click()
     }
     this.onToggleNeuClick = function() {
-      //mm_menu_right.initPanels($('#single-neu'));
+      mm_menu_right.initPanels($('#single-neu'));
+      mm_menu_right.initPanels($('#single-pin'));
       mm_menu_right.open();
       $("a[href='#toggle_neuron']")[0].click()
     }
     this.onToggleLPUClick = function() {
+      mm_menu_right.initPanels($('#single-neuropil'));
       mm_menu_right.open();
       $("a[href='#toggle_neuropil']")[0].click()
     }
@@ -140,14 +142,14 @@ moduleExporter("NeuroNLPUI", ["jquery", "jquery.mmenu"], function($){
         setTimeout( function() {
           ffbomesh.onWindowResize();
           infoPanel.resize();
-	}, 500 );
+        }, 500 );
         },
       }
     );
 
     $(document).ready(() => {
       $("#ui_menu_nav").mmenu({
-        counters: true,
+        //counters: true,
         onClick: {
           close: false
         },
@@ -162,7 +164,11 @@ moduleExporter("NeuroNLPUI", ["jquery", "jquery.mmenu"], function($){
               "searchfield"
             ]
           }
-        ]
+        ],
+        searchfield:{
+          panel: true,
+          showSubPanels: true
+        }
       },{
         offCanvas: {
           pageSelector: "#page-content-wrapper",
