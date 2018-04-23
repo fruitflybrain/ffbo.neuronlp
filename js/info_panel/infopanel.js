@@ -149,7 +149,7 @@ moduleExporter("InfoPanel",[
    */
   InfoPanel.prototype.renderAddRemoveBtn = function(btnId,state){
     let btn = $('#'+btnId)[0];
-    if (state == true){
+    if (! state){
       $('button[name="' + btn.name + '"]').each(
         (idx,dom) => {
 	  dom.innerText = "+";
@@ -162,8 +162,7 @@ moduleExporter("InfoPanel",[
 	  dom.className = "btn btn-remove btn-danger";
         });
     }
-  };   
-  
+  };
   /**
   * Update Info Panel
   *

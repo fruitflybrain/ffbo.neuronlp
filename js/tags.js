@@ -12,7 +12,7 @@ if( moduleExporter === undefined){
   };
 }
 
-moduleExporter('Tags', ['perfectScrollbar', 'tagEditor', 'jquery'], function(perfectScrollbar, tagEditor, $){
+moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'jquery'], function(perfectScrollbar, tagEditor, $){
   $ = $ || window.$;
   perfectScrollbar = perfectScrollbar || window.perfectScrollbar;
   tagEditor = tagEditor || window.tagEditor;
@@ -179,20 +179,20 @@ moduleExporter('Tags', ['perfectScrollbar', 'tagEditor', 'jquery'], function(per
            });
          }
       )
-  };
+    };
+  }
   return Tags;
 });
+               /*
 
-/*
+                 currentTag = new Tags($('#wrapper'));
+                 currentTag.initialize();
 
-  currentTag = new Tags($('#wrapper'));
-  currentTag.initialize();
+                 current_tags = $('#tagTagEditor').tagEditor('getTags')[0].tags;
 
-  current_tags = $('#tagTagEditor').tagEditor('getTags')[0].tags;
+                 var ex_tag = {'name': 'Alpha Lobe', 'desc': 'This tag shows the alpha lobe of the mushroom body.', 'keywords': ['mushroom body', 'alpha lobe'], 'FFBOdata': {extra: 'This tag has been created by the FFBO team.'}};
 
-  var ex_tag = {'name': 'Alpha Lobe', 'desc': 'This tag shows the alpha lobe of the mushroom body.', 'keywords': ['mushroom body', 'alpha lobe'], 'FFBOdata': {extra: 'This tag has been created by the FFBO team.'}};
+                 var tag_data = [];
 
-  var tag_data = [];
-
-  addTagBrowser(ex_tag, tag_data);
-  *]
+                 addTagBrowser(ex_tag, tag_data);
+                 */
