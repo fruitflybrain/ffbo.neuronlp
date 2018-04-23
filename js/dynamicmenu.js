@@ -104,7 +104,7 @@ moduleExporter(
       }
 
       this.toggleVisibility = function(id, visibility) {
-        var btn = $("#btn-" + uidDecode(id));
+        var btn = $("[id='btn-" + uidDecode(id) + "']");
         var label = btn.html().substring(2);
         var symbol = (visibility) ? _this.config.filledSymbol : _this.config.emptySymbol;
         btn.html(symbol + " " + label);
@@ -117,12 +117,6 @@ moduleExporter(
           $( _this.config.pinnedObjSel ).append(
             "<li><a id='" + pinBtnId + "'role='button' class='btn-single-pin'>" + label + "</a></li>");
           $("#" + pinBtnId)
-            .dblclick( function() {
-              $(this).remove();
-              var id = $(this).attr("id").substring(8);
-              id = uidEncode(id);
-              _this.dispatch.unpin(id);
-            })
             .click( function() {
                 var id = $(this).attr("id").substring(8);
                 updateInfoPanel([$(this).text(), uidEncode(id)]);
