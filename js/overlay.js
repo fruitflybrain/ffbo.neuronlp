@@ -23,11 +23,12 @@ moduleExporter("Overlay",
    */
   function Overlay(div_id, content){
     if (document.getElementById(div_id)){
-      return;
+      console.error('[InfoPanel.Overlay] Instantiation Failure, Element "' + div_id + '" exists, aborting');
+      return undefined;
     }
     this.divId = div_id;
     this.content = content;
-
+    
     this.dom = document.createElement("div");
     this.dom.setAttribute("id",this.divId);
     this.dom.setAttribute("class","overlay");
