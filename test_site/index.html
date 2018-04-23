@@ -91,8 +91,8 @@
                 <li>
                   <span>Tags</span>
                   <ul id="toggle_tag">
-                    <li><a onclick="NeuroNLPUI.onCreateTag()">Create Tag</a></li>
-                    <li><a onclick="NeuroNLPUI.onRetrieveTag()">Load Tag</a></li>
+                    <li><a onclick="tagsPanel.onCreateTag()">Create Tag</a></li>
+                    <li><a onclick="tagsPanel.onRetrieveTag()">Load Tag</a></li>
                   </ul>
                 </li>
                 <li>
@@ -124,10 +124,12 @@
         </nav>
 
         <div id="info-panel-wrapper" class="vis-info vis-info-pin">
-          <ul class="list-inline" style="pointer-events:none">
-            <li><p>Info Panel</p></li>
-            <li><button id="btn-info-pin" style="pointer-events:auto" class="btn btn-xs btn-clicked"><i class="fa fa-compress" aria-hidden="true"></i></button></li>
-          </ul>
+          <div id="info-pin-div" >
+            <ul class="list-inline" style="pointer-events:none">
+              <li><p>Info Panel</p></li>
+              <li><button id="btn-info-pin" style="pointer-events:auto" class="btn btn-xs btn-clicked"  onclick="NeuroNLPUI.resizeInfoPanel()"><i class="fa fa-compress" aria-hidden="true"></i></button></li>
+            </ul>
+          </div>
           <div>
             <div id="info-reset" class="ffbo-intro" style="display: none">
               <h4>
@@ -181,7 +183,7 @@
           </div>
         </div>
 
-        <div class="slider-bar" draggable="true"></div>
+        <div id="info-panel-dragger" class="slider-bar" draggable="true"></div>
 
         <div id="vis-3d" class="vis-3d vis-3d-hf"></div>
 

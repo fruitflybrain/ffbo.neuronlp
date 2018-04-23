@@ -14,7 +14,12 @@ if( moduleExporter === undefined){
 
 moduleExporter("NeuroNLPUI", ["jquery", "jquery.mmenu"], function($){
   function NeuroNLPUI(){
+    var _this = this;
     var mm_menu_right = undefined;
+
+    this.dispatch = {
+      onWindowResize: (function() {})
+    }
 
     this.onShowTutorialVideo = () => {
       mm_menu_right.close();
@@ -88,6 +93,47 @@ moduleExporter("NeuroNLPUI", ["jquery", "jquery.mmenu"], function($){
     this.openRightMenu = function() {
       mm_menu_right.open();
     }
+
+    this.resizeInfoPanel = function() {
+      $("#btn-info-pin").children().toggleClass("fa-compress fa-expand");
+      $("#info-panel-dragger").toggle();
+      $("#info-panel-wrapper").toggleClass("vis-info-sm vis-info-pin");
+      $("#vis-3d").toggleClass("vis-3d-lg vis-3d-hf");
+      $("#btn-info-pin").toggleClass('btn-clicked btn-unclicked');
+      setTimeout( function(){
+        _this.dispatch.onWindowResize();
+      }, 500);
+    }
+
+    $( ".slider-bar" ).draggable({
+      axis: "x",
+      delay: 200,
+      start: function( event, ui ) {
+        $(".vis-info-pin").addClass("notransition");
+      },
+      drag: function( event, ui ) {
+        var rect;
+        var objs = document.getElementsByClassName('vis-info-pin');
+        for (var i=0; i < objs.length; ++i) {
+          if ($(objs[i]).is(':visible')) {
+            rect = objs[i].getBoundingClientRect();
+          }
+        }
+        var width = ui.position.left - rect.left;
+        $(".vis-info-pin").css("width", width + "px");
+      },
+      stop: function( event, ui ) {
+        var perc = event.pageX / window.innerWidth * 100;
+        document.documentElement.style.setProperty("--boundary-horizontal", perc + "%");
+
+        $(".vis-info-pin").removeClass("notransition");
+        $("#info-panel-dragger").css({"top": "", "left":""});
+        $(".vis-info-pin").css("width","");
+        setTimeout( function() {
+          ffbomesh.onWindowResize()}, 500 );
+        },
+      }
+    );
 
     $(document).ready(() => {
       $("#ui_menu_nav").mmenu({
