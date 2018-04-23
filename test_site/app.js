@@ -78,7 +78,8 @@ requirejs.config({
     bloompass: {deps: ['three']},
     unrealbloompass: {deps: ['three']},
     adaptivetonemappingpass: {deps: ['three']},
-    lightshelper: {deps: ['three']}
+    lightshelper: {deps: ['three']},
+    tageditor: {deps: ['jquery']},
   }
 });
 
