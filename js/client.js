@@ -320,6 +320,36 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
     }, callbacks, format);
   }
 
+  FFBOClient.prototype.removeObjs = function(rids, callbacks, format){
+    /**
+     * Query to remove a list of Objs based on their Rids. rids must be an array
+     */
+    return this.executeNAquery({
+      verb: "remove",
+      query: [
+        {
+          action: { method: { has { rid: rids } } },
+          object: { state: 0 }
+        }
+      ]
+    }, callbacks, format);
+  }
+
+  FFBOClient.prototype.keepObjs = function(rids, callbacks, format){
+    /**
+     * Query to keep a list of Objs based on their Rids. rids must be an array
+     */
+    return this.executeNAquery({
+      verb: "keep",
+      query: [
+        {
+          action: { method: { has { rid: rids } } },
+          object: { state: 0 }
+        }
+      ]
+    }, callbacks, format);
+  }
+
   FFBOClient.prototype.startConnection = function(authid, key, url) {
     function onchallenge(session, method, extra) {
       if (method === "wampcra") {
