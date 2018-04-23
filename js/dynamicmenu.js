@@ -47,8 +47,8 @@ moduleExporter(
       var _this = this;
       this.btnLabelList = [];
       this.config = {
-        showSymbol: '<i class="fas fa-eye"></i>',
-        hideSymbol: '<i class="fas fa-eye-slash"></i>',
+        showSymbol: '<i class="fa fa-eye"></i>',
+        hideSymbol: '<i class="fa fa-eye-slash"></i>',
         singleObjSel: undefined,
         pinnedObjSel: undefined,
         compare: (function (x, y) { return x < y})
