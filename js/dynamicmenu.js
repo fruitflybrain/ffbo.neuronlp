@@ -47,8 +47,8 @@ moduleExporter(
       var _this = this;
       this.btnLabelList = [];
       this.config = {
-        filledSymbol: '&FilledSmallSquare;',
-        emptySymbol: '&EmptySmallSquare;',
+        showSymbol: '<i class="fas fa-eye"></i>',
+        hideSymbol: '<i class="fas fa-eye-slash"></i>',
         singleObjSel: undefined,
         pinnedObjSel: undefined,
         compare: (function (x, y) { return x < y})
@@ -65,7 +65,7 @@ moduleExporter(
       this.addNeuron = function(id, label) {
         var btnId = "btn-" + uidDecode(id);
         var domStr = "<li id='li-" + btnId + "'>" +
-                      "<a id='" + btnId + "'role='button' class='btn-single-ob'>" + _this.config.filledSymbol + " " + label + "</a>" +
+                      "<a id='" + btnId + "'role='button' label='" + label + "' class='btn-single-ob'>" + _this.config.showSymbol + " " + label + "</a>" +
                      "</li>";
 
         var idx = findIndex(label, _this.btnLabelList, _this.config.compare);
@@ -96,7 +96,7 @@ moduleExporter(
 
       this.removeNeuron = function(id) {
         var liBtnId = "li-btn-" + uidDecode(id);
-        var label = $("#" + liBtnId + " > a").html().substr(2);
+        var label = $("#" + liBtnId + " > a").attr('label');
         $("#" + liBtnId).remove();
         var idx = _this.btnLabelList.indexOf(label);
         if (idx > -1)
@@ -105,8 +105,8 @@ moduleExporter(
 
       this.toggleVisibility = function(id, visibility) {
         var btn = $("[id='btn-" + uidDecode(id) + "']");
-        var label = btn.html().substring(2);
-        var symbol = (visibility) ? _this.config.filledSymbol : _this.config.emptySymbol;
+        var label = btn.attr('label');
+        var symbol = (visibility) ? _this.config.showSymbol : _this.config.hideSymbol;
         btn.html(symbol + " " + label);
       }
 
