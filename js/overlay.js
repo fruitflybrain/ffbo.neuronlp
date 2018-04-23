@@ -32,7 +32,7 @@ moduleExporter("Overlay",
     this.dom.setAttribute("id",this.divId);
     this.dom.setAttribute("class","overlay");
     this.dom.innerHTML = '<div class="container">' + this.content + '</div>';
-    document.body.appendChild(this.dom);
+    $('#wrapper')[0].appendChild(this.dom);
   }
 
 
@@ -40,7 +40,7 @@ moduleExporter("Overlay",
    * SlideUp animation for closing overlay
    */
   Overlay.prototype.close = function(){
-    setTimeout( function() {
+    setTimeout( () => {
       $('#'+this.divId).slideUp(500);
       $('#'+this.divId).hide();
       $('#'+this.divId).css("display","none");
@@ -51,7 +51,7 @@ moduleExporter("Overlay",
    * SlideDown animation for opening overlay
    */
   Overlay.prototype.show = function(){
-    setTimeout( function() {
+    setTimeout( () => {
       $('#'+this.divId).slideDown(500);
       $('#'+this.divId).show();
       $('#'+this.divId).css("display","block");

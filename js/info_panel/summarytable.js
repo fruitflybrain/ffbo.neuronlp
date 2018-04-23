@@ -23,10 +23,10 @@ moduleExporter("SummaryTable",
    * @param {obj} parentObj -  parentObject
    * @param {dict} [nameConfig={}] - configuration of children divs. The 3 children divs in ConnTable are `['colorId','extraImgId','overlayId']`
    */
-    function SummaryTable(div_id, parentObj, nameConfig={}){
+  function SummaryTable(div_id, parentObj, nameConfig={}){
     this.divId = div_id;  // wrapper
-      this.parentObj = parentObj;
-      
+    this.parentObj = parentObj;
+    
     // nameConfig = nameConfig || {};
     Object.defineProperty(this, "colorId",{
       value: nameConfig.colorId || "info-panel-summary-neu-col",
@@ -39,13 +39,14 @@ moduleExporter("SummaryTable",
       writable: false
     });
     Object.defineProperty(this,"overlayId",{
-      value: nameConfig.overlayId || "img-viewer-overlay",
+      value: nameConfig.overlayId || "info-panel-extra-img-viewer-overlay",
       configurable: false,
       writable: false
     });
-      
-    this.overlay = new Overlay(this.overlayId,'<img id="full-img"><h2 id="img-viewer-caption"></h2>');
-
+    
+    $('#'+this.overlayId).remove();
+    this.overlay = new Overlay(this.overlayId,'<img></img><h2></h2>');
+    
     this.htmlTemplate = createTemplate(this);
     this.dom = document.getElementById(this.divId);
     this.reset();
@@ -59,9 +60,9 @@ moduleExporter("SummaryTable",
     var template = "";
     template += '<table class="table table-inverse table-custom-striped"><tbody></tbody></table>';
     template += '<div id="' + obj.extraImgId + '" class="row">';
-    template += '<div class="col-md-4" style="display:none"><h4>Confocal Image</h4><img class="clickable-image" style="width:100%" alt="not available" onerror="imgError(this);"></div>';
-    template += '<div class="col-md-4" style="display:none"><h4>Segmentation</h4><img class="clickable-image" style="width:100%" alt="not available" onerror="imgError(this);"></div>';
-    template += '<div class="col-md-4" style="display:none"><h4>Skeleton</h4><img class="clickable-image" style="width:100%" alt="not available" onerror="imgError(this);"></div>';
+    template += '<div class="col-md-4" style="display:none"><h4>Confocal Image</h4><img class="clickable-image" style="width:100%" alt="not available"></div>';
+    template += '<div class="col-md-4" style="display:none"><h4>Segmentation</h4><img class="clickable-image" style="width:100%" alt="not available"></div>';
+    template += '<div class="col-md-4" style="display:none"><h4>Skeleton</h4><img class="clickable-image" style="width:100%" alt="not available"></div>';
     template += '</div>';
     return template;
   }
@@ -72,7 +73,7 @@ moduleExporter("SummaryTable",
   SummaryTable.prototype.reset = function (){
     // purge div and add table
     this.dom.innerHTML = this.htmlTemplate;
-  }
+  };
 
 
   /**
@@ -81,18 +82,18 @@ moduleExporter("SummaryTable",
   SummaryTable.prototype.show = function (){
     $('#'+this.divId).show();
     $('#'+this.extraDivId).show();
-  }
+  };
   /**
    * SummaryTable Information hide
    */
   SummaryTable.prototype.hide = function (){
     $('#'+this.divId).hide();
     $('#'+this.extraDivId).hide();
-  }
+  };
 
   SummaryTable.prototype.resize = function(){
     return;
-  }
+  };
 
   /**
    * Convert snake_case to Sentence Case
@@ -111,7 +112,7 @@ moduleExporter("SummaryTable",
    */
   function verifyDataIntegrity(data){
     let integrity = 1;
-    return integrity  && data ;
+    return integrity && data;
   }
   
   /**
@@ -136,9 +137,15 @@ moduleExporter("SummaryTable",
     var objRId = data['rid'];
     var objColor = this.parentObj.getAttr(objRId,'color');
     
-    var tableHtml = '<tr><td>Name :</td><td>' + objName + '</td>';
-    
+    var tableHtml = '<tr><td>Name :</td><td>' + objName;
 
+    if (this.parentObj.isInWorkspace(objRId)){
+      tableHtml += '<button class="btn btn-remove btn-danger" id="btn-add-' + objName + '" name="'+ objName + '" style="margin-left:20px;">-</button>';
+    }else{
+      tableHtml += '<button class="btn btn-add btn-success" id="btn-add-' + objName + '" name="'+ objName +  '" style="margin-left:20px;">+</button>';
+    }
+    tableHtml +=  '</td>';
+    
     
     if (objColor){
       // add choose color
@@ -185,27 +192,6 @@ moduleExporter("SummaryTable",
     if (tableHtml.substr(tableHtml.length-5) !== '</tr>'){
       tableHtml += '<td></td><td></td></tr>';
     }
-
-    // for (let key of displayKeys){
-    //   if (data[key]) {  // make sure data field is valid	
-    //     if (key === 'vfb_id'){
-    //       let vfbBtn = "<a target='_blank' href='http://virtualflybrain.org/reports/" + data[key] + "'>VFB link</a>";
-    //       tableHtml += '<td>External Link:</td><td>' + vfbBtn + '</td>';
-    //     }else{
-    // 	  tableHtml += '<td>' + snakeToSentence(key) + ':</td><td>' + data[key] + '</td>';
-    // 	}
-    // 	displayCtr += 1;
-    // 	if (displayCtr % 2 == 0 ){
-    // 	  tableHtml += '</tr><tr>';
-    // 	}
-
-    //   }
-    // }
-    // // check if we ended on an odd number
-    // if (tableHtml.substr(tableHtml.length-5) !== '</tr>'){
-    //   tableHtml += '<td></td></tr>';
-    // }
-       
 
     $('#'+this.divId + " tbody").html(tableHtml);
     
@@ -256,47 +242,47 @@ moduleExporter("SummaryTable",
         $('#'+this.divId+ " tbody").append(extraTableHtml);
 
         // set source for images
-	if (extraData["Images"]["Original confocal image (Animation)"]){
-	  $("#info-panel-extra-img >div>img")[0].src = extraData["Images"]["Original confocal image (Animation)"];
-	  $("#info-panel-extra-img >div>img")[0].onclick = function(){
-            $('#full-img')[0].src = this.src;
-            $("#img-viewer-caption").html('Original confocal image');
-            this.overlay.show();
-          };
-	}else{
-	  $("#info-panel-extra-img >div>img").hide(); // <TODO> check this
-	}
-	
-	if (extraData["Images"]["Segmentation"]){
-	  $("#info-panel-extra-img >div>img")[1].src = extraData["Images"]["Segmentation"];
-	  $("#info-panel-extra-img >div>img")[1].onclick = function(){
-            $('#full-img')[1].src = this.src;
-            $("#img-viewer-caption").html('Segmentation');
-            this.overlay.show();
-          };
-	}else{
-	  $("#info-panel-extra-img >div>img").hide(); // <TODO> check this
-	}
-	
-	if (extraData["Images"]["Skeleton (download)"]){
-	  $("#info-panel-extra-img >div>img")[2].src = extraData["Images"]["Skeleton (download)"];
-	  $("#info-panel-extra-img >div>img")[2].onclick = function(){
-            $('#full-img')[2].src = this.src;
-            $("#img-viewer-caption").html('Skeleton');
-            this.overlay.show();
-          };
-	}else{
-	  $("#info-panel-extra-img >div>img").hide(); // <TODO> check this
-	}
-
-        $("#info-panel-extra-img").show();
+	if ("Images" in extraData){
+          let imgList = ["Original confocal image (Animation)","Segmentation","Skeleton (download)"];
+          Object.entries(imgList).forEach(
+            ([idx,imgName]) => {
+              $('#'+this.extraImgId + " img")[idx].onerror = function(){
+                console.log("[InfoPanel.SummaryTable] Image "+ imgName + " not found!");
+                this.style.display = "none";
+              };
+              $('#'+this.extraImgId + " img")[idx].onload = function(){
+                console.log("[InfoPanel.SummaryTable] Image "+ imgName + " loaded!");
+                this.style.display = "block";
+              };
+              if (extraData["Images"][imgName]){
+                let _source = extraData["Images"][imgName];
+                $('#'+this.extraImgId + " img")[idx].src = _source;                
+                // add overlay callback
+                $('#'+this.extraImgId + " img")[idx].onclick = () => {
+                  this.overlay.update('<img src="' + _source + '"></img><h2>' + imgName + '</h2>');
+                  this.overlay.show();
+                };
+              }else{
+                $('#'+this.extraImgId + " img")[idx].style.display = "none";
+              }
+            });
+          $("#" + this.extraImgId).show();
+        }        
       }
     }
+
+    this.setupCallbacks();
     
-  }
+  };
 
+  SummaryTable.prototype.setupCallbacks = function(){
+    let that = this;
+    $("#"+that.divId + " button").click(function(){
+      that.parentObj.toggleBtn(this);
+    });
+  };
 
-
+  
 
   return SummaryTable;
 });

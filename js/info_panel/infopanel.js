@@ -86,10 +86,10 @@ moduleExporter("InfoPanel",[
     if (this.connSVG !== undefined){
       delete this.connSVG;
     }
-    if (this.connTable === undefined){
+    if (this.connTable !== undefined){
       delete this.connTable;
     }
-    if (this.summaryTable === undefined){
+    if (this.summaryTable !== undefined){
       delete this.summaryTable;
     }
     
@@ -139,15 +139,30 @@ moduleExporter("InfoPanel",[
   };
   
   /**
-   * Set attribute of an object in the workspace.
+   * Toggle Button Method
    *
-   * @param {string} rid -  rid of target object
+   * @param {DOM obj} btn - button to be toggled
    */
-  InfoPanel.prototype.getAttr = function(rid,attr,value){
-    return;
+  InfoPanel.prototype.toggleBtn = function(btn){
+    if(btn.className.includes('add')){
+      $('button[name="' + btn.name + '"]').each((idx,dom) => {
+	dom.innerText = "-";
+	dom.className = "btn btn-remove btn-danger";
+      });
+      this.addByUname(btn.name);
+    }
+    else{
+      $('button[name="' + btn.name + '"]').each((idx,dom) => {
+	dom.innerText = "+";
+	dom.className = "btn btn-add btn-success";
+      });
+      this.removeByUname(btn.name);
+    }
   };
 
 
+
+  
   /**
   * Update Info Panel
   *

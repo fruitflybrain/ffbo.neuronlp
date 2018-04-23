@@ -93,7 +93,7 @@ require([
   'detector',
   'mesh3d',
   'infopanel',
-  'dynamicmenu',
+//  'dynamicmenu',
   'ui',
   'bootstrap',
   'jquery.mobile',
@@ -106,14 +106,15 @@ require([
    Detector,
    FFBOMesh3D,
    InfoPanel,
-   FFBODynamicMenu,
+//   FFBODynamicMenu,
    NeuroNLPUI
 ){
 
   $.mobile.ajaxEnabled = false;
   window.NeuroNLPUI = new NeuroNLPUI();
   var infoPanel = new InfoPanel("info-panel");
-  var dynamicNeuronMenu = new FFBODynamicMenu({singleObjSel: '#single-neu > .mm-listview', pinnedObjSel: '#single-pin > .mm-listview'});
+  window['infoPanel'] = infoPanel;
+//  var dynamicNeuronMenu = new FFBODynamicMenu({singleObjSel: '#single-neu > .mm-listview', pinnedObjSel: '#single-pin > .mm-listview'});
   // var dynamicNeuropilMenu = new FFBODynamicMenu({singleObjSel: '#single-lpu > .mm-listview'});
 
   var lpuList = [
@@ -150,24 +151,24 @@ require([
 
 
 
-  dynamicNeuronMenu.dispatch.highlight = function(id) {ffbomesh.highlight(id, true)};
-  dynamicNeuronMenu.dispatch.resume = function(id) {ffbomesh.highlight(undefined)};
-  dynamicNeuronMenu.dispatch.toggle = function(id) {ffbomesh.toggleVis(id)};
-  dynamicNeuronMenu.dispatch.unpin = function(id) {ffbomesh.unpin(id)};
+  // dynamicNeuronMenu.dispatch.highlight = function(id) {ffbomesh.highlight(id, true)};
+  // dynamicNeuronMenu.dispatch.resume = function(id) {ffbomesh.highlight(undefined)};
+  // dynamicNeuronMenu.dispatch.toggle = function(id) {ffbomesh.toggleVis(id)};
+  // dynamicNeuronMenu.dispatch.unpin = function(id) {ffbomesh.unpin(id)};
 
-  // dynamicNeuropilMenu.dispatch.toggle = function(id) {ffbomesh.toggleVis(id)};
+  // // dynamicNeuropilMenu.dispatch.toggle = function(id) {ffbomesh.toggleVis(id)};
 
-  ffbomesh.on('add',
-              function(e) {
-                if(!e.value.background)
-                  dynamicNeuronMenu.addNeuron(e.prop, e.value.label);
-                // else
-                // dynamicNeuropilMenu.addNeuron(e.prop, e.value.label)
-              });
-  ffbomesh.on('remove', function(e) { if(!e.value.background) dynamicNeuronMenu.removeNeuron(e.prop)});
-  ffbomesh.on('visible', (function(e) {
-    if(this.states.highlight[0] !== e.path[1]) dynamicNeuronMenu.toggleVisibility(e.path[1], e.value)}).bind(ffbomesh));
-  ffbomesh.on('pinned', function(e) { dynamicNeuronMenu.updatePinnedNeuron(e.path[0], e.obj.label, e.value)});
+  // ffbomesh.on('add',
+  //             function(e) {
+  //               if(!e.value.background)
+  //                 dynamicNeuronMenu.addNeuron(e.prop, e.value.label);
+  //               // else
+  //               // dynamicNeuropilMenu.addNeuron(e.prop, e.value.label)
+  //             });
+  // ffbomesh.on('remove', function(e) { if(!e.value.background) dynamicNeuronMenu.removeNeuron(e.prop)});
+  // ffbomesh.on('visible', (function(e) {
+  //   if(this.states.highlight[0] !== e.path[1]) dynamicNeuronMenu.toggleVisibility(e.path[1], e.value)}).bind(ffbomesh));
+  // ffbomesh.on('pinned', function(e) { dynamicNeuronMenu.updatePinnedNeuron(e.path[0], e.obj.label, e.value)});
 
 
   // ffbomesh.addJson({"ffbo_json": lpuJSON, "showAfterLoadAll": true});
