@@ -60,9 +60,9 @@ moduleExporter("SummaryTable",
     var template = "";
     template += '<table class="table table-inverse table-custom-striped"><tbody></tbody></table>';
     template += '<div id="' + obj.extraImgId + '" class="row">';
-    template += '<div class="col-md-4" style="display:none"><h4>Confocal Image</h4><img class="clickable-image" style="width:100%" alt="not available"></div>';
-    template += '<div class="col-md-4" style="display:none"><h4>Segmentation</h4><img class="clickable-image" style="width:100%" alt="not available"></div>';
-    template += '<div class="col-md-4" style="display:none"><h4>Skeleton</h4><img class="clickable-image" style="width:100%" alt="not available"></div>';
+    template += '<div class="col-md-4" style="display:none"><h4>Confocal Image</h4><img class="clickable-image" style="width:100%" alt="not available" tryCtr=0 maxTry=5></div>';
+    template += '<div class="col-md-4" style="display:none"><h4>Segmentation</h4><img class="clickable-image" style="width:100%" alt="not available" tryCtr=0 maxTry=5></div>';
+    template += '<div class="col-md-4" style="display:none"><h4>Skeleton</h4><img class="clickable-image" style="width:100%" alt="not available" tryCtr=0 maxTry=5></div>';
     template += '</div>';
     return template;
   }
@@ -247,10 +247,20 @@ moduleExporter("SummaryTable",
           Object.entries(imgList).forEach(
             ([idx,imgName]) => {
               $('#'+this.extraImgId + " img")[idx].onerror = function(){
-                console.log("[InfoPanel.SummaryTable] Image "+ imgName + " not found!");
-                this.style.display = "none";
+		this.style.display = "none";
+		if (this.getAttribute("tryCtr") < this.getAttribute("maxTry")){  // try 5 times max
+		  setTimeout( () => {
+		    this.src = extraData["Images"][imgName];
+		  }, 1000);
+		  this.attr('tryCtr') += 1;		  
+		  return;
+		}else{
+		  console.log("[InfoPanel.SummaryTable] Image "+ imgName + " not found!");
+		}
               };
+	      
               $('#'+this.extraImgId + " img")[idx].onload = function(){
+		this.setAttribute("tryCtr") = 0;
                 console.log("[InfoPanel.SummaryTable] Image "+ imgName + " loaded!");
                 this.style.display = "block";
               };
