@@ -147,6 +147,7 @@ moduleExporter("ConnTable",
     // create table
     this.updateTable(data,'pre');
     this.updateTable(data,'post');
+    this.setupCallbacks();
   }
 
   /**
@@ -209,9 +210,6 @@ moduleExporter("ConnTable",
           btn.innerText = '+';
           btn.className += ' btn-add btn-success';
         }
-        btn.onclick = () => {
-	  this.parentObj.toggleBtn(btn);
-        };
 
         c3.appendChild(btn);
         neuron_add = true;
@@ -229,10 +227,6 @@ moduleExporter("ConnTable",
           btn.innerText = '+';
           btn.className += ' btn-add btn-success';
         }
-	
-        btn.onclick = () => {
-	  this.parentObj.toggleBtn(btn);
-        };
  
         c4.appendChild(btn);
         synapse_add = true;
@@ -397,6 +391,19 @@ moduleExporter("ConnTable",
     }
   }
 
+  /**
+   * Setup Callback for add remove button
+   */
+  ConnTable.prototype.setupCallbacks = function(){
+    let that = this;
+    $("#"+that.divId + " button").click(function(){
+      if(this.className.includes('add')){
+        that.parentObj.addByUname(this.name);
+      }else{
+        that.parentObj.removeByUname(this.name); 
+      }        
+    });
+  };
 
 
   /**

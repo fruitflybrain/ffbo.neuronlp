@@ -139,29 +139,30 @@ moduleExporter("InfoPanel",[
   };
   
   /**
-   * Toggle Button Method
+   * Render Add/Remove buttons to a specific type. all buttons with the 
+   * same name will be set
    *
-   * @param {DOM obj} btn - button to be toggled
+   * @param {string} btnId - Id of button to be rendered
+   * @param {bool} state - new state of button (true false)
+   * @example 
+   * infoPanel.renderAddRemoveBtn("pre-add-mi1-5",true);
    */
-  InfoPanel.prototype.toggleBtn = function(btn){
-    if(btn.className.includes('add')){
-      $('button[name="' + btn.name + '"]').each((idx,dom) => {
-	dom.innerText = "-";
-	dom.className = "btn btn-remove btn-danger";
-      });
-      this.addByUname(btn.name);
+  InfoPanel.prototype.renderAddRemoveBtn = function(btnId,state){
+    let btn = $('#'+btnId)[0];
+    if (state == true){
+      $('button[name="' + btn.name + '"]').each(
+        (idx,dom) => {
+	  dom.innerText = "+";
+	  dom.className = "btn btn-add btn-success";
+        });
+    }else{
+      $('button[name="' + btn.name + '"]').each(
+        (idx,dom) => {
+	  dom.innerText = "-";
+	  dom.className = "btn btn-remove btn-danger";
+        });
     }
-    else{
-      $('button[name="' + btn.name + '"]').each((idx,dom) => {
-	dom.innerText = "+";
-	dom.className = "btn btn-add btn-success";
-      });
-      this.removeByUname(btn.name);
-    }
-  };
-
-
-
+  };   
   
   /**
   * Update Info Panel

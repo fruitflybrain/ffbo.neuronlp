@@ -139,6 +139,8 @@ moduleExporter("SummaryTable",
     
     var tableHtml = '<tr><td>Name :</td><td>' + objName;
 
+    this.parentObj.renderSymbol('button','id', content ,style='margin-left:20px;');
+    
     if (this.parentObj.isInWorkspace(objRId)){
       tableHtml += '<button class="btn btn-remove btn-danger" id="btn-add-' + objName + '" name="'+ objName + '" style="margin-left:20px;">-</button>';
     }else{
@@ -275,10 +277,17 @@ moduleExporter("SummaryTable",
     
   };
 
+  /**
+   * Setup Callback for add remove button
+   */
   SummaryTable.prototype.setupCallbacks = function(){
     let that = this;
     $("#"+that.divId + " button").click(function(){
-      that.parentObj.toggleBtn(this);
+      if(this.className.includes('add')){
+        that.parentObj.addByUname(this.name);
+      }else{
+        that.parentObj.removeByUname(this.name); 
+      }        
     });
   };
 
