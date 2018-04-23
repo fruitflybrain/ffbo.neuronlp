@@ -328,7 +328,7 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
       verb: "remove",
       query: [
         {
-          action: { method: { has { rid: rids } } },
+          action: { method: { has: { rid: rids } } },
           object: { state: 0 }
         }
       ]
@@ -343,7 +343,7 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
       verb: "keep",
       query: [
         {
-          action: { method: { has { rid: rids } } },
+          action: { method: { has: { rid: rids } } },
           object: { state: 0 }
         }
       ]
