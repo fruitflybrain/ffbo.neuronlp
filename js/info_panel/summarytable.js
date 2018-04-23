@@ -138,8 +138,6 @@ moduleExporter("SummaryTable",
     var objColor = this.parentObj.getAttr(objRId,'color');
     
     var tableHtml = '<tr><td>Name :</td><td>' + objName;
-
-    this.parentObj.renderSymbol('button','id', content ,style='margin-left:20px;');
     
     if (this.parentObj.isInWorkspace(objRId)){
       tableHtml += '<button class="btn btn-remove btn-danger" id="btn-add-' + objName + '" name="'+ objName + '" style="margin-left:20px;">-</button>';
