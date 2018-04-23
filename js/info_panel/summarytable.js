@@ -26,7 +26,7 @@ moduleExporter("SummaryTable",
   function SummaryTable(div_id, parentObj, nameConfig={}){
     this.divId = div_id;  // wrapper
     this.parentObj = parentObj;
-    
+
     // nameConfig = nameConfig || {};
     Object.defineProperty(this, "colorId",{
       value: nameConfig.colorId || "info-panel-summary-neu-col",
@@ -43,10 +43,10 @@ moduleExporter("SummaryTable",
       configurable: false,
       writable: false
     });
-    
+
     $('#'+this.overlayId).remove();
     this.overlay = new Overlay(this.overlayId,'<img></img><h2></h2>');
-    
+
     this.htmlTemplate = createTemplate(this);
     this.dom = document.getElementById(this.divId);
     this.reset();
@@ -100,13 +100,13 @@ moduleExporter("SummaryTable",
    *
    * @param {string} word_in_snake - Word in snake_case
    */
-  
+
   function snakeToSentence(word_in_snake){
     return word_in_snake.split("_")
                          .map(word => word.charAt(0).toUpperCase()+word.slice(1))
                          .join(" ");
   }
-  
+
   /**
    * Verify integrity of data
    */
@@ -114,7 +114,7 @@ moduleExporter("SummaryTable",
     let integrity = 1;
     return integrity && data;
   }
-  
+
   /**
    * SummaryTable Information Update
    *
@@ -124,7 +124,7 @@ moduleExporter("SummaryTable",
     if (verifyDataIntegrity(data) == false){
       return;
     }
-    
+
     this.reset();
     $('#'+this.divId).show(); // show summary information
 
@@ -136,17 +136,17 @@ moduleExporter("SummaryTable",
     }
     var objRId = data['rid'];
     var objColor = this.parentObj.getAttr(objRId,'color');
-    
+
     var tableHtml = '<tr><td>Name :</td><td>' + objName;
-    
+
     if (this.parentObj.isInWorkspace(objRId)){
       tableHtml += '<button class="btn btn-remove btn-danger" id="btn-add-' + objName + '" name="'+ objName + '" style="margin-left:20px;">-</button>';
     }else{
       tableHtml += '<button class="btn btn-add btn-success" id="btn-add-' + objName + '" name="'+ objName +  '" style="margin-left:20px;">+</button>';
     }
     tableHtml +=  '</td>';
-    
-    
+
+
     if (objColor){
       // add choose color
       tableHtml += '<td>Choose Color</td><td> <input class="color_inp"';
@@ -156,11 +156,11 @@ moduleExporter("SummaryTable",
         tableHtml+='type="text"';
       }
       tableHtml+='name="neu_col" id="' + this.colorId+ '" value="#' + objColor  + '"/></td></tr>';
-      
+
     }else{
       tableHtml += '<td></td></tr>';
     }
-      
+
     let displayKeys = ['class','vfb_id','data_source','transgenic_lines','transmitters','expresses'];
     var displayCtr = 0;
     tableHtml += '<tr>';
@@ -173,14 +173,14 @@ moduleExporter("SummaryTable",
 
       let fieldName = snakeToSentence(key);
       let fieldValue = data[key];
-      
+
       if (fieldName === 'vfb_id'){
         let vfbBtn = "<a target='_blank' href='http://virtualflybrain.org/reports/" + data[key] + "'>VFB link</a>";
 	fieldName = 'External Link';
 	fieldValue = vfbBtn;
       }
-      
-      
+
+
       if (keyCounter % 2 === 0){
         tableHtml += "<tr><td>" + fieldName + ":</td><td>" + fieldValue +"</td>" ;
       }else{
@@ -188,14 +188,14 @@ moduleExporter("SummaryTable",
       }
       keyCounter += 1;
     }
-    
+
     if (tableHtml.substr(tableHtml.length-5) !== '</tr>'){
       tableHtml += '<td></td><td></td></tr>';
     }
 
     $('#'+this.divId + " tbody").html(tableHtml);
-    
-    // set callback <TODO> check this 
+
+    // set callback <TODO> check this
     if(!Modernizr.inputtypes.color){
       $('#'+this.colorId).spectrum({
         showInput: true,
@@ -205,7 +205,7 @@ moduleExporter("SummaryTable",
         localStorageKey: "spectrum.neuronlp",
         showButtons: false,
         move: (c) => {
-          this.parentObj.setAttr(objRId,'color', c.toHexString());	    
+          this.parentObj.setAttr(objRId,'color', c.toHexString());
           }
       });
     }
@@ -214,7 +214,7 @@ moduleExporter("SummaryTable",
 	this.parentObj.setAttr(objRId,'color', $('#'+this.colorId)[0].value);
       });
     }
-    
+
     // flycircuit data
     if (('data_source' in data) && (data['data_source'].indexOf("FlyCircuit") > -1)) { // see if flycircuit is in
       let extraTableHtml = "";
@@ -234,7 +234,7 @@ moduleExporter("SummaryTable",
           }
 	  keyCounter += 1;
 	}
-	
+
 	if (extraTableHtml.substr(extraTableHtml.length-5) !== '</tr>'){
 	  extraTableHtml += '<td></td><td></td></tr>';
 	}
@@ -246,30 +246,35 @@ moduleExporter("SummaryTable",
           let imgList = ["Original confocal image (Animation)","Segmentation","Skeleton (download)"];
           Object.entries(imgList).forEach(
             ([idx,imgName]) => {
+	      
               $('#'+this.extraImgId + " img")[idx].onerror = function(){
-		this.style.display = "none";
-		if (this.getAttribute("tryCtr") < this.getAttribute("maxTry")){  // try 5 times max
-		  setTimeout( () => {
-		    this.src = extraData["Images"][imgName];
-		  }, 1000);
-		  this.attr('tryCtr') += 1;		  
+		this.parentElement.style.display = "none";
+		if (Number(this.getAttribute("tryCtr")) < Number(this.getAttribute("maxTry"))){  // try 5 times max
+		  let currTry = Number(this.getAttribute("tryCtr"));
+                  setTimeout( () => {
+                    this.src = extraData["Images"][imgName];
+                  }, 1000);
+		  console.log("[InfoPanel.SummaryTable > Retry] Image: "+ imgName);
+                  this.setAttribute("tryCtr" , currTry += 1);
 		  return;
 		}else{
-		  console.log("[InfoPanel.SummaryTable] Image "+ imgName + " not found!");
+		  console.log("[InfoPanel.SummaryTable > Failed] Image "+ imgName);
+		  this.setAttribute("tryCtr" , 0);
+		  return;
 		}
               };
-	      
+
               $('#'+this.extraImgId + " img")[idx].onload = function(){
-		this.setAttribute("tryCtr") = 0;
-                console.log("[InfoPanel.SummaryTable] Image "+ imgName + " loaded!");
-                this.style.display = "block";
+		this.setAttribute("tryCtr",0);
+                console.log("[InfoPanel.SummaryTable > Success] Image "+ imgName);
+                this.parentElement.style.display = "block";
               };
               if (extraData["Images"][imgName]){
                 let _source = extraData["Images"][imgName];
-                $('#'+this.extraImgId + " img")[idx].src = _source;                
+                $('#'+this.extraImgId + " img")[idx].src = _source;
                 // add overlay callback
                 $('#'+this.extraImgId + " img")[idx].onclick = () => {
-                  this.overlay.update('<img src="' + _source + '"></img><h2>' + imgName + '</h2>');
+                  this.overlay.update('<h2>' + imgName + '</h2><img src="' + _source + '"></img>');
                   this.overlay.show();
                 };
               }else{
@@ -277,12 +282,12 @@ moduleExporter("SummaryTable",
               }
             });
           $("#" + this.extraImgId).show();
-        }        
+        }
       }
     }
 
     this.setupCallbacks();
-    
+
   };
 
   /**
@@ -294,12 +299,12 @@ moduleExporter("SummaryTable",
       if(this.className.includes('add')){
         that.parentObj.addByUname(this.name);
       }else{
-        that.parentObj.removeByUname(this.name); 
-      }        
+        that.parentObj.removeByUname(this.name);
+      }
     });
   };
 
-  
+
 
   return SummaryTable;
 });
