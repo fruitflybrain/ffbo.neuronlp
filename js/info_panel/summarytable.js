@@ -92,6 +92,7 @@ moduleExporter("SummaryTable",
   };
 
   SummaryTable.prototype.resize = function(){
+    
     return;
   };
 
