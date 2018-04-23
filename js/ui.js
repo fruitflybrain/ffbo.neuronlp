@@ -137,6 +137,7 @@ moduleExporter("NeuroNLPUI", ["jquery", "jquery.mmenu"], function($){
 
     $(document).ready(() => {
       $("#ui_menu_nav").mmenu({
+        counters: true,
         onClick: {
           close: false
         },
@@ -151,14 +152,13 @@ moduleExporter("NeuroNLPUI", ["jquery", "jquery.mmenu"], function($){
               "searchfield"
             ]
           }
-        ],
-        searchfield: {
-          panel: true,
-          showSubPanels: false
-        },
+        ]
       },{
         offCanvas: {
           pageSelector: "#page-content-wrapper",
+        },
+        searchfield: {
+          clear: true
         }
       });
       mm_menu_right = $("#ui_menu_nav").data( "mmenu" );
