@@ -96,7 +96,7 @@ moduleExporter(
 
       this.removeNeuron = function(id) {
         var liBtnId = "li-btn-" + uidDecode(id);
-        var label = $("#" + liBtnId + " > a").html();
+        var label = $("#" + liBtnId + " > a").html().substr(2);
         $("#" + liBtnId).remove();
         var idx = _this.btnLabelList.indexOf(label);
         if (idx > -1)
