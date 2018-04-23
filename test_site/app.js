@@ -125,6 +125,8 @@ require([
   var client = new FFBOClient();
   client.startConnection("guest", "guestpass", "wss://neuronlp.fruitflybrain.org:8888/ws");
 
+
+
   window.client = client;
   window.tagsPanel = tagsPanel;
   window.ffbomesh = ffbomesh;
@@ -190,6 +192,8 @@ require([
     }});
   })
 
+
+  window.NeuroNLPUI.dispatch.onWindowResize = (function(){ffbomesh.onWindowResize()});
   dynamicNeuronMenu.dispatch.highlight = function(id) {ffbomesh.highlight(id, true)};
   dynamicNeuronMenu.dispatch.resume = function(id) {ffbomesh.highlight(undefined)};
   dynamicNeuronMenu.dispatch.toggle = function(id) {ffbomesh.toggleVis(id)};
