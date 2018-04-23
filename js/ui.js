@@ -140,10 +140,9 @@ moduleExporter("NeuroNLPUI", ["jquery", "jquery.mmenu"], function($){
         setTimeout( function() {
           ffbomesh.onWindowResize();
           infoPanel.resize();
-	}, 500 );
-        },
-      }
-    );
+        }, 500);
+      },
+    });
 
     $(document).ready(() => {
       $("#ui_menu_nav").mmenu({
