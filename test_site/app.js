@@ -51,7 +51,8 @@ requirejs.config({
     swiper: "//cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.2/js/swiper.min",
     bootstrap: "//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min",
     blockui: "//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min",
-    tageditor: "//cdnjs.cloudflare.com/ajax/libs/tag-editor/1.0.20/jquery.tag-editor.min"
+    tageditor: "//cdnjs.cloudflare.com/ajax/libs/tag-editor/1.0.20/jquery.tag-editor.min",
+    izitoast: "//cdn.rawgit.com/dolce/iziToast/v1.3.0/dist/js/iziToast.min"
     /* Notify, bootbox, colormaps, demos, mouse, vis_set, ResizeSensor, read_vars, colorm[aps */
   },
   shim: {
@@ -70,14 +71,14 @@ requirejs.config({
     tonemapshader: {deps: ['three']},
     gammacorrectionshader: {deps: ['three']},
     effectcomposer: {deps: ['three']},
-    renderpass: {deps: ['three']},
-    ssaarenderpass: {deps: ['three']},
-    shaderpass: {deps: ['three']},
-    ssaopass: {deps: ['three']},
-    maskpass: {deps: ['three']},
-    bloompass: {deps: ['three']},
-    unrealbloompass: {deps: ['three']},
-    adaptivetonemappingpass: {deps: ['three']},
+    renderpass: {deps: ['three', 'effectcomposer']},
+    ssaarenderpass: {deps: ['three', 'effectcomposer']},
+    shaderpass: {deps: ['three', 'effectcomposer']},
+    ssaopass: {deps: ['three', 'effectcomposer']},
+    maskpass: {deps: ['three', 'effectcomposer']},
+    bloompass: {deps: ['three', 'effectcomposer']},
+    unrealbloompass: {deps: ['three', 'effectcomposer']},
+    adaptivetonemappingpass: {deps: ['three', 'effectcomposer']},
     lightshelper: {deps: ['three']},
     tageditor: {deps: ['jquery']},
   }
@@ -98,6 +99,7 @@ require([
   'dynamicmenu',
   'ui',
   'tags',
+  'izitoast',
   'bootstrap',
   'jquery.mobile',
   'jqueryui',
@@ -111,13 +113,21 @@ require([
    InfoPanel,
    FFBODynamicMenu,
    NeuroNLPUI,
-   Tags
+   Tags,
+   iziToast
 ){
+
+  iziToast.settings({
+    timeout: 3000,
+    resetOnHover: true,
+    transitionIn: 'flipInX',
+    transitionOut: 'flipOutX',
+  })
 
   $.mobile.ajaxEnabled = false;
   window.NeuroNLPUI = new NeuroNLPUI();
   var infoPanel = new InfoPanel("info-panel");
-
+  window.infoPanel = infoPanel;
   var dynamicNeuronMenu = new FFBODynamicMenu({singleObjSel: '#single-neu > .mm-listview', pinnedObjSel: '#single-pin > .mm-listview'});
   var dynamicNeuropilMenu = new FFBODynamicMenu({singleObjSel: '#toggle_neuropil > .mm-listview'});
   var ffbomesh = new FFBOMesh3D('vis-3d', undefined, {"globalCenter": {'x': 0, 'y':-250, 'z':0}});
@@ -137,11 +147,11 @@ require([
   }
 
   client.notifySuccess = function(message){
-    console.log("Success: " + message);
+    iziToast.success({message: message})
   }
 
   client.notifyError = function(message){
-    console.log("Error: " + message);
+    iziToast.error({message: message})
   }
 
   client.receiveCommand = function(message){
