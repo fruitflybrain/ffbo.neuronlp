@@ -126,13 +126,10 @@ moduleExporter("ConnSVG",
     var post_num = data['post']['summary']['number'];;    // postsynaptic number (total number)
 
     // Total dimension for entire SVG div
-    var height_tot = 150;
-    var width_tot = 500;//$('#'+this.svgId)[0].getBoundingClientRect().width;
-    // Calculate SVG dimension
-    let margin = {top: 20, right: 20, bottom: 20, left: 20};
-    let width = width_tot - margin.left - margin.right;
-    let height = height_tot - margin.top - margin.bottom;
-
+    let margin = {'left':10,'right':10,'top':10,'bottom':10};
+    let width = 600;
+    let height = 150;
+    
     // SVG x-axis setup
     var x = d3.scale.linear()
                       .rangeRound([0,width]);
@@ -156,10 +153,10 @@ moduleExporter("ConnSVG",
     // create SVG
     this.svg = d3.select('#'+this.svgId)
                    .append("svg")
-                   //.attr("id",this.svgId)
-                     .attr("width", width_tot)
-                     .attr("height", height_tot)
-                     .attr("viewBox", "0 0 " + width_tot +" "+ height_tot );
+                   .attr("width", width)
+                   .attr("height", height)
+                   .attr("viewBox", "-70 5 " + (width+95) + " " + (height+25))
+                   .attr("preserveAspectRatio", "none");
 
     // extract data, create axis, sort in descending percentage
     var data_pre = d3.entries(pre_sum).map( function (d,i) {
@@ -298,15 +295,16 @@ moduleExporter("ConnSVG",
    * Resize Synaptic Profile plot
    */
   ConnSVG.prototype.resize = function(){
-    if(this.svg){ //check if an svg file exists, if not getBBox will throw error
-      let bbox = this.svg.dom.getBBox();
-      let width_margin = 40;
-      let width_tot = $('#'+this.svgId)[0].getBoundingClientRect().width;
-      this.svg.dom.setAttribute("width", width_tot);
-      this.svg.dom.setAttribute("viewBox", (bbox.x-width_margin/2)+" "+(bbox.y)+" "+(width_tot+width_margin)+" "+(bbox.height));
-    }else{
-      return;
-    }
+//     if(this.svg){ //check if an svg file exists, if not getBBox will throw error
+//       let bbox = this.svg.dom.getBBox();
+//       let width_margin = 40;
+//       let width_tot = $('#'+this.svgId)[0].getBoundingClientRect().width;
+// //      this.svg.dom.setAttribute("width", width_tot);
+//       this.svg.dom.setAttribute("viewBox", (bbox.x-width_margin/2)+" "+(bbox.y)+" "+(width_tot+width_margin)+" "+(bbox.height));
+//     }else{
+//       return;
+    //     }
+    return;
   };
 
 
