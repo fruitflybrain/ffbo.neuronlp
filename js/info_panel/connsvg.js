@@ -153,10 +153,11 @@ moduleExporter("ConnSVG",
     // create SVG
     this.svg = d3.select('#'+this.svgId)
                    .append("svg")
-                   .attr("width", width)
-                   .attr("height", height)
+                   .attr("width", '100%')
+                   .attr("height", '100%')
                    .attr("viewBox", "-70 5 " + (width+95) + " " + (height+25))
-                   .attr("preserveAspectRatio", "none");
+      .attr("preserveAspectRatio", "none")
+      .append('g');
 
     // extract data, create axis, sort in descending percentage
     var data_pre = d3.entries(pre_sum).map( function (d,i) {
@@ -287,7 +288,7 @@ moduleExporter("ConnSVG",
               .text("Click on/Hover over plot to extract detailed synaptic information");
         });
 
-    this.svg.dom = this.svg[0][0]; // save dom 
+    this.svg.dom = $('#'+this.svgId)[0]; // save dom 
   };
 
 
@@ -295,12 +296,12 @@ moduleExporter("ConnSVG",
    * Resize Synaptic Profile plot
    */
   ConnSVG.prototype.resize = function(){
-//     if(this.svg){ //check if an svg file exists, if not getBBox will throw error
-//       let bbox = this.svg.dom.getBBox();
+//     if(this.svg){ //check if an svg file exists, if not getBBox will throw
+//       let svgBbox = this.svg.dom.getBBox();
 //       let width_margin = 40;
-//       let width_tot = $('#'+this.svgId)[0].getBoundingClientRect().width;
+//       let divBbox = $('#'+this.svgId)[0].getBoundingClientRect();
 // //      this.svg.dom.setAttribute("width", width_tot);
-//       this.svg.dom.setAttribute("viewBox", (bbox.x-width_margin/2)+" "+(bbox.y)+" "+(width_tot+width_margin)+" "+(bbox.height));
+//       this.svg.dom.setAttribute("viewBox", (svgBbox.x-width_margin/2)+" "+(svgBbox.y)+" "+(divBbox.width+width_margin)+" "+(divBbox.height));
 //     }else{
 //       return;
     //     }
