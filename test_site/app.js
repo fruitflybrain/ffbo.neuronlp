@@ -193,7 +193,7 @@ require([
   })
 
 
-  window.NeuroNLPUI.dispatch.onWindowResize = (function(){ffbomesh.onWindowResize()});
+
   dynamicNeuronMenu.dispatch.highlight = function(id) {ffbomesh.highlight(id, true)};
   dynamicNeuronMenu.dispatch.resume = function(id) {ffbomesh.highlight(undefined)};
   dynamicNeuronMenu.dispatch.toggle = function(id) {ffbomesh.toggleVis(id)};
@@ -220,10 +220,18 @@ require([
 
 
   function updateThreshold(e) {client.threshold = e.value ? 1 : 20;}
-  updateThreshold({value: ffbomesh.settings.neurons_3d})
-  ffbomesh.settings.on('change', updateThreshold, 'neurons_3d')
+  updateThreshold({value: ffbomesh.settings.neuron3d})
+  ffbomesh.settings.on('change', updateThreshold, 'neuron3d')
 
+  function removeUnpinned() {
+    var list = ffbomesh.getPinned();
+    client.keepObjs(list);
+  }
 
+  function removePinned() {
+    var list = ffbomesh.getPinned();
+    client.removeObjs(list);
+  }
 
   var srchInput = document.getElementById('srch_box');
   var srchBtn = document.getElementById('srch_box_btn');
@@ -246,6 +254,10 @@ require([
       srchBtn.click();
   });
 
+  window.NeuroNLPUI.dispatch.onWindowResize = (function() { ffbomesh.onWindowResize() });
+  window.NeuroNLPUI.dispatch.onRemovePinned = (function() { removePinned() });
+  window.NeuroNLPUI.dispatch.onRemoveUnpinned = (function() { removeUnpinned() });
+
   ffbomesh.createUIBtn("showSettings", "fa-cog", "Settings")
   ffbomesh.createUIBtn("takeScreenshot", "fa-camera", "Download Screenshot")
   ffbomesh.createUIBtn("showInfo", "fa-info-circle", "GUI guideline")
@@ -259,7 +271,7 @@ require([
   ffbomesh.on('resetView', (function() {ffbomesh.resetView()}));
   ffbomesh.on('resetVisibleView', (function() {ffbomesh.resetVisibleView()}));
   ffbomesh.on('showInfo', (function() {closeAllOverlay(true); $("#gui-3d").show()}));
-  ffbomesh.on('removeUnpin', (function() {$("#btn-pin-keep").trigger("click")}));
+  ffbomesh.on('removeUnpin', (function() {removeUnpinned()}));
   ffbomesh.on('hide_all', (function() {ffbomesh.hideAll()}));
   ffbomesh.on('show_all', (function() {ffbomesh.showAll()}));
   ffbomesh.on('takeScreenshot', (function() {ffbomesh._take_screenshot=true;}));

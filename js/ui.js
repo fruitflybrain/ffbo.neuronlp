@@ -18,7 +18,9 @@ moduleExporter("NeuroNLPUI", ["jquery", "jquery.mmenu"], function($){
     var mm_menu_right = undefined;
 
     this.dispatch = {
-      onWindowResize: (function() {})
+      onWindowResize: (function() {}),
+      removePinned: (function() {}),
+      removeUnpinned: (function() {})
     }
 
     this.onShowTutorialVideo = () => {
@@ -92,6 +94,12 @@ moduleExporter("NeuroNLPUI", ["jquery", "jquery.mmenu"], function($){
     }
     this.openRightMenu = function() {
       mm_menu_right.open();
+    }
+    this.onRemovePinned = function() {
+      _this.dispatch.onRemovePinned();
+    }
+    this.onRemoveUnpinned = function() {
+      _this.dispatch.onRemoveUnpinned();
     }
 
     this.resizeInfoPanel = function() {
