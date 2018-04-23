@@ -45,18 +45,20 @@ moduleExporter("ConnTable",
       writable: false
     });
     Object.defineProperty(this,"overlayId",{
-      value: nameConfig.overlayId || "info-panel-overlay" ,
+      value: nameConfig.overlayId || "info-panel-table-overlay" ,
       configurable: false,
       writable: false
     });
     
     this.parentObj = parentObj;
-    //callback functions
 
-    overlayText = '<h2>Inferred Synaptic Partners</h2><p>Inferred synaptic partners are marked by &dagger; </p><h3>SPIN</h3><p>Inferred synaptic connections using axonic/dendritic polarity predicted by SPIN:Skeleton-based Polarity Identification for Neurons. Please refer to <br><a href="http://link.springer.com/article/10.1007/s12021-014-9225-6" target="_blank">SPIN: A Method of Skeleton-based Polarity Identification for Neurons. Neurinformatics 12:487-507. Yi-Hsuan Lee, Yen-Nan Lin, Chao-Chun Chuang and Chung-Chuan Lo (2014)</a> <br>for more details on the SPIN algorithm.</p>';
+    let overlayText = '<h2>Inferred Synaptic Partners</h2><p>Inferred synaptic partners are marked by &dagger; </p><h3>SPIN</h3><p>Inferred synaptic connections using axonic/dendritic polarity predicted by SPIN:Skeleton-based Polarity Identification for Neurons. Please refer to <br><a href="http://link.springer.com/article/10.1007/s12021-014-9225-6" target="_blank">SPIN: A Method of Skeleton-based Polarity Identification for Neurons. Neurinformatics 12:487-507. Yi-Hsuan Lee, Yen-Nan Lin, Chao-Chun Chuang and Chung-Chuan Lo (2014)</a> <br>for more details on the SPIN algorithm.</p>';
     overlayText += '<p>The polarity determined by spin was used to predict synaptic connections based on when an axonic segment of a neuron is within a specified distance to a dendritic segment of another neuron after registering to a standard brain template.</p>';
-    
+
+    // remove existing overlay if exists
+    $("#"+this.overlayId).remove();
     this.overlay = new Overlay(this.overlayId, overlayText);
+    
     this.htmlTemplate = createTemplate(this);
     this.dom = document.getElementById(this.divId);
     this.reset();
@@ -71,7 +73,6 @@ moduleExporter("ConnTable",
   function createTemplate(obj){
     var template = "";
     template = "";
-    template += '<div id ="' + obj.overlayId + '" class="overlay"></div>';
     template += '<h4>Presynaptic Partners</h4>';
     template += '<table id="' + obj.preTabId + '" class="table table-inverse table-custom-striped">';
     template += '<thead><tr class=""><th>Neuron</th> <th>Number of Synapses</th> <th class="neuron_add_pre">+/- Neuron</th><th class="synapse_add_pre">+/- Synapses</th></tr><tr class=""><th><span class="info-input-span"> Filter by name <br></span><input type="text" id="presyn-srch" value="" class="info-input"/></th> <th><span class="info-input-span"> N greater than <br></span><input type="number" id="presyn-N" value="5" class="info-input selectable"/></th> <th class="neuron_add_pre"></th><th class="synapse_add_pre"></th></tr></thead>';
@@ -137,7 +138,7 @@ moduleExporter("ConnTable",
     $('#'+this.divId + " h4").html("Presynaptic Partners"+ btnMoreInfo);
     $('#'+this.divId + " h4").html("Postsynaptic Partners"+ btnMoreInfo);
 
-    $(".inferred-more-info").onclick = () => {
+    $('#'+this.divId+ " .inferred-more-info")[0].onclick = () => {
       // info = "<h2>Inferred Synaptic Partners</h2>";
       // this.overlay.update(info + data['description']); //<TODO> overwrite in the future
       this.overlay.show();
@@ -209,7 +210,7 @@ moduleExporter("ConnTable",
           btn.className += ' btn-add btn-success';
         }
         btn.onclick = () => {
-	  this.toggleBtn(btn);
+	  this.parentObj.toggleBtn(btn);
         };
 
         c3.appendChild(btn);
@@ -230,7 +231,7 @@ moduleExporter("ConnTable",
         }
 	
         btn.onclick = () => {
-	  this.toggleBtn(btn);
+	  this.parentObj.toggleBtn(btn);
         };
  
         c4.appendChild(btn);
@@ -276,25 +277,25 @@ moduleExporter("ConnTable",
   /** 
   * Add/Remove neuron upon buttonclick in info panel and toggle button
   */
-  ConnTable.prototype.toggleBtn = function(btn){
-    if(btn.className.includes('add')){
-      $('button[name="' + btn.name + '"]').each((idx,dom) => {
-	dom.innerText = "-";
-	dom.className = "btn btn-remove btn-danger";
-      });
-      this.parentObj.addByUname(btn.name);
+  // ConnTable.prototype.toggleBtn = function(btn){
+  //   if(btn.className.includes('add')){
+  //     $('button[name="' + btn.name + '"]').each((idx,dom) => {
+  //       dom.innerText = "-";
+  //       dom.className = "btn btn-remove btn-danger";
+  //     });
+  //     this.parentObj.addByUname(btn.name);
       
-    }
-    else{
-      $('button[name="' + btn.name + '"]').each((idx,dom) => {
-	dom.innerText = "+";
-	dom.className = "btn btn-add btn-success";
-      });
+  //   }
+  //   else{
+  //     $('button[name="' + btn.name + '"]').each((idx,dom) => {
+  //       dom.innerText = "+";
+  //       dom.className = "btn btn-add btn-success";
+  //     });
 
-      this.parentObj.removeByUname(btn.name);
-      //$('button[name="' + btn.name + '"]').
-    }
-  }
+  //     this.parentObj.removeByUname(btn.name);
+  //     //$('button[name="' + btn.name + '"]').
+  //   }
+  // }
 
   // function toggleSynBtn(btn){
   //   if(btn.className.includes('add')){
