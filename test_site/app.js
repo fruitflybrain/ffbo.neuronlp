@@ -74,12 +74,11 @@ requirejs.config({
     renderpass: {deps: ['three', 'effectcomposer']},
     ssaarenderpass: {deps: ['three', 'effectcomposer']},
     shaderpass: {deps: ['three', 'effectcomposer']},
-    ssaopass: {deps: ['three', 'effectcomposer']},
+    ssaopass: {deps: ['three', 'effectcomposer', 'shaderpass']},
     maskpass: {deps: ['three', 'effectcomposer']},
     bloompass: {deps: ['three', 'effectcomposer']},
     unrealbloompass: {deps: ['three', 'effectcomposer']},
     adaptivetonemappingpass: {deps: ['three', 'effectcomposer']},
-    lightshelper: {deps: ['three']},
     tageditor: {deps: ['jquery']},
   }
 });
@@ -124,6 +123,8 @@ require([
     transitionOut: 'flipOutX',
   })
 
+  var isOnMobile =  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
   $.mobile.ajaxEnabled = false;
   window.NeuroNLPUI = new NeuroNLPUI();
   var infoPanel = new InfoPanel("info-panel");
@@ -146,9 +147,10 @@ require([
     ffbomesh.addJson({ffbo_json: data, type: 'morphology_json'});
   }
 
-  client.notifySuccess = function(message){
-    iziToast.success({message: message})
-  }
+  if(!isOnMobile)
+    client.notifySuccess = function(message){
+      iziToast.success({message: message})
+    }
 
   client.notifyError = function(message){
     iziToast.error({message: message})
@@ -225,8 +227,8 @@ require([
     infoPanel.renderAddRemoveBtn(e.value.label, false)
   });
   ffbomesh.on('visibility', (function(e) {
-    if(this.states.highlight !== e.path[0])
-      dynamicNeuronMenu.toggleVisibility(e.path[0], e.value)}
+    //if(this.states.highlight !== e.path[0])
+    dynamicNeuronMenu.toggleVisibility(e.path[0], e.value)}
   ).bind(ffbomesh));
   ffbomesh.on('pinned', function(e) { dynamicNeuronMenu.updatePinnedNeuron(e.path[0], e.obj.label, e.value)});
 
@@ -255,7 +257,8 @@ require([
     queryID = client.executeNLPquery(query, {success: dataCallback});
     client.status.on("change", function(e){
       $("#search-wrapper").unblock();
-      srchInput.focus();
+      if (!isOnMobile)
+        srchInput.focus();
       srchInput.value = "";
     }, queryID);
   });

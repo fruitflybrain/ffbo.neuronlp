@@ -13,8 +13,8 @@ if( moduleExporter === undefined){
 }
 
 moduleExporter("SummaryTable",
-	       ['jquery','d3','overlay','modernizr'],
-	       function($,d3,Overlay,Modernizr)
+               ['jquery','d3','overlay','modernizr', 'spectrum'],
+               function($,d3,Overlay,Modernizr, spectrum)
 {
   /**
    * SummaryTable Information Constructor
@@ -169,7 +169,7 @@ moduleExporter("SummaryTable",
     let keyCounter = 0;
     for (let key of displayKeys){
       if (!(key in data) || data[key] == 0){
-	continue;
+  continue;
       }
 
       let fieldName = snakeToSentence(key);
@@ -177,8 +177,8 @@ moduleExporter("SummaryTable",
 
       if (fieldName === 'vfb_id'){
         let vfbBtn = "<a target='_blank' href='http://virtualflybrain.org/reports/" + data[key] + "'>VFB link</a>";
-	fieldName = 'External Link';
-	fieldValue = vfbBtn;
+  fieldName = 'External Link';
+  fieldValue = vfbBtn;
       }
 
 
@@ -212,7 +212,7 @@ moduleExporter("SummaryTable",
     }
     else{
       $('#'+this.colorId).on('change',(c) => {
-	this.parentObj.setAttr(objRId,'color', $('#'+this.colorId)[0].value);
+  this.parentObj.setAttr(objRId,'color', $('#'+this.colorId)[0].value);
       });
     }
 
@@ -222,51 +222,51 @@ moduleExporter("SummaryTable",
       var extraData = data['flycircuit_data'];
       let extraKeys = ["Lineage", "Author", "Driver", "Gender/Age",  "Soma Coordinate", "Putative birth time", "Stock"];
       if (!('error' in extraData)){
-	// Fetch Key:value pair for flycircuit_data and add to
-	let keyCounter = 0;
-	for (let key of extraKeys){
-	  if (!(key in extraData) || extraData[key] == 0){
-	    continue;
-	  }
-	  if (keyCounter % 2 === 0){
+  // Fetch Key:value pair for flycircuit_data and add to
+  let keyCounter = 0;
+  for (let key of extraKeys){
+    if (!(key in extraData) || extraData[key] == 0){
+      continue;
+    }
+    if (keyCounter % 2 === 0){
             extraTableHtml += "<tr><td>" + key + ":</td><td>" + extraData[key] +"</td>" ;
           }else{
             extraTableHtml += "<td>" + key + ":</td><td>" + extraData[key] +"</td></tr>" ;
           }
-	  keyCounter += 1;
-	}
+    keyCounter += 1;
+  }
 
-	if (extraTableHtml.substr(extraTableHtml.length-5) !== '</tr>'){
-	  extraTableHtml += '<td></td><td></td></tr>';
-	}
+  if (extraTableHtml.substr(extraTableHtml.length-5) !== '</tr>'){
+    extraTableHtml += '<td></td><td></td></tr>';
+  }
 
         $('#'+this.divId+ " tbody").append(extraTableHtml);
 
         // set source for images
-	if ("Images" in extraData){
+  if ("Images" in extraData){
           let imgList = ["Original confocal image (Animation)","Segmentation","Skeleton (download)"];
           Object.entries(imgList).forEach(
             ([idx,imgName]) => {
-	      
+        
               $('#'+this.extraImgId + " img")[idx].onerror = function(){
-		this.parentElement.style.display = "none";
-		if (Number(this.getAttribute("tryCtr")) < Number(this.getAttribute("maxTry"))){  // try 5 times max
-		  let currTry = Number(this.getAttribute("tryCtr"));
+    this.parentElement.style.display = "none";
+    if (Number(this.getAttribute("tryCtr")) < Number(this.getAttribute("maxTry"))){  // try 5 times max
+      let currTry = Number(this.getAttribute("tryCtr"));
                   setTimeout( () => {
                     this.src = extraData["Images"][imgName];
                   }, 1000);
-		  console.log("[InfoPanel.SummaryTable > Retry] Image: "+ imgName);
+      console.log("[InfoPanel.SummaryTable > Retry] Image: "+ imgName);
                   this.setAttribute("tryCtr" , currTry += 1);
-		  return;
-		}else{
-		  console.log("[InfoPanel.SummaryTable > Failed] Image "+ imgName);
-		  this.setAttribute("tryCtr" , 0);
-		  return;
-		}
+      return;
+    }else{
+      console.log("[InfoPanel.SummaryTable > Failed] Image "+ imgName);
+      this.setAttribute("tryCtr" , 0);
+      return;
+    }
               };
 
               $('#'+this.extraImgId + " img")[idx].onload = function(){
-		this.setAttribute("tryCtr",0);
+    this.setAttribute("tryCtr",0);
                 console.log("[InfoPanel.SummaryTable > Success] Image "+ imgName);
                 this.parentElement.style.display = "block";
               };
