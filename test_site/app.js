@@ -227,7 +227,9 @@ require([
     infoPanel.renderAddRemoveBtn(e.value.label, false)
   });
   ffbomesh.on('visibility', (function(e) {
-    if(this.states.highlight[0] !== e.path[1]) dynamicNeuronMenu.toggleVisibility(e.path[1], e.value)}).bind(ffbomesh));
+    if(this.states.highlight !== e.path[0])
+      dynamicNeuronMenu.toggleVisibility(e.path[0], e.value)}
+  ).bind(ffbomesh));
   ffbomesh.on('pinned', function(e) { dynamicNeuronMenu.updatePinnedNeuron(e.path[0], e.obj.label, e.value)});
 
 
