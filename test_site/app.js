@@ -134,7 +134,6 @@ require([
   var tagsPanel = new Tags($('#wrapper'));
   var client = new FFBOClient();
   client.startConnection("guest", "guestpass", "wss://neuronlp.fruitflybrain.org:8888/ws");
-  mm_menu_right = $("#ui_menu_nav").data( "mmenu" );
 
 
 
@@ -166,7 +165,6 @@ require([
     }
     for(var cmd in message["commands"])
       ffbomesh.execCommand({"commands":[cmd],"neurons": message["commands"][cmd][0],"args":message['commands'][cmd][1]});
-    mm_menu_right.initPanels($('#single-neu'));
   }
 
 
@@ -292,8 +290,10 @@ require([
   ffbomesh.on('takeScreenshot', (function() {ffbomesh._take_screenshot=true;}));
 
   $.getJSON("config.json", function(json) {
-    ffbomesh.addJson({"ffbo_json": json, "showAfterLoadAll": true});
+    ffbomesh.addJson({ffbo_json: json,
+                      showAfterLoadAll: true}).then(function(){
+                        $('#ui-blocker').hide();
+                        srchInput.focus();
+                      });
   });
-
-  $('#ui-blocker').hide();
 });
