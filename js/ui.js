@@ -46,6 +46,7 @@ moduleExporter("NeuroNLPUI", ["jquery", "jquery.mmenu"], function($){
         $("#intro-panel").slideDown(500);
       }, 500);
     }
+
     this.onShowOverview = () => {
       mm_menu_right.close();
       setTimeout( function() {
@@ -60,7 +61,6 @@ moduleExporter("NeuroNLPUI", ["jquery", "jquery.mmenu"], function($){
         $("#announce-panel").slideDown(500);
       }, 500);
     }
-
 
     this.mimicMouseOver = (selector, flag) => {
       if (flag) {
@@ -140,8 +140,7 @@ moduleExporter("NeuroNLPUI", ["jquery", "jquery.mmenu"], function($){
         $("#info-panel-dragger").css({"top": "", "left":""});
         $(".vis-info-pin").css("width","");
         setTimeout( function() {
-          ffbomesh.onWindowResize();
-          infoPanel.resize();
+          _this.dispatch.onWindowResize();
         }, 500);
       },
     });
@@ -167,6 +166,10 @@ moduleExporter("NeuroNLPUI", ["jquery", "jquery.mmenu"], function($){
         searchfield:{
           panel: true,
           showSubPanels: true
+        },
+        hooks: {
+          "open:after": function($panel){ setTimeout(_this.dispatch.onWindowResize, 100) },
+          "close:after": function($panel){ setTimeout(_this.dispatch.onWindowResize, 100) }
         }
       },{
         offCanvas: {
@@ -177,7 +180,6 @@ moduleExporter("NeuroNLPUI", ["jquery", "jquery.mmenu"], function($){
         }
       });
       mm_menu_right = $("#ui_menu_nav").data( "mmenu" );
-
     });
   }
 

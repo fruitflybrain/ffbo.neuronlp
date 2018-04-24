@@ -266,7 +266,8 @@ require([
       srchBtn.click();
   });
 
-  window.NeuroNLPUI.dispatch.onWindowResize = (function() { ffbomesh.onWindowResize() });
+  window.NeuroNLPUI.dispatch.onWindowResize = (function() {
+    ffbomesh.onWindowResize(); infoPanel.resize(); });
   window.NeuroNLPUI.dispatch.onRemovePinned = (function() { removePinned() });
   window.NeuroNLPUI.dispatch.onRemoveUnpinned = (function() { removeUnpinned() });
 
@@ -291,4 +292,6 @@ require([
   $.getJSON("config.json", function(json) {
     ffbomesh.addJson({"ffbo_json": json, "showAfterLoadAll": true});
   });
+
+  $('#ui-blocker').hide();
 });

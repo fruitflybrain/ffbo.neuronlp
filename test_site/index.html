@@ -39,94 +39,95 @@
     <link rel="stylesheet" id="main_css" type="text/css" href="/lib/css/ffbo.Menu.css">
   </head>
   <body>
-    <div id="wrapper">
+    <div id="ui-blocker" style="width: 100vw; height:100vh;z-index:999999; background-color: rgba(0,0,0,0.5)"></div>
+    <div id="wrapper" style="z-index:1">
+      <nav class="navbar navbar-ffbo navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <div class="navbar-brand">
+              <a href="http://fruitflybrain.org" target="_blank"><img src="/img/ffbo_logo.png" role="button"></a>
+              <span style="font-family:var(--title-font-family); font-size: 20px; color:var(--navbar-text-color);">NeuroNLP</span>
+              <a onclick="NeuroNLPUI.onShowNeuroNLP()">
+                <span>.Adult</span>
+              </a>
+            </div>
+            <button id="ui_menu_btn" type="button" class="navbar-toggle collapsed" onclick="NeuroNLPUI.openRightMenu()" style="z-index:1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
+          <div class="navbar-fixed-bottom">
+            <ul class="nav navbar-nav">
+              <li >Copyright &copy; 2018 FFBO</li>
+              <li>
+                <div id="search-wrapper" class="search-bottom input-group input-group-mid">
+                  <input id = "srch_box" type="text" class="form-control" title="please type in query string..."  placeholder="enter query here, ex. show gabaergic local neurons in ellipsoid body">
+                  <span class="input-group-btn">
+                    <button id = "srch_box_btn" class="btn btn-mid btn-primary" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                  </span>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+              <li id="btn-getting-started"><a onclick="NeuroNLPUI.onGettingStarted()">Get Started</a></li>
+              <li id="btn-tags" ><a onclick="NeuroNLPUI.onToggleTag()">Tags</a></li>
+              <li id="btn-neuron"><a onclick="NeuroNLPUI.onToggleNeuClick()">Toggle Neurons</a></li>
+              <li id="btn-neuropils"><a onclick="NeuroNLPUI.onToggleLPUClick()">Toggle Neuropils</a></li>
+            </ul>
+          </div>
+          <nav id="ui_menu_nav">
+            <ul>
+              <li>
+                <span>Get Started</span>
+                <ul id="toggle_get_started">
+                  <li id="btn-overview"><a onclick="NeuroNLPUI.onShowOverview()">Overview</a></li>
+                  <li id="btn-news"><a onclick="NeuroNLPUI.onShowAnnounce()">News</a></li>
+                  <li><a onclick="NeuroNLPUI.onShowDemo()">Demos</a></li>
+                  <li><a onclick="NeuroNLPUI.onShowTutorialVideo()">Tutorial Video</a></li>
+                </ul>
+              </li>
+              <li>
+                <span>Tags</span>
+                <ul id="toggle_tag">
+                  <li><a onclick="tagsPanel.onCreateTag()">Create Tag</a></li>
+                  <li><a onclick="tagsPanel.onRetrieveTag()">Load Tag</a></li>
+                </ul>
+              </li>
+              <li>
+                <span>Toggle Neuron </span>
+                <ul id="toggle_neuron">
+                  <li><a id='btn-neu-all' role='button' class=''>Show All</a></li>
+                  <li><a id='btn-neu-none' role='button' class=''>Hide All</a></li>
+                  <li>
+                    <span>Pinned <i class="icon-arrow-right"></i></span>
+                    <ul id="single-pin">
+                      <li><a id="btn-pin-keep" role="button" class='' onclick="NeuroNLPUI.onRemoveUnpinned()">Delete unpinned neurons</a></li>
+                      <li><a id="btn-pin-keep" role="button" class='' onclick="NeuroNLPUI.onRemovePinned()">Delete pinned neurons</a></li>
+                      <li><a id="btn-pin-unpinall" role="button" class=''>Unpin All</a></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <span>Single Neuron <i class="icon-arrow-right"></i></span>
+                    <ul id="single-neu"></ul>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <span>Toggle Neuropil</span>
+                <ul id="toggle_neuropil">
+                </ul>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </nav>
 
       <!-- Page Content -->
       <div id="page-content-wrapper">
-        <nav class="navbar navbar-ffbo navbar-inverse">
-          <div class="container-fluid">
-            <div class="navbar-header">
-              <div class="navbar-brand">
-                <a href="http://fruitflybrain.org" target="_blank"><img src="/img/ffbo_logo.png" role="button"></a>
-                <span style="font-family:var(--title-font-family); font-size: 20px; color:var(--navbar-text-color);">NeuroNLP</span>
-                <a onclick="NeuroNLPUI.onShowNeuroNLP()">
-                  <span>.Adult</span>
-                </a>
-              </div>
-              <button id="ui_menu_btn" type="button" class="navbar-toggle collapsed" onclick="NeuroNLPUI.openRightMenu()" style="z-index:1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-            </div>
-            <div class="navbar-fixed-bottom">
-              <ul class="nav navbar-nav">
-                <li >Copyright &copy; 2018 FFBO</li>
-                <li>
-                  <div id="search-wrapper" class="search-bottom input-group input-group-mid">
-                    <input id = "srch_box" type="text" class="form-control" title="please type in query string..."  placeholder="enter query here, ex. show gabaergic local neurons in ellipsoid body">
-                    <span class="input-group-btn">
-                      <button id = "srch_box_btn" class="btn btn-mid btn-primary" type="button"><span class="glyphicon glyphicon-search"></span></button>
-                    </span>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="navbar-collapse collapse">
-              <ul class="nav navbar-nav navbar-right">
-                <li id="btn-getting-started"><a onclick="NeuroNLPUI.onGettingStarted()">Get Started</a></li>
-                <li id="btn-tags" ><a onclick="NeuroNLPUI.onToggleTag()">Tags</a></li>
-                <li id="btn-neuron"><a onclick="NeuroNLPUI.onToggleNeuClick()">Toggle Neurons</a></li>
-                <li id="btn-neuropils"><a onclick="NeuroNLPUI.onToggleLPUClick()">Toggle Neuropils</a></li>
-              </ul>
-            </div>
-            <nav id="ui_menu_nav">
-              <ul>
-                <li>
-                  <span>Get Started</span>
-                  <ul id="toggle_get_started">
-                    <li id="btn-overview"><a onclick="NeuroNLPUI.onShowOverview()">Overview</a></li>
-                    <li id="btn-news"><a onclick="NeuroNLPUI.onShowAnnounce()">News</a></li>
-                    <li><a onclick="NeuroNLPUI.onShowDemo()">Demos</a></li>
-                    <li><a onclick="NeuroNLPUI.onShowTutorialVideo()">Tutorial Video</a></li>
-                  </ul>
-                </li>
-                <li>
-                  <span>Tags</span>
-                  <ul id="toggle_tag">
-                    <li><a onclick="tagsPanel.onCreateTag()">Create Tag</a></li>
-                    <li><a onclick="tagsPanel.onRetrieveTag()">Load Tag</a></li>
-                  </ul>
-                </li>
-                <li>
-                  <span>Toggle Neuron </span>
-                  <ul id="toggle_neuron">
-                    <li><a id='btn-neu-all' role='button' class=''>Show All</a></li>
-                    <li><a id='btn-neu-none' role='button' class=''>Hide All</a></li>
-                    <li>
-                      <span>Pinned <i class="icon-arrow-right"></i></span>
-                      <ul id="single-pin">
-                        <li><a id="btn-pin-keep" role="button" class='' onclick="NeuroNLPUI.onRemoveUnpinned()">Delete unpinned neurons</a></li>
-                        <li><a id="btn-pin-keep" role="button" class='' onclick="NeuroNLPUI.onRemovePinned()">Delete pinned neurons</a></li>
-                        <li><a id="btn-pin-unpinall" role="button" class=''>Unpin All</a></li>
-                      </ul>
-                    </li>
-                    <li>
-                      <span>Single Neuron <i class="icon-arrow-right"></i></span>
-                      <ul id="single-neu"></ul>
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <span>Toggle Neuropil</span>
-                  <ul id="toggle_neuropil">
-                  </ul>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </nav>
 
         <div id="info-panel-wrapper" class="vis-info vis-info-pin">
           <div id="info-pin-div" >
@@ -137,9 +138,9 @@
           </div>
           <div>
             <!-- <div id="info-reset" class="ffbo-intro" style="display: none">
-              <h4>
-                Click on a neuron to display its detailed information in this
-                panel.
+                 <h4>
+                   Click on a neuron to display its detailed information in this
+                   panel.
             </div> -->
             <div id="info-intro" class="ffbo-intro">
               <h4>What is NeuroNLP?</h4>
