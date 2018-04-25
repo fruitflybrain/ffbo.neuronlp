@@ -42,6 +42,34 @@ moduleExporter(
       return idx;
     }
 
+    function compareLeftRigt(x, y) {
+
+      var _x = x.split(' ');
+      var _y = y.split(' ');
+      if (_x[_x.length-1] == _y[_y.length-1])
+        return _x[0] < _y[0];
+      else
+        return _x[_x.length-1] < _y[_y.length-1] ;
+    }
+
+    function compareCase(x, y) {
+      var _x = x.toUpperCase();
+      var _y = y.toUpperCase();
+      if (_x == _y)
+        return x[0] < y[0];
+      else
+        return _x < _y;
+    }
+
+    function compare(x, y) {
+      return x < y;
+    }
+
+    var compareFunc = {
+      'LeftRight': compareLeftRigt,
+      'Case': compareCase
+    }
+
     var FFBODynamicMenu = function(config, struture){
 
       var _this = this;
@@ -51,7 +79,7 @@ moduleExporter(
         hideSymbol: '<i class="fa fa-eye-slash"></i>',
         singleObjSel: undefined,
         pinnedObjSel: undefined,
-        compare: (function (x, y) { return x < y})
+        compare: undefined
       }
 
       for (var key of Object.keys(config)) {
@@ -61,6 +89,11 @@ moduleExporter(
         if (val !== undefined )
           this.config[key] = val;
       }
+
+      if (this.config.compare === undefined)
+        this.config.compare = compare;
+      else if (typeof this.config.compare === 'string' || this.config.compare instanceof String)
+        this.config.compare = compareFunc[this.config.compare];
 
       this.addNeuron = function(id, label) {
         var btnId = "btn-" + uidDecode(id);
