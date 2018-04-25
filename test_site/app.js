@@ -130,7 +130,7 @@ require([
   var infoPanel = new InfoPanel("info-panel");
   window.infoPanel = infoPanel;
   var dynamicNeuronMenu = new FFBODynamicMenu({singleObjSel: '#single-neu > .mm-listview', pinnedObjSel: '#single-pin > .mm-listview'});
-  var dynamicNeuropilMenu = new FFBODynamicMenu({singleObjSel: '#toggle_neuropil > .mm-listview'});
+  var dynamicNeuropilMenu = new FFBODynamicMenu({singleObjSel: '#toggle_neuropil > .mm-listview', compare: 'LeftRight'});
   var ffbomesh = new FFBOMesh3D('vis-3d', undefined, {"globalCenter": {'x': 0, 'y':-250, 'z':0}});
   var tagsPanel = new Tags($('#wrapper'));
   var client = new FFBOClient();
