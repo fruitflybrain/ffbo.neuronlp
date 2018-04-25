@@ -20,7 +20,11 @@ moduleExporter("NeuroNLPUI", ["jquery", "jquery.mmenu"], function($){
     this.dispatch = {
       onWindowResize: (function() {}),
       removePinned: (function() {}),
-      removeUnpinned: (function() {})
+      removeUnpinned: (function() {}),
+      onShowAllNeuron: (function() {}),
+      onHideAllNeuron: (function() {}),
+      onShowAllNeuropil: (function() {}),
+      onHideAllNeuropil: (function() {})
     }
 
     this.onShowTutorialVideo = () => {
@@ -102,6 +106,18 @@ moduleExporter("NeuroNLPUI", ["jquery", "jquery.mmenu"], function($){
     }
     this.onRemoveUnpinned = function() {
       _this.dispatch.onRemoveUnpinned();
+    }
+    this.onShowAllNeuron = function() {
+      _this.dispatch.onShowAllNeuron();
+    }
+    this.onHideAllNeuron = function() {
+      _this.dispatch.onHideAllNeuron();
+    }
+    this.onShowAllNeuropil = function() {
+      _this.dispatch.onShowAllNeuropil();
+    }
+    this.onHideAllNeuropil = function() {
+      _this.dispatch.onHideAllNeuropil();
     }
 
     this.resizeInfoPanel = function() {

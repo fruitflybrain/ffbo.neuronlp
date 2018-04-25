@@ -273,6 +273,10 @@ require([
     ffbomesh.onWindowResize(); infoPanel.resize(); });
   window.NeuroNLPUI.dispatch.onRemovePinned = (function() { removePinned() });
   window.NeuroNLPUI.dispatch.onRemoveUnpinned = (function() { removeUnpinned() });
+  window.NeuroNLPUI.dispatch.onShowAllNeuron = (function() { ffbomesh.showFrontAll() });
+  window.NeuroNLPUI.dispatch.onHideAllNeuron = (function() { ffbomesh.hideFrontAll() });
+  window.NeuroNLPUI.dispatch.onShowAllNeuropil = (function() { ffbomesh.showBackAll() });
+  window.NeuroNLPUI.dispatch.onHideAllNeuropil = (function() { ffbomesh.hideBackAll() });
 
   ffbomesh.createUIBtn("showSettings", "fa-cog", "Settings")
   ffbomesh.createUIBtn("takeScreenshot", "fa-camera", "Download Screenshot")
