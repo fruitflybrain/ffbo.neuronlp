@@ -72,8 +72,10 @@ moduleExporter(
 
         if (idx === _this.btnLabelList.length)
           $(_this.config.singleObjSel).append(domStr);
-        else
-          $(_this.config.singleObjSel + " > li:nth-child(" + (idx+1) + ")").before(domStr);
+        else {
+          var offset = $(_this.config.singleObjSel).children().length - _this.btnLabelList.length;
+          $(_this.config.singleObjSel + " > li:nth-child(" + (idx+offset+1) + ")").before(domStr);
+        }
 
         _this.btnLabelList.splice(idx, 0, label);
 
