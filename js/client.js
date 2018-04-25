@@ -119,6 +119,8 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
     this.language = "en";
 
     this.status = new PropertyManager();
+    this._callbacks = {};
+    this.dataThroughRPCcall = true;
   }
 
   // Should be overloaded by application
@@ -179,7 +181,10 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
     uri = (msg.uri || "ffbo.na.query") + "." + naServerID;
     callbacks = callbacks || {};
     queryID = queryID || guidGenerator();
+    this._callbacks[queryID] = callbacks;
     msg.queryID = queryID;
+    if(this.dataThroughRPCcall)
+      msg.data_callback_uri = 'ffbo.ui.receive_data';
     if( !('threshold' in msg) ) msg.threshold = this.threshold
     if( format != undefined ) {msg.format = format}
     if( 'progress' in callbacks ){
@@ -222,6 +227,7 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
     this.status.on("change", (function(e){
       setTimeout((function(){
         delete this.status[e['prop']];
+        delete this._callbacks[e['prop']];
       }).bind(this), 10000);}).bind(this), queryID);
 
     return queryID;
@@ -379,6 +385,17 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
       session.register("ffbo.ui.receive_cmd." + session.id, ( function (args) {
         this.receiveCommand(args[0]);
       } ).bind(this)).then(
+         function(reg) {},
+         function(err) {
+           console.log("failed to register procedure ffbo.ui.receive_cmd." + session.id, err);
+         }
+      );
+
+      session.register("ffbo.ui.receive_data." + session.id,  (args) => {
+        onProgressCallback(args[0].data, args[0].queryID,
+                           this._callbacks[args[0].queryID].progress ||
+                           this._callbacks[args[0].queryID].success);
+      }).then(
          function(reg) {},
          function(err) {
            console.log("failed to register procedure ffbo.ui.receive_cmd." + session.id, err);

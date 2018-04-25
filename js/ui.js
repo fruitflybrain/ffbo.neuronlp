@@ -126,9 +126,6 @@ moduleExporter("NeuroNLPUI", ["jquery", "jquery.mmenu"], function($){
       $("#info-panel-wrapper").toggleClass("vis-info-sm vis-info-pin");
       $("#vis-3d").toggleClass("vis-3d-lg vis-3d-hf");
       $("#btn-info-pin").toggleClass('btn-clicked btn-unclicked');
-      setTimeout( function(){
-        _this.dispatch.onWindowResize();
-      }, 500);
     }
 
     $( ".slider-bar" ).draggable({
@@ -155,9 +152,6 @@ moduleExporter("NeuroNLPUI", ["jquery", "jquery.mmenu"], function($){
         $(".vis-info-pin").removeClass("notransition");
         $("#info-panel-dragger").css({"top": "", "left":""});
         $(".vis-info-pin").css("width","");
-        setTimeout( function() {
-          _this.dispatch.onWindowResize();
-        }, 500);
       },
     });
 
@@ -184,8 +178,6 @@ moduleExporter("NeuroNLPUI", ["jquery", "jquery.mmenu"], function($){
           showSubPanels: true
         },
         hooks: {
-          "open:after": function($panel){ setTimeout(_this.dispatch.onWindowResize, 100) },
-          "close:after": function($panel){ setTimeout(_this.dispatch.onWindowResize, 100) }
         }
       },{
         offCanvas: {
