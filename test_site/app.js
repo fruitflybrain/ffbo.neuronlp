@@ -13,7 +13,7 @@ requirejs.config({
   baseUrl: '../js',
   paths: {
     // app: 'app',
-    mesh3d: 'https://neuronlp.fruitflybrain.org:8888/lib/js/mesh3d',
+    mesh3d: '../lib/js/mesh3d',
     infopanel: "info_panel/infopanel",
     autobahn: '//cdn.rawgit.com/crossbario/autobahn-js-built/master/autobahn.min',
     d3: '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min',
@@ -39,7 +39,7 @@ requirejs.config({
     unrealbloompass: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/postprocessing/UnrealBloomPass',
     adaptivetonemappingpass: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/postprocessing/AdaptiveToneMappingPass',
     trackballcontrols: '//cdn.rawgit.com/fruitflybrain/ffbo.lib/VisualizationUpdates/js/three/libs/TrackballControls',
-    lightshelper: '//cdn.rawgit.com/fruitflybrain/ffbo.lib/VisualizationUpdates/js/lightshelper',
+    lightshelper: '../lib/js/lightshelper',
     modernizr: "//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min",
     d3: "//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3",
     jqueryui: "//code.jquery.com/ui/1.12.1/jquery-ui",
@@ -52,7 +52,8 @@ requirejs.config({
     bootstrap: "//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min",
     blockui: "//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min",
     tageditor: "//cdnjs.cloudflare.com/ajax/libs/tag-editor/1.0.20/jquery.tag-editor.min",
-    izitoast: "//cdn.rawgit.com/dolce/iziToast/v1.3.0/dist/js/iziToast.min"
+    izitoast: "//cdn.rawgit.com/dolce/iziToast/v1.3.0/dist/js/iziToast.min",
+    stats: "//cdn.rawgit.com/mrdoob/stats.js/28632bd8/build/stats.min"
     /* Notify, bootbox, colormaps, demos, mouse, vis_set, ResizeSensor, read_vars, colorm[aps */
   },
   shim: {
@@ -129,19 +130,43 @@ require([
   window.NeuroNLPUI = new NeuroNLPUI();
   var infoPanel = new InfoPanel("info-panel");
   window.infoPanel = infoPanel;
-  var dynamicNeuronMenu = new FFBODynamicMenu({singleObjSel: '#single-neu > .mm-listview', pinnedObjSel: '#single-pin > .mm-listview'});
+  var dynamicNeuronMenu = new FFBODynamicMenu({singleObjSel: '#single-neu > .mm-listview', pinnedObjSel: '#single-pin > .mm-listview', removable: true, pinnable: true});
   var dynamicNeuropilMenu = new FFBODynamicMenu({singleObjSel: '#toggle_neuropil > .mm-listview', compare: 'LeftRight'});
   var ffbomesh = new FFBOMesh3D('vis-3d', undefined, {"globalCenter": {'x': 0, 'y':-250, 'z':0}});
   var tagsPanel = new Tags($('#wrapper'));
   var client = new FFBOClient();
   client.startConnection("guest", "guestpass", "wss://neuronlp.fruitflybrain.org:8888/ws");
 
-
+  ffbomesh.settings.neuron3d = 1;
 
   window.client = client;
   window.tagsPanel = tagsPanel;
   window.ffbomesh = ffbomesh;
   tagsPanel.initialize();
+
+
+  var oldHeight = ffbomesh.container.clientHeight;
+  var oldWidth = ffbomesh.container.clientWidth;
+  resizing = false;
+  function onResize(){
+    setTimeout( () => {
+      ffbomesh.onWindowResize();
+      infoPanel.resize();
+      oldHeight = ffbomesh.container.clientHeight;
+      oldWidth = ffbomesh.container.clientWidth;
+      resizing = false;
+    }, 40);
+  }
+
+
+  setInterval( () => {
+    if(oldHeight != ffbomesh.container.clientHeight || oldWidth != ffbomesh.container.clientWidth){
+      if(!resizing){
+        onResize();
+        resizing = true;
+      }
+    }
+  }, 40);
 
   function dataCallback(data){
     ffbomesh.addJson({ffbo_json: data, type: 'morphology_json'});
@@ -209,18 +234,20 @@ require([
   dynamicNeuronMenu.dispatch.highlight = function(id) {ffbomesh.highlight(id, true)};
   dynamicNeuronMenu.dispatch.resume = function(id) {ffbomesh.highlight(undefined)};
   dynamicNeuronMenu.dispatch.toggle = function(id) {ffbomesh.toggleVis(id)};
+  dynamicNeuronMenu.dispatch.pin = function(id) {ffbomesh.pin(id)};
   dynamicNeuronMenu.dispatch.unpin = function(id) {ffbomesh.unpin(id)};
+  dynamicNeuronMenu.dispatch.remove = function(id) {client.removeObjs(id)};
   dynamicNeuropilMenu.dispatch.toggle = function(id) {ffbomesh.toggleVis(id)};
 
 
   ffbomesh.on('add',
-    function(e) {
-      if(!e.value.background)
-        dynamicNeuronMenu.addNeuron(e.prop, e.value.label);
-      else
-        dynamicNeuropilMenu.addNeuron(e.prop, e.value.label)
-      infoPanel.renderAddRemoveBtn(e.value.label, true)
-    });
+              function(e) {
+                if(!e.value.background)
+                  dynamicNeuronMenu.addNeuron(e.prop, e.value.label);
+                else
+                  dynamicNeuropilMenu.addNeuron(e.prop, e.value.label)
+                infoPanel.renderAddRemoveBtn(e.value.label, true)
+              });
   ffbomesh.on('remove', function(e) {
     if(!e.value.background)
       dynamicNeuronMenu.removeNeuron(e.prop)
@@ -229,7 +256,7 @@ require([
   ffbomesh.on('visibility', (function(e) {
     //if(this.states.highlight !== e.path[0])
     dynamicNeuronMenu.toggleVisibility(e.path[0], e.value)}
-  ).bind(ffbomesh));
+                            ).bind(ffbomesh));
   ffbomesh.on('pinned', function(e) { dynamicNeuronMenu.updatePinnedNeuron(e.path[0], e.obj.label, e.value)});
 
 
@@ -269,8 +296,6 @@ require([
       srchBtn.click();
   });
 
-  window.NeuroNLPUI.dispatch.onWindowResize = (function() {
-    ffbomesh.onWindowResize(); infoPanel.resize(); });
   window.NeuroNLPUI.dispatch.onRemovePinned = (function() { removePinned() });
   window.NeuroNLPUI.dispatch.onRemoveUnpinned = (function() { removeUnpinned() });
   window.NeuroNLPUI.dispatch.onShowAllNeuron = (function() { ffbomesh.showFrontAll() });
