@@ -77,9 +77,13 @@ moduleExporter(
       this.config = {
         showSymbol: '<i class="fa fa-eye"></i>',
         hideSymbol: '<i class="fa fa-eye-slash"></i>',
+        removeSymbol: '<i class="fa fa-trash"></i>',
+        pinSymbol: '<i class="fa fa-thumb-tack"></i>',
         singleObjSel: undefined,
         pinnedObjSel: undefined,
-        compare: undefined
+        compare: undefined,
+        removable: false,
+        pinnable: false
       }
 
       for (var key of Object.keys(config)) {
@@ -97,9 +101,15 @@ moduleExporter(
 
       this.addNeuron = function(id, label) {
         var btnId = "btn-" + uidDecode(id);
-        var domStr = "<li id='li-" + btnId + "'>" +
-                      "<a id='" + btnId + "'role='button' label='" + label + "' class='btn-single-ob'>" + _this.config.showSymbol + " " + label + "</a>" +
-                     "</li>";
+        var btnToggleId = "btn-toggle-" + uidDecode(id);
+        var btnRmId = (_this.config.removable) ? "btn-rm-" + uidDecode(id): false;
+        var btnPinSymId = (_this.config.pinnable) ? "btn-pin-symbol-" + uidDecode(id): false;
+        var domStr = `<li id='li-${btnId}'>` +
+                      `<a id='${btnId}' role='button' label='${label}' class='btn-single-ob'>${label}</a>` +
+                      ((btnRmId) ? `<a id='${btnRmId}' role='button'>${_this.config.removeSymbol}</a>` : '') +
+                      ((btnPinSymId) ? `<a id='${btnPinSymId}' class='btn-unpinned' role='button'>${_this.config.pinSymbol}</a>` : '') +
+                      `<a id='${btnToggleId}' role='button'>${_this.config.showSymbol}</a>` +
+                     `</li>`;
 
         var idx = findIndex(label, _this.btnLabelList, _this.config.compare);
 
@@ -111,53 +121,84 @@ moduleExporter(
         }
 
         _this.btnLabelList.splice(idx, 0, label);
-
-        $("#" + btnId).click( function() {
-            _this.dispatch.resume();
+        $("#" + btnId)
+          .click( function() {
             var id = $(this).attr("id").substring(4);
+            _this.dispatch.getInfo(id);
+        });
+        $("#" + btnToggleId)
+          .click( function() {
+            var id = $(this).attr("id").substring(11);
             id = uidEncode(id);
             _this.dispatch.toggle(id);
-            _this.dispatch.highlight(id);
-        })
-        .mouseenter( function() {
-            var id = $(this).attr("id").substring(4);
+        });
+        $("#li-" + btnId)
+          .mouseenter( function() {
+            var id = $(this).attr("id").substring(7);
             id = uidEncode(id);
             _this.dispatch.highlight(id);
-        })
-        .mouseleave( function() {
+          })
+          .mouseleave( function() {
             _this.dispatch.resume();
-        });
+          });
+        if (btnRmId) {
+          $("#" + btnRmId).click( function() {
+              var id = $(this).attr("id").substring(7);
+              id = uidEncode(id);
+              _this.dispatch.remove(id);
+          })
+        }
+        if (btnPinSymId) {
+          $("#" + btnPinSymId).click( function() {
+              var id = $(this).attr("id").substring(15);
+              id = uidEncode(id);
+              _this.dispatch.togglePin(id);
+          })
+        }
       }
 
       this.removeNeuron = function(id) {
         var liBtnId = "li-btn-" + uidDecode(id);
         var label = $("#" + liBtnId + " > a").attr('label');
-        $("#" + liBtnId).remove();
+        $(`[id=${liBtnId}]`).hide("slide", { direction: "right" }, 800, function() {
+          $(`#${liBtnId}`).remove();
+        });
         var idx = _this.btnLabelList.indexOf(label);
         if (idx > -1)
           _this.btnLabelList.splice(idx, 1);
       }
 
       this.toggleVisibility = function(id, visibility) {
-        var btn = $("[id='btn-" + uidDecode(id) + "']");
-        var label = btn.attr('label');
+        var btn = $("[id='btn-toggle-" + uidDecode(id) + "']");
         var symbol = (visibility) ? _this.config.showSymbol : _this.config.hideSymbol;
-        btn.html(symbol + " " + label);
+        btn.html(symbol);
       }
 
       this.updatePinnedNeuron = function(id, label, pinned) {
         id = uidDecode(id);
         var pinBtnId = "btn-pin-" + id;
+        var pinnedSymbolId = "btn-pinned-" + id;
         if (pinned) {
-          $( _this.config.pinnedObjSel ).append(
-            "<li><a id='" + pinBtnId + "'role='button' class='btn-single-pin'>" + label + "</a></li>");
+          var domStr = `<li id='li-${pinBtnId}'>` +
+                         `<a id='${pinBtnId}' role='button' 'role='button' class='btn-pinned'>${label}</a>` +
+                         `<a id='${pinnedSymbolId}' class='btn-pinned' role='button'>${_this.config.pinSymbol}</a>` +
+                       "</li>";
+          $( _this.config.pinnedObjSel ).append(domStr);
           $("#" + pinBtnId)
             .click( function() {
                 var id = $(this).attr("id").substring(8);
                 updateInfoPanel([$(this).text(), uidEncode(id)]);
             })
+          $("#" + pinnedSymbolId)
+            .click( function() {
+                var id = $(this).attr("id").substring(11);
+                $(this).removeClass("btn-pinned");
+                $(this).addClass("btn-unpinned");
+                _this.dispatch.unpin(uidEncode(id));
+            })
+          $("#li-" + pinBtnId)
             .mouseenter( function() {
-                var id = $(this).attr("id").substring(8);
+                var id = $(this).attr("id").substring(11);
                 id = uidEncode(id);
                 _this.dispatch.highlight(id);
             })
@@ -165,17 +206,29 @@ moduleExporter(
                 _this.dispatch.resume();
             })
         } else {
-            $("#" + pinBtnId).remove();
+            $("#li-" + pinBtnId).hide("slide", { direction: "right" }, 800, function() {
+              $("#li-" + pinBtnId).remove();
+            });
         }
+
+        if (_this.config.pinnable) {
+          var btnPinSymId = "btn-pin-symbol-" + id;
+          var oldClass = ((pinned) ? "btn-unpinned" : "btn-pinned");
+          var newClass = ((pinned) ? "btn-pinned" : "btn-unpinned");
+          $(`[id=${btnPinSymId}]`).removeClass(oldClass).addClass(newClass);
+        }
+
       };
 
       this.dispatch = {
+        getInfo: function(){},
         highlight: function(){},
         resume: function(){},
         toggle: function(){},
         unpin: function(){},
         hideAll: function(){},
         showAll: function(){},
+        remove: function(){}
       };
     };
 
