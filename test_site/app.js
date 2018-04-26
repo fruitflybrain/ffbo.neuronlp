@@ -302,6 +302,7 @@ require([
   window.NeuroNLPUI.dispatch.onHideAllNeuron = (function() { ffbomesh.hideFrontAll() });
   window.NeuroNLPUI.dispatch.onShowAllNeuropil = (function() { ffbomesh.showBackAll() });
   window.NeuroNLPUI.dispatch.onHideAllNeuropil = (function() { ffbomesh.hideBackAll() });
+  window.NeuroNLPUI.dispatch.onUnpinAll = (function() { ffbomesh.unpinAll() });
 
   ffbomesh.createUIBtn("showSettings", "fa-cog", "Settings")
   ffbomesh.createUIBtn("takeScreenshot", "fa-camera", "Download Screenshot")
