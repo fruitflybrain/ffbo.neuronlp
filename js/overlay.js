@@ -13,8 +13,8 @@ if( moduleExporter === undefined){
 }
 
 moduleExporter("Overlay",
-	       ['d3','jquery'],
-	       function(d3,$)
+         ['d3','jquery'],
+         function(d3,$)
 {
   /**
    * Overlay Constructor
@@ -28,7 +28,6 @@ moduleExporter("Overlay",
     }
     this.divId = div_id;
     this.content = content;
-    
     this.dom = document.createElement("div");
     this.dom.setAttribute("id",this.divId);
     this.dom.setAttribute("class","overlay");
