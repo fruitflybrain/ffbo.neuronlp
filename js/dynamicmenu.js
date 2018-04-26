@@ -187,7 +187,7 @@ moduleExporter(
           $("#" + pinBtnId)
             .click( function() {
                 var id = $(this).attr("id").substring(8);
-                updateInfoPanel([$(this).text(), uidEncode(id)]);
+                _this.dispatch.getInfo(uidEncode(id));
             })
           $("#" + pinnedSymbolId)
             .click( function() {

@@ -237,6 +237,7 @@ require([
   dynamicNeuronMenu.dispatch.togglePin = function(id) {ffbomesh.togglePin(id)};
   dynamicNeuronMenu.dispatch.unpin = function(id) {ffbomesh.unpin(id)};
   dynamicNeuronMenu.dispatch.remove = function(id) {client.removeObjs(id)};
+  dynamicNeuronMenu.dispatch.getInfo = function(id) {ffbomesh.select(id)};
   dynamicNeuropilMenu.dispatch.toggle = function(id) {ffbomesh.toggleVis(id)};
 
 
