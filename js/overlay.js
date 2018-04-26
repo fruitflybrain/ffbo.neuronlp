@@ -13,12 +13,12 @@ if( moduleExporter === undefined){
 }
 
 moduleExporter("Overlay",
-         ['d3','jquery'],
-         function(d3,$)
+               ['d3','jquery'],
+               function(d3,$)
 {
 
   var overlayBackground = undefined;
-  
+
   /**
    * Overlay Constructor
    * @param {string} div_id - a id for overlay object
@@ -49,7 +49,7 @@ moduleExporter("Overlay",
 	$('#wrapper')[0].appendChild(overlayDiv);
 	overlayBackground = overlayDiv;
       }
-      
+
       overlayBackground.onclick = () => {
 	this.close();
       };
@@ -75,11 +75,11 @@ moduleExporter("Overlay",
   Overlay.prototype.show = function(){
     setTimeout( () => {
       overlayBackground.style.display = "block";
-      
+
       $('#'+this.divId).slideDown(500);
       $('#'+this.divId).show();
       $('#'+this.divId).css("display","block");
-      
+
     }, 500);
   }
 
