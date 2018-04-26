@@ -18,6 +18,7 @@ moduleExporter("Overlay",
 {
 
   var overlayBackground = undefined;
+  var overlayRegistry = [];
 
   /**
    * Overlay Constructor
@@ -37,21 +38,34 @@ moduleExporter("Overlay",
     this.dom.innerHTML = '<div class="container">' + this.content + '</div>';
     $('#wrapper')[0].appendChild(this.dom);
 
+    overlayRegistry.find((elem,idx) => { // check if overlay with same div_id already exists
+      if (elem.divId === div_id){
+        console.error('[InfoPanel.Overlay] Reinstantiating Overlay with Id = ' + div_id + ', overwritting registration');
+        overlayRegistry.splice(idx,1); //remove existing overlay object
+      }
+    });
+    overlayRegistry.push(this); //adding new object
+
     if (overlayBackground == undefined){
       if ($('#overlay-background')[0]){
-	overlayBackground = $('#overlay-background')[0];
+        overlayBackground = $('#overlay-background')[0];
       }else if ($('.overlay-background')[0] ){
-	overlayBackground = $('.overlay-background')[0];
+        overlayBackground = $('.overlay-background')[0];
       }else{
-	let overlayDiv = document.createElement("div");
-	overlayDiv.setAttribute("id",'overlay-background');
-	overlayDiv.setAttribute("class",'overlay-background');
-	$('#wrapper')[0].appendChild(overlayDiv);
-	overlayBackground = overlayDiv;
+        let overlayDiv = document.createElement("div");
+        overlayDiv.setAttribute("id",'overlay-background');
+        overlayDiv.setAttribute("class",'overlay-background');
+        $('#wrapper')[0].appendChild(overlayDiv);
+        overlayBackground = overlayDiv;
       }
 
       overlayBackground.onclick = () => {
-	this.close();
+        if (overlayRegistry.length == 0){
+          return;
+        }
+        for (let overlayObj of overlayRegistry){
+          overlayObj.close();
+        }
       };
     }
   }
