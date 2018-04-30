@@ -12,130 +12,128 @@ if( moduleExporter === undefined){
   };
 }
 
-moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'jquery'], function(perfectScrollbar, tagEditor, $){
+moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], function(perfectScrollbar, tagEditor, Overlay, $){
   $ = $ || window.$;
   perfectScrollbar = perfectScrollbar || window.perfectScrollbar;
   tagEditor = tagEditor || window.tagEditor;
-
-  function Tags(inDiv, tagsConfigUpdate = { tag: '#tag', tagSubmit: '#tagSubmit', tagModal: '#tagModal', tagSearchMenu: '#tagSearchMenu', tagTagEditor: '#tagTagEditor'}) {
-    this.tagsConfig = { tag: '#tag', tagSubmit: '#tagSubmit', tagModal: '#tagModal', tagSearchMenu: '#tagSearchMenu', tagTagEditor: '#tagTagEditor', createTag: '.createtag', loadTag: '.loadtag'};
+  Overlay = Overlay || window.Overlay;
+  function Tags(div_id, tagsConfigUpdate = { }) {
+    this.tagsConfig = { retrieveTag: '#retrieve_tag_name_input', tag: '#tag_name_input', tagSubmit: '#tagSubmit', tagModal: '#tagModal',
+                        tagSearchMenu: '#tagSearchMenu', tagTagEditor: '#tagTagEditor',
+                        createTag: '.createtag', loadTag: '.loadtag', tagClose: '#tagClose'};
     this.tagsConfig = Object.assign({}, this.tagsConfig, tagsConfigUpdate);
     this.metadata = {};
-    this.inDiv = inDiv;
-    this.initialize = function () {
-      /**
-       * Initializes the Tags menus.
-       */
-      var a = `
-          <div class="modal" id="tagModal" tabindex="-1" role="dialog" aria-labelledby="tagLabel" aria-hidden="true">
-          <div class="modal-dialog">
-          <div class="modal-content">
-          <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&#10005;</span>
-          </button>
-        <h4 class="modal-title" id="tagLabel">Create A Tag</h4>
+    this.div_id = div_id;
+    /**
+     * Initializes the Tags menus.
+     */
+    var a = `
+        <div class="createtag">
+          <h4 class="tagLabel">Create Tag</h4>
+          <h5 type="text" id="tag_name" style="width:30%; float:left">Tag Name</h5>
+          <input type="text" name="tag" class="tag-text tag-name" id="tag_name_input" style="display: block;margin: 10px; right: 0px; width: 60%; position: absolute">
+          <!-- <h5 type="text" id="tag_desc" style="float: left; width:60%">Tag Description</h5>
+          <textarea type="text" name="tag" class="tag-text" rows="3" id="tag_desc_input" style="display: block; width:100%; resize: none;"></textarea>
+          <h5 type="text" id="tag_keys" style="float: left; width:100%">Tag Keywords</h5>
+          <div id="tagTagEditor" style="float: left; width:100%"></div> -->
         </div>
-        <div class="modal-body createtag">
-        <h5 type="text" id="tag_name" style="float: left; width:60%">Tag Name</h5>
-        <textarea type="text" name="tag" class="tag-text" rows="1" id="tag_name_input" style="display: block; width:100%; resize: none;"></textarea>
-        <h5 type="text" id="tag_desc" style="float: left; width:60%">Tag Description</h5>
-        <textarea type="text" name="tag" class="tag-text" rows="3" id="tag_desc_input" style="display: block; width:100%; resize: none;"></textarea>
-        <h5 type="text" id="tag_keys" style="float: left; width:100%">Tag Keywords</h5>
-
-        <div id="tagTagEditor" style="float: left; width:100%"></div>
+        <div class="loadtag">
+          <h4 class="tagLabel">Retrieve Tag</h4>
+          <h5 type="text" id="tag_name" style="width:30%; float:left">Retrieve a Tag by Name</h5>
+          <input type="text" name="tag" class="tag-text tag-name"  id="retrieve_tag_name_input" style="display: block;margin: 10px; right: 0px; width: 60%; position: absolute">
+          <!--
+          <h5 type="text" id="tag_desc" style="display: block; width:60%">Browse Tags</h5>
+          <br />
+          <div id="tagSearchMenu" class="list-group" style="overflow:scroll; height:400px; overflow-x: hidden; max-width: 100%;">
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start tag-el active">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">Mushroom Body Alpha Lobe</h5>
+              <div class="tags-aggregate">
+                <span class="badge badge-primary">alpha-lobe</span>
+                <span class="badge badge-primary">mushroom-body</span>
+              </div>
+            </div>
+            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+            &nbsp;&nbsp;
+            <small>This Tag is currently featured.</small>
+            </a>
+          </div>
+          !-->
         </div>
-        <div class="modal-body loadtag">
-        <h5 type="text" id="tag_name" style="float: left; width:60%">Retrieve a Tag by Name</h5>
-        <textarea type="text" name="tag" rows="1" id="retrieve_tag_name_input" style="display: block; width:100%; resize: none; max-width: 100%;"></textarea>
-        <h5 type="text" id="tag_desc" style="display: block; width:60%">Browse Tags</h5>
-        <br />
-        <div id="tagSearchMenu" class="list-group" style="overflow:scroll; height:400px; overflow-x: hidden; max-width: 100%;">
-        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start tag-el active">
-        <div class="d-flex w-100 justify-content-between">
-        <h5 class="mb-1">Mushroom Body Alpha Lobe</h5>
-        <div class="tags-aggregate">
-        <span class="badge badge-primary">alpha-lobe</span>
-        <span class="badge badge-primary">mushroom-body</span>
-        </div>
-        </div>
-        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-        &nbsp;&nbsp;
-        <small>This Tag is currently featured.</small>
-        </a>
-        </div>
-        </div>
-        <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="tagSubmit"></button>
-        </div>
-        </div>
-        </div>
+        <div class="tag-footer" style="padding-top: 50px">
+          <button type="button" class="btn btn-primary" style = "margin: 10px; float: right" id="tagSubmit"></button>
+          <button type="button" class="btn btn-default" style = "margin: 10px;float: right" id="tagClose">Close</button>
         </div>`;
-      this.inDiv.append(a);
-      $(this.tagsConfig['tagSubmit']).click(function () {
-        if ($(this.tagsConfig['tagSubmit']).text() == 'Create tag')
+    this.overlay = new Overlay(div_id, a)
+    //this.inDiv.append(a);
+
+    $(this.tagsConfig['tagClose']).click( () => {this.overlay.closeAll();} );
+    $(this.tagsConfig['tagSubmit']).click( () => {
+      if ($(this.tagsConfig['tagSubmit']).text() == 'Create Tag')
+        this.createTag($(this.tagsConfig['tag']).val());
+      else
+        this.retrieveTag($(this.tagsConfig['retrieveTag']).val());
+      this.overlay.closeAll();
+      //$(this.tagsConfig['tagModal']).modal('hide');
+    });
+    $('.tag-name').keyup( (event) => {
+      if (event.keyCode == 13) {
+        if ($(this.tagsConfig['tagSubmit']).text() == 'Create Tag')
           this.createTag($(this.tagsConfig['tag']).val());
         else
-          this.retrieveTag($(this.tagsConfig['tag']).val());
-        $(this.tagsConfig['tagModal']).modal('hide');
-      });
-      $(this.tagsConfig['tag']).keyup(function (event) {
-        if (event.keyCode == 13) {
-          if ($(this.tagsConfig['tagSubmit']).text() == 'Create tag')
-            this.createTag($(this.tagsConfig['tag']).val());
-          else
+          this.retrieveTag($(this.tagsConfig['retrieveTag']).val());
+        //$(this.tagsConfig['tagModal']).modal('hide');
+        this.overlay.closeAll();
+      }
+    });
+
+    /*
+    //$(this.tagsConfig['tagSearchMenu']).perfectScrollbar();
+    $(this.tagsConfig['tag']).keyup( (event) => {
+      if (event.keyCode == 13) {
+        if ($(this.tagsConfig['tagSubmit']).text() == 'Create tag')
+          this.createTag($(this.tagsConfig['tag']).val());
+        else {
+          if ($(this.tagsConfig['tag']).val().length > 0)
             this.retrieveTag($(this.tagsConfig['tag']).val());
-          $(this.tagsConfig['tagModal']).modal('hide');
-        }
-      });
-
-      $(this.tagsConfig['tagSearchMenu']).perfectScrollbar();
-
-      $(this.tagsConfig['tag']).keyup(function (event) {
-        if (event.keyCode == 13) {
-          if ($(this.tagsConfig['tagSubmit']).text() == 'Create tag')
-            this.createTag($(this.tagsConfig['tag']).val());
           else {
-            if ($(this.tagsConfig['tag']).val().length > 0)
-              this.retrieveTag($(this.tagsConfig['tag']).val());
-            else {
-              var thisdata = tag_data[parseInt($('.tag-el.active').attr('data')) - 1];
-              this.retrieveTag(thisdata['name']);
-            }
+            var thisdata = tag_data[parseInt($('.tag-el.active').attr('data')) - 1];
+            this.retrieveTag(thisdata['name']);
           }
-          $(this.tagsConfig['tagModal']).modal('hide');
         }
+        //$(this.tagsConfig['tagModal']).modal('hide');
+      }
+    });
+    */
+    /*$(this.tagsConfig['tagTagEditor']).tagEditor({
+      initialTags: ['mushroom body', 'kenyon cells'],
+      delimiter: ',',
+      placeholder: 'Enter Keywords'
       });
-
-      $(this.tagsConfig['tagTagEditor']).tagEditor({
-        initialTags: ['mushroom body', 'kenyon cells'],
-        delimiter: ',', /* Comma */
-        placeholder: 'Enter Keywords'
-      });
-
-    }
+    */
 
     this.onCreateTag = function() {
       /**
        * Opens the Create Tag menu.
        */
+      $("#ui_menu_nav").data( "mmenu" ).close(); // This should be done somewhere else
       $(this.tagsConfig['tagSubmit']).text('Create Tag');
-      $(this.tagsConfig['tagModal']).modal('show');
-      $(this.tagsConfig['tag']).focus();
       $(this.tagsConfig['createTag']).show();
       $(this.tagsConfig['loadTag']).hide();
+      this.overlay.show();
+      $(this.tagsConfig['tag']).focus();
     }
 
     this.onRetrieveTag = function(){
       /**
        * Opens the Retrieve Tag menu.
        */
+      $("#ui_menu_nav").data( "mmenu" ).close(); // This should be done somewhere else
       $(this.tagsConfig['tagSubmit']).text('Retrieve Tag');
-      $(this.tagsConfig['tagModal']).modal('show');
-      $(this.tagsConfig['tag']).focus()
       $(this.tagsConfig['createTag']).hide();
       $(this.tagsConfig['loadTag']).show();
+      this.overlay.show();
+      $(this.tagsConfig['retrieveTag']).focus()
     }
 
 
@@ -183,16 +181,16 @@ moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'jquery'], function(per
   }
   return Tags;
 });
-               /*
+/*
 
-                 currentTag = new Tags($('#wrapper'));
-                 currentTag.initialize();
+  currentTag = new Tags($('#wrapper'));
+  currentTag.initialize();
 
-                 current_tags = $('#tagTagEditor').tagEditor('getTags')[0].tags;
+  current_tags = $('#tagTagEditor').tagEditor('getTags')[0].tags;
 
-                 var ex_tag = {'name': 'Alpha Lobe', 'desc': 'This tag shows the alpha lobe of the mushroom body.', 'keywords': ['mushroom body', 'alpha lobe'], 'FFBOdata': {extra: 'This tag has been created by the FFBO team.'}};
+  var ex_tag = {'name': 'Alpha Lobe', 'desc': 'This tag shows the alpha lobe of the mushroom body.', 'keywords': ['mushroom body', 'alpha lobe'], 'FFBOdata': {extra: 'This tag has been created by the FFBO team.'}};
 
-                 var tag_data = [];
+  var tag_data = [];
 
-                 addTagBrowser(ex_tag, tag_data);
-                 */
+  addTagBrowser(ex_tag, tag_data);
+*/

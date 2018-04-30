@@ -32,7 +32,7 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
     }
     try{
       if('info' in result && 'error' in result.info){
-        this.notifyError(result['info']['success'])
+        this.notifyError(result['info']['error'])
         if( queryID != undefined) this.status[queryID] = -1; //Error
         return;
       }
@@ -309,7 +309,7 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
       tag: tag_name,
       metadata: metadata,
       uri: 'ffbo.na.create_tag'
-    }, callbacks, format);
+    });
   }
 
   FFBOClient.prototype.retrieveTag = function(tag_name, callbacks, format){
@@ -353,6 +353,19 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
           object: { state: 0 }
         }
       ]
+    }, callbacks, format);
+  }
+
+  FFBOClient.prototype.retrieveState = function(callbacks, format){
+    /**
+     * Query to keep a list of Objs based on their Rids. rids must be an array
+     */
+    return this.executeNAquery({
+      command:{
+        retrieve:{
+          state: 0
+        }
+      }
     }, callbacks, format);
   }
 

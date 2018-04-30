@@ -13,8 +13,8 @@ if( moduleExporter === undefined){
 }
 
 moduleExporter("Overlay",
-               ['d3','jquery'],
-               function(d3,$)
+               ['jquery'],
+               function($)
 {
 
   var overlayBackground = undefined;
@@ -35,7 +35,7 @@ moduleExporter("Overlay",
     this.dom = document.createElement("div");
     this.dom.setAttribute("id",this.divId);
     this.dom.setAttribute("class","overlay");
-    this.dom.innerHTML = '<div class="container">' + this.content + '</div>';
+    this.dom.innerHTML = '<div class="overlay_container">' + this.content + '</div>';
     $('#wrapper')[0].appendChild(this.dom);
 
     overlayRegistry.find((elem,idx) => { // check if overlay with same div_id already exists
@@ -70,7 +70,14 @@ moduleExporter("Overlay",
     }
   }
 
-
+  Overlay.prototype.closeAll = function(){
+    if (overlayRegistry.length == 0){
+      return;
+    }
+    for (let overlayObj of overlayRegistry){
+      overlayObj.close();
+    }
+  }
   /**
    * SlideUp animation for closing overlay
    */

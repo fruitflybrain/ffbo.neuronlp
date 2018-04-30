@@ -133,17 +133,38 @@ require([
   var dynamicNeuronMenu = new FFBODynamicMenu({singleObjSel: '#single-neu > .mm-listview', pinnedObjSel: '#single-pin > .mm-listview', removable: true, pinnable: true});
   var dynamicNeuropilMenu = new FFBODynamicMenu({singleObjSel: '#toggle_neuropil > .mm-listview', compare: 'LeftRight'});
   var ffbomesh = new FFBOMesh3D('vis-3d', undefined, {"globalCenter": {'x': 0, 'y':-250, 'z':0}});
-  var tagsPanel = new Tags($('#wrapper'));
+  var tagsPanel = new Tags('tagsMenu');
   var client = new FFBOClient();
   client.startConnection("guest", "guestpass", "wss://neuronlp.fruitflybrain.org:8888/ws");
 
   ffbomesh.settings.neuron3d = 1;
+  function dataCallback(data){
+    ffbomesh.addJson({ffbo_json: data, type: 'morphology_json'});
+  }
 
   window.client = client;
   window.tagsPanel = tagsPanel;
   window.ffbomesh = ffbomesh;
-  tagsPanel.initialize();
+  //tagsPanel.initialize();
 
+  function retrieveTagCallback(data){
+    $('#ui-blocker').show();
+    metadata = data;
+    queryID = client.retrieveState({success: dataCallback});
+    client.status.on("change", function(){
+      ffbomesh.import_state(metadata);
+      $('#ui-blocker').hide();
+    }, queryID)
+  }
+  tagsPanel.createTag = function(tagName){
+    client.createTag(tagName, Object.assign({}, ffbomesh.export_state(), {
+                               //settings: ffbomesh.export_settings(),
+                               //keywords: keywords
+    }));
+  }
+  tagsPanel.retrieveTag = function(tagName){
+    client.retrieveTag(tagName, {success: retrieveTagCallback});
+  }
 
   var oldHeight = ffbomesh.container.clientHeight;
   var oldWidth = ffbomesh.container.clientWidth;
@@ -168,9 +189,6 @@ require([
     }
   }, 40);
 
-  function dataCallback(data){
-    ffbomesh.addJson({ffbo_json: data, type: 'morphology_json'});
-  }
 
   if(!isOnMobile)
     client.notifySuccess = function(message){
@@ -182,8 +200,6 @@ require([
   }
 
   client.receiveCommand = function(message){
-    console.log("Command Received");
-    console.log(message);
     if(!'commands' in message)
       return;
     if('reset' in message['commands']){
