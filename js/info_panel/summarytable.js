@@ -64,10 +64,10 @@ moduleExporter("SummaryTable",
   function createTemplate(obj){
     var template = "";
     template += '<div id="' + obj.tabId + '" class="table-grid"></div>';
-    template += '<div id="' + obj.extraImgId + '" class="row">';
-    template += '<div class="col-md-4" style="display:none"><h4>Confocal Image</h4><img class="clickable-image" alt="not available" tryCtr=0 maxTry=5></div>';
-    template += '<div class="col-md-4" style="display:none"><h4>Segmentation</h4><img class="clickable-image" alt="not available" tryCtr=0 maxTry=5></div>';
-    template += '<div class="col-md-4" style="display:none"><h4>Skeleton</h4><img class="clickable-image" alt="not available" tryCtr=0 maxTry=5></div>';
+    template += '<div id="' + obj.extraImgId + '">';
+    template += '<div style="display:none"><h4>Confocal Image</h4><img class="clickable-image" alt="not available" tryCtr=0 maxTry=5></div>';
+    template += '<div style="display:none"><h4>Segmentation</h4><img class="clickable-image" alt="not available" tryCtr=0 maxTry=5></div>';
+    template += '<div style="display:none"><h4>Skeleton</h4><img class="clickable-image" alt="not available" tryCtr=0 maxTry=5></div>';
     template += '</div>';
     return template;
   }
