@@ -210,7 +210,8 @@ require([
     }));
   }
   tagsPanel.retrieveTag = function(tagName){
-    client.retrieveTag(tagName, {success: retrieveTagCallback});
+    queryID = client.retrieveTag(tagName, {success: retrieveTagCallback});
+    client.status.on("change", function(e){ if(e.value == -1) $('#ui-blocker').hide(); }, queryID);
   }
 
   var oldHeight = ffbomesh.container.clientHeight;
