@@ -10,10 +10,10 @@ define('three', ['https://cdn.rawgit.com/mrdoob/three.js/r92/build/three.min.js'
   return THREE;
 });
 requirejs.config({
-  baseUrl: '../js',
+  baseUrl: 'js',
   paths: {
     // app: 'app',
-    mesh3d: '../lib/js/mesh3d',
+    mesh3d: 'lib/js/mesh3d',
     infopanel: "info_panel/infopanel",
     autobahn: '//cdn.rawgit.com/crossbario/autobahn-js-built/master/autobahn.min',
     d3: '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min',
@@ -39,7 +39,7 @@ requirejs.config({
     unrealbloompass: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/postprocessing/UnrealBloomPass',
     adaptivetonemappingpass: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/postprocessing/AdaptiveToneMappingPass',
     trackballcontrols: '//cdn.rawgit.com/fruitflybrain/ffbo.lib/VisualizationUpdates/js/three/libs/TrackballControls',
-    lightshelper: '../lib/js/lightshelper',
+    lightshelper: 'lib/js/lightshelper',
     modernizr: "//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min",
     d3: "//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3",
     jqueryui: "//code.jquery.com/ui/1.12.1/jquery-ui",
@@ -138,12 +138,13 @@ require([
 
   var tagLoad = false;
   searchParams = new URLSearchParams(document.location.search);
-  if(searchParams.get('tag'))
+  if(searchParams.get('tag')){
     tagLoad = true;
-  client.loginStatus.on("change", function(){
-    console.log('Retrieving Tag');
-    tagsPanel.retrieveTag(searchParams.get('tag'))
-  }, "connected");
+    client.loginStatus.on("change", function(){
+      console.log('conn');
+      if(tagLoad) tagsPanel.retrieveTag(searchParams.get('tag'))
+    }, "connected");
+  }
 
   client.startConnection("guest", "guestpass", "wss://neuronlp.fruitflybrain.org:8888/ws");
 

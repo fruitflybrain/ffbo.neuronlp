@@ -55,6 +55,7 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "jquery.mmenu"], function($, 
 
     this.mimicMouseOver = (selector, flag) => {
       if (flag) {
+        mm_menu_right.closeAllPanels();
         mm_menu_right.open();
         $("a[href='#toggle_get_started']")[0].click()
       }
@@ -67,20 +68,24 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "jquery.mmenu"], function($, 
     };
 
     this.onGettingStarted = function() {
+      mm_menu_right.closeAllPanels();
       mm_menu_right.open();
       $("a[href='#toggle_get_started']")[0].click()
     }
     this.onToggleTag = function() {
+      mm_menu_right.closeAllPanels();
       mm_menu_right.open();
       $("a[href='#toggle_tag']")[0].click()
     }
     this.onToggleNeuClick = function() {
+      mm_menu_right.closeAllPanels();
       mm_menu_right.initPanels($('#single-neu'));
       mm_menu_right.initPanels($('#single-pin'));
       mm_menu_right.open();
       $("a[href='#toggle_neuron']")[0].click()
     }
     this.onToggleLPUClick = function() {
+      mm_menu_right.closeAllPanels();
       mm_menu_right.initPanels($('#single-neuropil'));
       mm_menu_right.open();
       $("a[href='#toggle_neuropil']")[0].click()
@@ -153,7 +158,7 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "jquery.mmenu"], function($, 
       $("#ui_menu_nav").mmenu({
         //counters: true,
         onClick: {
-          close: false
+          close: false,
         },
         "extensions": ["effect-menu-zoom", "position-right", "position-front"],
         navbar: {

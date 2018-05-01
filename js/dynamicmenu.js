@@ -104,7 +104,7 @@ moduleExporter(
         var btnToggleId = "btn-toggle-" + uidDecode(id);
         var btnRmId = (_this.config.removable) ? "btn-rm-" + uidDecode(id): false;
         var btnPinSymId = (_this.config.pinnable) ? "btn-pin-symbol-" + uidDecode(id): false;
-        var domStr = `<li id='li-${btnId}'>` +
+        var domStr = `<li id='li-${btnId}' class='mm-listitem'>` +
                       `<a id='${btnId}' role='button' label='${label}' class='btn-single-ob'>${label}</a>` +
                       ((btnRmId) ? `<a id='${btnRmId}' role='button'>${_this.config.removeSymbol}</a>` : '') +
                       ((btnPinSymId) ? `<a id='${btnPinSymId}' class='btn-unpinned' role='button'>${_this.config.pinSymbol}</a>` : '') +
@@ -179,7 +179,7 @@ moduleExporter(
         var pinBtnId = "btn-pin-" + id;
         var pinnedSymbolId = "btn-pinned-" + id;
         if (pinned) {
-          var domStr = `<li id='li-${pinBtnId}'>` +
+          var domStr = `<li id='li-${pinBtnId}' class='mm-listitem'>` +
                          `<a id='${pinBtnId}' role='button' 'role='button' class='btn-pinned'>${label}</a>` +
                          `<a id='${pinnedSymbolId}' class='btn-pinned' role='button'>${_this.config.pinSymbol}</a>` +
                        "</li>";
