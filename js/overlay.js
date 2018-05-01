@@ -13,8 +13,8 @@ if( moduleExporter === undefined){
 }
 
 moduleExporter("Overlay",
-               ['jquery'],
-               function($)
+               ['jquery','perfectscrollbar'],
+               function($,perfectScrollbar)
 {
 
   var overlayBackground = undefined;
@@ -26,6 +26,7 @@ moduleExporter("Overlay",
    * @param {string} content - HTML string for content of ovelay
    */
   function Overlay(div_id, content){
+    perfectScrollbar = perfectScrollbar || window.perfectScrollbar;
     this.divId = div_id;
     if (document.getElementById(div_id)){
       //console.error('[InfoPanel.Overlay] Instantiation Failure, Element "' + div_id + '" exists, aborting');
@@ -33,7 +34,10 @@ moduleExporter("Overlay",
       this.dom = document.getElementById(this.divId);
       this.dom.setAttribute("class","overlay");
       if( !this.dom.querySelector('.overlay_container') )
+      {
         this.dom.innerHTML = '<div class="overlay_container">' + this.dom.innerHTML + '</div>';
+        $('.overlay_container').perfectScrollbar();
+      }
     }
     else{
       this.content = content;
