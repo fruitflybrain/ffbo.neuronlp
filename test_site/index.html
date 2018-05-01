@@ -55,7 +55,7 @@
               </a>
             </div>
             <button id="ui_menu_btn" type="button" class="navbar-toggle collapsed" onclick="NeuroNLPUI.openRightMenu()" style="z-index:1">
-              <span class="sr-only">Toggle navigation</span>
+              <span class="sr-only">navigation</span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
@@ -76,10 +76,10 @@
           </div>
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-              <li id="btn-getting-started"><a onclick="NeuroNLPUI.onGettingStarted()">Get Started</a></li>
+              <li id="btn-getting-started" ><a onclick="NeuroNLPUI.onGettingStarted()" data-toggle="tooltip" title="Try some demos, get a UI overview or check the latest news">Get Started</a></li>
               <li id="btn-tags" ><a onclick="NeuroNLPUI.onToggleTag()">Tags</a></li>
-              <li id="btn-neuron"><a onclick="NeuroNLPUI.onToggleNeuClick()">Toggle Neurons</a></li>
-              <li id="btn-neuropils"><a onclick="NeuroNLPUI.onToggleLPUClick()">Toggle Neuropils</a></li>
+              <li id="btn-neuron"><a data-toggle="tooltip" title="Control Neuron and Synapses currently in the scene" onclick="NeuroNLPUI.onToggleNeuClick()">Neurons/Synapses</a></li>
+              <li id="btn-neuropils"><a data-toggle="tooltip" title="Control Neuropils currently in the scene" onclick="NeuroNLPUI.onToggleLPUClick()">Neuropils</a></li>
             </ul>
           </div>
           <nav id="ui_menu_nav">
@@ -90,7 +90,7 @@
                   <li id="btn-overview"><a onclick="NeuroNLPUI.onShowOverview()">Overview</a></li>
                   <li id="btn-news"><a onclick="NeuroNLPUI.onShowAnnounce()">News</a></li>
                   <li><a onclick="NeuroNLPUI.onShowDemo()">Demos</a></li>
-                  <li><a onclick="NeuroNLPUI.onShowTutorialVideo()">Tutorial Video</a></li>
+                  <!-- <li><a onclick="NeuroNLPUI.onShowTutorialVideo()">Tutorial Video</a></li> -->
                 </ul>
               </li>
               <li>
@@ -101,26 +101,26 @@
                 </ul>
               </li>
               <li>
-                <span>Toggle Neuron </span>
+                <span>Neurons/Synapses</span>
                 <ul id="toggle_neuron">
                   <li><a id='btn-neu-all' role='button' class='' onclick="NeuroNLPUI.onShowAllNeuron()">Show All</a></li>
                   <li><a id='btn-neu-none' role='button' class='' onclick="NeuroNLPUI.onHideAllNeuron()">Hide All</a></li>
                   <li>
-                    <span>Pinned <i class="icon-arrow-right"></i></span>
+                    <span>Pinned Neurons/Synapses <i class="icon-arrow-right"></i></span>
                     <ul id="single-pin">
-                      <li><a id="btn-pin-keep" role="button" class='' onclick="NeuroNLPUI.onRemoveUnpinned()">Delete unpinned neurons</a></li>
-                      <li><a id="btn-pin-keep" role="button" class='' onclick="NeuroNLPUI.onRemovePinned()">Delete pinned neurons</a></li>
+                      <li><a id="btn-pin-keep" role="button" class='' onclick="NeuroNLPUI.onRemoveUnpinned()">Delete unpinned neurons/synapses</a></li>
+                      <li><a id="btn-pin-keep" role="button" class='' onclick="NeuroNLPUI.onRemovePinned()">Delete pinned neurons/synapses</a></li>
                       <li><a id="btn-pin-unpinall" role="button" class='' onclick="NeuroNLPUI.onUnpinAll()">Unpin All</a></li>
                     </ul>
                   </li>
                   <li>
-                    <span>Single Neuron <i class="icon-arrow-right"></i></span>
+                    <span>All Neurons/Synapses <i class="icon-arrow-right"></i></span>
                     <ul id="single-neu"></ul>
                   </li>
                 </ul>
               </li>
               <li>
-                <span>Toggle Neuropil</span>
+                <span>Neuropils</span>
                 <ul id="toggle_neuropil">
                   <li><a id='btn-lpu-all' role='button' class='' onclick="NeuroNLPUI.onShowAllNeuropil()">Show All</a></li>
                   <li><a id='btn-lpu-none' role='button' class='' onclick="NeuroNLPUI.onHideAllNeuropil()">Hide All</a></li>
@@ -176,16 +176,17 @@
               </p>
               <a  onmouseover="NeuroNLPUI.mimicMouseOver('#btn-getting-started')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-getting-started')" onclick="NeuroNLPUI.onShowDemo()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Try Demos!</a>
               <br><br>
+              <!--
               <h4>Tutorial Video</h4>
               <p>
                 Want to learn more? Go watch the "Tutorial Video" covering details and features of NeuroNLP!
               </p>
               <a  onmouseover="NeuroNLPUI.mimicMouseOver('#btn-getting-started')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-getting-started')" onclick="NeuroNLPUI.onShowTutorialVideo()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Watch Tutorial Video!</a>
-              <br><br>
+              <br><br> -->
               <h4>Sharing Query Results</h4>
               <p>
-                Sharing query results is easy with the "Tags" feature. Try
-                create your own tags!
+                Sharing query results is easy with the "Tags" feature. Try retrieving the tag "ffbo" or
+                create your own tag!
               </p>
               <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-tags')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-tags')"  onclick="NeuroNLPUI.onToggleTag()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Try Tags!</a>
             </div>
@@ -321,7 +322,7 @@
             </div>
           </div>
         </div>
-        <div id="video-panel" class='overlay'>
+        <!--<div id="video-panel" class='overlay'>
           <ul  class="list-inline">
             <li><h2>Tutorial Video </h2></li>
           </ul>
@@ -331,15 +332,7 @@
             <a href="video/FFBO_video_guide.mp4">download it</a>
             and watch it with your favorite video player!
           </video>
-        </div>
-        <div id="img-viewer-overlay" class='overlay'>
-          <img id="full-img">
-          <h2 id="img-viewer-caption"></h2>
-        </div>
-        <div id="information-overlay" class='overlay'>
-          <div class="container">
-          </div>
-        </div>
+        </div> -->
         <!-- Overview Panel -->
         <div id="overview-panel" class="overlay">
           <ul id="overview-header" class="overview-header list-inline">
@@ -382,7 +375,7 @@
                   </ul>
                 </article>
                 <images>
-                  <img src="img/overview-panel/layout_release_overview.png"> </img>
+                  <img src="/img/overview-panel/layout_release_overview.png"> </img>
                 </images>
               </band>
 
@@ -488,18 +481,20 @@
         </div>
         <div id="neuronlp-switch" class="overlay">
           <div class="neuronlp-switch-wrapper">
-            <a class="info-try btn btn-xs">Stay at <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #999;">NeuroNLP .Adult</span></a>
+            <a class="info-try btn btn-xs" onclick="NeuroNLPUI.closeAllOverlay()">Stay at <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #999;">NeuroNLP .Adult</span></a>
             <h5>Or</h5>
             <a class="info-try btn btn-xs" href="https://neuronlp.larva.fruitflybrain.org">Switch to <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #999;">NeuroNLP .Larva</span></a>
           </div>
         </div>
 
         <div id="announce-panel" class="overlay">
-          <ul class="list-inline">
-            <li><h2>Latest News</h2></li>
-          </ul>
-          <div>
-            <a class="twitter-timeline"  data-chrome="noheader nofooter transperant" data-partner="tweetdeck" data-theme="dark" href="https://twitter.com/FlyBrainObs/timelines/895746744633483264">NeuroNLPUpdates - Curated tweets by FlyBrainObs</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+          <div class="overlay_container">
+            <ul class="list-inline">
+              <li><h2>Latest News</h2></li>
+            </ul>
+            <div>
+              <a class="twitter-grid" href="https://twitter.com/FlyBrainObs/timelines/895746744633483264?ref_src=twsrc%5Etfw">NeuroNLPUpdates</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
           </div>
         </div>
       </div>

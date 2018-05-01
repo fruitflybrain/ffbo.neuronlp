@@ -101,7 +101,7 @@ require([
   'tags',
   'izitoast',
   'bootstrap',
-  'jquery.mobile',
+  //'jquery.mobile',
   'jqueryui',
   'blockui'
 ], function (
@@ -126,7 +126,7 @@ require([
 
   var isOnMobile =  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-  $.mobile.ajaxEnabled = false;
+  //$.mobile.ajaxEnabled = false;
   window.NeuroNLPUI = new NeuroNLPUI();
   var infoPanel = new InfoPanel("info-panel");
   window.infoPanel = infoPanel;
@@ -135,6 +135,16 @@ require([
   var ffbomesh = new FFBOMesh3D('vis-3d', undefined, {"globalCenter": {'x': 0, 'y':-250, 'z':0}});
   var tagsPanel = new Tags('tagsMenu');
   var client = new FFBOClient();
+
+  var tagLoad = false;
+  searchParams = new URLSearchParams(document.location.search);
+  if(searchParams.get('tag'))
+    tagLoad = true;
+  client.loginStatus.on("change", function(){
+    console.log('Retrieving Tag');
+    tagsPanel.retrieveTag(searchParams.get('tag'))
+  }, "connected");
+
   client.startConnection("guest", "guestpass", "wss://neuronlp.fruitflybrain.org:8888/ws");
 
   ffbomesh.settings.neuron3d = 1;
@@ -147,18 +157,55 @@ require([
   window.ffbomesh = ffbomesh;
   //tagsPanel.initialize();
 
-  function retrieveTagCallback(data){
-    $('#ui-blocker').show();
-    metadata = data;
+  function retrieveTagData(metadata){
     queryID = client.retrieveState({success: dataCallback});
     client.status.on("change", function(){
       ffbomesh.import_state(metadata);
       $('#ui-blocker').hide();
-    }, queryID)
+    }, queryID);
   }
+
+  function retrieveTagCallback(data){
+    metadata = data;
+    if('settings' in metadata){
+      settings = metadata.settings;
+      delete metadata['settings'];
+      if( tagLoad ){
+        tagLoad = false;
+        ffbomesh.import_settings(settings);
+        retrieveTagData(metadata);
+      }
+      else{
+        iziToast.info({
+          close: false,
+          timeout: false,
+          drag: false,
+          overlay: true,
+          title: "Visualization Settings",
+          message: "Click yes to load Visualization Settings from the tag and override your settings",
+          position: "center",
+          buttons: [
+            ['<button><b>YES</b></button>', function (instance, toast) {
+              instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+              $('#ui-blocker').show();
+              ffbomesh.import_settings(settings);
+              retrieveTagData(metadata);
+            }, true],
+            ['<button>NO</button>', function (instance, toast) {
+              instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+              $('#ui-blocker').show();
+              retrieveTagData(metadata);
+            }],
+          ],
+        });
+      }
+    }
+    else{ retrieveTagData(metadata); }
+  }
+
   tagsPanel.createTag = function(tagName){
     client.createTag(tagName, Object.assign({}, ffbomesh.export_state(), {
-                               //settings: ffbomesh.export_settings(),
+                               settings: ffbomesh.export_settings(),
                                //keywords: keywords
     }));
   }
@@ -333,17 +380,71 @@ require([
 
   ffbomesh.on('resetView', (function() {ffbomesh.resetView()}));
   ffbomesh.on('resetVisibleView', (function() {ffbomesh.resetVisibleView()}));
-  ffbomesh.on('showInfo', (function() {closeAllOverlay(true); $("#gui-3d").show()}));
   ffbomesh.on('removeUnpin', (function() {removeUnpinned()}));
   ffbomesh.on('hide_all', (function() {ffbomesh.hideAll()}));
   ffbomesh.on('show_all', (function() {ffbomesh.showAll()}));
   ffbomesh.on('takeScreenshot', (function() {ffbomesh._take_screenshot=true;}));
+  ffbomesh.on('showInfo', function() {window.NeuroNLPUI.GUIinfoOverlay.show();});
 
   $.getJSON("config.json", function(json) {
     ffbomesh.addJson({ffbo_json: json,
                       showAfterLoadAll: true}).then(function(){
-                        $('#ui-blocker').hide();
+                        if(!tagLoad) $('#ui-blocker').hide();
                         srchInput.focus();
                       });
+  });
+  console.log(client.loginStatus.connected)
+
+  var textFile = null;
+  ffbomesh.on("DownData", function() {
+    client.NotifySuccess("Fetching Connectivity Data")
+    $('#ui-blocker').show();
+    client.getConnectivity({success: function(res){
+      csv = 'If Inferred=1, the connectivity between neurons was inferred using axonic/dendritic polarity predicted by SPIN:Skeleton-based Polarity Identification for Neurons. Please refer to \nSPIN: A Method of Skeleton-based Polarity Identification for Neurons. Neurinformatics 12:487-507. Yi-Hsuan Lee, Yen-Nan Lin, Chao-Chun Chuang and Chung-Chuan Lo (2014)\nfor more details\n'
+      csv += 'PreSynaptic Neuron,PostSynaptic Neuron,N,Inferred'
+      nodes = res['nodes']
+      edges = res['edges']
+
+      for(e_pre in edges){
+        if(nodes[e_pre]['class'] == 'Neuron'){
+          if('uname' in nodes[e_pre])
+            pre = nodes[e_pre]['uname']
+          else
+            pre = nodes[e_pre]['name']
+          synapse_nodes = edges[e_pre]
+          for(synapse in synapse_nodes){
+            if(nodes[synapse]['class'] == 'Synapse')
+              inferred=0
+            else
+              inferred=1
+            N = nodes[synapse]['N']
+            post_node = nodes[Object.keys(edges[synapse])[0]]
+            if('uname' in post_node)
+              post = post_node['uname']
+            else
+              post = post_node['name']
+            csv += ('\n' + pre + ',' + post + ',' + N + ',' + inferred)
+          }
+        }
+      }
+      var data = new Blob([csv], {type: 'text/csv'});
+      // If we are replacing a previously generated file we need to
+      // manually revoke the object URL to avoid memory leaks.
+      if (textFile !== null) {
+        window.URL.revokeObjectURL(textFile);
+      }
+      textFile = window.URL.createObjectURL(data);
+      var link = document.createElement('a');
+      link.setAttribute('download', 'ffbo_connectivity.csv');
+      link.href = textFile;
+      document.body.appendChild(link);
+      // wait for the link to be added to the document
+      window.requestAnimationFrame(function () {
+        var event = new MouseEvent('click');
+        link.dispatchEvent(event);
+        document.body.removeChild(link);
+      });
+      $('#ui-blocker').hide();
+    }});
   });
 });

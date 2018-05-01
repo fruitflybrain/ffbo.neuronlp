@@ -26,18 +26,23 @@ moduleExporter("Overlay",
    * @param {string} content - HTML string for content of ovelay
    */
   function Overlay(div_id, content){
-    if (document.getElementById(div_id)){
-      console.error('[InfoPanel.Overlay] Instantiation Failure, Element "' + div_id + '" exists, aborting');
-      return undefined;
-    }
     this.divId = div_id;
-    this.content = content;
-    this.dom = document.createElement("div");
-    this.dom.setAttribute("id",this.divId);
-    this.dom.setAttribute("class","overlay");
-    this.dom.innerHTML = '<div class="overlay_container">' + this.content + '</div>';
-    $('#wrapper')[0].appendChild(this.dom);
-
+    if (document.getElementById(div_id)){
+      //console.error('[InfoPanel.Overlay] Instantiation Failure, Element "' + div_id + '" exists, aborting');
+      //return undefined;
+      this.dom = document.getElementById(this.divId);
+      this.dom.setAttribute("class","overlay");
+      if( !this.dom.querySelector('.overlay_container') )
+        this.dom.innerHTML = '<div class="overlay_container">' + this.dom.innerHTML + '</div>';
+    }
+    else{
+      this.content = content;
+      this.dom = document.createElement("div");
+      this.dom.setAttribute("id",this.divId);
+      this.dom.setAttribute("class","overlay");
+      this.dom.innerHTML = '<div class="overlay_container">' + this.content + '</div>';
+      $('#wrapper')[0].appendChild(this.dom);
+    }
     overlayRegistry.find((elem,idx) => { // check if overlay with same div_id already exists
       if (elem.divId === div_id){
         console.error('[InfoPanel.Overlay] Reinstantiating Overlay with Id = ' + div_id + ', overwritting registration');
@@ -94,6 +99,7 @@ moduleExporter("Overlay",
    * SlideDown animation for opening overlay
    */
   Overlay.prototype.show = function(){
+    this.closeAll();
     setTimeout( () => {
       overlayBackground.style.display = "block";
 
@@ -109,7 +115,7 @@ moduleExporter("Overlay",
    * @param {string} content - new content for overlay
    */
   Overlay.prototype.update = function(content){
-    $('#'+this.divId + " .container").html(content);
+    $('#'+this.divId + " .overlay_container").html(content);
   };
 
   /**

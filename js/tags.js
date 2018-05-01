@@ -116,7 +116,7 @@ moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], f
       /**
        * Opens the Create Tag menu.
        */
-      $("#ui_menu_nav").data( "mmenu" ).close(); // This should be done somewhere else
+      window.NeuroNLPUI.closeRightMenu();   // This should be done somewhere else
       $(this.tagsConfig['tagSubmit']).text('Create Tag');
       $(this.tagsConfig['createTag']).show();
       $(this.tagsConfig['loadTag']).hide();
@@ -128,7 +128,7 @@ moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], f
       /**
        * Opens the Retrieve Tag menu.
        */
-      $("#ui_menu_nav").data( "mmenu" ).close(); // This should be done somewhere else
+      window.NeuroNLPUI.closeRightMenu();  // This should be done somewhere else
       $(this.tagsConfig['tagSubmit']).text('Retrieve Tag');
       $(this.tagsConfig['createTag']).hide();
       $(this.tagsConfig['loadTag']).show();

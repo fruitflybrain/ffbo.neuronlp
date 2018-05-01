@@ -441,7 +441,8 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
       );
 
       this.session = session
-      this.loginStatus.connected = true;
+      setTimeout(() => {this.loginStatus.connected = true;}, 500);
+      console.log("connected to FFBO");
       this.loginStatus.sessionID = session.id;
       this.loginStatus.username = details.authid;
     }).bind(this);

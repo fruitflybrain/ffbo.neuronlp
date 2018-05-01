@@ -12,7 +12,7 @@ if( moduleExporter === undefined){
   };
 }
 
-moduleExporter("NeuroNLPUI", ["jquery", "jquery.mmenu"], function($){
+moduleExporter("NeuroNLPUI", ["jquery", "overlay", "jquery.mmenu"], function($, Overlay){
   function NeuroNLPUI(){
     var _this = this;
     var mm_menu_right = undefined;
@@ -28,43 +28,29 @@ moduleExporter("NeuroNLPUI", ["jquery", "jquery.mmenu"], function($){
       onUnpinAll: (function() {})
     }
 
-    this.onShowTutorialVideo = () => {
-      mm_menu_right.close();
-      setTimeout( function() {
-        closeAllOverlay(true);
-        $("#video-panel").slideDown(500);
-      }, 500);
-    }
-
     this.onShowNeuroNLP = () => {
       mm_menu_right.close();
-      setTimeout( function() {
-        closeAllOverlay(true);
-        $("#neuronlp-switch").slideDown(500);
-      }, 500);
+      this.neuronlpSwitch.show();
     }
 
-    this.onShowIntro = () => {
+    this.closeAllOverlay = () => {
+      this.neuronlpSwitch.closeAll();
+    }
+    /*this.onShowIntro = () => {
       mm_menu_right.close();
       setTimeout( function() {
         closeAllOverlay(true);
         $("#intro-panel").slideDown(500);
       }, 500);
-    }
+    }*/
 
     this.onShowOverview = () => {
       mm_menu_right.close();
-      setTimeout( function() {
-        closeAllOverlay(true);
-        $("#overview-panel").slideDown(500);
-      }, 500);
+      this.overviewPanel.show();
     }
     this.onShowAnnounce = () => {
       mm_menu_right.close();
-      setTimeout( function() {
-        closeAllOverlay(true);
-        $("#announce-panel").slideDown(500);
-      }, 500);
+      this.announcePanel.show();
     }
 
     this.mimicMouseOver = (selector, flag) => {
@@ -102,6 +88,10 @@ moduleExporter("NeuroNLPUI", ["jquery", "jquery.mmenu"], function($){
     this.openRightMenu = function() {
       mm_menu_right.open();
     }
+    this.closeRightMenu = function() {
+      mm_menu_right.close();
+    }
+
     this.onRemovePinned = function() {
       _this.dispatch.onRemovePinned();
     }
@@ -192,7 +182,13 @@ moduleExporter("NeuroNLPUI", ["jquery", "jquery.mmenu"], function($){
         }
       });
       mm_menu_right = $("#ui_menu_nav").data( "mmenu" );
+      $('[data-toggle="tooltip"]').tooltip();
     });
+
+    this.GUIinfoOverlay = new Overlay("gui-3d", "");
+    this.overviewPanel = new Overlay("overview-panel", "");
+    this.announcePanel = new Overlay("announce-panel", "");
+    this.neuronlpSwitch = new Overlay("neuronlp-switch", "");
   }
 
   return NeuroNLPUI;
