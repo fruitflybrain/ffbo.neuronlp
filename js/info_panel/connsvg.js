@@ -26,15 +26,15 @@ moduleExporter("ConnSVG",
    * @constructor
    * @param {string} div_id - id for div element in which the connectivity table is held
    * @param {obj} parentObj - parent object (infopanel)
-   * @param {dict} [nameConfig={}] - configuration of children divs. The 3 children divs in ConnTable are `['tabId','tabTextId','svgId']`. 
+   * @param {dict} [nameConfig={}] - configuration of children divs. The 3 children divs in ConnTable are `['tabId','tabTextId','svgId']`.
    *    `tabId`: holder for table showing information over each rectangle in svg on hover/click,
    *    `tabTextId`: the `<td>` element in tabId div where the text is being held
    *    `svgId`: div for where the svg will be rendered
-   */   
+   */
   function ConnSVG(div_id,parentObj,nameConfig={}){
     this.divId = div_id;  // wrapper
     this.parentObj = parentObj;
-    
+
     Object.defineProperty(this,"tabId",{
       value: nameConfig.tabId || "info-panel-conn-table",
       configurable: false,
@@ -64,11 +64,9 @@ moduleExporter("ConnSVG",
    */
   function createTemplate(obj){
     var template = "";
-    let tableText = '<tr><td>Synaptic Profile</td><td id="' + obj.tabTextId + '" class="syn-reference">Click on/Hover over plot to extract detailed synaptic information</td></tr>';
+    let tableText = '<div><p>Synaptic Profile</p><p id="' + obj.tabTextId + '" class="syn-reference">Click on/Hover over plot to extract detailed synaptic information</p></div>';
     template = "";
-    template += '<table id="' + obj.tabId + '" class="table table-inverse table-custom-striped">';
-    template += '<tbody>' + tableText + '</tbody>';
-    template += '</table>';  // table
+    template += '<div id="' + obj.tabId + '">' + tableText +'</div>';
     template += '<div id="' + obj.svgId + '"></div>';
     return template;
   }
@@ -116,7 +114,7 @@ moduleExporter("ConnSVG",
     if (verifyDataIntegrity(data) == false){
       return;
     }
-  
+
     this.reset();
 
     // extract data
@@ -129,7 +127,7 @@ moduleExporter("ConnSVG",
     let margin = {'left':10,'right':10,'top':10,'bottom':10};
     let width = 600;
     let height = 150;
-    
+
     // SVG x-axis setup
     var x = d3.scale.linear()
                       .rangeRound([0,width]);
@@ -234,20 +232,20 @@ moduleExporter("ConnSVG",
               .attr("class", "syn-axis x")
               .attr("transform", "translate(0" + margin.left + "," + (height+margin.top) + ")")
               .call(xAxis);
-    
+
     this.svg.append("g")
               .attr("class", "syn-axis y")
               .attr("transform", "translate(" + margin.left + "," + margin.top  + ")")
               .call(yAxis);
-    
+
     this.svg.select(".syn-axis.x")
             .selectAll("text");
-    
+
     this.svg.select(".syn-axis.y")
             .selectAll(".tick")
             .select("text")
               .attr("transform","rotate(-30)");
-    
+
 
     // format x-axis as percentage
     d3.selectAll(".syn-axis.x")
@@ -288,7 +286,7 @@ moduleExporter("ConnSVG",
             .text(" "); //Click on/Hover over plot to extract detailed synaptic information");
         });
 
-    this.svg.dom = $('#'+this.svgId)[0]; // save dom 
+    this.svg.dom = $('#'+this.svgId)[0]; // save dom
   };
 
 

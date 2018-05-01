@@ -136,7 +136,8 @@ moduleExporter("SummaryTable",
     // extra name and color
     var objName = ('uname' in data) ? data['uname'] : data['name'];
     if (data['class'] === 'Synapse'){
-      objName = "Synapse between " + objName.split("--")[0]+ " and " + objName.split("--")[1];
+//      objName = "Synapse between " + objName.split("--")[0]+ " and " + objName.split("--")[1];
+      objName = objName.split("--")[0]+ " to " + objName.split("--")[1];
     }
     var objRId = data['rid'];
     var objColor = this.parentObj.getAttr(objRId,'color');
