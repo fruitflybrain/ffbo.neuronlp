@@ -13,7 +13,8 @@ requirejs.config({
   baseUrl: 'js',
   paths: {
     // app: 'app',
-    mesh3d: 'lib/js/mesh3d',
+    mesh3d: '../lib/js/mesh3d',
+    ffbodemoplayer: '../lib/js/ffbodemoplayer',
     infopanel: "info_panel/infopanel",
     autobahn: '//cdn.rawgit.com/crossbario/autobahn-js-built/master/autobahn.min',
     d3: '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min',
@@ -39,7 +40,7 @@ requirejs.config({
     unrealbloompass: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/postprocessing/UnrealBloomPass',
     adaptivetonemappingpass: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/postprocessing/AdaptiveToneMappingPass',
     trackballcontrols: '//cdn.rawgit.com/fruitflybrain/ffbo.lib/VisualizationUpdates/js/three/libs/TrackballControls',
-    lightshelper: 'lib/js/lightshelper',
+    lightshelper: '../lib/js/lightshelper',
     modernizr: "//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min",
     d3: "//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3",
     jqueryui: "//code.jquery.com/ui/1.12.1/jquery-ui",
@@ -100,6 +101,7 @@ require([
   'ui',
   'tags',
   'izitoast',
+  'ffbodemoplayer',
   'bootstrap',
   //'jquery.mobile',
   'jqueryui',
@@ -114,7 +116,8 @@ require([
    FFBODynamicMenu,
    NeuroNLPUI,
    Tags,
-   iziToast
+   iziToast,
+   FFBODemoPlayer
 ){
 
   iziToast.settings({
@@ -342,18 +345,31 @@ require([
 
   var srchInput = document.getElementById('srch_box');
   var srchBtn = document.getElementById('srch_box_btn');
+
+  window.NLPsearch = function(query){
+    return new Promise(function(resolve, reject){
+      if(query == undefined){
+        query = document.getElementById('srch_box').value;
+        $("#search-wrapper").block({ message: null });
+        srchInput.blur();
+      }
+      queryID = client.executeNLPquery(query, {success: dataCallback});
+      client.status.on("change", function(e){
+        $("#search-wrapper").unblock();
+        if (!isOnMobile)
+          srchInput.focus();
+        srchInput.value = "";
+        if(e.value == -1)
+          reject();
+        else
+          resolve();
+      }, queryID);
+    });
+  }
+
   //add event listener
   srchBtn.addEventListener('click', function(event) {
-    query = document.getElementById('srch_box').value;
-    $("#search-wrapper").block({ message: null });
-    srchInput.blur();
-    queryID = client.executeNLPquery(query, {success: dataCallback});
-    client.status.on("change", function(e){
-      $("#search-wrapper").unblock();
-      if (!isOnMobile)
-        srchInput.focus();
-      srchInput.value = "";
-    }, queryID);
+    NLPsearch();
   });
 
   srchInput.addEventListener("keyup", function(event) {
@@ -375,20 +391,20 @@ require([
   ffbomesh.createUIBtn("showInfo", "fa-info-circle", "GUI guideline")
   ffbomesh.createUIBtn("resetView", "fa-refresh", "Reset View")
   ffbomesh.createUIBtn("resetVisibleView", "fa-align-justify", "Centre View To Visible Objects")
-  ffbomesh.createUIBtn("show_all", "fa-eye", "Show All")
-  ffbomesh.createUIBtn("hide_all", "fa-eye-slash", "Hide All")
+  ffbomesh.createUIBtn("showAll", "fa-eye", "Show All")
+  ffbomesh.createUIBtn("hideAll", "fa-eye-slash", "Hide All")
   ffbomesh.createUIBtn("removeUnpin", "fa-trash", "Remove Unpinned Neurons")
-  ffbomesh.createUIBtn("DownData", "fa-download", "Download Connectivity")
+  ffbomesh.createUIBtn("downData", "fa-download", "Download Connectivity")
 
   ffbomesh.on('resetView', (function() {ffbomesh.resetView()}));
   ffbomesh.on('resetVisibleView', (function() {ffbomesh.resetVisibleView()}));
   ffbomesh.on('removeUnpin', (function() {removeUnpinned()}));
-  ffbomesh.on('hide_all', (function() {ffbomesh.hideAll()}));
-  ffbomesh.on('show_all', (function() {ffbomesh.showAll()}));
+  ffbomesh.on('hideAll', (function() {ffbomesh.hideAll()}));
+  ffbomesh.on('showAll', (function() {ffbomesh.showAll()}));
   ffbomesh.on('takeScreenshot', (function() {ffbomesh._take_screenshot=true;}));
   ffbomesh.on('showInfo', function() {window.NeuroNLPUI.GUIinfoOverlay.show();});
 
-  $.getJSON("config.json", function(json) {
+  $.getJSON("/data/config.json", function(json) {
     ffbomesh.addJson({ffbo_json: json,
                       showAfterLoadAll: true}).then(function(){
                         if(!tagLoad) $('#ui-blocker').hide();
@@ -397,8 +413,11 @@ require([
   });
   console.log(client.loginStatus.connected)
 
+  $(document).ready(function(){
+    window.FFBODemoPlayer = new FFBODemoPlayer(ffbomesh, $('#ui_menu_nav').data('mmenu'));
+  })
   var textFile = null;
-  ffbomesh.on("DownData", function() {
+  ffbomesh.on("downData", function() {
     client.NotifySuccess("Fetching Connectivity Data")
     $('#ui-blocker').show();
     client.getConnectivity({success: function(res){

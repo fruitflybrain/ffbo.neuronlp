@@ -146,6 +146,12 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "jquery.mmenu"], function($, 
       },
       stop: function( event, ui ) {
         var perc = event.pageX / window.innerWidth * 100;
+        if (perc < (315./window.innerWidth *100)){
+          perc = 315./window.innerWidth *100; // minimum 315px
+        }else if (perc > 50){
+          perc = 50;   //maximum 50 percent
+        }
+
         document.documentElement.style.setProperty("--boundary-horizontal", perc + "%");
 
         $(".vis-info-pin").removeClass("notransition");
