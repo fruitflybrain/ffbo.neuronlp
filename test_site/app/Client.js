@@ -332,16 +332,16 @@ moduleExporter("ClientSession", ["autobahn", "app/PropertyManager"], function(au
       uri: 'ffbo.na.create_tag'
     }
     if( settings != undefined) msg['settings'] = settings;
-    if( keywords != undefined) msg['keywords'] = settings;
-    if( description != undefined) msg['description'] = settings;
-    return msg
+    if( keywords != undefined) msg['keywords'] = keywords;
+    if( description != undefined) msg['description'] = description;
+    return msg;
   }
 
   ClientSession.prototype.retrieveTagQuery = function(tag_name){
     return {
       tag: tag_name,
       uri: 'ffbo.na.retrieve_tag'
-    }
+    };
   }
 
   ClientSession.prototype.neuronInfoQuery = function(rid){
