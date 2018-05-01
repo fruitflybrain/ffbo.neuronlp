@@ -158,7 +158,7 @@ moduleExporter("ConnTable",
     */
   ConnTable.prototype.updateTable = function(data,connDir){
     if(!(connDir in data)){
-      return;
+      return false;
     }
     if (connDir === 'pre'){
       // pre/post tbody
@@ -172,6 +172,7 @@ moduleExporter("ConnTable",
       $('#'+this.postTabId + " tbody tr").remove();
 
     }
+    
     // flags for detecting if neuron or synapses have been added
     let neuron_add = false;
     let synapse_add = false;

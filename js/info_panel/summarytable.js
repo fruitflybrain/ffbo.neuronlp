@@ -33,6 +33,11 @@ moduleExporter("SummaryTable",
       configurable: false,
       writable: false
     });
+    Object.defineProperty(this, "tabId",{
+      value: nameConfig.tabId || "info-panel-summary-table",
+      configurable: false,
+      writable: false
+    });
     Object.defineProperty(this, "extraImgId",{
       value: nameConfig.extraImgId || "info-panel-extra-img",
       configurable: false,
@@ -58,7 +63,7 @@ moduleExporter("SummaryTable",
    */
   function createTemplate(obj){
     var template = "";
-    template += '<table class="table table-inverse table-custom-striped"><tbody></tbody></table>';
+    template += '<div id="' + obj.tabId + '" class="table-grid"></div>';
     template += '<div id="' + obj.extraImgId + '" class="row">';
     template += '<div class="col-md-4" style="display:none"><h4>Confocal Image</h4><img class="clickable-image" style="width:100%" alt="not available" tryCtr=0 maxTry=5></div>';
     template += '<div class="col-md-4" style="display:none"><h4>Segmentation</h4><img class="clickable-image" style="width:100%" alt="not available" tryCtr=0 maxTry=5></div>';
@@ -81,18 +86,16 @@ moduleExporter("SummaryTable",
    */
   SummaryTable.prototype.show = function (){
     $('#'+this.divId).show();
-    $('#'+this.extraDivId).show();
   };
   /**
    * SummaryTable Information hide
    */
   SummaryTable.prototype.hide = function (){
     $('#'+this.divId).hide();
-    $('#'+this.extraDivId).hide();
   };
 
   SummaryTable.prototype.resize = function(){
-    
+
     return;
   };
 
@@ -133,43 +136,42 @@ moduleExporter("SummaryTable",
     // extra name and color
     var objName = ('uname' in data) ? data['uname'] : data['name'];
     if (data['class'] === 'Synapse'){
-      objName = "Synapse between" + objName.split("--")[0]+ " and " + objName.split("--")[1];
+      objName = "Synapse between " + objName.split("--")[0]+ " and " + objName.split("--")[1];
     }
     var objRId = data['rid'];
     var objColor = this.parentObj.getAttr(objRId,'color');
 
-    var tableHtml = '<tr><td>Name :</td><td>' + objName;
+    var tableHtml = '<div> <p>Name :</p><p>' + objName;
 
     if (this.parentObj.isInWorkspace(objRId)){
       tableHtml += '<button class="btn btn-remove btn-danger" id="btn-add-' + objName + '" name="'+ objName + '" style="margin-left:20px;">-</button>';
     }else{
       tableHtml += '<button class="btn btn-add btn-success" id="btn-add-' + objName + '" name="'+ objName +  '" style="margin-left:20px;">+</button>';
     }
-    tableHtml +=  '</td>';
+    tableHtml +=  '</p></div>';
 
 
     if (objColor){
       // add choose color
-      tableHtml += '<td>Choose Color</td><td> <input class="color_inp"';
+      tableHtml += '<div><p>Choose Color:</p><p> <input class="color_inp"';
       if(Modernizr.inputtypes.color){
         tableHtml+='type="color"';
       }else{
         tableHtml+='type="text"';
       }
-      tableHtml+='name="neu_col" id="' + this.colorId+ '" value="#' + objColor  + '"/></td></tr>';
+      tableHtml+='name="neu_col" id="' + this.colorId+ '" value="#' + objColor  + '"/></p></div>';
 
     }else{
-      tableHtml += '<td></td></tr>';
+      //do nothing;
     }
 
     let displayKeys = ['class','vfb_id','data_source','transgenic_lines','transmitters','expresses'];
     var displayCtr = 0;
-    tableHtml += '<tr>';
 
     let keyCounter = 0;
     for (let key of displayKeys){
       if (!(key in data) || data[key] == 0){
-  continue;
+        continue;
       }
 
       let fieldName = snakeToSentence(key);
@@ -177,24 +179,14 @@ moduleExporter("SummaryTable",
 
       if (fieldName === 'vfb_id'){
         let vfbBtn = "<a target='_blank' href='http://virtualflybrain.org/reports/" + data[key] + "'>VFB link</a>";
-  fieldName = 'External Link';
-  fieldValue = vfbBtn;
+        fieldName = 'External Link';
+        fieldValue = vfbBtn;
       }
 
-
-      if (keyCounter % 2 === 0){
-        tableHtml += "<tr><td>" + fieldName + ":</td><td>" + fieldValue +"</td>" ;
-      }else{
-        tableHtml += "<td>" + fieldName + ":</td><td>" + fieldValue +"</td></tr>" ;
-      }
-      keyCounter += 1;
+      tableHtml += "<div><p>" + fieldName + ":</p><p>" + fieldValue +"</p></div>" ;
     }
 
-    if (tableHtml.substr(tableHtml.length-5) !== '</tr>'){
-      tableHtml += '<td></td><td></td></tr>';
-    }
-
-    $('#'+this.divId + " tbody").html(tableHtml);
+    $('#'+this.tabId ).html(tableHtml);
 
     // set callback <TODO> check this
     if(!Modernizr.inputtypes.color){
@@ -212,7 +204,7 @@ moduleExporter("SummaryTable",
     }
     else{
       $('#'+this.colorId).on('change',(c) => {
-  this.parentObj.setAttr(objRId,'color', $('#'+this.colorId)[0].value);
+        this.parentObj.setAttr(objRId,'color', $('#'+this.colorId)[0].value);
       });
     }
 
@@ -222,51 +214,43 @@ moduleExporter("SummaryTable",
       var extraData = data['flycircuit_data'];
       let extraKeys = ["Lineage", "Author", "Driver", "Gender/Age",  "Soma Coordinate", "Putative birth time", "Stock"];
       if (!('error' in extraData)){
-  // Fetch Key:value pair for flycircuit_data and add to
-  let keyCounter = 0;
-  for (let key of extraKeys){
-    if (!(key in extraData) || extraData[key] == 0){
-      continue;
-    }
-    if (keyCounter % 2 === 0){
-            extraTableHtml += "<tr><td>" + key + ":</td><td>" + extraData[key] +"</td>" ;
-          }else{
-            extraTableHtml += "<td>" + key + ":</td><td>" + extraData[key] +"</td></tr>" ;
+        // Fetch Key:value pair for flycircuit_data and add to
+        for (let key of extraKeys){
+          if (!(key in extraData) || extraData[key] == 0){
+            continue;
           }
-    keyCounter += 1;
-  }
+          extraTableHtml += "<div><p>" + key + ":</p><p>" + extraData[key] +"</p></div>" ;
+        }
 
-  if (extraTableHtml.substr(extraTableHtml.length-5) !== '</tr>'){
-    extraTableHtml += '<td></td><td></td></tr>';
-  }
 
-        $('#'+this.divId+ " tbody").append(extraTableHtml);
+
+        $('#'+this.tabId).append(extraTableHtml);
 
         // set source for images
-  if ("Images" in extraData){
+        if ("Images" in extraData){
           let imgList = ["Original confocal image (Animation)","Segmentation","Skeleton (download)"];
           Object.entries(imgList).forEach(
             ([idx,imgName]) => {
-        
+
               $('#'+this.extraImgId + " img")[idx].onerror = function(){
-    this.parentElement.style.display = "none";
-    if (Number(this.getAttribute("tryCtr")) < Number(this.getAttribute("maxTry"))){  // try 5 times max
-      let currTry = Number(this.getAttribute("tryCtr"));
+                this.parentElement.style.display = "none";
+                if (Number(this.getAttribute("tryCtr")) < Number(this.getAttribute("maxTry"))){  // try 5 times max
+                  let currTry = Number(this.getAttribute("tryCtr"));
                   setTimeout( () => {
                     this.src = extraData["Images"][imgName];
                   }, 1000);
-      console.log("[InfoPanel.SummaryTable > Retry] Image: "+ imgName);
+                  console.log("[InfoPanel.SummaryTable > Retry] Image: "+ imgName);
                   this.setAttribute("tryCtr" , currTry += 1);
-      return;
-    }else{
-      console.log("[InfoPanel.SummaryTable > Failed] Image "+ imgName);
-      this.setAttribute("tryCtr" , 0);
-      return;
-    }
+                  return;
+                }else{
+                  console.log("[InfoPanel.SummaryTable > Failed] Image "+ imgName);
+                  this.setAttribute("tryCtr" , 0);
+                  return;
+                }
               };
 
               $('#'+this.extraImgId + " img")[idx].onload = function(){
-    this.setAttribute("tryCtr",0);
+                this.setAttribute("tryCtr",0);
                 console.log("[InfoPanel.SummaryTable > Success] Image "+ imgName);
                 this.parentElement.style.display = "block";
               };

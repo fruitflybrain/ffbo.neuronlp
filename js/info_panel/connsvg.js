@@ -64,7 +64,7 @@ moduleExporter("ConnSVG",
    */
   function createTemplate(obj){
     var template = "";
-    let tableText = '<tr><td>Synaptic Profile Plot</td><td id="' + obj.tabTextId + '" class="syn-reference">Click on/Hover over plot to extract detailed synaptic information</td></tr>';
+    let tableText = '<tr><td>Synaptic Profile</td><td id="' + obj.tabTextId + '" class="syn-reference">Click on/Hover over plot to extract detailed synaptic information</td></tr>';
     template = "";
     template += '<table id="' + obj.tabId + '" class="table table-inverse table-custom-striped">';
     template += '<tbody>' + tableText + '</tbody>';
@@ -285,7 +285,7 @@ moduleExporter("ConnSVG",
         })
         .on("mouseout",() => {
           d3.select("#"+tabTextId)
-              .text("Click on/Hover over plot to extract detailed synaptic information");
+            .text(" "); //Click on/Hover over plot to extract detailed synaptic information");
         });
 
     this.svg.dom = $('#'+this.svgId)[0]; // save dom 
