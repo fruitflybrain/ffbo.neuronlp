@@ -182,15 +182,17 @@ moduleExporter("InfoPanel",[
       this.name = new_name;
 
       if ('connectivity' in data){ // synapse data does not have connectivity
-  this.connSVG.update(data['connectivity']);
-  this.connTable.update(data['connectivity']);
+        this.connSVG.update(data['connectivity']);
+        this.connTable.update(data['connectivity']);
+        this.summaryTable.update(data['summary']);
+        this.show(); //show all
       }else{
-  this.connSVG.hide();
-  this.connTable.hide();
+        this.connSVG.hide();
+        this.connTable.hide();
+        this.summaryTable.update(data['summary']);
+        this.summaryTable.show();
       }
-      this.summaryTable.update(data['summary']);
 
-      this.show();
       this.resize();
     }
   };
