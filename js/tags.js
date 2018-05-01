@@ -87,8 +87,9 @@ moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], f
       }
     });
 
+    $(this.tagsConfig['tagSearchMenu']).perfectScrollbar();
+    $(this.div_id + ' .overlay_container').perfectScrollbar();
     /*
-    //$(this.tagsConfig['tagSearchMenu']).perfectScrollbar();
     $(this.tagsConfig['tag']).keyup( (event) => {
       if (event.keyCode == 13) {
         if ($(this.tagsConfig['tagSubmit']).text() == 'Create tag')
@@ -121,6 +122,7 @@ moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], f
       $(this.tagsConfig['createTag']).show();
       $(this.tagsConfig['loadTag']).hide();
       this.overlay.show();
+      this.overlay.dom.style.height = '30%';
       $(this.tagsConfig['tag']).focus();
     }
 
@@ -133,6 +135,7 @@ moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], f
       $(this.tagsConfig['createTag']).hide();
       $(this.tagsConfig['loadTag']).show();
       this.overlay.show();
+      this.overlay.dom.style.height = '30%'; // Must be 80% normally
       $(this.tagsConfig['retrieveTag']).focus()
     }
 
