@@ -143,6 +143,11 @@ moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], f
     // Should be Overloaded by application
     this.retrieveTag = function(tagName) {}
 
+
+    function clearTagBrowser() {
+      $(this.tagsConfig.tagSearchMenu).html('');
+    }
+    
     function addTagToBrowser(tagData) {
       /**
        * Adds a Tag to the Tag Browser.
