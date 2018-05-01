@@ -102,6 +102,7 @@ require([
   'tags',
   'izitoast',
   'ffbodemoplayer',
+  'visualizationsettings',
   'bootstrap',
   //'jquery.mobile',
   'jqueryui',
@@ -117,7 +118,8 @@ require([
    NeuroNLPUI,
    Tags,
    iziToast,
-   FFBODemoPlayer
+   FFBODemoPlayer,
+   FFBOVisualizationSettings
 ){
 
   iziToast.settings({
