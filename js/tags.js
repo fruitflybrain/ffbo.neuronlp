@@ -41,11 +41,11 @@ moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], f
           <h4 class="tagLabel">Retrieve Tag</h4>
           <h5 type="text" id="tag_name" style="width:30%; float:left">Retrieve a Tag by Name</h5>
           <input type="text" name="tag" class="tag-text tag-name"  id="retrieve_tag_name_input" style="display: block;margin: 10px; right: 0px; width: 60%; position: absolute">
-          <!--
+          <div id="tagSearchMenuWrapper">
           <h5 type="text" id="tag_desc" style="display: block; width:60%">Browse Tags</h5>
           <br />
           <div id="tagSearchMenu" class="list-group" style="overflow:scroll; height:400px; overflow-x: hidden; max-width: 100%;">
-            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start tag-el active">
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start tag-el active" tag_name="nikul_7">
             <div class="d-flex w-100 justify-content-between">
               <h5 class="mb-1">Mushroom Body Alpha Lobe</h5>
               <div class="tags-aggregate">
@@ -58,7 +58,8 @@ moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], f
             <small>This Tag is currently featured.</small>
             </a>
           </div>
-          !-->
+          
+        </div>
         </div>
         <div class="tag-footer" style="padding-top: 50px">
           <button type="button" class="btn btn-primary" style = "margin: 10px; float: right" id="tagSubmit"></button>
@@ -89,7 +90,7 @@ moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], f
 
     $(this.tagsConfig['tagSearchMenu']).perfectScrollbar();
     $(this.div_id + ' .overlay_container').perfectScrollbar();
-    /*
+    
     $(this.tagsConfig['tag']).keyup( (event) => {
       if (event.keyCode == 13) {
         if ($(this.tagsConfig['tagSubmit']).text() == 'Create tag')
@@ -105,7 +106,7 @@ moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], f
         //$(this.tagsConfig['tagModal']).modal('hide');
       }
     });
-    */
+    
     /*$(this.tagsConfig['tagTagEditor']).tagEditor({
       initialTags: ['mushroom body', 'kenyon cells'],
       delimiter: ',',
@@ -146,37 +147,47 @@ moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], f
     // Should be Overloaded by application
     this.retrieveTag = function(tagName) {}
 
+    // Should be Overloaded by application
+    this.activateTagLinks = function(tagName) {}
 
-    function clearTagBrowser() {
+    this.clearTagBrowser = function() {
       $(this.tagsConfig.tagSearchMenu).html('');
     }
-    
-    function addTagToBrowser(tagData) {
-      /**
-       * Adds a Tag to the Tag Browser.
+
+    this.populateTags = function(tagDataList) {
+       /*
+       * Populates the Tag Browser.
        */
-      if( !tag_data.constructor.name == "Array" ) tag_data = Array(tagData);
-      tagData.forEach(
-         function(tag){
+      this.clearTagBrowser();
+      for (var i = 0; i < tagDataList.length; i++) {
+        this.addTagToBrowser(tagDataList[i]);
+      }
+      this.activateTagLinks();
+    }
+    
+    this.addTagToBrowser = function(tagData) {
+      /**
+       * Adds Tags to the Tag Browser.
+       */
            var a = document.createElement('a');
            a.className = "list-group-item list-group-item-action flex-column align-items-start tag-el";
            a.href = "#";
-           a.setAttribute("data", tag.name);
+           a.setAttribute("tag_name", tagData.name);
            var b = document.createElement('div');
            b.className = "d-flex w-100 justify-content-between";
            a.appendChild( b );
 
-           $(this.tagsConfig.tagSearchMenu).append(a);
-           $(b).append('<h5 class="mb-1">' + tag['name'] + '</h5> <div class="tags-aggregate">');
+           $(this.tagsConfig['tagSearchMenu']).append(a);
+           $(b).append('<h5 class="mb-1">' + tagData['name'] + '</h5> <div class="tags-aggregate">');
            var tags_text = '';
-           for (i = 0; i < x['keywords'].length; i++) {
-             tags_text += '<span class="badge badge-primary">' + tag['tags'][i] + "</span>";
+           for (i = 0; i < tagData['keywords'].length; i++) {
+             tags_text += '<span class="badge badge-primary">' + tagData['keywords'][i] + "</span>";
            }
 
            try{
              $(b).append(tags_text);
-             $(b).append('<p class="mb-1">' + tag['desc'] + '</p>');
-             $(b).append('<small>' + tag['FFBOdata']['extra'] + '</small>');
+             $(b).append('<p class="mb-1">' + tagData['desc'] + '</p>');
+             $(b).append('<small>' + tagData['FFBOdata']['extra'] + '</small>');
            }
            catch(err){}
            $(".tag-el").on("click", function() {
@@ -184,8 +195,6 @@ moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], f
              $(this).addClass("active");
            });
          }
-      )
-    };
   }
   return Tags;
 });
