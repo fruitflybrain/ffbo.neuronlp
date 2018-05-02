@@ -14,7 +14,6 @@ requirejs.config({
   paths: {
     // app: 'app',
     mesh3d: '../lib/js/mesh3d',
-    ffbodemoplayer: '../lib/js/ffbodemoplayer',
     infopanel: "info_panel/infopanel",
     autobahn: '//cdn.rawgit.com/crossbario/autobahn-js-built/master/autobahn.min',
     d3: '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min',
@@ -135,7 +134,6 @@ require([
   //$.mobile.ajaxEnabled = false;
   window.NeuroNLPUI = new NeuroNLPUI();
   var infoPanel = new InfoPanel("info-panel");
-  //window.infoPanel = infoPanel;
   var dynamicNeuronMenu = new FFBODynamicMenu({singleObjSel: '#single-neu > .mm-listview', pinnedObjSel: '#single-pin > .mm-listview', removable: true, pinnable: true});
   var dynamicNeuropilMenu = new FFBODynamicMenu({singleObjSel: '#toggle_neuropil > .mm-listview', compare: 'LeftRight'});
   var ffbomesh = new FFBOMesh3D('vis-3d', undefined, {"globalCenter": {'x': 0, 'y':-250, 'z':0}});
@@ -162,10 +160,10 @@ require([
     ffbomesh.addJson({ffbo_json: data, type: 'morphology_json'});
   }
 
-  //window.client = client;
-  //window.tagsPanel = tagsPanel;
-  //window.ffbomesh = ffbomesh;
-  //tagsPanel.initialize();
+  window.client = client;
+  window.tagsPanel = tagsPanel;
+  window.ffbomesh = ffbomesh;
+  window.infoPanel = infoPanel;
 
   function retrieveTagData(metadata){
     queryID = client.retrieveState({success: dataCallback});
@@ -281,7 +279,7 @@ require([
     }
 
   client.notifyError = function(message){
-    iziToast.error({message: message})
+    iziToast.error({message: message, timeout: false})
   }
 
   client.receiveCommand = function(message){
@@ -423,7 +421,7 @@ require([
   ffbomesh.createUIBtn("takeScreenshot", "fa-camera", "Download Screenshot")
   ffbomesh.createUIBtn("showInfo", "fa-info-circle", "GUI guideline")
   ffbomesh.createUIBtn("resetView", "fa-refresh", "Reset View")
-  ffbomesh.createUIBtn("resetVisibleView", "fa-align-justify", "Centre View To Visible Objects")
+  ffbomesh.createUIBtn("resetVisibleView", "fa-align-justify", "Centre View To Visible Neurons/Sunapses")
   ffbomesh.createUIBtn("showAll", "fa-eye", "Show All")
   ffbomesh.createUIBtn("hideAll", "fa-eye-slash", "Hide All")
   ffbomesh.createUIBtn("removeUnpin", "fa-trash", "Remove Unpinned Neurons")
@@ -454,13 +452,15 @@ require([
     if (isOnMobile)
       ffbomesh.backrender.SSAO.enabled = false;
     FFBODemoPlayer = new FFBODemoPlayer(ffbomesh, $('#ui_menu_nav').data('mmenu'));
+    window.FFBODemoPlayer = FFBODemoPlayer;
     FFBODemoPlayer.notify = function(message, settings){
       iziToast.info(Object.assign({message: message}, settings))
     }
     FFBODemoPlayer.afterDemo = function(){
       iziToast.hide({transitionOut:'fadeOut'},document.querySelector('.demoplayer-status-notify'));
     }
-    FFBODemoPlayer.beforeDemo = function(keyword){
+    FFBODemoPlayer.beforeDemo = (function(keyword){
+      this.ffbomesh.resetView();
       iziToast.info({
         close: true,
         class: 'demoplayer-status-notify',
@@ -479,7 +479,7 @@ require([
         ],
       });
       window.NeuroNLPUI.closeAllOverlay();
-    };
+    }).bind(FFBODemoPlayer);
     $.getJSON("/data/demos.json", function(json) {
       FFBODemoPlayer.addDemos(json);
       FFBODemoPlayer.updateDemoTable('#demo-table-wrapper');
