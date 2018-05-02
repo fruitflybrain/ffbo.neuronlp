@@ -105,10 +105,14 @@ moduleExporter(
         var btnRmId = (_this.config.removable) ? "btn-rm-" + uidDecode(id): false;
         var btnPinSymId = (_this.config.pinnable) ? "btn-pin-symbol-" + uidDecode(id): false;
         var domStr = `<li id='li-${btnId}' class='mm-listitem'>` +
-                      `<a id='${btnId}' role='button' label='${label}' class='btn-single-ob'>${label}</a>` +
-                      ((btnRmId) ? `<a id='${btnRmId}' role='button'>${_this.config.removeSymbol}</a>` : '') +
-                      ((btnPinSymId) ? `<a id='${btnPinSymId}' class='btn-unpinned' role='button'>${_this.config.pinSymbol}</a>` : '') +
-                      `<a id='${btnToggleId}' role='button'>${_this.config.showSymbol}</a>` +
+                      "<span>" +
+                      `<div id='${btnId}' role='button' label='${label}' class='btn-single-ob'>${label}</div>` +
+                      "<div class='btn-single-obj-ctrl'>" +
+                        ((btnRmId) ? `<a id='${btnRmId}' role='button'>${_this.config.removeSymbol}</a>` : '') +
+                        ((btnPinSymId) ? `<a id='${btnPinSymId}' class='btn-unpinned' role='button'>${_this.config.pinSymbol}</a>` : '') +
+                        `<a id='${btnToggleId}' role='button'>${_this.config.showSymbol}</a>` +
+                        "</div>" +
+                      "</span>" +
                      `</li>`;
 
         var idx = findIndex(label, _this.btnLabelList, _this.config.compare);
@@ -159,7 +163,7 @@ moduleExporter(
 
       this.removeNeuron = function(id) {
         var liBtnId = "li-btn-" + uidDecode(id);
-        var label = $("#" + liBtnId + " > a").attr('label');
+        var label = $("#" + liBtnId + " > span > .btn-single-ob").attr('label');
         $(`[id=${liBtnId}]`).hide("slide", { direction: "right" }, 800, function() {
           $(`#${liBtnId}`).remove();
         });
@@ -180,8 +184,10 @@ moduleExporter(
         var pinnedSymbolId = "btn-pinned-" + id;
         if (pinned) {
           var domStr = `<li id='li-${pinBtnId}' class='mm-listitem'>` +
-                         `<a id='${pinBtnId}' role='button' 'role='button' class='btn-pinned'>${label}</a>` +
-                         `<a id='${pinnedSymbolId}' class='btn-pinned' role='button'>${_this.config.pinSymbol}</a>` +
+                         "<span>" +
+                           `<div id='${pinBtnId}' role='button' 'role='button' class='btn-pinned'>${label}</div>` +
+                           `<div><a id='${pinnedSymbolId}' class='btn-pinned' role='button'>${_this.config.pinSymbol}</a></div>` +
+                         "</span>" +
                        "</li>";
           $( _this.config.pinnedObjSel ).append(domStr);
           $("#" + pinBtnId)

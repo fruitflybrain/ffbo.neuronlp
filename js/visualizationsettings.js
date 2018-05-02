@@ -301,6 +301,11 @@ moduleExporter(
       .on("change", function(e){
         ffbomesh.bloomPass.strength = e.value.newValue;
       });
+
+    $('#btn-store-vis-settings')
+      .click(function() {
+        ffbomesh.import_settings(ffbomesh._defaultSettings);
+      });
   }
   return FFBOVisualizationSettings;
 });
