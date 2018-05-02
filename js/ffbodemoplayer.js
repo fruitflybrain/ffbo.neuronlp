@@ -460,7 +460,7 @@ moduleExporter(
              }
              object.settings = Object.assign({timeout: 6000}, object.settings);
              this.notify(object.message, object.settings);
-             setTimeout(resolve, object.pause);
+             setTimeout(resolve, pause);
            }catch(err){
              reject(err);
            }
