@@ -185,8 +185,8 @@ moduleExporter(
         if (pinned) {
           var domStr = `<li id='li-${pinBtnId}' class='mm-listitem'>` +
                          "<span>" +
-                           `<div id='${pinBtnId}' role='button' 'role='button' class='btn-pinned'>${label}</div>` +
-                           `<div><a id='${pinnedSymbolId}' class='btn-pinned' role='button'>${_this.config.pinSymbol}</a></div>` +
+                           `<div id='${pinBtnId}' role='button'  class='btn-single-ob btn-pinned'>${label}</div>` +
+                           `<div class='btn-single-obj-ctrl'><a id='${pinnedSymbolId}' class='btn-pinned' role='button'>${_this.config.pinSymbol}</a></div>` +
                          "</span>" +
                        "</li>";
           $( _this.config.pinnedObjSel ).append(domStr);
