@@ -7,7 +7,339 @@
       ["search", {"query": "Show Neurons in the Ellipsoid Body"}],
       ["notify", {"message": "Try it yourself!"}]
     ],
-    "description": "Show Neurons in the Ellipsoid Body",
+    "description": "Show neurons in the Ellipsoid Body.",
     "category": "Basic Usage"
   },
+  "show_2": {
+    "keyword": "Show",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query T4 neurons!"}],
+      ["search", {"query": "Show T4 Neurons"}],
+      ["notify", {"message": "Done!"}],
+      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+    ],
+    "description": "Visualize T4 neurons in the Medulla.",
+    "category": "Basic Usage"
+  },
+  "show_3": {
+    "keyword": "Show",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for neurons in the PB (Protocerebral Bridge)!"}],
+      ["search", {"query": "Show neurons in the PB"}],
+      ["notify", {"message": "Done!"}],
+      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+    ],
+    "description": "Visualize neurons in the protocerebral bridge.",
+    "category": "Basic Usage"
+  },
+  "show_4": {
+    "keyword": "Show",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for neurons in the left lateral horn!"}],
+      ["search", {"query": "Show neurons in left lateral horn"}],
+      ["notify", {"message": "Done!"}],
+      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+    ],
+    "description": "Visualize neurons in the left lateral horn.",
+    "category": "Basic Usage"
+  },
+  "add_1": {
+    "keyword": "Add",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query L1 neurons in the Lamina!"}],
+      ["search", {"query": "Show neurons in left lateral horn"}],
+      ["notify", {"message": "Let's add L1 neurons' postsynaptic neurons!"}],
+      ["search", {"query": "Add postsynaptic neurons"}],
+      ["notify", {"message": "Done!"}],
+      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+    ],
+    "description": "Show L1 neurons in the Lamina, add their postsynaptic neurons.",
+    "category": "Basic Usage"
+  },
+  "add_2": {
+    "keyword": "Add",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for L1 neurons!"}],
+      ["search", {"query": "Show L1 neurons"}],
+      ["notify", {"message": "Now let's add Mi1 neurons:"}],
+      ["search", {"query": "Add Mi1 neurons"}],
+      ["notify", {"message": "Done!"}],
+      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+    ],
+    "description": "Visualize L1 neurons and then add Mi1 neurons.",
+    "category": "Basic Usage"
+  },
+  "add_3": {
+    "keyword": "Add",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for neurons in the ellipsoid body!"}],
+      ["search", {"query": "Show neurons in eb"}],
+      ["notify", {"message": "Now let's bring in neurons from protocerebral bridge."}],
+      ["search", {"query": "Add neurons in protocerebral bridge"}],
+      ["notify", {"message": "Done!"}],
+      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+    ],
+    "description": "Visualize neurons in Ellipsoid Body and then add neurons in the Protocerebral Bridge.",
+    "category": "Basic Usage"
+  },
+  "undo_1": {
+    "keyword": "Undo",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for neurons in the ellipsoid body!"}],
+      ["search", {"query": "Show neurons in eb"}],
+      ["notify", {"message": "Now let's add neurons in the optic glomeruli."}],
+      ["search", {"query": "Add neurons in og"}],
+      ["notify", {"message": "Now let's undo what we just did."}],
+      ["search", {"query": "Undo"}],
+      ["notify", {"message": "Now let's add neurons from the PB."}],
+      ["search", {"query": "Add neurons in PB"}],
+      ["notify", {"message": "Done!"}],
+      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+    ],
+    "description": "Go back to a previous step (UNDO).",
+    "category": "Basic Usage"
+  },
+  "keep_1": {
+    "keyword": "Keep",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for neurons from the entire central complex!"}],
+      ["search", {"query": "Show neurons in cx"}],
+      ["notify", {"message": "Now let's only keep known dopaminergic neurons and remove the rest."}],
+      ["search", {"query": "Keep dopaminergic neurons"}],
+      ["notify", {"message": "Now let's undo what we just did to get back to all neurons from the central complex."}],
+      ["search", {"query": "Undo"}],
+      ["notify", {"message": "Now let's only keep cholinergic neurons."}],
+      ["search", {"query": "Keep neurons that transmit acetycholine"}],
+      ["notify", {"message": "Done!"}],
+      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+    ],
+    "description": "Filter neurons in the current workspace based on a specific query.",
+    "category": "Basic Usage"
+  },
+  "remove_1": {
+    "keyword": "Remove",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for neurons from the right antennal lobe!"}],
+      ["search", {"query": "Show neurons in right al"}],
+      ["notify", {"message": "Now let's only remove the projection neurons."}],
+      ["search", {"query": "Remove projection neurons"}],
+      ["notify", {"message": "Done!"}],
+      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+    ],
+    "description": "Remove neurons from the current workspace based on a specific query.",
+    "category": "Basic Usage"
+  },
+  "connecting_1": {
+    "keyword": "Tract based queries",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for neurons projecting from right Lobula to left optic glomerulus!"}],
+      ["search", {"query": "Show neurons connecting right lob to left og"}],
+      ["notify", {"message": "Done!"}],
+      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+    ],
+    "description": "Show neurons projecting from right Lobula to left optic glomerulus.",
+    "category": "Advanced Demonstrations"
+  },
+  "innervating_1": {
+    "keyword": "Innervations/Arborizations",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for neurons innervating optic glomerulus!"}],
+      ["search", {"query": "Show neurons innervating optic glomerulus"}],
+      ["notify", {"message": "Done!"}],
+      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+    ],
+    "description": "Visualize neurons innervating the optic glomerulus.",
+    "category": "Advanced Demonstrations"
+  },
+  "dendrite_axon_1": {
+    "keyword": "Dendritic Innervations/Arborizations",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for neurons that have dendrites in the right lateral horn!"}],
+      ["search", {"query": "Show neurons having dendritic innervations in right lateral horn"}],
+      ["notify", {"message": "Done!"}],
+      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+    ],
+    "description": "Visualize neurons with dendrites in the right lateral horn.",
+    "category": "Advanced Demonstrations"
+  },
+  "dendrite_axon_2": {
+    "keyword": "Axon/Dendrite Arborizations",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for neurons that have dendrites in al and axons in both right lh and left lh!"}],
+      ["search", {"query": "Show neurons having dendrites in al and axons in both right lh and left lh"}],
+      ["notify", {"message": "Done!"}],
+      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+    ],
+    "description": "Visualize neurons connecting antennal lobe to both left and right lateral horn.",
+    "category": "Advanced Demonstrations"
+  },
+  "lptc": {
+    "keyword": "Lobula Plate Tangential Cells",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "It is known that Lobula Plate Tangential Cells are an essential component of optomotor responses."}],
+      ["notify", {"message": "Let's try and find some  LPTCs from the FlyCircuit data:"}],
+      ["search", {"query": "show neurons connecting the left lop to the left cvlp"}],
+      ["notify", {"message": "Now let's add neurons from the other side of the brain."}],
+      ["search", {"query": "add neurons connecting the right lop to the right cvlp"}],
+      ["notify", {"message": "Now let's select from the workspace some tangential cells and pin them."}],
+      ["pin", {"label": "VGlut-F-400392"}],
+      ["pin", {"label": "VGlut-F-700175"}],
+      ["pin", {"label": "fru-F-400542"}],
+      ["pin", {"label": "VGlut-F-800153"}],
+      ["pin", {"label": "Cha-F-200097"}],
+      ["pin", {"label": "VGlut-F-500650"}],
+      ["pin", {"label": "VGlut-F-300353"}],
+      ["pin", {"label": "VGlut-F-300501"}],
+      ["pin", {"label": "VGlut-F-100111"}],
+      ["pin", {"label": "fru-F-100144"}],
+      ["pin", {"label": "fru-F-300055"}],
+      ["pin", {"label": "VGlut-F-200199"}],
+      ["pin", {"label": "VGlut-F-300567"}],
+      ["pin", {"label": "VGlut-F-000601"}],
+      ["pin", {"label": "VGlut-F-700450"}],
+      ["pin", {"label": "VGlut-F-000241"}],
+      ["pin", {"label": "fru-F-300055"}],
+      ["pin", {"label": "VGlut-F-200199"}],
+      ["notify", {"message": "We can also investigate each of the LPTC individually."}],
+      ["notify", {"message": "Let's remove the unpinned neurons first."}],
+      ["click", {"uiBtn": {"type": "removeUnpin"}}],
+      ["notify", {"message": "And unpin all the pinned neurons."}],
+      ["click", {"menu": "unpinAll"}],
+      ["notify", {"message": "Now let's inspect individual neurons:"}],
+      ["menu", {"type": "visToggle", "label": "VGlut-F-400392"}],
+      ["menu", {"type": "visToggle", "label": "VGlut-F-700175"}],
+      ["menu", {"type": "visToggle", "label": "fru-F-400542"}],
+      ["menu", {"type": "visToggle", "label": "VGlut-F-800153"}],
+      ["menu", {"type": "visToggle", "label": "Cha-F-200097"}],
+      ["menu", {"type": "visToggle", "label": "VGlut-F-500650"}],
+      ["menu", {"type": "visToggle", "label": "VGlut-F-300353"}],
+      ["menu", {"type": "visToggle", "label": "VGlut-F-300501"}],
+      ["menu", {"type": "visToggle", "label": "VGlut-F-100111"}],
+      ["menu", {"type": "visToggle", "label": "fru-F-100144"}],
+      ["menu", {"type": "visToggle", "label": "fru-F-300055"}],
+      ["menu", {"type": "visToggle", "label": "VGlut-F-200199"}],
+      ["menu", {"type": "visToggle", "label": "VGlut-F-300567"}],
+      ["menu", {"type": "visToggle", "label": "VGlut-F-000601"}],
+      ["menu", {"type": "visToggle", "label": "VGlut-F-700450"}],
+      ["menu", {"type": "visToggle", "label": "VGlut-F-000241"}],
+      ["menu", {"type": "visToggle", "label": "fru-F-300055"}],
+      ["menu", {"type": "visToggle", "label": "VGlut-F-200199"}],
+      ["notify", {"message": "Let's hide all but one of the neurons!"}],
+      ["menu", {"type": "neuHideAll"}],
+      ["menu", {"type": "visToggle", "label": "VGlut-F-000241"}],
+      ["notify", {"message": "Done!"}],
+      ["notify", {"message": "Try exploring detailed information from the Info Panel!"}]
+    ],
+    "description": "Query for Lobula Plate Tangential Cells.",
+    "category": "Advanced Demonstrations"
+  },
+  "projection_1": {
+    "keyword": "Projection Neuron",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for projection neurons in the left mushroom body!"}],
+      ["search", {"query": "Show projection neurons in the left mushroom body"}],
+      ["notify", {"message": "Done!"}],
+      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+    ],
+    "description": "Show projection neurons in the left mushroom body.",
+    "category": "Neurons and Neurotransmitters"
+  },
+  "local_1": {
+    "keyword": "Local Neuron/Interneurons",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for local neurons in the right antennal lobe!"}],
+      ["search", {"query": "Show local neurons in the right antennal lobe"}],
+      ["notify", {"message": "Let's add interneurons in the left antennal lobe!"}],
+      ["search", {"query": "Add interneurons in the left antennal lobe"}],
+      ["notify", {"message": "Done!"}],
+      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+    ],
+    "description": "Show local neurons in the right antennal lobe, and add interneurons in the left antennal lobe.",
+    "category": "Neurons and Neurotransmitters"
+  },
+  "neurotransmitter_1": {
+    "keyword": "Serotonergic/Glutamatergic/Cholinergic/Dopaminergic/Gabaergic Neurons",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for serotonergic neurons in the Ellipsoid Body!"}],
+      ["search", {"query": "Show serotonergic neurons in eb"}],
+      ["notify", {"message": "Let's bring in glutamatergic neurons in the Ellipsoid Body!"}],
+      ["search", {"query": "Add glutamatergic neurons in eb"}],
+      ["notify", {"message": "Let's add cholinergic neurons in the Ellipsoid Body!"}],
+      ["search", {"query": "Add cholinergic neurons in eb"}],
+      ["notify", {"message": "Let's also have dopaminergic neurons in the Ellipsoid Body!"}],
+      ["search", {"query": "Add dopaminergic neurons in eb"}],
+      ["notify", {"message": "Finally, let's add gabaergic neurons in the Ellipsoid Body!"}],
+      ["search", {"query": "Add gabaergic neurons in eb"}],
+      ["notify", {"message": "Done!"}],
+      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+    ],
+    "description": "Show serotonegic neurons in the Ellipsoid Body, and sequentially add glutamatergic, cholinergic, dopaminergic and gabaergic neurons.",
+    "category": "Neurons and Neurotransmitters"
+  },
+  "highlight_1": {
+    "keyword": "Highlight",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's first bring up neurons in the Ellipsoid Body!"}],
+      ["search", {"query": "Show Neurons in the Ellipsoid Body"}],
+      ["notify", {"message": "Let's move the cursor over the neurons to highlight them!"}],
+      ["highlight", {"label": "VGlut-F-200478"}],
+      ["notify", {"message": "Try it yourself!"}]
+    ],
+    "description": "Remove neurons from the current workspace based on a specific query.",
+    "category": "GUI Usage"
+  },
+  "select_1": {
+    "keyword": "Select",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's first bring up neurons in the Ellipsoid Body!"}],
+      ["search", {"query": "Show Neurons in the Ellipsoid Body"}],
+      ["notify", {"message": "Let's move the cursor over a neuron, and click on it!"}],
+      ["click", {"label": "VGlut-F-200478"}],
+      ["notify", {"message": "The information of the selected neuron has been loaded from the FlyCircuit Database!"}],
+      ["notify", {"message": "Try it yourself!"}]
+    ],
+    "description": "Click on a neuron to show its information from FlyCircuit Database.",
+    "category": "GUI Usage"
+  },
+  "pin_1": {
+    "keyword": "Pin",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's first bring up gabaergic neurons in the Ellipsoid Body!"}],
+      ["search", {"query": "Show gabaergic neurons in eb"}],
+      ["notify", {"message": "Let's move the cursor over some neurons, and use 'double click' to pin them!"}],
+      ["pin", {"label": "Gad1-F-400328"}],
+      ["pin", {"label": "Gad1-F-200171"}],
+      ["pin", {"label": "Gad1-F-600135"}],
+      ["notify", {"message": "The pinned neurons always remain highlighted."}],
+      ["notify", {"message": "Let's remove all unpinned neurons."}],
+      ["click", {"uiBtn": {"type": "removeUnpin"}}],
+      ["notify", {"message": "Now we only have pinned neurons in the scene."}],
+      ["notify", {"message": "Want to unpin a neuron? Use 'Double click' on a pinned neuron to unpin it."}],
+      ["click", {"label": "Gad1-F-400328"}],
+      ["click", {"label": "Gad1-F-400328"}],
+      ["notify", {"message": "Try it yourself!"}]
+    ],
+    "description": "Pin a neuron via 'Double Click' to make it stick in the scene.",
+    "category": "GUI Usage"
+  }
 }
