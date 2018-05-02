@@ -154,7 +154,7 @@ require([
 
   client.startConnection("guest", "guestpass", "wss://neuronlp.fruitflybrain.org:8888/ws");
 
-  ffbomesh.settings.neuron3d = 1;
+  //ffbomesh.settings.neuron3d = 1;
   function dataCallback(data){
     ffbomesh.addJson({ffbo_json: data, type: 'morphology_json'});
   }
@@ -425,7 +425,29 @@ require([
     window.FFBODemoPlayer.notify = function(message, settings){
       iziToast.info(Object.assign({message: message}, settings))
     }
-    window.FFBODemoPlayer.beforeDemo = function(){ window.NeuroNLPUI.closeAllOverlay(); }
+    window.FFBODemoPlayer.afterDemo = function(){
+      iziToast.hide({transitionOut:'fadeOut'},document.querySelector('.demoplayer-status-notify'));
+    }
+    window.FFBODemoPlayer.beforeDemo = function(keyword){
+      iziToast.info({
+        close: true,
+        class: 'demoplayer-status-notify',
+        timeout: false,
+        drag: false,
+        overlay: false,
+        color: 'yellow',
+        title: "Demo",
+        message: "Running <u>"+ keyword +"</u> Demo",
+        position: "topCenter",
+        buttons: [
+          ['<button><b>Stop</b></button>', function (instance, toast) {
+            instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+            window.FFBODemoPlayer.stopDemo();
+          },true],
+        ],
+      });
+      window.NeuroNLPUI.closeAllOverlay();
+    };
     $.getJSON("/data/demos.json", function(json) {
       window.FFBODemoPlayer.addDemos(json);
       window.FFBODemoPlayer.updateDemoTable('#demo-table-wrapper');

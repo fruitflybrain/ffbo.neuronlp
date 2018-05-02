@@ -93,10 +93,10 @@ moduleExporter("Overlay",
   Overlay.prototype.close = function(){
     setTimeout( () => {
       overlayBackground.style.display = "none";
-      $('#'+this.divId).slideUp(500);
+      $('#'+this.divId).slideUp(200);
       $('#'+this.divId).hide();
       $('#'+this.divId).css("display","none");
-    }, 500);
+    }, 200);
   }
 
   /**

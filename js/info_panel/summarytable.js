@@ -240,11 +240,11 @@ moduleExporter("SummaryTable",
                   setTimeout( () => {
                     this.src = extraData["Images"][imgName];
                   }, 1000);
-                  console.log("[InfoPanel.SummaryTable > Retry] Image: "+ imgName);
+                  //console.log("[InfoPanel.SummaryTable > Retry] Image: "+ imgName);
                   this.setAttribute("tryCtr" , currTry += 1);
                   return;
                 }else{
-                  console.log("[InfoPanel.SummaryTable > Failed] Image "+ imgName);
+                  //console.log("[InfoPanel.SummaryTable > Failed] Image "+ imgName);
                   this.setAttribute("tryCtr" , 0);
                   return;
                 }
@@ -252,7 +252,7 @@ moduleExporter("SummaryTable",
 
               $('#'+this.extraImgId + " img")[idx].onload = function(){
                 this.setAttribute("tryCtr",0);
-                console.log("[InfoPanel.SummaryTable > Success] Image "+ imgName);
+                //console.log("[InfoPanel.SummaryTable > Success] Image "+ imgName);
                 this.parentElement.style.display = "block";
               };
               if (extraData["Images"][imgName]){
