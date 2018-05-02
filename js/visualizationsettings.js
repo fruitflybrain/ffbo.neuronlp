@@ -147,7 +147,8 @@ moduleExporter(
         $("#vis-neuropil-color").attr("type", "text");
 
     this.setColorPickerBackground = function (c) {
-      $("#vis-neuropil-color-wrapper").css("background-color", c)
+      $("#vis-neuropil-color-wrapper").css("background-color", c);
+      $("#vis-neuropil-color").attr("value", c);
     }
 
     if (!Modernizr.inputtypes.color) {
