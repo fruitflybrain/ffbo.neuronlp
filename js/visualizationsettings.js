@@ -17,16 +17,6 @@ moduleExporter(
   function($){
     $ = $ || window.$;
 
-  //
-  // $('#3d_rendering')[0].checked = ffbomesh.neurons_3d
-  // if(!ffbomesh.neurons_3d)
-  //     $('.option_3d').hide()
-  //
-  // $('#3d_rendering').change(function(){
-  //     $('.option_3d').toggle()
-  //     ffbomesh.neurons_3d = !ffbomesh.neurons_3d
-  // });
-
   var FFBOVisualizationSettings = function(ffbomesh) {
 
     var _this = this;
@@ -61,7 +51,7 @@ moduleExporter(
     $('#vis-default-opacity')
       .bootstrapSlider({value: ffbomesh.settings.defaultOpacity})
       .on("change", function(e){
-        ffbomesh.settings.default_opacity = e.value.newValue;
+        ffbomesh.settings.defaultOpacity = e.value.newValue;
         ffbomesh.resetOpacity();
       });
 
@@ -306,6 +296,32 @@ moduleExporter(
       .click(function() {
         ffbomesh.import_settings(ffbomesh._defaultSettings);
       });
+
+    var domId2ffbomeshSettings = {
+      '#vis-default-nerite-radius': 'defaultRadius',
+      '#vis-default-soma-radius': 'defaultSomaRadius',
+      '#vis-default-opacity': 'defaultOpacity',
+      '#vis-highlighted-object-opacity': 'highlightedObjectOpacity',
+      '#vis-low-opacity': 'lowOpacity',
+      '#vis-pin-opacity': 'pinOpacity',
+      '#vis-pin-low-opacity': 'pinLowOpacity',
+      '#vis-ambientlight': 'pinLowOpacity',
+      '#vis-background-opacity': 'backgroundOpacity',
+      '#vis-background-wireframe-opacity': 'backgroundWireframeOpacity',
+      '#vis-default-synapse-radius': 'defaultSynapseRadius',
+      '#vis-synapse-opacity': 'synapseOpacity'
+    }
+
+    var settingCallback = function (key) {
+      return (function (e) {
+        $(key).bootstrapSlider('setValue', e.value, true);
+      })
+    }
+
+    for (var key of Object.keys(domId2ffbomeshSettings)) {
+      let val = domId2ffbomeshSettings[key];
+      ffbomesh.settings.on('change', settingCallback(key), val);
+    }
   }
   return FFBOVisualizationSettings;
 });
