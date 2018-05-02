@@ -98,8 +98,8 @@
               <li>
                 <span>Tags</span>
                 <ul id="toggle_tag">
-                  <li><a onclick="tagsPanel.onCreateTag()">Create Tag</a></li>
-                  <li><a onclick="tagsPanel.onRetrieveTag()">Load Tag</a></li>
+                  <li><a onclick="NeuroNLPUI.onCreateTag()">Create Tag</a></li>
+                  <li><a onclick="NeuroNLPUI.onRetrieveTag()">Load Tag</a></li>
                 </ul>
               </li>
               <li>
@@ -133,6 +133,13 @@
                 <ul id="toggle_visset">
                   <li><p>* (Doesn't affect neurons already in workspace)</p></li>
                   <li>
+                    <span>
+                    <div id="btn-store-vis-settings">
+                       <i class="fa fa-undo"></i>&nbsp;Restore Original Settings
+                    <div>
+                  </span>
+                  </li>
+                  <li>
                     <h4> Neuron Rendering </h4>
                   </li>
                   <li>
@@ -141,7 +148,7 @@
                       <input id="vis-3d-rendering" type="checkbox" class="Toggle" />
                     </a>
                   </li>
-                  <li id="vis-3d-mode-option">
+                  <li id="vis-3d-mode-option" class="vis-settings-sub">
                     <a>
                       <div>3D Neuron Rendering Mode *</div>
                       <input checked="checked" type="radio" name="mode3d" id="rd1" value="1"/>
@@ -152,55 +159,55 @@
                       <label for="rd3">Cylinder + Tubes (Very Intensive)</label>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Default Neurite Radius *</div>
                       <input id="vis-default-nerite-radius" data-slider-id='def_rad_slider' class="slider" type="text" data-slider-min="0" data-slider-max="2.0" data-slider-step="0.01" data-slider-value="0.8"/>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Default Soma Radius *</div>
                       <input id="vis-default-soma-radius" data-slider-id='def_soma_slider' class="slider" type="text" data-slider-min="0.4" data-slider-max="10.0" data-slider-step="0.01" data-slider-value="0.8"/>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Default Opacity</div>
                       <input id="vis-default-opacity" data-slider-id='def_op_slider' class="slider" type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Higlighted Neuron Opacity</div>
                       <input id="vis-highlighted-object-opacity" data-slider-id='highlight_op_slider' class="slider" type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
                       </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Low Opacity in Highlight mode</div>
                       <input id="vis-low-opacity" data-slider-id='low_op_slider' class="slider" type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Pinned Neuron Opacity</div>
                       <input id="vis-pin-opacity" id='pin_op_slider' class="slider" type="radio" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Low Opacity in Pinned Mode</div>
                       <input id="vis-pin-low-opacity" id='pin_low_op_slider' class="slider" type="radio" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Ambient Light</div>
                       <input id="vis-ambientlight" id='amb_lght_slider' class="slider" type="radio" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Directional Light</div>
                       <input id="vis-dirlight" id='dir_lght_slider' class="slider" type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
@@ -211,25 +218,25 @@
                       <h5>Spot Light 1 on Neuron</h5>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Horizontal Angle</div>
                       <input id="vis-frontSpot-1-posAngle1" data-slider-id="frontSpot_1_posAngle1" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Vertical Angle</div>
                       <input id="vis-frontSpot-1-posAngle2" data-slider-id="frontSpot_1_posAngle2" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Intensity</div>
                       <input id="vis-frontSpot-1-intensity" data-slider-id="frontSpot_1_intensity" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="0.1" data-slider-value="4"/>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Track Camera</div>
                       <input id="vis-frontSpot-1-track" type="checkbox" class="Toggle" />
@@ -240,25 +247,25 @@
                       <h5>Spot Light 2 on Neuron</h5>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Horizontal Angle</div>
                       <input id="vis-frontSpot-2-posAngle1" data-slider-id="frontSpot_2_posAngle1" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Vertical Angle</div>
                       <input id="vis-frontSpot-2-posAngle2" data-slider-id="frontSpot_2_posAngle2" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Intensity</div>
                       <input id="vis-frontSpot-2-intensity" data-slider-id="frontSpot_2_intensity" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="0.1" data-slider-value="4"/>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Track Camera</div>
                       <input id="vis-frontSpot-2-track" type="checkbox" class="Toggle" />
@@ -267,7 +274,7 @@
                   <li>
                     <h4> Neuropil Rendering </h4>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Color</div>
                       <div id="vis-neuropil-color-wrapper">
@@ -275,31 +282,31 @@
                       </div>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Opacity</div>
                       <input id="vis-background-opacity" data-slider-id='back_op_slider' class="slider" type="radio" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Wireframe Opacity</div>
                       <input id="vis-background-wireframe-opacity" data-slider-id='back_op_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div class="wrap">Screen-space ambient occlusion pass (SSAO)</div>
                       <input type="checkbox" id="vis-ssao" class="Toggle"/>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Ambient Light</div>
                       <input id="vis-backambientlight" data-slider-id='backamb_lght_slider' class="slider" type="radio" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Directional Light</div>
                       <input id="vis-backdirlight" data-slider-id='backdir_lght_slider' class="slider" type="radio" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
@@ -310,25 +317,25 @@
                       <h5>Spot Light 1 on Neuropil</h5>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Horizontal Angle</div>
                       <input id="vis-backSpot-1-posAngle1" data-slider-id="backSpot_1_posAngle1" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Vertical Angle</div>
                       <input id="vis-backSpot-1-posAngle2" data-slider-id="backSpot_1_posAngle2" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Intensity</div>
                       <input id="vis-backSpot-1-intensity" data-slider-id="backSpot_1_intensity" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="0.1" data-slider-value="4"/>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Track Camera</div>
                       <input id="vis-backSpot-1-track" type="checkbox" class="Toggle" />
@@ -339,25 +346,25 @@
                       <h5>Spot Light 2 on Neuropil</h5>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Horizontal Angle</div>
                       <input id="vis-backSpot-2-posAngle1" data-slider-id="backSpot_2_posAngle1" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Vertical Angle</div>
                       <input id="vis-backSpot-2-posAngle2" data-slider-id="backSpot_2_posAngle2" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Intensity</div>
                       <input id="vis-backSpot-2-intensity" data-slider-id="backSpot_2_intensity" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="0.1" data-slider-value="4"/>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Track Camera</div>
                       <input id="vis-backSpot-2-track" type="checkbox" class="Toggle" />
@@ -366,13 +373,13 @@
                   <li>
                     <h4> Synapse Rendering </h4>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Synapse Size * </div>
                       <input id="vis-default-synapse-radius" data-slider-id='def_syn_slider' class="slider" type="radio" data-slider-min="0.1" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Synapse Opacity</div>
                       <input id="vis-synapse-opacity" data-slider-id='syn_op_slider' class="slider" type="radio" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
@@ -381,13 +388,13 @@
                   <li>
                     <h4> PostProcessing Settings </h4>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div class="wrap">Fast approXimate Anti-Aliasing (FXAA)</div>
                       <input type="checkbox" id="vis-fxaa" class="Toggle"/>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Brightness</div>
                       <input id="vis-tonemappingbright" data-slider-id='tm_brght_slider' type="text" data-slider-min="0.01" data-slider-max="0.99" data-slider-step="0.01" data-slider-value="0.95"/>
@@ -398,19 +405,19 @@
                       <h5>Bloom Pass Settings</h5>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Radius</div>
                       <input id="vis-bloomradius" data-slider-id='blm_rad_slider' type="text" data-slider-min="0.05" data-slider-max="10.0" data-slider-step="0.05" data-slider-value="0.8"/>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Threshold</div>
                       <input id="vis-bloomthreshold" data-slider-id='blm_th_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub">
                     <a>
                       <div>Strength</div>
                       <input id="vis-bloomstrength" data-slider-id='blm_st_slider' type="text" data-slider-min="0" data-slider-max="2.0" data-slider-step="0.01" data-slider-value="0.8"/>

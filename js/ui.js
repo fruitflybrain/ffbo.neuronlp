@@ -28,6 +28,20 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "jquery.mmenu"], function($, 
       onUnpinAll: (function() {})
     }
 
+    this.GUIinfoOverlay = new Overlay("gui-3d", "");
+    this.overviewPanel = new Overlay("overview-panel", "");
+    this.announcePanel = new Overlay("announce-panel", "");
+    this.neuronlpSwitch = new Overlay("neuronlp-switch", "");
+    this.demoTable = new Overlay("demo-panel", `
+<ul class="list-inline">
+  <li><h2>Demos </h2></li>
+</ul>
+<div id="demo-table-wrapper" class="demo-table-wrapper"></div>`);
+
+    this.onShowDemo = function(){
+      mm_menu_right.close();
+      this.demoTable.show()
+    }
     this.onShowNeuroNLP = () => {
       mm_menu_right.close();
       this.neuronlpSwitch.show();
@@ -66,6 +80,9 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "jquery.mmenu"], function($, 
     this.mimicMouseOut = (selector) => {
       $(selector).removeClass("hover");
     };
+
+    this.onCreateTag = function() {}
+    this.onRetrieveTag = function() {}
 
     this.onGettingStarted = function() {
       mm_menu_right.closeAllPanels();
@@ -200,20 +217,6 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "jquery.mmenu"], function($, 
       mm_menu_right = $("#ui_menu_nav").data( "mmenu" );
       $('[data-toggle="tooltip"]').tooltip();
     });
-
-    this.GUIinfoOverlay = new Overlay("gui-3d", "");
-    this.overviewPanel = new Overlay("overview-panel", "");
-    this.announcePanel = new Overlay("announce-panel", "");
-    this.neuronlpSwitch = new Overlay("neuronlp-switch", "");
-    this.demoTable = new Overlay("demo-panel", `
-                          <ul class="list-inline">
-                           <li><h2>Demos </h2></li>
-                          </ul>
-                          <div id="demo-table-wrapper" class="demo-table-wrapper"></div>`);
-    this.onShowDemo = function(){
-      this.demoTable.show()
-    }
-
   }
 
   return NeuroNLPUI;

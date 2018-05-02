@@ -58,7 +58,6 @@ moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], f
             <small>This Tag is currently featured.</small>
             </a>
           </div>
-          
         </div>
         </div>
         <div class="tag-footer" style="padding-top: 50px">
@@ -67,6 +66,8 @@ moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], f
         </div>`;
     this.overlay = new Overlay(div_id, a)
     //this.inDiv.append(a);
+    //this.overlay.dom.style['height'] = '30%';
+    this.overlay.dom.style['max-height'] = '200px';
 
     $(this.tagsConfig['tagClose']).click( () => {this.overlay.closeAll();} );
     $(this.tagsConfig['tagSubmit']).click( () => {
@@ -90,7 +91,6 @@ moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], f
 
     $(this.tagsConfig['tagSearchMenu']).perfectScrollbar();
     $(this.div_id + ' .overlay_container').perfectScrollbar();
-    
     $(this.tagsConfig['tag']).keyup( (event) => {
       if (event.keyCode == 13) {
         if ($(this.tagsConfig['tagSubmit']).text() == 'Create tag')
@@ -106,7 +106,7 @@ moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], f
         //$(this.tagsConfig['tagModal']).modal('hide');
       }
     });
-    
+
     /*$(this.tagsConfig['tagTagEditor']).tagEditor({
       initialTags: ['mushroom body', 'kenyon cells'],
       delimiter: ',',
@@ -123,7 +123,6 @@ moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], f
       $(this.tagsConfig['createTag']).show();
       $(this.tagsConfig['loadTag']).hide();
       this.overlay.show();
-      this.overlay.dom.style.height = '30%';
       $(this.tagsConfig['tag']).focus();
     }
 
@@ -136,7 +135,9 @@ moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], f
       $(this.tagsConfig['createTag']).hide();
       $(this.tagsConfig['loadTag']).show();
       this.overlay.show();
-      this.overlay.dom.style.height = '30%'; // Must be 80% normally
+      //this.overlay.dom.style['height'] = '30%';
+      //this.overlay.dom.style['min-height'] = '200px';
+      //this.overlay.dom.style.height = '30%'; // Must be 80% normally
       $(this.tagsConfig['retrieveTag']).focus()
     }
 
@@ -164,7 +165,7 @@ moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], f
       }
       this.activateTagLinks();
     }
-    
+
     this.addTagToBrowser = function(tagData) {
       /**
        * Adds Tags to the Tag Browser.

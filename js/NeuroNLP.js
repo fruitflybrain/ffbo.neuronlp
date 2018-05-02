@@ -107,7 +107,8 @@ require([
   //'jquery.mobile',
   'jqueryui',
   'blockui'
-], function (
+  ]
+, function (
    $,
    FFBOClient,
    THREE,
@@ -134,13 +135,15 @@ require([
   //$.mobile.ajaxEnabled = false;
   window.NeuroNLPUI = new NeuroNLPUI();
   var infoPanel = new InfoPanel("info-panel");
-  window.infoPanel = infoPanel;
+  //window.infoPanel = infoPanel;
   var dynamicNeuronMenu = new FFBODynamicMenu({singleObjSel: '#single-neu > .mm-listview', pinnedObjSel: '#single-pin > .mm-listview', removable: true, pinnable: true});
   var dynamicNeuropilMenu = new FFBODynamicMenu({singleObjSel: '#toggle_neuropil > .mm-listview', compare: 'LeftRight'});
   var ffbomesh = new FFBOMesh3D('vis-3d', undefined, {"globalCenter": {'x': 0, 'y':-250, 'z':0}});
   var tagsPanel = new Tags('tagsMenu');
   var client = new FFBOClient();
   var visualizationSettings = new FFBOVisualizationSettings(ffbomesh);
+  window.NeuroNLPUI.onCreateTag = (tagsPanel.onCreateTag).bind(tagsPanel);
+  window.NeuroNLPUI.onRetrieveTag = (tagsPanel.onRetrieveTag).bind(tagsPanel);
 
   var tagLoad = false;
   searchParams = new URLSearchParams(document.location.search);
@@ -159,9 +162,9 @@ require([
     ffbomesh.addJson({ffbo_json: data, type: 'morphology_json'});
   }
 
-  window.client = client;
-  window.tagsPanel = tagsPanel;
-  window.ffbomesh = ffbomesh;
+  //window.client = client;
+  //window.tagsPanel = tagsPanel;
+  //window.ffbomesh = ffbomesh;
   //tagsPanel.initialize();
 
   function retrieveTagData(metadata){
@@ -189,11 +192,12 @@ require([
           drag: false,
           overlay: true,
           title: "Visualization Settings",
-          message: "Click yes to load Visualization Settings from the tag and override your settings",
+          message: "Load Visualization Settings from the tag and override your settings?",
           position: "center",
           buttons: [
             ['<button><b>YES</b></button>', function (instance, toast) {
               instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+              iziToast.info({ message: "Note that you can revert to default settings from the visualization settings menu"})
               $('#ui-blocker').show();
               ffbomesh.import_settings(settings);
               retrieveTagData(metadata);
@@ -210,16 +214,39 @@ require([
     else{ retrieveTagData(metadata); }
   }
 
+  /*
+   * Overload the create Tag function.
+   */
   tagsPanel.createTag = function(tagName){
     client.createTag(tagName, Object.assign({}, ffbomesh.export_state(), {
                                settings: ffbomesh.export_settings(),
                                //keywords: keywords
     }));
   }
+  /*
+   * Overload the retrieve Tag function.
+   */
   tagsPanel.retrieveTag = function(tagName){
     queryID = client.retrieveTag(tagName, {success: retrieveTagCallback});
     client.status.on("change", function(e){ if(e.value == -1) $('#ui-blocker').hide(); }, queryID);
   }
+
+  var ex_tag = {'name': 'nikul_7', 'desc': 'This tag shows the alpha lobe of the mushroom body.', 'keywords': ['mushroom body', 'alpha lobe'], 'FFBOdata': {extra: 'This tag has been created by the FFBO team.'}};
+  tagsPanel.populateTags([ex_tag]);
+    /*
+   * Add tag retrieval functionality.
+   */
+  tagsPanel.activateTagLinks = (function(tagName){
+    $('.tag-el').click( () => {
+      this.retrieveTag($(this).attr('tag_name'));
+      this.overlay.closeAll();
+    });
+  }).bind(tagsPanel)
+  tagsPanel.activateTagLinks();
+    /*
+   * Hide the tag search menu for now.
+   */
+  $('#tagSearchMenuWrapper').hide();
 
   var oldHeight = ffbomesh.container.clientHeight;
   var oldWidth = ffbomesh.container.clientWidth;
@@ -247,7 +274,10 @@ require([
 
   if(!isOnMobile)
     client.notifySuccess = function(message){
-      iziToast.success({message: message})
+      if(message == "Fetching results from NeuroArch")
+        iziToast.success({message: message, icon: "fa fa-clock"})
+      else
+        iziToast.success({message: message})
     }
 
   client.notifyError = function(message){
@@ -419,16 +449,18 @@ require([
     var hex =  '#' + (0x1000000 + rgb).toString(16).slice(1);
     visualizationSettings.setColorPickerBackground(hex);
   });
-  console.log(client.loginStatus.connected)
+
   $(document).ready(function(){
-    window.FFBODemoPlayer = new FFBODemoPlayer(ffbomesh, $('#ui_menu_nav').data('mmenu'));
-    window.FFBODemoPlayer.notify = function(message, settings){
+    if (isOnMobile)
+      ffbomesh.backrender.SSAO.enabled = false;
+    FFBODemoPlayer = new FFBODemoPlayer(ffbomesh, $('#ui_menu_nav').data('mmenu'));
+    FFBODemoPlayer.notify = function(message, settings){
       iziToast.info(Object.assign({message: message}, settings))
     }
-    window.FFBODemoPlayer.afterDemo = function(){
+    FFBODemoPlayer.afterDemo = function(){
       iziToast.hide({transitionOut:'fadeOut'},document.querySelector('.demoplayer-status-notify'));
     }
-    window.FFBODemoPlayer.beforeDemo = function(keyword){
+    FFBODemoPlayer.beforeDemo = function(keyword){
       iziToast.info({
         close: true,
         class: 'demoplayer-status-notify',
@@ -442,15 +474,15 @@ require([
         buttons: [
           ['<button><b>Stop</b></button>', function (instance, toast) {
             instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-            window.FFBODemoPlayer.stopDemo();
+            FFBODemoPlayer.stopDemo();
           },true],
         ],
       });
       window.NeuroNLPUI.closeAllOverlay();
     };
     $.getJSON("/data/demos.json", function(json) {
-      window.FFBODemoPlayer.addDemos(json);
-      window.FFBODemoPlayer.updateDemoTable('#demo-table-wrapper');
+      FFBODemoPlayer.addDemos(json);
+      FFBODemoPlayer.updateDemoTable('#demo-table-wrapper');
     });
 
   })
