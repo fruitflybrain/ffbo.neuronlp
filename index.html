@@ -127,6 +127,269 @@
                   <li><a id='btn-lpu-none' role='button' class='' onclick="NeuroNLPUI.onHideAllNeuropil()">Hide All</a></li>
                 </ul>
               </li>
+              <li>
+                <span>Visualization Settings</span>
+                <ul id="toggle_visset">
+                  <li><p>* (Doesn't affect neurons already in workspace)</p></li>
+                  <li>
+                    <h4> Neuron Rendering </h4>
+                  </li>
+                  <li>
+                    <a href="#">3D Neuron Rendering *</a>
+                    <input id="3d_rendering" type="checkbox" class="Toggle" />
+                  </li>
+                  <li>
+                    <a>
+                    <a href="#">Cylinders</a>
+                    <input checked="checked" type="checkbox" class="Toggle" name="mode3d" id="rd1" data-slider-value="1"/>
+                    <a href="#">Cylinders + Spheres (Intensive)</a>
+                    <input type="checkbox" name="mode3d" class="Toggle" id="rd2" data-slider-value="2"/>
+                    <a href="#">Cylinder + Tubes (Very Intensive)</a>
+                    <input type="checkbox" name="mode3d" class="Toggle" id="rd3" data-slider-value="3"/>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <div>Default Neurite Radius *</div>
+                      <input id="default_radius" id='def_rad_slider' class="slider" type="text" data-slider-min="0" data-slider-max="2.0" data-slider-step="0.01" data-slider-value="0.8"/>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <div>Default Soma Radius *</div>
+                      <input id="default_soma_radius" id='def_soma_slider' class="slider" type="text" data-slider-min="0.4" data-slider-max="10.0" data-slider-step="0.01" data-slider-value="0.8"/>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <div>Default Opacity</div>
+                      <input id="default_opacity" id='def_op_slider' class="slider" type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <div>Higlighted Neuron Opacity</div>
+                      <input id="highlighted_object_opacity" id='highlight_op_slider' class="slider" type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
+                      </a>
+                  </li>
+                  <li>
+                    <a>
+                      <div>Low Opacity in Highlight mode</div>
+                      <input id="low_opacity" id='low_op_slider' class="slider" type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <div>Pinned Neuron Opacity</div>
+                      <input id="pin_opacity" id='pin_op_slider' class="slider" type="radio" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <div>Low Opacity in Pinned Mode</div>
+                      <input id="pin_low_opacity" id='pin_low_op_slider' class="slider" type="radio" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <div>Ambient Light</div>
+                      <input id="ambientlight" id='amb_lght_slider' class="slider" type="radio" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <div>Directional Light</div>
+                      <input id="dirlight" id='dir_lght_slider' class="slider" type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <h5>Spot Light 1 on Neuron</h5>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <div>Horizontal Angle</div>
+                      <input id="frontSpot_1_posAngle1" data-slider-id="frontSpot_1_posAngle1" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <div>Vertical Angle</div>
+                      <input id="frontSpot_1_posAngle2" data-slider-id="frontSpot_1_posAngle2" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <div>Intensity</div>
+                      <input id="frontSpot_1_intensity" data-slider-id="frontSpot_1_intensity" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="0.1" data-slider-value="4"/>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <div>Track Camera</div>
+                      <input id="frontSpot_1_track" type="checkbox" class="Toggle" />
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <h5>Spot Light 2 on Neuron</h5>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <div>Horizontal Angle</div>
+                      <input id="frontSpot_2_posAngle1" data-slider-id="frontSpot_2_posAngle1" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <div>Vertical Angle</div>
+                      <input id="frontSpot_2_posAngle2" data-slider-id="frontSpot_2_posAngle2" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <div>Intensity</div>
+                      <input id="frontSpot_2_intensity" data-slider-id="frontSpot_2_intensity" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="0.1" data-slider-value="4"/>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <div>Track Camera</div>
+                      <input id="frontSpot_2_track" type="checkbox" class="Toggle" />
+                    </a>
+                  </li>
+                  <li>
+                    <h4> Neuropil Rendering </h4>
+                  </li>
+                  <li>
+                    <a>Color</a>
+                    <a id="neuropil-color"></a>
+                  </li>
+                  <li>
+                    <a>
+                      <div>Opacity</div>
+                      <input id="background_opacity" id='back_op_slider' class="slider" type="radio" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <div>Wireframe Opacity</div>
+                      <input id="background_wireframe_opacity" data-slider-id='back_op_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <div class="wrap">Screen-space ambient occlusion pass (SSAO)</div>
+                      <input type="checkbox" id="ssao" class="Toggle"/>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <div>Ambient Light</div>
+                      <input id="backambientlight" id='backamb_lght_slider' class="slider" type="radio" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <div>Directional Light</div>
+                      <input id="backdirlight" id='backdir_lght_slider' class="slider" type="radio" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <h5>Spot Light 1 on Neuropil</h5>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <div>Horizontal Angle</div>
+                      <input id="backSpot_1_posAngle1" data-slider-id="backSpot_1_posAngle1" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <div>Vertical Angle</div>
+                      <input id="backSpot_1_posAngle2" data-slider-id="backSpot_1_posAngle2" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <div>Intensity</div>
+                      <input id="backSpot_1_intensity" data-slider-id="backSpot_1_intensity" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="0.1" data-slider-value="4"/>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <div>Track Camera</div>
+                      <input id="backSpot_1_track" type="checkbox" class="Toggle" />
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <h5>Spot Light 2 on Neuropil</h5>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <div>Horizontal Angle</div>
+                      <input id="backSpot_2_posAngle1" data-slider-id="backSpot_2_posAngle1" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <div>Vertical Angle</div>
+                      <input id="backSpot_2_posAngle2" data-slider-id="backSpot_2_posAngle2" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <div>Intensity</div>
+                      <input id="backSpot_2_intensity" data-slider-id="backSpot_2_intensity" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="0.1" data-slider-value="4"/>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <div>Track Camera</div>
+                      <input id="backSpot_2_track" type="checkbox" class="Toggle" />
+                    </a>
+                  </li>
+                  <li>
+                    <h4> Synapse Rendering </h4>
+                  </li>
+                  <li>
+                    <a>
+                      <div>Synapse Size * </div>
+                      <input id="default_synapse_radius" id='def_syn_slider' class="slider" type="radio" data-slider-min="0.1" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
+                    </a>
+                  </li>
+                  <li>
+                    <a>
+                      <div>Synapse Opacity</div>
+                      <input id="synapse_opacity" id='syn_op_slider' class="slider" type="radio" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
+                    </a>
+                  </li>
+                  <li>
+                    <h4> PostProcessing Settings </h4>
+                  </li>
+                  <li>
+                    <a>
+                      <div class="wrap">Fast approXimate Anti-Aliasing (FXAA)</div>
+                      <input type="checkbox" id="fxaa" class="Toggle"/>
+                    </a>
+                  </li>
+                  <!-- <li>
+                    <p> Bloom Pass Settings </p><p></p>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">Radius</div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><input id="bloomradius" id='blm_rad_slider' type="text" data-slider-min="0.05" data-slider-max="10.0" data-slider-step="0.05" data-slider-value="0.8"/></div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">Threshold</div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><input id="bloomthreshold" id='blm_th_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">Strength</div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><input id="bloomstrength" id='blm_st_slider' type="text" data-slider-min="0" data-slider-max="2.0" data-slider-step="0.01" data-slider-value="0.8"/></div>
+                  </li> -->
+                </ul>
+              </li>
             </ul>
           </nav>
         </div>
