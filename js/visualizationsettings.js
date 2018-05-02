@@ -138,32 +138,36 @@ moduleExporter(
         ffbomesh.lightsHelper.frontSpot_2.track = !ffbomesh.lightsHelper.frontSpot_2.track
     });
 
-    //
-    //
-    // html='<input class="color_inp" '
-    // if(Modernizr.inputtypes.color)
-    //     html+='type="color" '
-    // else
-    //     html+='type="text" '
-    // html+='name="np_col" id="np_col" value="#' + ffbomesh.meshDict['al_l'].color.getHexString() + '"/>';
-    // $('#neuropil-color').html(html);
-    //
-    // if(!Modernizr.inputtypes.color)
-    //     $("#np_col").spectrum({
-    //   showInput: true,
-    //   showPalette: true,
-    //   showSelectionPalette: true,
-    //   showInitial: true,
-    //     localStorageKey: "spectrum.neuronlp",
-    //   showButtons: false,
-    //   move: function(c){
-    //       ffbomesh.setBackgroundColor( c.toHexString());
-    //   }
-    //     });
-    // else
-    //     $('#np_col').on('change', function(){
-    //   ffbomesh.setBackgroundColor($('#np_col')[0].value);
-    //     });
+    if(Modernizr.inputtypes.color)
+        $("#vis-neuropil-color").attr("type", "color");
+    else
+        $("#vis-neuropil-color").attr("type", "text");
+
+    this.setColorPickerBackground = function (c) {
+      $("#vis-neuropil-color-wrapper").css("background-color", c)
+    }
+
+    if (!Modernizr.inputtypes.color) {
+      $("#vis-neuropil-color").spectrum({
+        showInput: true,
+        showPalette: true,
+        showSelectionPalette: true,
+        showInitial: true,
+        localStorageKey: "spectrum.neuronlp",
+        showButtons: false,
+        move: function(c){
+          var ch = c.toHexString();
+          ffbomesh.setBackgroundColor(ch);
+          setColorPickerBackground(ch);
+        }
+      });
+    } else {
+      $('#vis-neuropil-color').on('change', function(){
+        var ch = $('#vis-neuropil-color')[0].value;
+        ffbomesh.setBackgroundColor(ch);
+        setColorPickerBackground(ch);
+      });
+    }
 
     $('#vis-background-opacity')
       .bootstrapSlider({value: ffbomesh.settings.backgroundOpacity})
