@@ -34,8 +34,11 @@ moduleExporter(
         $("#vis-3d-mode-option").hide()
 
     $('#vis-3d-rendering').change(function(){
-        $("#vis-3d-mode-option").toggle()
-        ffbomesh.settings.neuron3d = !ffbomesh.settings.neuron3d
+        ffbomesh.settings.neuron3d = !ffbomesh.settings.neuron3d;
+        if (ffbomesh.settings.neuron3d)
+          $("#vis-3d-mode-option").show("slide", { direction: "right" }, 800);
+        else
+          $("#vis-3d-mode-option").hide("slide", { direction: "right" }, 800);
     });
 
     $('input[type=radio][name=mode3d]').change(function(){
