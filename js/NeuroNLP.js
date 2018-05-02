@@ -140,6 +140,7 @@ require([
   var ffbomesh = new FFBOMesh3D('vis-3d', undefined, {"globalCenter": {'x': 0, 'y':-250, 'z':0}});
   var tagsPanel = new Tags('tagsMenu');
   var client = new FFBOClient();
+  var visualizationSettings = FFBOVisualizationSettings(ffbomesh);
 
   var tagLoad = false;
   searchParams = new URLSearchParams(document.location.search);
@@ -209,39 +210,16 @@ require([
     else{ retrieveTagData(metadata); }
   }
 
-  /* 
-   * Overload the create Tag function. 
-   */
   tagsPanel.createTag = function(tagName){
     client.createTag(tagName, Object.assign({}, ffbomesh.export_state(), {
                                settings: ffbomesh.export_settings(),
                                //keywords: keywords
     }));
   }
-  /* 
-   * Overload the retrieve Tag function. 
-   */
   tagsPanel.retrieveTag = function(tagName){
     queryID = client.retrieveTag(tagName, {success: retrieveTagCallback});
     client.status.on("change", function(e){ if(e.value == -1) $('#ui-blocker').hide(); }, queryID);
   }
-
-  var ex_tag = {'name': 'nikul_7', 'desc': 'This tag shows the alpha lobe of the mushroom body.', 'keywords': ['mushroom body', 'alpha lobe'], 'FFBOdata': {extra: 'This tag has been created by the FFBO team.'}};
-  tagsPanel.populateTags([ex_tag]);
-  /* 
-   * Add tag retrieval functionality.
-   */
-  tagsPanel.activateTagLinks = function(tagName){
-    $('.tag-el').click(function() {
-      window.tagsPanel.retrieveTag($(this).attr('tag_name'));
-      window.tagsPanel.overlay.closeAll();
-  });
-  }
-  tagsPanel.activateTagLinks();
-  /* 
-   * Hide the tag search menu for now.
-   */
-  $('#tagSearchMenuWrapper').hide();
 
   var oldHeight = ffbomesh.container.clientHeight;
   var oldWidth = ffbomesh.container.clientWidth;
