@@ -1,0 +1,13 @@
+{
+  "show_1": {
+    "keyword": "Show",
+    "script": [
+      ["notify", {"message": "Hi there!"}],
+      ["notify", {"message": "Let's query for neurons in the Ellipsoid Body!"}],
+      ["search", {"query": "Show Neurons in the Ellipsoid Body"}],
+      ["notify", {"message": "Try it yourself!"}]
+    ],
+    "description": "Show Neurons in the Ellipsoid Body",
+    "category": "Basic Usage"
+  },
+}

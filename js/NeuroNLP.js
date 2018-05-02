@@ -416,12 +416,6 @@ require([
                       });
   });
   console.log(client.loginStatus.connected)
-  demoTable = new Overlay("demo-panel", `
-                          <ul class="list-inline">
-                           <li><h2>Demos </h2></li>
-                          </ul>
-                          <div id="demo-table-wrapper" class="demo-table-wrapper"></div>`);
-  window.NeuroNLPUI.onShowDemo = demoTable.show
   $(document).ready(function(){
     window.FFBODemoPlayer = new FFBODemoPlayer(ffbomesh, $('#ui_menu_nav').data('mmenu'));
     window.FFBODemoPlayer.notify = function(message, settings){

@@ -205,6 +205,15 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "jquery.mmenu"], function($, 
     this.overviewPanel = new Overlay("overview-panel", "");
     this.announcePanel = new Overlay("announce-panel", "");
     this.neuronlpSwitch = new Overlay("neuronlp-switch", "");
+    this.demoTable = new Overlay("demo-panel", `
+                          <ul class="list-inline">
+                           <li><h2>Demos </h2></li>
+                          </ul>
+                          <div id="demo-table-wrapper" class="demo-table-wrapper"></div>`);
+    this.onShowDemo = function(){
+      this.demoTable.show()
+    }
+
   }
 
   return NeuroNLPUI;
