@@ -29,6 +29,7 @@ moduleExporter(
 
   var FFBOVisualizationSettings = function(ffbomesh) {
 
+    var _this = this;
     $('#vis-3d-rendering')[0].checked = ffbomesh.settings.neuron3d;
     if(!ffbomesh.settings.neuron3d)
         $("#vis-3d-mode-option").hide()
@@ -162,14 +163,14 @@ moduleExporter(
         move: function(c){
           var ch = c.toHexString();
           ffbomesh.setBackgroundColor(ch);
-          setColorPickerBackground(ch);
+          _this.setColorPickerBackground(ch);
         }
       });
     } else {
       $('#vis-neuropil-color').on('change', function(){
         var ch = $('#vis-neuropil-color')[0].value;
         ffbomesh.setBackgroundColor(ch);
-        setColorPickerBackground(ch);
+        _this.setColorPickerBackground(ch);
       });
     }
 
