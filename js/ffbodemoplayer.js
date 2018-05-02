@@ -307,9 +307,9 @@ moduleExporter(
              }
              else if('label' in object || 'rid' in object){
                this._highlight(object).then( () => {
-                 rid = 'label' in object ? ffbomesh._labelToRid[object.label] : object.rid;
+                 rid = 'label' in object ? this.ffbomesh._labelToRid[object.label] : object.rid;
                  if(object.cursorMove) this.cursor.click();
-                 ffbomesh.select(rid);
+                 this.ffbomesh.select(rid);
                  setTimeout(() => {resolve();}, this._longerPause);
                }).catch(reject)
              }
@@ -336,10 +336,10 @@ moduleExporter(
              }
              object = Object.assign({}, {cursorMove: true, cursorMoveDuration: 1000}, object);
              this._highlight(object).then( () => {
-               rid = 'label' in object ? ffbomesh._labelToRid[object.label] : object.rid;
-               ffbomesh.select(rid);
+               rid = 'label' in object ? this.ffbomesh._labelToRid[object.label] : object.rid;
+               //this.ffbomesh.select(rid);
                if(object.cursorMove) this.cursor.dbclick();
-               ffbomesh.togglePin(rid);
+               this.ffbomesh.togglePin(rid);
                setTimeout(() => {resolve();}, this._longerPause*1.2);
              }).catch(reject)
            }catch(err){
@@ -361,9 +361,9 @@ moduleExporter(
                return;
              }
              object = Object.assign({}, {cursorMove: true, cursorMoveDuration: 1000}, object);
-             rid = 'label' in object ? ffbomesh._labelToRid[object.label] : object.rid;
+             rid = 'label' in object ? this.ffbomesh._labelToRid[object.label] : object.rid;
              if(object.cursorMove){
-               pos = ffbomesh.getNeuronScreenPosition(rid);
+               pos = this.ffbomesh.getNeuronScreenPosition(rid);
                this._moveTo(pos, object.cursorMoveDuration).then(() =>{
                  this.ffbomesh.highlight(rid, true);
                  setTimeout(() => {resolve();}, this._timeOutPause);
@@ -372,6 +372,22 @@ moduleExporter(
                this.ffbomesh.highlight(rid);
                setTimeout(() => {resolve();}, this._timeOutPause);
              }
+           }catch(err){
+             reject(err);
+           }
+         });
+       },
+       _select: function(object){
+         return new Promise((resolve, reject) => {
+           try{
+             if(this._interrupt){
+               resolve();
+               return;
+             }
+             object = Object.assign({}, {pause: 1000}, object);
+             rid = 'label' in object ? this.ffbomesh._labelToRid[object.label] : object.rid;
+             this.ffbomesh.select(rid);
+             setTimeout(() => {resolve();}, object.pause);
            }catch(err){
              reject(err);
            }
@@ -494,6 +510,9 @@ moduleExporter(
                  break;
                case "notify":
                  p = this._displayMessage(json[i][1])
+                 break;
+               case "select":
+                 p = this._select(json[i][1])
                  break;
                }
                if(p !== undefined) p.then(()=>{execute(i+1)}).catch(reject);
