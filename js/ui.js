@@ -90,6 +90,11 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "jquery.mmenu"], function($, 
       mm_menu_right.open();
       $("a[href='#toggle_neuropil']")[0].click()
     }
+    this.onClickVisualizationSettings = function() {
+      mm_menu_right.closeAllPanels();
+      mm_menu_right.open();
+      $("a[href='#toggle_visset']")[0].click()
+    }
     this.openRightMenu = function() {
       mm_menu_right.open();
     }

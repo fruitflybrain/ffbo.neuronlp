@@ -419,6 +419,7 @@ require([
   ffbomesh.createUIBtn("removeUnpin", "fa-trash", "Remove Unpinned Neurons")
   ffbomesh.createUIBtn("downData", "fa-download", "Download Connectivity")
 
+  ffbomesh.on('showSettings', (function() {window.NeuroNLPUI.onClickVisualizationSettings()}));
   ffbomesh.on('resetView', (function() {ffbomesh.resetView()}));
   ffbomesh.on('resetVisibleView', (function() {ffbomesh.resetVisibleView()}));
   ffbomesh.on('removeUnpin', (function() {removeUnpinned()}));
