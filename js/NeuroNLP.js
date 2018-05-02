@@ -140,7 +140,7 @@ require([
   var ffbomesh = new FFBOMesh3D('vis-3d', undefined, {"globalCenter": {'x': 0, 'y':-250, 'z':0}});
   var tagsPanel = new Tags('tagsMenu');
   var client = new FFBOClient();
-  var visualizationSettings = FFBOVisualizationSettings(ffbomesh);
+  var visualizationSettings = new FFBOVisualizationSettings(ffbomesh);
 
   var tagLoad = false;
   searchParams = new URLSearchParams(document.location.search);
@@ -414,6 +414,10 @@ require([
                         if(!tagLoad) $('#ui-blocker').hide();
                         srchInput.focus();
                       });
+    var c = json[Object.keys(json)[0]].color;
+    var rgb = parseInt(c.b*255) | (parseInt(c.g*255) << 8) | (parseInt(c.r*255) << 16);
+    var hex =  '#' + (0x1000000 + rgb).toString(16).slice(1);
+    visualizationSettings.setColorPickerBackground(hex);
   });
   console.log(client.loginStatus.connected)
   $(document).ready(function(){
