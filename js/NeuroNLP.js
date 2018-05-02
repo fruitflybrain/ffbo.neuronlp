@@ -421,6 +421,12 @@ require([
     window.FFBODemoPlayer.notify = function(message, settings){
       iziToast.info(Object.assign({message: message}, settings))
     }
+    window.FFBODemoPlayer.beforeDemo = function(){ window.NeuroNLPUI.closeAllOverlay(); }
+    $.getJSON("/data/demos.json", function(json) {
+      window.FFBODemoPlayer.addDemos(json);
+      window.FFBODemoPlayer.updateDemoTable('#demo-table-wrapper');
+    });
+
   })
   var textFile = null;
   ffbomesh.on("downData", function() {
