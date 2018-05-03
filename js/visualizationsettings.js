@@ -370,6 +370,9 @@ moduleExporter(
       $('#vis-tonemappingbright').bootstrapSlider('setValue', e.value, true);
     }, 'brightness');
 
+    ffbomesh.settings.on('change', function(e) {
+      $('input[type=radio][name=mode3d]')[e.value].checked = true;
+    }, 'neuron3dMode');
 
   }
   return FFBOVisualizationSettings;
