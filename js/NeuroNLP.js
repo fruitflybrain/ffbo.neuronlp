@@ -450,7 +450,7 @@ require([
 
   $(document).ready(function(){
     if (isOnMobile)
-      ffbomesh.backrender.SSAO.enabled = false;
+      ffbomesh.backrenderSSAO.enabled = false;
     FFBODemoPlayer = new FFBODemoPlayer(ffbomesh, $('#ui_menu_nav').data('mmenu'));
     window.FFBODemoPlayer = FFBODemoPlayer;
     FFBODemoPlayer.notify = function(message, settings){
