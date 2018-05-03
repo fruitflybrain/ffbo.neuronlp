@@ -177,10 +177,9 @@ moduleExporter(
         ffbomesh.resetOpacity();
       });
 
-    ssao_pass = ffbomesh.passes['SSAO'];
-    $('#vis-ssao')[0].checked = ffbomesh.composer.passes[ssao_pass].enabled
+    $('#vis-ssao')[0].checked = ffbomesh.settings.backrenderSSAO.enabled;
     $('#vis-ssao').change(function(){
-        ffbomesh.composer.passes[ssao_pass].enabled = !ffbomesh.composer.passes[ssao_pass].enabled
+        ffbomesh.settings.backrenderSSAO.enabled = !ffbomesh.settings.backrenderSSAO.enabled;
     });
 
     $('#vis-backambientlight-intensity')
@@ -257,39 +256,33 @@ moduleExporter(
     //
     //
     //
-    $('#vis-fxaa')[0].checked = ffbomesh.effectFXAA.enabled
+    $('#vis-fxaa')[0].checked = ffbomesh.settings.effectFXAA.enabled;
     $('#vis-fxaa').change(function(){
-        ffbomesh.effectFXAA.enabled = !ffbomesh.effectFXAA.enabled
+        ffbomesh.settings.effectFXAA.enabled = !ffbomesh.settings.effectFXAA.enabled;
     });
-    //
-    // /*
-    // $('#tonemapping')[0].checked = ffbomesh.toneMappingPass.enabled
-    // $('#fxaa').change(function(){
-    //     ffbomesh.toneMappingPass.enabled = !ffbomesh.toneMappingPass.enabled
-    // });
-    // */
+
     $('#vis-tonemappingbright')
-      .bootstrapSlider({value: 1-ffbomesh.toneMappingPass.materialToneMap.uniforms.minLuminance.value})
+      .bootstrapSlider({value: ffbomesh.settings.toneMappingPass.brightness})
       .on("change", function(e){
-        ffbomesh.toneMappingPass.setMinLuminance(1-e.value.newValue);
+        ffbomesh.settings.toneMappingPass.brightness = e.value.newValue;
       });
 
-    $('#vis-bloomradius')
+    $('#vis-bloom-radius')
       .bootstrapSlider({value: ffbomesh.bloomPass.radius})
       .on("change", function(e){
-        ffbomesh.bloomPass.radius = e.value.newValue;
+        ffbomesh.settings.bloomPass.radius = e.value.newValue;
       });
 
-    $('#vis-bloomthreshold')
+    $('#vis-bloom-threshold')
       .bootstrapSlider({value: ffbomesh.bloomPass.threshold})
       .on("change", function(e){
-        ffbomesh.bloomPass.threshold = e.value.newValue;
+        ffbomesh.settings.bloomPass.threshold = e.value.newValue;
       });
 
-    $('#vis-bloomstrength')
+    $('#vis-bloom-strength')
       .bootstrapSlider({value: ffbomesh.bloomPass.strength})
       .on("change", function(e){
-        ffbomesh.bloomPass.strength = e.value.newValue;
+        ffbomesh.settings.bloomPass.strength = e.value.newValue;
       });
 
     $('#btn-store-vis-settings')
@@ -322,6 +315,11 @@ moduleExporter(
       'frontAmbient': 'vis-ambientlight'
     }
 
+    var postProcessing2Dom = {
+      'backrenderSSAO': 'vis-ssao',
+      'effectFXAA': 'vis-fxaa'
+    }
+
     var settingCallback = function (key) {
       return (function (e) {
         $(key).bootstrapSlider('setValue', e.value, true);
@@ -336,10 +334,43 @@ moduleExporter(
     ffbomesh.lightsHelper.on('change', function(e) {
       if (!lightObj2Dom.hasOwnProperty(e.path[0]))
         return;
-      console.log(e);
       var dom = lightObj2Dom[e.path[0]];
       $(`#${dom}-${e.prop}`).bootstrapSlider('setValue', e.value, true);
     }, ['intensity', 'posAngle1', 'posAngle2']);
+
+    ffbomesh.settings.on('change', function (e) {
+      $('#vis-3d-rendering')[0].checked = e.value;
+      if (ffbomesh.settings.neuron3d)
+        $("#vis-3d-mode-option").show("slide", { direction: "right" }, 800);
+      else
+        $("#vis-3d-mode-option").hide("slide", { direction: "right" }, 800);
+    }, 'neuron3d');
+
+
+    ffbomesh.settings.bloomPass.on('change', function(e) {
+      var dom = 'vis-bloom';
+      $(`#${dom}-${e.prop}`).bootstrapSlider('setValue', e.value, true);
+    }, ['threshold', 'radius', 'strength']);
+
+    ffbomesh.settings.on('change', function (e) {
+      if (!postProcessing2Dom.hasOwnProperty(e.path[0]))
+        return;
+      var dom = postProcessing2Dom[e.path[0]];
+      $(`#${dom}`)[0].checked = e.value;
+    }, 'enabled');
+
+    ffbomesh.lightsHelper.on('change', function (e) {
+      if (!lightObj2Dom.hasOwnProperty(e.path[0]))
+        return;
+      var dom = lightObj2Dom[e.path[0]];
+      $(`#${dom}-${e.prop}`)[0].checked = e.value;
+    }, 'track');
+
+    ffbomesh.settings.toneMappingPass.on('change', function(e) {
+      $('#vis-tonemappingbright').bootstrapSlider('setValue', e.value, true);
+    }, 'brightness');
+
+
   }
   return FFBOVisualizationSettings;
 });
