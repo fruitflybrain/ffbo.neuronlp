@@ -14,6 +14,7 @@ requirejs.config({
   paths: {
     // app: 'app',
     mesh3d: '../lib/js/mesh3d',
+    propertymanager: '../lib/js/propertymanager',
     infopanel: "info_panel/infopanel",
     autobahn: '//cdn.rawgit.com/crossbario/autobahn-js-built/master/autobahn.min',
     d3: '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min',
