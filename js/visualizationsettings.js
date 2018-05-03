@@ -154,13 +154,13 @@ moduleExporter(
         showButtons: false,
         move: function(c){
           var ch = c.toHexString();
-          ffbomesh.setBackgroundColor(ch);
+          ffbomesh.settings.backgroundColor = ch;
         }
       });
     } else {
       $('#vis-neuropil-color').on('change', function(){
         var ch = $('#vis-neuropil-color')[0].value;
-        ffbomesh.setBackgroundColor(ch);
+        ffbomesh.settings.backgroundColor = ch;
       });
     }
 
