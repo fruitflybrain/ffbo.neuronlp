@@ -65,13 +65,15 @@
     "script": [
       ["notify", {"message": "Let's explore some inferred connectivity (using the SPIN algorithm ) in the central complex", "pause": 1000}],
       ["notify", {"message": "Let's add some neurons from the central complex to the scene", "pause": 2000}],
-      ["search", {"query": "show neurons with inputs in the ellipsoid body and axons in both pb and idfp"}],
-      ["search", {"query": "add neurons wieh dendrites in pb and axons in both eb and idfp"}],
-      ["search", {"query": "add neurons wieh inputs in pb and outputs in eb and noduli"}],
-      ["search", {"query": "add local neurons in eb"}],
-      ["notify", {"message": "Now let's download the inferred connectivity between these neurons <i class='fa fa-download'></i> button", "pause": 1000}],
-      ["click", {"uiBtn": {"type": "downData"}}],
-      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
+      ["notify", {"message": "We first add some tentative EB ring neurons", "pause": 2000}],
+      ["search", {"query": "show neurons connecting lat to eb"}],
+      ["notify", {"message": "We then add some tentative EPG, PEG and PEN neurons", "pause": 2000}],
+      ["search", {"query": "add neurons with inputs in the ellipsoid body and axons in both pb and idfp"}],
+      ["search", {"query": "add neurons with dendrites in pb and axons in both eb and idfp"}],
+      ["search", {"query": "add neurons with inputs in pb and outputs in eb and noduli"}],
+      ["notify", {"message": "Now let's download the inferred connectivity between these neurons by using the <i class='fa fa-download'></i> button", "pause": 1000}],
+      ["click", {"uiBtn": {"type": "downData"}, "waitForUI": true}],
+      ["notify", {"message": "Done! Try it yourself!", "pause": 5000}]
     ],
     "neuron3d": true,
     "keyword": "Connectivity",
@@ -83,8 +85,8 @@
       ["notify", {"message": "Let's explore some connectivity in the motion detection pathway", "pause": 4000}],
       ["search", {"query": "Show Mi1, Tm3 and T4a neurons"}],
       ["click", {"uiBtn": {"type": "resetVisibleView"}}],
-      ["notify", {"message": "Now let's download the connectivity between these neurons <i class='fa fa-download'></i> button", "pause": 1000}],
-      ["click", {"uiBtn": {"type": "downData"}}],
+      ["notify", {"message": "Now let's download the connectivity between these neurons by using the <i class='fa fa-download'></i> button", "pause": 1000}],
+      ["click", {"uiBtn": {"type": "downData"}, "waitForUI": true}],
       ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
     ],
     "neuron3d": "desktop",

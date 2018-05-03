@@ -242,7 +242,15 @@ moduleExporter(
              if('uiBtn' in object){
                if(object.uiBtn.type in this.uiBtns)
                  this._clickMenu(this.uiBtns[object.uiBtn.type], object.cursorMove, object.cursorMoveDuration).then(() => {
-                   resolve();
+                   if(  object.waitForUI )
+                     x = setInterval(() => {
+                       if($('#ui-blocker').is(":hidden")){
+                         clearInterval(x);
+                         resolve();
+                       }
+                     }, 1000);
+                   else
+                     setTimeout(resolve, object.pause || this._timeOutPause );
                  }).catch(reject);
                else
                  resolve();
@@ -329,9 +337,7 @@ moduleExporter(
                            // resolve on callback but don't have access to client
                            // here right now
                            $('#ui-blocker').show();
-                           console.log($('#ui-blocker').is(":hidden"))
                            x = setInterval(() => {
-                             console.log($('#ui-blocker').is(":hidden"))
                              if($('#ui-blocker').is(":hidden")){
                                clearInterval(x);
                                resolve();
@@ -612,9 +618,9 @@ moduleExporter(
                this._neuron3d = undefined;
                if( 'neuron3d' in this._demoJson[demoName]){
                  this._neuron3d = this.ffbomesh.settings.neuron3d;
-                 if (this.ffbomesh.settings.neuron3d == "mobile")
+                 if (this._demoJson[demoName].neuron3d == "mobile")
                    neuron3d = isOnMobile ? true: false;
-                 else if (this.ffbomesh.settings.neuron3d == "desktop")
+                 else if (this._demoJson[demoName].neuron3d == "desktop")
                    neuron3d = isOnMobile ? false: true;
                  else
                    neuron3d = this._demoJson[demoName].neuron3d;
