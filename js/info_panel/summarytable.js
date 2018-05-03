@@ -178,7 +178,7 @@ moduleExporter("SummaryTable",
       let fieldName = snakeToSentence(key);
       let fieldValue = data[key];
 
-      if (fieldName === 'vfb_id'){
+      if (key === 'vfb_id'){
         let vfbBtn = "<a target='_blank' href='http://virtualflybrain.org/reports/" + data[key] + "'>VFB link</a>";
         fieldName = 'External Link';
         fieldValue = vfbBtn;

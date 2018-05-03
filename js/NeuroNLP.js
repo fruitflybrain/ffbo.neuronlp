@@ -248,26 +248,15 @@ require([
 
   var oldHeight = ffbomesh.container.clientHeight;
   var oldWidth = ffbomesh.container.clientWidth;
-  resizing = false;
-  function onResize(){
-    setTimeout( () => {
+
+  setInterval( () => {
+    if(oldHeight != ffbomesh.container.clientHeight || oldWidth != ffbomesh.container.clientWidth){
       ffbomesh.onWindowResize();
       infoPanel.resize();
       oldHeight = ffbomesh.container.clientHeight;
       oldWidth = ffbomesh.container.clientWidth;
-      resizing = false;
-    }, 40);
-  }
-
-
-  setInterval( () => {
-    if(oldHeight != ffbomesh.container.clientHeight || oldWidth != ffbomesh.container.clientWidth){
-      if(!resizing){
-        onResize();
-        resizing = true;
-      }
     }
-  }, 40);
+  }, 200);
 
 
   if(!isOnMobile)
@@ -453,7 +442,7 @@ require([
     if (isOnMobile)
       ffbomesh.backrenderSSAO.enabled = false;
     FFBODemoPlayer = new FFBODemoPlayer(ffbomesh, $('#ui_menu_nav').data('mmenu'));
-    window.FFBODemoPlayer = FFBODemoPlayer;
+    //window.FFBODemoPlayer = FFBODemoPlayer;
     FFBODemoPlayer.onLoadingTag = () => {
       tagLoad = true;
     };
