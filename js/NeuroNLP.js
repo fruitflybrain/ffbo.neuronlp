@@ -144,14 +144,14 @@ require([
   window.NeuroNLPUI.onRetrieveTag = (tagsPanel.onRetrieveTag).bind(tagsPanel);
 
   var tagLoad = false;
-  searchParams = new URLSearchParams(document.location.search);
+  var searchParams = new URLSearchParams(document.location.search);
   if(searchParams.get('tag')){
     tagLoad = true;
     client.loginStatus.on("change", function(){
-      console.log('conn');
       if(tagLoad) tagsPanel.retrieveTag(searchParams.get('tag'))
     }, "connected");
   }
+
 
   client.startConnection("guest", "guestpass", "wss://neuronlp.fruitflybrain.org:8888/ws");
 
@@ -483,6 +483,9 @@ require([
     $.getJSON("/data/demos.json", function(json) {
       FFBODemoPlayer.addDemos(json);
       FFBODemoPlayer.updateDemoTable('#demo-table-wrapper');
+      if(searchParams.get('demo') && !searchParams.get('tag'))
+        FFBODemoPlayer.startDemo(searchParams.get('demo'))
+
     });
 
   })
