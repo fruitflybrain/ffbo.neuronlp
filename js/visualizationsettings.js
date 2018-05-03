@@ -123,10 +123,12 @@ moduleExporter(
       .on("change", function(e){
         ffbomesh.lightsHelper.frontSpot_2.posAngle2 = e.value.newValue;
       });
-    $('#vis-frontSpot-2-intensity').bootstrapSlider({value: ffbomesh.lightsHelper.frontSpot_2.intensity})
-        .on("change", function(e){
-      ffbomesh.lightsHelper.frontSpot_2.intensity = e.value.newValue;
-        });
+    $('#vis-frontSpot-2-intensity')
+      .bootstrapSlider({value: ffbomesh.lightsHelper.frontSpot_2.intensity})
+      .on("change", function(e){
+        ffbomesh.lightsHelper.frontSpot_2.intensity = e.value.newValue;
+    });
+
     $('#vis-frontSpot-2-track')[0].checked = ffbomesh.lightsHelper.frontSpot_2.track
     $('#vis-frontSpot-2-track').change(function(){
         ffbomesh.lightsHelper.frontSpot_2.track = !ffbomesh.lightsHelper.frontSpot_2.track
@@ -153,14 +155,12 @@ moduleExporter(
         move: function(c){
           var ch = c.toHexString();
           ffbomesh.setBackgroundColor(ch);
-          _this.setColorPickerBackground(ch);
         }
       });
     } else {
       $('#vis-neuropil-color').on('change', function(){
         var ch = $('#vis-neuropil-color')[0].value;
         ffbomesh.setBackgroundColor(ch);
-        _this.setColorPickerBackground(ch);
       });
     }
 
@@ -373,6 +373,10 @@ moduleExporter(
     ffbomesh.settings.on('change', function(e) {
       $('input[type=radio][name=mode3d]')[e.value].checked = true;
     }, 'neuron3dMode');
+
+    ffbomesh.settings.on('change', function(e) {
+      _this.setColorPickerBackground(e.value);
+    }, 'backgroundColor');
 
   }
   return FFBOVisualizationSettings;
