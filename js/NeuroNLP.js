@@ -421,7 +421,7 @@ require([
   ffbomesh.createUIBtn("takeScreenshot", "fa-camera", "Download Screenshot")
   ffbomesh.createUIBtn("showInfo", "fa-info-circle", "GUI guideline")
   ffbomesh.createUIBtn("resetView", "fa-refresh", "Reset View")
-  ffbomesh.createUIBtn("resetVisibleView", "fa-align-justify", "Centre View To Visible Neurons/Sunapses")
+  ffbomesh.createUIBtn("resetVisibleView", "fa-align-justify", "Centre and zoom into visible Neurons/Sunapses")
   ffbomesh.createUIBtn("showAll", "fa-eye", "Show All")
   ffbomesh.createUIBtn("hideAll", "fa-eye-slash", "Hide All")
   ffbomesh.createUIBtn("removeUnpin", "fa-trash", "Remove Unpinned Neurons")

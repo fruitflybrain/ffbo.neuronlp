@@ -69,6 +69,7 @@ moduleExporter(
        // Tags API
        this._timeOutPause = 100;
        this._longerPause = 400;
+       this._neuron3d = undefined;
      }
 
      Object.assign(FFBODemoPlayer.prototype, {
@@ -301,7 +302,6 @@ moduleExporter(
                // Can be used for Info Panel now. Should be later replaced by an API
                this._clickMenu(object.selector, object.cursorMove, object.cursorMoveDuration)
                  .then(() => {
-                   $(object.selector).click();
                    setTimeout(resolve, this._timeOutPause);
                  }).catch(reject);
              }
@@ -430,6 +430,22 @@ moduleExporter(
            }
          });
        },
+       _maxInfoPanel: function(object){
+         return new Promise((resolve, reject) => {
+           try{
+             if($('#info-panel-wrapper').hasClass('vis-info-pin')){
+               resolve();
+               return;
+             }
+             object = Object.assign({selector: '#btn-info-pin'}, object);
+             this._click(object).then( () => {
+               setTimeout(() => { resolve(); }, this._timeOutPause);
+             });
+           }catch(err){
+             reject(err);
+           }
+         });
+       },
        addDemos: function(demoJson){
          Object.assign(this._demoJson, demoJson)
        },
@@ -514,6 +530,9 @@ moduleExporter(
                case "select":
                  p = this._select(json[i][1])
                  break;
+               case "maxInfoPanel":
+                 p = this._maxInfoPanel();
+                 break;
                }
                if(p !== undefined) p.then(()=>{execute(i+1)}).catch(reject);
                else execute(i+1);
@@ -538,8 +557,11 @@ moduleExporter(
            try{
              this._interrupt = false;
              if(demoName in this._demoJson){
-               if( 'neuron3d' in this._demoJson[demoName])
-                 this.ffbomesh.neuron3d = this._demoJson[demoName].neuron3d;
+               this._neuron3d = undefined;
+               if( 'neuron3d' in this._demoJson[demoName]){
+                 this._neuron3d = this.ffbomesh.settings.neuron3d;
+                 this.ffbomesh.settings.neuron3d = this._demoJson[demoName].neuron3d;
+               }
                $('#demo-blocker').show();
                this.beforeDemo(this._demoJson[demoName].keyword);
                this._initCursor();
@@ -562,6 +584,8 @@ moduleExporter(
          try{
            this.afterDemo();
          }catch(err){console.log(err);}
+         if( this._neuron3d !== undefined)
+           this.ffbomesh.settings.neuron3d = this._neuron3d;
          if(this._interrupt)
            this.notify("Demo stopped successfully", {color: "yellow"});
          if(err !== undefined){
