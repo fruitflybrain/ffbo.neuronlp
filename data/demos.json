@@ -1,11 +1,73 @@
 {
+  "3dmode": {
+    "script": [
+      ["notify", {"message": "The settings menu can be accessed by clicking on <i class='fa fa-cog'></i> icon on the topright"}],
+      ["click", {"uiBtn": {"type": "showSettings"}}],
+      ["click", {"selector": "label[for=vis-3d-rendering]"}],
+      ["notify", {"message": "Neurons will now be loaded in 3d. Let's query for neurons in EB."}],
+      ["search", {"query": "EB"}],
+      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
+    ],
+    "neuron3d": false,
+    "keyword": "3d Mode",
+    "description": "Turn on 3d mode and show neurons in EB",
+    "category": "New Features"
+  },
+  "centre_view": {
+    "script": [
+      ["notify", {"message": "Let's hide everything first"}],
+      ["click", {"uiBtn": {"type": "hideAll"}}],
+      ["notify", {"message": "And then pull up Mi1 neurons from the medulla connectome"}],
+      ["search", {"query": "show Mi1 neurons in medulla"}],
+      ["notify", {"message": "We can center the view into visible neurons by clicking on the <i class='fa fa-align-justify'></i> icon on the topright"}],
+      ["click", {"uiBtn": {"type": "resetVisibleView"}}],
+      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
+    ],
+    "neuron3d": false,
+    "keyword": "Center/Zoom View",
+    "description": "Center and zoom  to visible neurons",
+    "category": "New Features"
+  },
+  "synapse_vis": {
+    "script": [
+      ["notify", {"message": "Let's hide everything first", "pause": 1000}],
+      ["click", {"uiBtn": {"type": "hideAll"}}],
+      ["notify", {"message": "And then pull up Mi1 neuron from the home column", "pause": 1000}],
+      ["search", {"query": "show Mi1 from the home column in medulla"}],
+      ["click", {"uiBtn": {"type": "resetVisibleView"}}],
+      ["maxInfoPanel", {} ],
+      ["click", {"label": "Mi1-home"}],
+      ["notify", {"message": "Let's add T4a-home from the info panel"}],
+      ["click", {"selector": "#btn-post-add-T4a-home"}],
+      ["notify", {"message": "Now let's add the synapse locations between these neurons to the scene"}],
+      ["click", {"selector": "#btn-post-syn-add-Mi1-home--T4a-home"}],
+      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
+    ],
+    "neuron3d": true,
+    "keyword": "Synapse Visualization",
+    "description": "Visualize synapses between Mi1 and T4a in the home column",
+    "category": "New Features"
+  },
+  "screenshot": {
+    "script": [
+      ["minInfoPanel", {"cursorMoveDuration": 500}],
+      ["notify", {"message": "Let's load a tag first", "pause": 1000}],
+      ["click", {"menu": {"type": "loadTag", "tag": "ffbo_1"}}],
+      ["notify", {"message": "Now let's download a screenshot of the visualization using the <i class='fa fa-camera'></i> button", "pause": 1000}],
+      ["click", {"uiBtn": {"type": "takeScreenshot"}}],
+      ["notify", {"message": "The quality of the screenshot depends on the resolution of the display and the browser window size", "pause": 0, "settings":{"timeout":false}}]
+    ],
+    "keyword": "Screenshot",
+    "description": "Load a tag and take a screenshot<br><small>*This demo will override your visualization settings</small>",
+    "category": "New Features"
+  },
   "show_1": {
     "keyword": "Show",
     "script": [
       ["notify", {"message": "Hi there!"}],
       ["notify", {"message": "Let's query for neurons in the Ellipsoid Body!"}],
       ["search", {"query": "Show Neurons in the Ellipsoid Body"}],
-      ["notify", {"message": "Try it yourself!"}]
+      ["notify", {"message": "Try it yourself!", "pause": 0}]
     ],
     "description": "Show neurons in the Ellipsoid Body.",
     "category": "Basic Usage"
@@ -16,8 +78,8 @@
       ["notify", {"message": "Hi!"}],
       ["notify", {"message": "Let's query T4 neurons!"}],
       ["search", {"query": "Show T4 Neurons"}],
-      ["notify", {"message": "Done!"}],
-      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+      ["notify", {"message": "Done!", "pause": 0}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
     "description": "Visualize T4 neurons in the Medulla.",
     "category": "Basic Usage"
@@ -28,8 +90,8 @@
       ["notify", {"message": "Hi!"}],
       ["notify", {"message": "Let's query for neurons in the PB (Protocerebral Bridge)!"}],
       ["search", {"query": "Show neurons in the PB"}],
-      ["notify", {"message": "Done!"}],
-      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+      ["notify", {"message": "Done!", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
     "description": "Visualize neurons in the protocerebral bridge.",
     "category": "Basic Usage"
@@ -40,8 +102,8 @@
       ["notify", {"message": "Hi!"}],
       ["notify", {"message": "Let's query for neurons in the left lateral horn!"}],
       ["search", {"query": "Show neurons in left lateral horn"}],
-      ["notify", {"message": "Done!"}],
-      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+      ["notify", {"message": "Done!" , "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
     "description": "Visualize neurons in the left lateral horn.",
     "category": "Basic Usage"
@@ -54,8 +116,8 @@
       ["search", {"query": "Show L1 neurons"}],
       ["notify", {"message": "Let's add L1 neurons' postsynaptic neurons!"}],
       ["search", {"query": "Add postsynaptic neurons"}],
-      ["notify", {"message": "Done!"}],
-      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
     "description": "Show L1 neurons in the Lamina, add their postsynaptic neurons.",
     "category": "Basic Usage"
@@ -68,8 +130,8 @@
       ["search", {"query": "Show L1 neurons"}],
       ["notify", {"message": "Now let's add Mi1 neurons:"}],
       ["search", {"query": "Add Mi1 neurons"}],
-      ["notify", {"message": "Done!"}],
-      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
     "description": "Visualize L1 neurons and then add Mi1 neurons.",
     "category": "Basic Usage"
@@ -82,8 +144,8 @@
       ["search", {"query": "Show neurons in eb"}],
       ["notify", {"message": "Now let's bring in neurons from protocerebral bridge."}],
       ["search", {"query": "Add neurons in protocerebral bridge"}],
-      ["notify", {"message": "Done!"}],
-      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
     "description": "Visualize neurons in Ellipsoid Body and then add neurons in the Protocerebral Bridge.",
     "category": "Basic Usage"
@@ -100,8 +162,8 @@
       ["search", {"query": "Undo"}],
       ["notify", {"message": "Now let's add neurons from the PB."}],
       ["search", {"query": "Add neurons in PB"}],
-      ["notify", {"message": "Done!"}],
-      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
     "description": "Go back to a previous step (UNDO).",
     "category": "Basic Usage"
@@ -114,8 +176,8 @@
       ["search", {"query": "Show neurons in cvlp"}],
       ["notify", {"message": "Now let's only keep known fruitless neurons and remove the rest."}],
       ["search", {"query": "Keep fruitless neurons in cvlp"}],
-      ["notify", {"message": "Done!"}],
-      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
     "description": "Filter neurons in the current workspace based on a specific query.",
     "category": "Basic Usage"
@@ -128,8 +190,8 @@
       ["search", {"query": "Show neurons in the left al"}],
       ["notify", {"message": "Now let's only keep known gabaergic neurons and remove the rest."}],
       ["search", {"query": "Keep gabaergic neurons in the left al"}],
-      ["notify", {"message": "Done!"}],
-      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
     "description": "Filter neurons in the current workspace based on a specific query.",
     "category": "Basic Usage"
@@ -142,13 +204,13 @@
       ["search", {"query": "Show neurons in right al"}],
       ["notify", {"message": "Now let's only remove the projection neurons."}],
       ["search", {"query": "Remove projection neurons from the right al"}],
-      ["notify", {"message": "Done!"}],
-      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
     "description": "Remove neurons from the current workspace based on a specific query.",
     "category": "Basic Usage"
   },
-    "highlight_1": {
+  "highlight_1": {
     "keyword": "Highlight",
     "script": [
       ["notify", {"message": "Hi!"}],
@@ -156,7 +218,7 @@
       ["search", {"query": "Show Neurons in the Ellipsoid Body"}],
       ["notify", {"message": "Let's move the cursor over the neurons to highlight them!"}],
       ["highlight", {"label": "VGlut-F-200478"}],
-      ["notify", {"message": "Try it yourself!"}]
+      ["notify", {"message": "Try it yourself!", "pause": 0}]
     ],
     "description": "Remove neurons from the current workspace based on a specific query.",
     "category": "GUI Usage"
@@ -170,7 +232,7 @@
       ["notify", {"message": "Let's move the cursor over a neuron, and click on it!"}],
       ["click", {"label": "VGlut-F-200478"}],
       ["notify", {"message": "The information of the selected neuron has been loaded from the FlyCircuit Database!"}],
-      ["notify", {"message": "Try it yourself!"}]
+      ["notify", {"message": "Try it yourself!", "pause": 0}]
     ],
     "description": "Click on a neuron to show its information from FlyCircuit Database.",
     "category": "GUI Usage"
@@ -193,7 +255,7 @@
       ["notify", {"message": "Want to unpin a neuron? Use 'Double click' on a pinned neuron to unpin it."}],
       ["pin", {"label": "Gad1-F-400328"}],
       ["select", {"label": "Gad1-F-400328"}],
-      ["notify", {"message": "Try it yourself!"}]
+      ["notify", {"message": "Try it yourself!", "pause": 0}]
     ],
     "description": "Pin a neuron via 'Double Click' to make it stick in the scene.",
     "category": "GUI Usage"
@@ -204,8 +266,8 @@
       ["notify", {"message": "Hi!"}],
       ["notify", {"message": "Let's query for projection neurons in the left mushroom body!"}],
       ["search", {"query": "Show projection neurons in the left mushroom body"}],
-      ["notify", {"message": "Done!"}],
-      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
     "description": "Show projection neurons in the left mushroom body.",
     "category": "Neurons and Neurotransmitters"
@@ -218,8 +280,8 @@
       ["search", {"query": "Show local neurons in the right antennal lobe"}],
       ["notify", {"message": "Let's add interneurons in the left antennal lobe!"}],
       ["search", {"query": "Add interneurons in the left antennal lobe"}],
-      ["notify", {"message": "Done!"}],
-      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
     "description": "Show local neurons in the right antennal lobe, and add interneurons in the left antennal lobe.",
     "category": "Neurons and Neurotransmitters"
@@ -238,8 +300,8 @@
       ["search", {"query": "Add dopaminergic neurons in eb"}],
       ["notify", {"message": "Finally, let's add gabaergic neurons in the Ellipsoid Body!"}],
       ["search", {"query": "Add gabaergic neurons in eb"}],
-      ["notify", {"message": "Done!"}],
-      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
     "description": "Show serotonegic neurons in the Ellipsoid Body, and sequentially add glutamatergic, cholinergic, dopaminergic and gabaergic neurons.",
     "category": "Neurons and Neurotransmitters"
@@ -250,8 +312,8 @@
       ["notify", {"message": "Hi!"}],
       ["notify", {"message": "Let's query for neurons projecting from right Lobula to left optic glomerulus!"}],
       ["search", {"query": "Show neurons connecting right lob to left og"}],
-      ["notify", {"message": "Done!"}],
-      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
     "description": "Show neurons projecting from right Lobula to left optic glomerulus.",
     "category": "Advanced Demonstrations"
@@ -262,8 +324,8 @@
       ["notify", {"message": "Hi!"}],
       ["notify", {"message": "Let's query for neurons innervating optic glomerulus!"}],
       ["search", {"query": "Show neurons innervating optic glomerulus"}],
-      ["notify", {"message": "Done!"}],
-      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
     "description": "Visualize neurons innervating the optic glomerulus.",
     "category": "Advanced Demonstrations"
@@ -274,8 +336,8 @@
       ["notify", {"message": "Hi!"}],
       ["notify", {"message": "Let's query for neurons that have dendrites in the right lateral horn!"}],
       ["search", {"query": "Show neurons having dendritic innervations in right lateral horn"}],
-      ["notify", {"message": "Done!"}],
-      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
     "description": "Visualize neurons with dendrites in the right lateral horn.",
     "category": "Advanced Demonstrations"
@@ -286,8 +348,8 @@
       ["notify", {"message": "Hi!"}],
       ["notify", {"message": "Let's query for neurons that have dendrites in al and axons in both right lh and left lh!"}],
       ["search", {"query": "Show neurons having dendrites in al and axons in both right lh and left lh"}],
-      ["notify", {"message": "Done!"}],
-      ["notify", {"message": "It is all yours now! Try it yourself!"}]
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
     "description": "Visualize neurons connecting antennal lobe to both left and right lateral horn.",
     "category": "Advanced Demonstrations"
@@ -343,8 +405,8 @@
       ["click", {"menu": {"type": "visToggle", "label": "fru-F-400542"}}],
       ["notify", {"message": "Let's bring back one of the neurons!"}],
       ["click", {"menu": {"type": "visToggle", "label": "VGlut-F-000241"}}],
-      ["notify", {"message": "Done!"}],
-      ["notify", {"message": "Try exploring detailed information from the Info Panel!"}]
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "Try exploring detailed information from the Info Panel!", "pause": 0}]
     ],
     "description": "Query for Lobula Plate Tangential Cells.",
     "category": "Advanced Demonstrations"

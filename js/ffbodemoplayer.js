@@ -38,28 +38,31 @@ moduleExporter(
        this.cursor = undefined;
        this.autoType = AutoTyper($(this.srchBox)[0]);
        this.menu = menuApi;
-       this.menuSels = Object.assign({}, {singleNeu: '#single-neu',
-                                          singlePin: '#single-pin',
-                                          lpu: '#toggle_neuropil',
-                                          neu: '#toggle_neuron',
-                                          top: '#mm-0',
-                                          neuHideAll: '#btn-neu-none',
-                                          neuShowAll: '#btn-neu-all',
-                                          pinKeep: '#btn-pin-keep',
-                                          pinRemove: '#btn-pin-remove',
-                                          unpinAll: '#btn-pin-unpinall',
-                                          lpuShowAll: '#btn-lpu-all',
-                                          lpuHideAll: '#btn-lpu-none'
-                                         }, menuSelectors)
-       this.uiBtns = Object.assign({}, {showSettings: 'showSettings',
-                                        takeScreenshot: 'takeScreenshot',
-                                        showInfo: 'showInfo',
-                                        resetView: 'resetView',
-                                        resetVisibleView: 'resetVisibleView',
-                                        showAll: 'showAll',
-                                        hideAll: 'hideAll',
-                                        removeUnpin: 'removeUnpin',
-                                        downData: 'downData'}, uiBtns);
+       this.menuSels = Object.assign({}, {
+         singleNeu: '#single-neu',
+         singlePin: '#single-pin',
+         lpu: '#toggle_neuropil',
+         neu: '#toggle_neuron',
+         top: '#mm-0',
+         neuHideAll: '#btn-neu-none',
+         neuShowAll: '#btn-neu-all',
+         pinKeep: '#btn-pin-keep',
+         pinRemove: '#btn-pin-remove',
+         unpinAll: '#btn-pin-unpinall',
+         lpuShowAll: '#btn-lpu-all',
+         lpuHideAll: '#btn-lpu-none',
+         tags: '#toggle_tag'
+       }, menuSelectors)
+       this.uiBtns = Object.assign({}, {
+         showSettings: 'showSettings',
+         takeScreenshot: 'takeScreenshot',
+         showInfo: 'showInfo',
+         resetView: 'resetView',
+         resetVisibleView: 'resetVisibleView',
+         showAll: 'showAll',
+         hideAll: 'hideAll',
+         removeUnpin: 'removeUnpin',
+         downData: 'downData'}, uiBtns);
        for(key in this.uiBtns)
          this.uiBtns[key] = '#ffboUIbtn-' + this.uiBtns[key];
        // InfoPanel API
@@ -161,7 +164,22 @@ moduleExporter(
                  }
                });
              }
-             else if(panel == this.menuSels.top){
+             else if(panel == this.menuSels.tags){
+               this._openPanel(this.menuSels.top, moveTo, moveToDur, panelOpenPause).then(() => {
+                 if(moveTo) {
+                   sel = this.menuSels.top + ' > ul > li:nth-child(2)'
+                   this._moveTo(sel, moveToDur).then(() =>{
+                     this.cursor.click();
+                     this.menu.openPanel($(panel));
+                     setTimeout(function(){resolve()}, panelOpenPause + this._timeOutPause);
+                   }).catch(reject);
+                 }
+                 else{
+                   this.menu.openPanel($(panel));
+                   setTimeout(function(){resolve()}, panelOpenPause + this._timeOutPause);
+                 }
+               });
+             }else if(panel == this.menuSels.top){
                this.menu.open();
                this.menu.openPanel($(panel));
                setTimeout(function(){resolve()}, panelOpenPause + this._timeOutPause);
@@ -200,8 +218,9 @@ moduleExporter(
        type:   // showSettings, takeScreenshot etc
        }
        menu: {
-       type:  pinToggle/unpin-pinned/visToggle/remove/neuShowAll/neuHideAll/pinKeep/pinRemove/unpinAll/lpuShowAll/lpuHideAll,
-       label/rid: ,// if type in pinToggle/vistoggle/remove/unpin-pinned
+       type:  pinToggle/unpin-pinned/visToggle/remove/neuShowAll/neuHideAll/pinKeep/pinRemove/unpinAll/lpuShowAll/lpuHideAll/loadTag,
+       label/rid: ,// if type in pinToggle/vistoggle/remove/unpin-pinned,
+       tag: //tio be provided if type is loadTag
        }
        selector: jquerySelector,  // Currently could be used for info panel, to be removed later
        label: objectLabel,
@@ -294,6 +313,32 @@ moduleExporter(
                    this._clickMenu(sel, object.cursorMove, object.cursorMoveDuration).then(() => {resolve()});
                  }).catch(reject);
                  break;
+               case "loadTag":
+                 this._openPanel(this.menuSels.tags, object.cursorMove, object.cursorMoveDuration).then(()=>{
+                   sel = '#toggle_tag > ul > li:nth-child(2) > a';
+                   this._clickMenu(sel, object.cursorMove, object.cursorMoveDuration)
+                     .then(() => {
+                       $('#retrieve_tag_name_input').val(object.menu.tag);
+                       this.onLoadingTag();
+                       this._clickMenu('#tagSubmit', object.cursorMove, object.cursorMoveDuration)
+                         .then(() => {
+                           // Extremely Hacky and Ugly!
+                           // client status should be used to
+                           // resolve on callback but don't have access to client
+                           // here right now
+                           $('#ui-blocker').show();
+                           console.log($('#ui-blocker').is(":hidden"))
+                           x = setInterval(() => {
+                             console.log($('#ui-blocker').is(":hidden"))
+                             if($('#ui-blocker').is(":hidden")){
+                               clearInterval(x);
+                               resolve();
+                             }
+                           }, 1000);
+                         });
+                     });
+                 });
+                 break;
                default:
                  reject("Unrecognized Command");
                }
@@ -302,7 +347,7 @@ moduleExporter(
                // Can be used for Info Panel now. Should be later replaced by an API
                this._clickMenu(object.selector, object.cursorMove, object.cursorMoveDuration)
                  .then(() => {
-                   setTimeout(resolve, this._timeOutPause);
+                   setTimeout(() => {resolve();}, this._longerPause);
                  }).catch(reject);
              }
              else if('label' in object || 'rid' in object){
@@ -430,10 +475,11 @@ moduleExporter(
            }
          });
        },
-       _maxInfoPanel: function(object){
+       _minMaxInfoPanel: function(max, object){
          return new Promise((resolve, reject) => {
+           cls = max ? 'vis-info-pin' : 'vis-info-sm';
            try{
-             if($('#info-panel-wrapper').hasClass('vis-info-pin')){
+             if($('#info-panel-wrapper').hasClass(cls)){
                resolve();
                return;
              }
@@ -531,7 +577,10 @@ moduleExporter(
                  p = this._select(json[i][1])
                  break;
                case "maxInfoPanel":
-                 p = this._maxInfoPanel();
+                 p = this._minMaxInfoPanel(true, json[i][1]);
+                 break;
+               case "minInfoPanel":
+                 p = this._minMaxInfoPanel(false, json[i][1]);
                  break;
                }
                if(p !== undefined) p.then(()=>{execute(i+1)}).catch(reject);
@@ -548,6 +597,7 @@ moduleExporter(
            }
          });
        },
+       onLoadingTag: function(){},
        beforeDemo: function(keyword){
        },
        afterDemo: function(){

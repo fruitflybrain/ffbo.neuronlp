@@ -160,10 +160,10 @@ require([
     ffbomesh.addJson({ffbo_json: data, type: 'morphology_json'});
   }
 
-  window.client = client;
-  window.tagsPanel = tagsPanel;
+  //window.client = client;
+  //window.tagsPanel = tagsPanel;
   window.ffbomesh = ffbomesh;
-  window.infoPanel = infoPanel;
+  //window.infoPanel = infoPanel;
 
   function retrieveTagData(metadata){
     queryID = client.retrieveState({success: dataCallback});
@@ -437,22 +437,26 @@ require([
   ffbomesh.on('showInfo', function() {window.NeuroNLPUI.GUIinfoOverlay.show();});
 
   $.getJSON("/data/config.json", function(json) {
-    ffbomesh.addJson({ffbo_json: json,
-                      showAfterLoadAll: true}).then(function(){
-                        if(!tagLoad) $('#ui-blocker').hide();
-                        srchInput.focus();
-                      });
+    ffbomesh.addJson({
+      ffbo_json: json,
+      showAfterLoadAll: true}).then(function(){
+        if(!tagLoad) $('#ui-blocker').hide();
+        srchInput.focus();
+      });
     var c = json[Object.keys(json)[0]].color;
     var rgb = parseInt(c.b*255) | (parseInt(c.g*255) << 8) | (parseInt(c.r*255) << 16);
     var hex =  '#' + (0x1000000 + rgb).toString(16).slice(1);
     visualizationSettings.setColorPickerBackground(hex);
   });
-
+  demoLoad = false;
   $(document).ready(function(){
     if (isOnMobile)
       ffbomesh.backrenderSSAO.enabled = false;
     FFBODemoPlayer = new FFBODemoPlayer(ffbomesh, $('#ui_menu_nav').data('mmenu'));
     window.FFBODemoPlayer = FFBODemoPlayer;
+    FFBODemoPlayer.onLoadingTag = () => {
+      tagLoad = true;
+    };
     FFBODemoPlayer.notify = function(message, settings){
       iziToast.info(Object.assign({message: message}, settings))
     }
@@ -460,11 +464,12 @@ require([
       iziToast.hide({transitionOut:'fadeOut'},document.querySelector('.demoplayer-status-notify'));
     }
     FFBODemoPlayer.beforeDemo = (function(keyword){
+      timeout = demoLoad && isOnMobile ? 2000: false
       this.ffbomesh.resetView();
       iziToast.info({
         close: true,
         class: 'demoplayer-status-notify',
-        timeout: false,
+        timeout: timeout,
         drag: false,
         overlay: false,
         color: 'yellow',
@@ -483,17 +488,32 @@ require([
     $.getJSON("/data/demos.json", function(json) {
       FFBODemoPlayer.addDemos(json);
       FFBODemoPlayer.updateDemoTable('#demo-table-wrapper');
-      if(searchParams.get('demo') && !searchParams.get('tag'))
+      if(searchParams.get('demo') && !searchParams.get('tag')){
+        demoLoad = true;
         FFBODemoPlayer.startDemo(searchParams.get('demo'))
-
+      }
     });
-
-  })
+  });
   var textFile = null;
   ffbomesh.on("downData", function() {
-    client.NotifySuccess("Fetching Connectivity Data")
+    if( !ffbomesh.uiVars.frontNum ){
+      client.notifyError( "No neurons present in scene" );
+      return;
+    }
+    if( ffbomesh.uiVars.frontNum > 500 ){
+      client.notifyError( "NeuroNLP currently limits this feature for use with upto 500 neurons" );
+      return;
+    }
+    iziToast.info({
+      class: 'fetching_conn_notification',
+      message: "Fetching Connectivity Data",
+      timeout: false,
+      color: 'green',
+      close: false
+    })
     $('#ui-blocker').show();
     client.getConnectivity({success: function(res){
+      iziToast.hide({transitionOut:'fadeOut'},document.querySelector('.fetching_conn_notification'));
       csv = 'If Inferred=1, the connectivity between neurons was inferred using axonic/dendritic polarity predicted by SPIN:Skeleton-based Polarity Identification for Neurons. Please refer to \nSPIN: A Method of Skeleton-based Polarity Identification for Neurons. Neurinformatics 12:487-507. Yi-Hsuan Lee, Yen-Nan Lin, Chao-Chun Chuang and Chung-Chuan Lo (2014)\nfor more details\n'
       csv += 'PreSynaptic Neuron,PostSynaptic Neuron,N,Inferred'
       nodes = res['nodes']
