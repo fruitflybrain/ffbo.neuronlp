@@ -17,6 +17,8 @@ moduleExporter(
    function($, d3){
      $ = $ || window.$;
      d3 = d3 || window.d3;
+     var isOnMobile =  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
      FFBODemoPlayer = function(ffbomesh, menuApi, menuSelectors, uiBtns, srchBoxSelector, srchBtnSelector, srchWrapSelector, pageWrapSelector){
        this.ffbomesh = ffbomesh;
        this._demoJson = {};
@@ -610,7 +612,13 @@ moduleExporter(
                this._neuron3d = undefined;
                if( 'neuron3d' in this._demoJson[demoName]){
                  this._neuron3d = this.ffbomesh.settings.neuron3d;
-                 this.ffbomesh.settings.neuron3d = this._demoJson[demoName].neuron3d;
+                 if (this.ffbomesh.settings.neuron3d == "mobile")
+                   neuron3d = isOnMobile ? true: false;
+                 else if (this.ffbomesh.settings.neuron3d == "desktop")
+                   neuron3d = isOnMobile ? false: true;
+                 else
+                   neuron3d = this._demoJson[demoName].neuron3d;
+                 this.ffbomesh.settings.neuron3d = neuron3d;
                }
                $('#demo-blocker').show();
                this.beforeDemo(this._demoJson[demoName].keyword);
