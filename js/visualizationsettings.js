@@ -77,13 +77,13 @@ moduleExporter(
         ffbomesh.settings.pinLowOpacity = e.value.newValue;
       });
 
-    $('#vis-ambientlight')
+    $('#vis-ambientlight-intensity')
       .bootstrapSlider({value: ffbomesh.lightsHelper.frontAmbient.intensity})
       .on("change", function(e){
         ffbomesh.lightsHelper.frontAmbient.intensity = e.value.newValue;
       });
 
-    $('#vis-dirlight')
+    $('#vis-dirlight-intensity')
       .bootstrapSlider({value: ffbomesh.lightsHelper.frontDirectional_1.intensity})
       .on("change", function(e){
         ffbomesh.lightsHelper.frontDirectional_1.intensity = e.value.newValue;
@@ -183,13 +183,13 @@ moduleExporter(
         ffbomesh.composer.passes[ssao_pass].enabled = !ffbomesh.composer.passes[ssao_pass].enabled
     });
 
-    $('#vis-backambientlight')
+    $('#vis-backambientlight-intensity')
       .bootstrapSlider({value: ffbomesh.lightsHelper.backAmbient.intensity})
       .on("change", function(e){
         ffbomesh.lightsHelper.backAmbient.intensity = e.value.newValue;
       });
 
-    $('#vis-backdirlight')
+    $('#vis-backdirlight-intensity')
       .bootstrapSlider({value: ffbomesh.lightsHelper.backDirectional_1.intensity})
       .on("change", function(e){
         ffbomesh.lightsHelper.backDirectional_1.intensity = e.value.newValue;
@@ -305,11 +305,21 @@ moduleExporter(
       '#vis-low-opacity': 'lowOpacity',
       '#vis-pin-opacity': 'pinOpacity',
       '#vis-pin-low-opacity': 'pinLowOpacity',
-      '#vis-ambientlight': 'pinLowOpacity',
       '#vis-background-opacity': 'backgroundOpacity',
       '#vis-background-wireframe-opacity': 'backgroundWireframeOpacity',
       '#vis-default-synapse-radius': 'defaultSynapseRadius',
       '#vis-synapse-opacity': 'synapseOpacity'
+    }
+
+    var lightObj2Dom = {
+      'backSpot_1': 'vis-backSpot-1',
+      'backSpot_2': 'vis-backSpot-2',
+      'backAmbient': 'vis-backambientlight',
+      'frontDirectional_1': 'vis-dirlight',
+      'backDirectional_1': 'vis-backdirlight',
+      'frontSpot_1': 'vis-frontSpot-1',
+      'frontSpot_2': 'vis-frontSpot-2',
+      'frontAmbient': 'vis-ambientlight'
     }
 
     var settingCallback = function (key) {
@@ -322,6 +332,14 @@ moduleExporter(
       let val = domId2ffbomeshSettings[key];
       ffbomesh.settings.on('change', settingCallback(key), val);
     }
+
+    ffbomesh.lightsHelper.on('change', function(e) {
+      if (!lightObj2Dom.hasOwnProperty(e.path[0]))
+        return;
+      console.log(e);
+      var dom = lightObj2Dom[e.path[0]];
+      $(`#${dom}-${e.prop}`).bootstrapSlider('setValue', e.value, true);
+    }, ['intensity', 'posAngle1', 'posAngle2']);
   }
   return FFBOVisualizationSettings;
 });
