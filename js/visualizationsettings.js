@@ -52,7 +52,6 @@ moduleExporter(
       .bootstrapSlider({value: ffbomesh.settings.defaultOpacity})
       .on("change", function(e){
         ffbomesh.settings.defaultOpacity = e.value.newValue;
-        ffbomesh.resetOpacity();
       });
 
     $('#vis-highlighted-object-opacity')
@@ -167,14 +166,12 @@ moduleExporter(
     $('#vis-background-opacity')
       .bootstrapSlider({value: ffbomesh.settings.backgroundOpacity})
       .on("change", function(e){
-        ffbomesh.backgroundOpacity = e.value.newValue;
-        ffbomesh.resetOpacity();
+        ffbomesh.settings.backgroundOpacity = e.value.newValue;
       });
     $('#vis-background-wireframe-opacity')
       .bootstrapSlider({value: ffbomesh.settings.backgroundWireframeOpacity})
       .on("change", function(e){
-        ffbomesh.backgroundWireframeOpacity = e.value.newValue;
-        ffbomesh.resetOpacity();
+        ffbomesh.settings.backgroundWireframeOpacity = e.value.newValue;
       });
 
     $('#vis-ssao')[0].checked = ffbomesh.settings.backrenderSSAO.enabled;
@@ -251,7 +248,6 @@ moduleExporter(
       .bootstrapSlider({value: ffbomesh.settings.synapseOpacity})
       .on("change", function(e){
         ffbomesh.settings.synapseOpacity = e.value.newValue;
-        ffbomesh.resetOpacity();
       });
     //
     //
