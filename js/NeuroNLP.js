@@ -148,9 +148,6 @@ require([
   var searchParams = new URLSearchParams(document.location.search);
   if(searchParams.get('tag')){
     tagLoad = true;
-    client.loginStatus.on("change", function(){
-      if(tagLoad) tagsPanel.retrieveTag(searchParams.get('tag'))
-    }, "connected");
   }
 
 
@@ -411,7 +408,7 @@ require([
   ffbomesh.createUIBtn("takeScreenshot", "fa-camera", "Download Screenshot")
   ffbomesh.createUIBtn("showInfo", "fa-info-circle", "GUI guideline")
   ffbomesh.createUIBtn("resetView", "fa-refresh", "Reset View")
-  ffbomesh.createUIBtn("resetVisibleView", "fa-align-justify", "Centre and zoom into visible Neurons/Sunapses")
+  ffbomesh.createUIBtn("resetVisibleView", "fa-align-justify", "Center and zoom into visible Neurons/Synapses")
   ffbomesh.createUIBtn("showAll", "fa-eye", "Show All")
   ffbomesh.createUIBtn("hideAll", "fa-eye-slash", "Hide All")
   ffbomesh.createUIBtn("removeUnpin", "fa-trash", "Remove Unpinned Neurons")
@@ -430,13 +427,20 @@ require([
     ffbomesh.addJson({
       ffbo_json: json,
       showAfterLoadAll: true}).then(function(){
+        var c = json[Object.keys(json)[0]].color;
+        var rgb = parseInt(c.b*255) | (parseInt(c.g*255) << 8) | (parseInt(c.r*255) << 16);
+        var hex =  '#' + (0x1000000 + rgb).toString(16).slice(1);
+        visualizationSettings.setColorPickerBackground(hex);
         if(!tagLoad) $('#ui-blocker').hide();
         srchInput.focus();
+        if( client.loginStatus.connected ){
+          tagsPanel.retrieveTag(searchParams.get('tag'))
+        }else{
+          client.loginStatus.on("change", function(){
+            if(tagLoad) tagsPanel.retrieveTag(searchParams.get('tag'))
+          }, "connected");
+        }
       });
-    var c = json[Object.keys(json)[0]].color;
-    var rgb = parseInt(c.b*255) | (parseInt(c.g*255) << 8) | (parseInt(c.r*255) << 16);
-    var hex =  '#' + (0x1000000 + rgb).toString(16).slice(1);
-    visualizationSettings.setColorPickerBackground(hex);
   });
   demoLoad = false;
   $(document).ready(function(){

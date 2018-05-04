@@ -80,7 +80,7 @@ moduleExporter(
      Object.assign(FFBODemoPlayer.prototype, {
        // For Test
        _initCursor: function(){
-         this.cursor = new mouseSVG(ffbomesh);
+         this.cursor = new mouseSVG(this.ffbomesh);
          bodyRect = $('#demo-blocker')[0].getBoundingClientRect();
          this.cursor.show({x: Math.round(bodyRect.width/2), y:Math.round(bodyRect.width/2)})
        },
