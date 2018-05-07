@@ -182,9 +182,17 @@ moduleExporter(
                  }
                });
              }else if(panel == this.menuSels.top){
-               this.menu.open();
-               this.menu.openPanel($(panel));
-               setTimeout(function(){resolve()}, panelOpenPause + this._timeOutPause);
+               if($('#ui_menu_btn').is(':visible') && moveTo){
+                 this._moveTo('#ui_menu_btn', moveToDur).then(() =>{
+                   this.cursor.click();
+                   this.menu.openPanel($(panel));
+                   setTimeout(function(){resolve()}, panelOpenPause + this._timeOutPause);
+                 }).catch(reject);
+               }else{
+                 this.menu.open();
+                 this.menu.openPanel($(panel));
+                 setTimeout(function(){resolve()}, panelOpenPause + this._timeOutPause);
+               }
              }
            }catch(err){
              reject(err)
@@ -207,6 +215,7 @@ moduleExporter(
              }else{
                $(sel).mouseover();
                setTimeout(() => {$(sel)[0].click();}, hoverPause)
+               setTimeout(() => {resolve();}, hoverPause + this._longerPause)
              }
            }catch(err){
              reject(err);
