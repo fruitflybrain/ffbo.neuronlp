@@ -39,7 +39,7 @@ requirejs.config({
     bloompass: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/postprocessing/BloomPass',
     unrealbloompass: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/postprocessing/UnrealBloomPass',
     adaptivetonemappingpass: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/postprocessing/AdaptiveToneMappingPass',
-    trackballcontrols: '//cdn.rawgit.com/fruitflybrain/ffbo.lib/VisualizationUpdates/js/three/libs/TrackballControls',
+    trackballcontrols: '//cdn.rawgit.com/fruitflybrain/ffbo.lib/updates/js/three/libs/TrackballControls',
     lightshelper: '../lib/js/lightshelper',
     modernizr: "//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min",
     d3: "//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3",
