@@ -158,10 +158,10 @@ require([
     ffbomesh.addJson({ffbo_json: data, type: 'morphology_json'});
   }
 
-  //window.client = client;
-  //window.tagsPanel = tagsPanel;
+  window.client = client;
+  window.tagsPanel = tagsPanel;
   window.ffbomesh = ffbomesh;
-  //window.infoPanel = infoPanel;
+  window.infoPanel = infoPanel;
 
   function retrieveTagData(metadata){
     queryID = client.retrieveState({success: dataCallback});
@@ -447,7 +447,7 @@ require([
     if (isOnMobile)
       ffbomesh.backrenderSSAO.enabled = false;
     FFBODemoPlayer = new FFBODemoPlayer(ffbomesh, $('#ui_menu_nav').data('mmenu'));
-    //window.FFBODemoPlayer = FFBODemoPlayer;
+    window.FFBODemoPlayer = FFBODemoPlayer;
     FFBODemoPlayer.onLoadingTag = () => {
       tagLoad = true;
     };
