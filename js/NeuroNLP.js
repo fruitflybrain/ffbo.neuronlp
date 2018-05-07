@@ -10,7 +10,7 @@ define('three', ['https://cdn.rawgit.com/mrdoob/three.js/r92/build/three.min.js'
   return THREE;
 });
 requirejs.config({
-  baseUrl: 'js',
+  baseUrl: '/js',
   paths: {
     // app: 'app',
     mesh3d: '../lib/js/mesh3d',
@@ -82,7 +82,8 @@ requirejs.config({
     unrealbloompass: {deps: ['three', 'effectcomposer']},
     adaptivetonemappingpass: {deps: ['three', 'effectcomposer']},
     tageditor: {deps: ['jquery']},
-  }
+  },
+  waitSeconds: 15
 });
 
 
