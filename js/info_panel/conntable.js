@@ -135,14 +135,15 @@ moduleExporter("ConnTable",
     this.show();
 
     const btnMoreInfo = '<a id="inferred-details-pre" class="info-panel-more-info inferred-more-info"> <i class="fa fa-info-circle" aria-hidden="true"></i></a>';
-    $('#'+this.divId + " h4").html("Presynaptic Partners"+ btnMoreInfo);
-    $('#'+this.divId + " h4").html("Postsynaptic Partners"+ btnMoreInfo);
+    $('#'+this.divId).children('h4').eq(0).html("Presynaptic Partners"+ btnMoreInfo);
+    $('#'+this.divId).children('h4').eq(1).html("Postsynaptic Partners"+ btnMoreInfo);
 
-    $('#'+this.divId+ " .inferred-more-info")[0].onclick = () => {
+
+    $('#'+this.divId+ " .inferred-more-info").click(() => {
       // info = "<h2>Inferred Synaptic Partners</h2>";
       // this.overlay.update(info + data['description']); //<TODO> overwrite in the future
       this.overlay.show();
-    };
+    });
 
     // create table
     this.updateTable(data,'pre');
