@@ -20,7 +20,8 @@ requirejs.config({
     d3: '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min',
     jquery: '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min',
     detector: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/Detector',
-    simplifymodifier: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/utils/SceneUtils',
+    sceneutils: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/utils/SceneUtils',
+    simplifymodifier: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/modifiers/SimplifyModifier',
     lut: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/math/Lut',
     copyshader: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/shaders/CopyShader',
     convolutionshader: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/shaders/ConvolutionShader',
@@ -54,7 +55,7 @@ requirejs.config({
     blockui: "//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min",
     tageditor: "//cdnjs.cloudflare.com/ajax/libs/tag-editor/1.0.20/jquery.tag-editor.min",
     izitoast: "//cdn.rawgit.com/dolce/iziToast/v1.3.0/dist/js/iziToast.min",
-    stats: "//cdn.rawgit.com/mrdoob/stats.js/28632bd8/build/stats.min"
+    stats: "../lib/js/stats"
     /* Notify, bootbox, colormaps, demos, mouse, vis_set, ResizeSensor, read_vars, colorm[aps */
   },
   shim: {
@@ -62,6 +63,7 @@ requirejs.config({
     modernizr: {exports: 'Modernizr'},
     detector: {deps: ['three'], exports: 'Detector'},
     trackballcontrols: {deps: ['three']},
+    sceneutils: {deps: ['three']},
     simplifymodifier: {deps: ['three']},
     lut: {deps: ['three']},
     copyshader: {deps: ['three']},
