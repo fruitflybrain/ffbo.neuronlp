@@ -36,6 +36,11 @@ moduleExporter(
         ffbomesh.settings.neuron3dMode = parseInt($(this).val());
     });
 
+    $('#vis-transparency')[0].checked = ffbomesh.settings.effecttransparency;
+    $('#vis-transparency').change(function(){
+        ffbomesh.settings.effecttransparency = !ffbomesh.settings.effecttransparency;
+    });
+
     $('#vis-default-nerite-radius')
       .bootstrapSlider({value: ffbomesh.settings.defaultRadius})
       .on("change", function(e){
@@ -256,6 +261,7 @@ moduleExporter(
     $('#vis-fxaa').change(function(){
         ffbomesh.settings.effectFXAA.enabled = !ffbomesh.settings.effectFXAA.enabled;
     });
+
 
     $('#vis-tonemappingbright')
       .bootstrapSlider({value: ffbomesh.settings.toneMappingPass.brightness})
