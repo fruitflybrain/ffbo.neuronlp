@@ -151,7 +151,7 @@ require([
   }
 
 
-  client.startConnection("guest", "guestpass", "ws://ffbo.processor:8081/ws");
+  client.startConnection("guest", "guestpass", "ws://localhost:8081/ws");
 
   //ffbomesh.settings.neuron3d = 1;
   function dataCallback(data){
