@@ -151,7 +151,7 @@ require([
   }
 
 
-  client.startConnection("guest", "guestpass", "wss://neuronlp.fruitflybrain.org:8888/ws");
+  client.startConnection("guest", "guestpass", "ws://ffbo.processor:8081/ws");
 
   //ffbomesh.settings.neuron3d = 1;
   function dataCallback(data){
