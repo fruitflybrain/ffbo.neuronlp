@@ -266,7 +266,8 @@ require([
     }
 
   client.notifyError = function(message){
-    iziToast.error({message: message, timeout: false})
+    iziToast.error({message: message, timeout: false});
+    $('#ui-blocker').hide();
   }
 
   client.receiveCommand = function(message){
