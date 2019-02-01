@@ -361,6 +361,10 @@ moduleExporter(
                }
              }
              else if('selector' in object){
+                 pause = this._longerPause;
+                 if('pause' in object){
+                     pause = object.pause;
+                 }
                // Can be used for Info Panel now. Should be later replaced by an API
                this._clickMenu(object.selector, object.cursorMove, object.cursorMoveDuration)
                  .then(() => {
@@ -368,11 +372,15 @@ moduleExporter(
                  }).catch(reject);
              }
              else if('label' in object || 'rid' in object){
-               this._highlight(object).then( () => {
+                 pause = this._longerPause;
+                 if('pause' in object){
+                     pause = object.pause;
+                 }
+                 this._highlight(object).then( () => {
                  rid = 'label' in object ? this.ffbomesh._labelToRid[object.label] : object.rid;
                  if(object.cursorMove) this.cursor.click();
                  this.ffbomesh.select(rid);
-                 setTimeout(() => {resolve();}, this._longerPause);
+                 setTimeout(() => {resolve();}, Math.max(this._longerPause, pause));
                }).catch(reject)
              }
              else{
@@ -902,4 +910,3 @@ moduleExporter(
      return FFBODemoPlayer;
    }
 )
-
