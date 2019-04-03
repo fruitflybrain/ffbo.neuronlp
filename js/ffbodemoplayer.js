@@ -368,7 +368,7 @@ moduleExporter(
                // Can be used for Info Panel now. Should be later replaced by an API
                this._clickMenu(object.selector, object.cursorMove, object.cursorMoveDuration)
                  .then(() => {
-                   setTimeout(() => {resolve();}, this._longerPause);
+                   setTimeout(() => {resolve();}, Math.max(this._longerPause, pause));
                  }).catch(reject);
              }
              else if('label' in object || 'rid' in object){
@@ -454,7 +454,6 @@ moduleExporter(
                resolve();
                return;
              }
-             object = Object.assign({}, {pause: 1000}, object);
              rid = 'label' in object ? this.ffbomesh._labelToRid[object.label] : object.rid;
              this.ffbomesh.select(rid);
              setTimeout(() => {resolve();}, object.pause);
@@ -557,12 +556,19 @@ moduleExporter(
          return new Promise((resolve, reject) => {
            try{
              pause = 4000;
+             timeout = 6000;
              if(object.settings && 'pause' in object.settings){
                pause = object.settings.pause;
                delete object.settings.pause;
              }
-             object.settings = Object.assign({timeout: 6000}, object.settings);
-             this.notify(object.message, object.settings);
+             if('pause' in object){
+                      pause = object.pause;
+                  }
+                  if('timeout' in object){
+                      timeout = object.timeout;
+                  }
+                  object.settings = Object.assign({timeout: timeout}, object.settings);
+               this.notify(object.message, object.settings);
              setTimeout(resolve, pause);
            }catch(err){
              reject(err);
