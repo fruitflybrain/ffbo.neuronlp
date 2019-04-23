@@ -500,6 +500,20 @@ moduleExporter(
            }
          });
        },
+       _loadTag: function(max, object){
+        return new Promise((resolve, reject) => {
+          cls = max ? 'vis-info-pin' : 'vis-info-sm';
+          try{
+            // console.log('Running...');
+            resolve();
+            this.onLoadingTag();
+            tagsPanel.retrieveTag(object.name);
+            
+          }catch(err){
+            reject(err);
+          }
+        });
+      },
        addDemos: function(demoJson){
          Object.assign(this._demoJson, demoJson)
        },
@@ -583,6 +597,9 @@ moduleExporter(
                  break;
                case "select":
                  p = this._select(json[i][1])
+                 break;
+               case "loadTag":
+                 p = this._loadTag(true, json[i][1]);
                  break;
                case "maxInfoPanel":
                  p = this._minMaxInfoPanel(true, json[i][1]);
