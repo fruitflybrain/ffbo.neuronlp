@@ -111,6 +111,11 @@ moduleExporter("SummaryTable",
                          .join(" ");
   }
 
+  function camelToSentence(word_in_snake) {
+    var result = word_in_snake.replace(/([A-Z])/g, " $1");
+    var finalResult = result.charAt(0).toUpperCase() + result.slice(1);
+    return finalResult;
+  }
   /**
    * Verify integrity of data
    */
@@ -166,7 +171,16 @@ moduleExporter("SummaryTable",
       //do nothing;
     }
 
-    let displayKeys = ['class','vfb_id','data_source','transgenic_lines','transmitters','expresses'];
+    let displayKeys = ['class','vfb_id','data_source','transgenic_lines','transmitters','expresses',"totalLength", "totalSurfaceArea", "totalVolume", "maximumEuclideanDistance", "width", "height", "depth", "numberOfBifurcations", "maxPathDistance", "averageDiameter"];
+    let displayDict = {"totalLength": 'Total Length (µm)',
+                       "totalSurfaceArea": 'Total Surface Area (µm<sup>2</sup>)',
+                       "totalVolume": 'Total Volume (µm<sup>3</sup>)',
+                       "maximumEuclideanDistance": 'Maximum Euclidean Distance (µm)',
+                       "width": 'Width (µm)',
+                       "height": 'Height (µm)',
+                       "depth": 'Depth (µm)',
+                       "maxPathDistance": 'Max Path Distance (µm)',
+                       "averageDiameter": "Average Diameter (µm)"}
     var displayCtr = 0;
 
     let keyCounter = 0;
@@ -175,7 +189,10 @@ moduleExporter("SummaryTable",
         continue;
       }
 
-      let fieldName = snakeToSentence(key);
+      let fieldName = camelToSentence(snakeToSentence(key));
+      if (key in displayDict) {
+        fieldName = displayDict[key];
+      }
       let fieldValue = data[key];
 
       if (key === 'vfb_id'){

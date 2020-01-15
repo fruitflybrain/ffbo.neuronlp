@@ -38,6 +38,12 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "jquery.mmenu"], function($, 
 </ul>
 <div id="demo-table-wrapper" class="demo-table-wrapper"></div>`);
 
+this.MBTagTable = new Overlay("mb-tag-panel", `
+<ul class="list-inline">
+  <li><h2>MB Tags</h2></li>
+</ul>
+<div id="mb-tag-table-wrapper" class="mb-tag-table-wrapper"></div>`);
+
     this.onShowDemo = function(){
       mm_menu_right.close();
       this.demoTable.show()
@@ -45,6 +51,10 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "jquery.mmenu"], function($, 
     this.onShowNeuroNLP = () => {
       mm_menu_right.close();
       this.neuronlpSwitch.show();
+    }
+    this.onShowMBTags = function(){
+      mm_menu_right.close();
+      this.MBTagTable.show()
     }
 
     this.closeAllOverlay = () => {
