@@ -14,9 +14,9 @@ if( moduleExporter === undefined){
 
 moduleExporter("InfoPanel",[
   'jquery',
-  'info_panel/summarytable',
-  'info_panel/connsvg',
-  'info_panel/conntable',
+  '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@local/js/info_panel/summarytable.js',
+  '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@local/js/info_panel/connsvg.js',
+  '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@local/js/info_panel/conntable.js',
   ],
   function(
     $,
