@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>NeuroNLP.Adult Beta</title>
+    <title>NeuroNLP.EM</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -26,7 +26,6 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/css/bootstrap-slider.min.css">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dolce/iziToast/v1.3.0/dist/css/iziToast.min.css">
-
     <script data-main="js/NeuroNLP" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
 
     <link rel="stylesheet" type="text/css" href="/lib/css/ffbo.theme_settings.css">
@@ -53,7 +52,7 @@
               <a href="http://fruitflybrain.org" target="_blank"><img src="/img/ffbo_logo.png" role="button"></a>
               <span style="font-family:var(--title-font-family); font-size: 20px; color:var(--navbar-text-color);">NeuroNLP</span>
               <a onclick="NeuroNLPUI.onShowNeuroNLP()">
-                <span>.Adult</span>
+                <span>.EM</span>
               </a>
             </div>
             <button id="ui_menu_btn" type="button" class="navbar-toggle collapsed" onclick="NeuroNLPUI.openRightMenu()" style="z-index:1">
@@ -65,7 +64,7 @@
           </div>
           <div class="navbar-fixed-bottom">
             <ul class="nav navbar-nav">
-              <li >Copyright &copy; 2018 FFBO</li>
+              <li >Copyright &copy; 2020 FFBO</li>
               <li>
                 <div id="search-wrapper" class="search-bottom input-group input-group-mid">
                   <input id = "srch_box" type="text" class="form-control" title="please type in query string..."  placeholder="enter query here, ex. show gabaergic local neurons in ellipsoid body">
@@ -452,11 +451,12 @@
                 NeuroNLP provides a modern web-based portal for navigating fruit fly
                 brain circuit data. It enables in-depth exploration and investigation
                 of brain structure, using intuitive plain English queries, such as
-                <br><br><u style="font-style:italic">"show glutamatergic local neurons in the left antennal lobe".</u></br></br>
-                NeuroNLP can be accessed from any browser supporting WebGL. Remember
+                <br><br><u style="font-style:italic">"show local neurons".</u></br></br>
+                NeuroNLP can be accessed from any browser supporting WebGL. This is the FIB dataset (EM reconstruction) version of NeuroNLP. Remember
                 to check it out on your smartphone!
               </p>
               <br><br>
+              <!--
               <h4>Overview</h4>
               <p>
                 Check out the Overview for a brief description of the layout and menus.
@@ -465,7 +465,7 @@
               <br><br>
               <h4>News</h4>
               <p>
-                Updates and announcements for <u style="text-decoration:none; font-family:'Rajdhani',sans-serif; color:grey;">NeuroNLP.Adult</u>.
+                Updates and announcements for <u style="text-decoration:none; font-family:'Rajdhani',sans-serif; color:grey;">NeuroNLP.EM</u>.
               </p>
               <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-getting-started')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-getting-started')" onclick="NeuroNLPUI.onShowAnnounce()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> See What's New!</a>
               <br><br>
@@ -475,7 +475,7 @@
               </p>
               <a  onmouseover="NeuroNLPUI.mimicMouseOver('#btn-getting-started')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-getting-started')" onclick="NeuroNLPUI.onShowDemo()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Try Demos!</a>
               <br><br>
-              <!--
+              
               <h4>Tutorial Video</h4>
               <p>
                 Want to learn more? Go watch the "Tutorial Video" covering details and features of NeuroNLP!
@@ -666,7 +666,7 @@
         </div>
         <div id="neuronlp-switch" class="overlay">
           <div class="neuronlp-switch-wrapper">
-            <a class="info-try btn btn-xs" onclick="NeuroNLPUI.closeAllOverlay()">Stay at <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #999;">NeuroNLP .Adult</span></a>
+            <a class="info-try btn btn-xs" onclick="NeuroNLPUI.closeAllOverlay()">Stay at <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #999;">NeuroNLP .EM</span></a>
             <h5>Or</h5>
             <a class="info-try btn btn-xs" href="https://neuronlp.larva.fruitflybrain.org">Switch to <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #999;">NeuroNLP .Larva</span></a>
           </div>

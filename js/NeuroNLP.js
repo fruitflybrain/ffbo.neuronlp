@@ -39,7 +39,7 @@ requirejs.config({
     bloompass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/BloomPass',
     unrealbloompass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/UnrealBloomPass',
     adaptivetonemappingpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/AdaptiveToneMappingPass',
-    trackballcontrols: '../lib/js/TrackballControls',
+    trackballcontrols: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@master/js/TrackballControls',
     lightshelper: '../lib/js/lightshelper',
     modernizr: "//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min",
     d3: "//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3",
@@ -53,8 +53,8 @@ requirejs.config({
     bootstrap: "//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min",
     blockui: "//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min",
     tageditor: "//cdnjs.cloudflare.com/ajax/libs/tag-editor/1.0.20/jquery.tag-editor.min",
-    izitoast: "../lib/js/iziToast.min",
-    stats: "../lib/js/stats.min"
+    izitoast: "//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@master/js/iziToast.min",
+    stats: "//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@master/js/stats.min"
     /* Notify, bootbox, colormaps, demos, mouse, vis_set, ResizeSensor, read_vars, colorm[aps */
   },
   shim: {
@@ -367,6 +367,50 @@ require([
   var srchBtn = document.getElementById('srch_box_btn');
 
   window.NLPsearch = function(query){
+      if(query == undefined){
+        query = document.getElementById('srch_box').value;
+        srchInput.value = "";
+      }
+      var current_query = query;
+      current_query = current_query.replace('show ',' ');
+      current_query = current_query.replace('add ',' ');
+      current_query = current_query.replace('remove ',' ');
+      current_query = current_query.replace('neurons ',' ');
+      current_query = current_query.replace('in ',' ');
+      current_query = current_query.replace(/\s\s+/g, ' ');
+      var query_elements = current_query.split(" ");
+      var arrayLength = query_elements.length;
+      for (var i = 0; i < arrayLength; i++) {
+          if (query_elements[i].endsWith("s")) {
+              query_elements.push(query_elements[i].slice(0,-1));
+        }
+      }
+      var arrayLength = query_elements.length;
+      var results = [];
+      for (var i = 0; i < arrayLength; i++) {
+          if (window.NLPData['neuropil_names'].includes(query_elements[i])) {
+              var index, value, result;
+                for (index = 0; index < window.NLPData['unames'].length; ++index) {
+                    value = window.NLPData['neuropils'][index];
+                    if (value.includes(query_elements[i])) {
+                        results.push(window.NLPData['unames'][index]);
+                    }
+                }
+          }
+          else {
+              var index, value, result;
+                for (index = 0; index < window.NLPData['unames'].length; ++index) {
+                    value = window.NLPData['unames'][index];
+                    if (value.includes(query_elements[i])) {
+                        results.push(value);
+                    }
+                }
+          }
+      }
+      console.log('Query Result:', results);
+      infoPanel.addByUname(results);
+      iziToast.success({'message': 'NLP has successfully parsed your query, please wait...'});
+      /*
     return new Promise(function(resolve, reject){
       if(query == undefined){
         query = document.getElementById('srch_box').value;
@@ -385,6 +429,7 @@ require([
           resolve();
       }, queryID);
     });
+    */
   }
 
   //add event listener
@@ -397,7 +442,7 @@ require([
     if (event.keyCode == 13)
       srchBtn.click();
   });
-
+  window.iziToast = iziToast;
   window.NeuroNLPUI.dispatch.onRemovePinned = (function() { removePinned() });
   window.NeuroNLPUI.dispatch.onRemoveUnpinned = (function() { removeUnpinned() });
   window.NeuroNLPUI.dispatch.onShowAllNeuron = (function() { ffbomesh.showFrontAll() });
@@ -424,7 +469,7 @@ require([
   ffbomesh.on('showAll', (function() {ffbomesh.showAll()}));
   ffbomesh.on('takeScreenshot', (function() {ffbomesh._take_screenshot=true;}));
   ffbomesh.on('showInfo', function() {window.NeuroNLPUI.GUIinfoOverlay.show();});
-
+ /*
   $.getJSON("/data/config.json", function(json) {
     ffbomesh.addJson({
       ffbo_json: json,
@@ -444,6 +489,36 @@ require([
         }
       });
   });
+  */
+    /*
+    if( client.loginStatus.connected ){
+          tagsPanel.retrieveTag('vnc_all');
+        }else{
+          client.loginStatus.on("change", function(){
+            tagsPanel.retrieveTag('vnc_all');
+          }, "connected");
+        }
+            
+  */ 
+    $.ajax({
+        type: "get", 
+        url: "/data/nlp_data.json",
+        datatype: "json",
+        success: function (data, text) {
+            window.NLPData = data;
+            console.log('Cached NLP Data loaded.');
+        },
+       //add this error handler you'll get alert
+        error: function (request, status, error) {
+            window.NLPData = request.responseText;
+            console.log('Cached NLP Data loaded with an error.');
+            console.log(status, error);
+        }
+    });
+    client.loginStatus.on("change", function(){
+            if(tagLoad) tagsPanel.retrieveTag(searchParams.get('tag'))
+          }, "connected");
+  $('#ui-blocker').hide();
   demoLoad = false;
   $(document).ready(function(){
     if (isOnMobile)
