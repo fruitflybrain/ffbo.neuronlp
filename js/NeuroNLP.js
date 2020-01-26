@@ -156,6 +156,11 @@ require([
 
   //ffbomesh.settings.neuron3d = 1;
   function dataCallback(data){
+      
+      for (key in data) {
+          data[key]['label'] = data[key]['name'];
+      }
+      console.log(data);
     ffbomesh.addJson({ffbo_json: data, type: 'morphology_json'});
   }
 
