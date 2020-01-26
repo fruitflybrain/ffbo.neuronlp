@@ -585,12 +585,15 @@ require([
     $('#ui-blocker').show();
     client.getConnectivity({success: function(res){
       iziToast.hide({transitionOut:'fadeOut'},document.querySelector('.fetching_conn_notification'));
-      csv = 'If Inferred=1, the connectivity between neurons was inferred using axonic/dendritic polarity predicted by SPIN:Skeleton-based Polarity Identification for Neurons. Please refer to \nSPIN: A Method of Skeleton-based Polarity Identification for Neurons. Neurinformatics 12:487-507. Yi-Hsuan Lee, Yen-Nan Lin, Chao-Chun Chuang and Chung-Chuan Lo (2014)\nfor more details\n'
-      csv += 'PreSynaptic Neuron,PostSynaptic Neuron,N,Inferred'
-      nodes = res['nodes']
-      edges = res['edges']
-
-      for(e_pre in edges){
+        console.log(res);
+      csv = ''
+      csv += 'PreSynaptic Neuron,PostSynaptic Neuron,N'
+      var nodes = res['nodes']
+      var edges = res['edges']
+      /*
+      for(e_pre_id in edges){
+        e_pre = edges[e_pre_id][0]
+        console.log(e_pre);
         if(nodes[e_pre]['class'] == 'Neuron'){
           if('uname' in nodes[e_pre])
             pre = nodes[e_pre]['uname']
@@ -612,6 +615,17 @@ require([
           }
         }
       }
+      */
+      for(e_pre_id in edges){
+        e_pre = edges[e_pre_id][0]
+        if(nodes[e_pre]['class'] == 'Synapse'){
+            var res = nodes[e_pre]['uname'].split("--");
+            var N = nodes[e_pre]['N'];
+            var inferred = 0;
+            csv += ('\n' + res[0] + ',' + res[1] + ',' + N);
+        }
+      }
+        
       var data = new Blob([csv], {type: 'text/csv'});
       // If we are replacing a previously generated file we need to
       // manually revoke the object URL to avoid memory leaks.
