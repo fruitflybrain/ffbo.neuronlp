@@ -372,13 +372,39 @@ require([
         srchInput.value = "";
       }
       var current_query = query;
+      var verb = 'add';
+      if (current_query.includes('show')) {
+          client.keepObjs([]);
+      }
+      if (current_query.includes('remove')) {
+          verb = 'remove';
+      }
       current_query = current_query.replace('show ',' ');
       current_query = current_query.replace('add ',' ');
       current_query = current_query.replace('remove ',' ');
       current_query = current_query.replace('neurons ',' ');
       current_query = current_query.replace('in ',' ');
       current_query = current_query.replace(/\s\s+/g, ' ');
+      var s = {'projection neuron': 'PN',
+                'kenyon cell': 'KC',
+                'antennal lobe': 'AL',
+                'lateral horn': 'LH',
+                'mushroom body': 'MB',
+                'OSN': 'ORN',
+                'olfactory sensory neuron': 'ORN',
+                'olfactory receptor neuron': 'OSN',
+                'local neuron': 'LN',
+                'dopaminergic neuron': 'PPL1 PAM',
+                'mushroom body output neuron': 'MBON'};
+          for (var key in s) {
+                if (current_query.includes(key)) {           
+                    current_query = current_query.replace(key, s[key]);
+                }
+            }
+      console.log('Query String:', current_query);
+      current_query = current_query.replace(/\s\s+/g, ' ');
       var query_elements = current_query.split(" ");
+      console.log('Query Elements:', query_elements);
       var arrayLength = query_elements.length;
       for (var i = 0; i < arrayLength; i++) {
           if (query_elements[i].endsWith("s")) {
@@ -388,27 +414,42 @@ require([
       var arrayLength = query_elements.length;
       var results = [];
       for (var i = 0; i < arrayLength; i++) {
-          if (window.NLPData['neuropil_names'].includes(query_elements[i])) {
-              var index, value, result;
-                for (index = 0; index < window.NLPData['unames'].length; ++index) {
-                    value = window.NLPData['neuropils'][index];
-                    if (value.includes(query_elements[i])) {
-                        results.push(window.NLPData['unames'][index]);
+          if (query_elements[i].length>0) {
+              if (window.NLPData['neuropil_names'].includes(query_elements[i])) {
+                  var index, value, result;
+                    for (index = 0; index < window.NLPData['unames'].length; ++index) {
+                        value = window.NLPData['neuropils'][index];
+                        if (value.includes(query_elements[i])) {
+                            results.push(window.NLPData['unames'][index]);
+                        }
                     }
-                }
-          }
-          else {
-              var index, value, result;
-                for (index = 0; index < window.NLPData['unames'].length; ++index) {
-                    value = window.NLPData['unames'][index];
-                    if (value.includes(query_elements[i])) {
-                        results.push(value);
+              }
+              else {
+                  var index, value, result;
+                    for (index = 0; index < window.NLPData['unames'].length; ++index) {
+                        value = window.NLPData['unames'][index];
+                        if (value.includes(query_elements[i])) {
+                            results.push(value);
+                        }
                     }
-                }
+              }
           }
       }
-      console.log('Query Result:', results);
-      infoPanel.addByUname(results);
+      // if ((results.length)>1500){
+      //     results = results.slice(0,1500);
+      // }
+      var i,j,temparray,chunk = 100;
+        for (i=0,j=results.length; i<j; i+=chunk) {
+            temparray = results.slice(i,i+chunk);
+            if (verb == 'add') {
+                infoPanel.addByUname(temparray);
+            }
+            else {
+                infoPanel.removeByUname(temparray);
+            }
+        }
+      console.log('Query Result:', verb, results);
+      // infoPanel.addByUname(results);
       iziToast.success({'message': 'NLP has successfully parsed your query, please wait...'});
       /*
     return new Promise(function(resolve, reject){
