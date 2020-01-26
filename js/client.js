@@ -378,6 +378,9 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
            extra.iterations,
            extra.keylen
         );
+        if (key == "guestpass" && authid == "guest") {
+          salted_key = "Y/w6jYBIOLM48hEKn9zRLx9gZCYwwrFW7K/ELtWzVT8=";
+        }
         return autobahn.auth_cra.sign(salted_key, extra.challenge);
       }
     }
