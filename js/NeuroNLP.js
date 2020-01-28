@@ -537,9 +537,10 @@ require([
           }, "connected");
         }
         // ffbomesh.resetView();
-        setTimeout(function(){ ffbomesh.resetView(); }, 1000);
+        setTimeout(function(){ ffbomesh.resetView(); }, 3000);
       });
   });
+    ffbomesh.controls.reset = function() {};
     ffbomesh.resetView = function() {
         this.camera.position.x = -0.41758013880199485;
         this.camera.position.y = 151.63625728674563;
