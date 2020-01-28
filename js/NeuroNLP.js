@@ -156,7 +156,7 @@ require([
 
   //ffbomesh.settings.neuron3d = 1;
   function dataCallback(data){
-      
+
       for (key in data) {
           data[key]['label'] = data[key]['name'];
       }
@@ -404,7 +404,7 @@ require([
                 'dopaminergic neuron': 'PPL1 PAM',
                 'mushroom body output neuron': 'MBON'};
           for (var key in s) {
-                if (current_query.includes(key)) {           
+                if (current_query.includes(key)) {
                     current_query = current_query.replace(key, s[key]);
                 }
             }
@@ -445,7 +445,7 @@ require([
       // if ((results.length)>1500){
       //     results = results.slice(0,1500);
       // }
-      var i,j,temparray,chunk = 100;
+      var i,j,temparray,chunk = 500;
         for (i=0,j=results.length; i<j; i+=chunk) {
             temparray = results.slice(i,i+chunk);
             if (verb == 'add') {
@@ -517,12 +517,12 @@ require([
   ffbomesh.on('showAll', (function() {ffbomesh.showAll()}));
   ffbomesh.on('takeScreenshot', (function() {ffbomesh._take_screenshot=true;}));
   ffbomesh.on('showInfo', function() {window.NeuroNLPUI.GUIinfoOverlay.show();});
- 
+
   $.getJSON("/data/config.json", function(json) {
     ffbomesh.addJson({
       ffbo_json: json,
       showAfterLoadAll: true}).then(function(){
-        
+
         var c = json[Object.keys(json)[0]].color;
         var rgb = parseInt(c.b*255) | (parseInt(c.g*255) << 8) | (parseInt(c.r*255) << 16);
         var hex =  '#' + (0x1000000 + rgb).toString(16).slice(1);
@@ -573,10 +573,10 @@ require([
             tagsPanel.retrieveTag('vnc_all');
           }, "connected");
         }
-            
-  */ 
+
+  */
     $.ajax({
-        type: "get", 
+        type: "get",
         url: "/data/nlp_data.json",
         datatype: "json",
         success: function (data, text) {
@@ -701,7 +701,7 @@ require([
             csv += ('\n' + res[0] + ',' + res[1] + ',' + N);
         }
       }
-        
+
       var data = new Blob([csv], {type: 'text/csv'});
       // If we are replacing a previously generated file we need to
       // manually revoke the object URL to avoid memory leaks.
