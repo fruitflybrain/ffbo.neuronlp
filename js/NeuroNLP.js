@@ -595,6 +595,7 @@ require([
           }, "connected");
   $('#ui-blocker').hide();
   demoLoad = false;
+  ffbomesh.settings.defaultSynapseRadius = 0.1;
   $(document).ready(function(){
     if (isOnMobile)
       ffbomesh.backrenderSSAO.enabled = false;
