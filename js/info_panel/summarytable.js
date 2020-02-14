@@ -137,7 +137,8 @@ moduleExporter("SummaryTable",
     var objName = ('uname' in data) ? data['uname'] : data['name'];
     if (data['class'] === 'Synapse'){
 //      objName = "Synapse between " + objName.split("--")[0]+ " and " + objName.split("--")[1];
-      objName = objName.split("--")[0]+ " to " + objName.split("--")[1];
+        // removed as it is not consistent with uname naming, and cannot removal this synapse based on uname
+      // objName = objName.split("--")[0]+ " to " + objName.split("--")[1];
     }
     var objRId = data['rid'];
     var objColor = this.parentObj.getAttr(objRId,'color');
@@ -166,7 +167,7 @@ moduleExporter("SummaryTable",
       //do nothing;
     }
 
-    let displayKeys = ['class','vfb_id','data_source','transgenic_lines','transmitters','expresses'];
+    let displayKeys = ['class','vfb_id','data_source','transgenic_lines','transmitters','expresses','referenceId'];
     var displayCtr = 0;
 
     let keyCounter = 0;
@@ -182,6 +183,10 @@ moduleExporter("SummaryTable",
         let vfbBtn = "<a target='_blank' href='http://virtualflybrain.org/reports/" + data[key] + "'>VFB link</a>";
         fieldName = 'External Link';
         fieldValue = vfbBtn;
+      }
+
+      if (key === 'referenceId'){
+            fieldName = 'Hemibrain BodyID';
       }
 
       tableHtml += "<div><p>" + fieldName + ":</p><p>" + fieldValue +"</p></div>" ;
