@@ -443,35 +443,8 @@ require([
             if(tagLoad) tagsPanel.retrieveTag(searchParams.get('tag'))
           }, "connected");
         }
-        // ffbomesh.resetView();
-        setTimeout(function(){ ffbomesh.resetView(); }, 3000);
       });
   });
-  ffbomesh.controls.reset = function() {};
-  ffbomesh.resetView = function() {
-      this.camera.position.x = -0.41758013880199485;
-      this.camera.position.y = 151.63625728674563;
-      this.camera.position.z = -50.50723330508691;
-
-      this.camera.up.x = -0.0020307520395871814;
-      this.camera.up.y = -0.500303768173525;
-      this.camera.up.z = -0.8658475706482184;
-
-      this.controls.target.x = 17.593074756823892;
-      this.controls.target.y = 22.60567192152306;
-      this.controls.target.z = 21.838699853616273;
-      this.camera.lookAt(this.controls.target);
-      this.camera.updateProjectionMatrix();
-  }
-  ffbomesh.initLoadingManager = function() {
-     loadingManager = new window.THREE.LoadingManager();
-     loadingManager.onLoad = function() {
-       this.controls.target0.x = 0.5*(this.boundingBox.minX + this.boundingBox.maxX );
-       this.controls.target0.y = 0.5*(this.boundingBox.minY + this.boundingBox.maxY );
-       this.groups.front.visible = true;
-     }.bind(this);
-     return loadingManager;
-   }
   demoLoad = false;
   ffbomesh.settings.defaultSynapseRadius = 0.1;
   $(document).ready(function(){
