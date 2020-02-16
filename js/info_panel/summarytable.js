@@ -141,14 +141,15 @@ moduleExporter("SummaryTable",
       // objName = objName.split("--")[0]+ " to " + objName.split("--")[1];
     }
     var objRId = data['rid'];
+    var oRId = data['orid'];
     var objColor = this.parentObj.getAttr(objRId,'color');
 
     var tableHtml = '<div> <p>Name :</p><p>' + objName;
 
     if (this.parentObj.isInWorkspace(objRId)){
-      tableHtml += '<button class="btn btn-remove btn-danger" id="btn-add-' + objName + '" name="'+ objName + '" style="margin-left:20px;">-</button>';
+      tableHtml += '<button class="btn btn-remove btn-danger" id="btn-add-' + oRId + '" name="'+ objName + '" style="margin-left:20px;">-</button>';
     }else{
-      tableHtml += '<button class="btn btn-add btn-success" id="btn-add-' + objName + '" name="'+ objName +  '" style="margin-left:20px;">+</button>';
+      tableHtml += '<button class="btn btn-add btn-success" id="btn-add-' + oRId + '" name="'+ objName +  '" style="margin-left:20px;">+</button>';
     }
     tableHtml +=  '</p></div>';
 
@@ -285,15 +286,15 @@ moduleExporter("SummaryTable",
    * Setup Callback for add remove button
    */
   SummaryTable.prototype.setupCallbacks = function(){
-    let that = this;
-    $("#"+that.divId + " button").click(function(){
-      if(this.className.includes('add')){
-        that.parentObj.addByUname(this.name);
-      }else{
-        that.parentObj.removeByUname(this.name);
-      }
-    });
-  };
+      let that = this;
+      $("#"+that.divId + " button").click(function(){
+        if(this.className.includes('add')){
+            that.parentObj.addByRid(this.id.replace('btn-add-', ''))
+        }else{
+          that.parentObj.removeByRid(this.id.replace('btn-add-', ''))
+        }
+      });
+    };
 
 
 

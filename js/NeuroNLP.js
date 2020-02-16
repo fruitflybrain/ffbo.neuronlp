@@ -291,8 +291,32 @@ require([
     queryID = client.addByUname(uname, {success: dataCallback});
   };
 
+  infoPanel.addByRid = (rid) => {
+    queryID = client.addByRid(rid, {success: dataCallback});
+  };
+
+  infoPanel.addNeuronByUname = (uname) => {
+    queryID = client.addNeuronByUname(uname, {success: dataCallback});
+  };
+
+  infoPanel.addSynapseByUname = (uname) => {
+    queryID = client.addSynapseByUname(uname, {success: dataCallback});
+  };
+
   infoPanel.removeByUname = (uname) => {
     queryID = client.removeByUname(uname);
+  };
+
+  infoPanel.removeByRid = (rid) => {
+    queryID = client.removeByRid(rid);
+  };
+
+  infoPanel.removeNeuronByUname = (uname) => {
+    queryID = client.removeNeuronByUname(uname);
+  };
+
+  infoPanel.removeSynapseByUname = (uname) => {
+    queryID = client.removeSynapseByUname(uname);
   };
 
   infoPanel.getAttr = (id,attr) => {

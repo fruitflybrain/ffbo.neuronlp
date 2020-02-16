@@ -260,7 +260,7 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
 
   FFBOClient.prototype.addByUname = function(uname, callbacks, format){
     /**
-     * Query to add a neuron by its name.
+     * Query to add a neuron/synapse by its name.
      */
     return this.executeNAquery({
       verb: "add",
@@ -273,6 +273,52 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
     }, callbacks, format);
   }
 
+  FFBOClient.prototype.addByRid = function(rid, callbacks, format){
+    /**
+     * Query to add a neuron/synapse by its name.
+     */
+    return this.executeNAquery({
+      verb: "add",
+      query: [
+        {
+          action: { method: { query: { rid: rid } } },
+          object: { rid: rid }
+        }
+      ]
+    }, callbacks, format);
+  }
+
+  FFBOClient.prototype.addNeuronByUname = function(uname, callbacks, format){
+    /**
+     * Query to add a neuron by its name.
+     */
+    return this.executeNAquery({
+      verb: "add",
+      query: [
+        {
+          action: { method: { query: { uname: uname } } },
+          object: { class: ["Neuron"] }
+        }
+      ]
+    }, callbacks, format);
+  }
+
+  FFBOClient.prototype.addSynapseByUname = function(uname, callbacks, format){
+    /**
+     * Query to add a synapse by its name.
+     */
+    return this.executeNAquery({
+      verb: "add",
+      query: [
+        {
+          action: { method: { query: { uname: uname } } },
+          object: { class: ["Synapse"] }
+        }
+      ]
+    }, callbacks, format);
+  }
+
+
   FFBOClient.prototype.removeByUname = function(uname, callbacks, format){
     /**
      * Query to remove a neuron or synapse by its uname.
@@ -283,6 +329,51 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
         {
           action: { method: { query: { uname: uname } } },
           object: { class: ["Neuron", "Synapse"] }
+        }
+      ]
+    }, callbacks, format);
+  }
+
+  FFBOClient.prototype.removeByRid = function(rid, callbacks, format){
+    /**
+     * Query to remove a neuron/synapse by its rid.
+     */
+    return this.executeNAquery({
+      verb: "remove",
+      query: [
+        {
+          action: { method: { query: { rid: rid } } },
+          object: { rid: rid }
+        }
+      ]
+    }, callbacks, format);
+  }
+
+  FFBOClient.prototype.removeNeuronByUname = function(uname, callbacks, format){
+    /**
+     * Query to remove a neuron by its uname.
+     */
+    return this.executeNAquery({
+      verb: "remove",
+      query: [
+        {
+          action: { method: { query: { uname: uname } } },
+          object: { class: ["Neuron"] }
+        }
+      ]
+    }, callbacks, format);
+  }
+
+  FFBOClient.prototype.removeSynapseByUname = function(uname, callbacks, format){
+    /**
+     * Query to remove a synapse by its uname.
+     */
+    return this.executeNAquery({
+      verb: "remove",
+      query: [
+        {
+          action: { method: { query: { uname: uname } } },
+          object: { class: ["Synapse"] }
         }
       ]
     }, callbacks, format);
