@@ -12,6 +12,17 @@ if( moduleExporter === undefined){
   };
 }
 
+
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+
 moduleExporter("ConnSVG",
  ['jquery',
   'd3',
@@ -206,7 +217,8 @@ moduleExporter("ConnSVG",
               y: height/8 + margin.top,
               x: x(1-(d.x+d.x0)/100) + margin.left,
               width: x(d.x/100),
-              height: height/8*2.5
+              height: height/8*2.5,
+              fill: getRandomColor()
             });
             var tooltip_info = d.neuron+": "+ (d.x).toFixed(1) +"%("+Math.round(pre_num*d.x/100).toString() +")";
             d3.select(this).append("title").text(tooltip_info);
@@ -221,7 +233,8 @@ moduleExporter("ConnSVG",
               y: height/8*5 + margin.top,
               x: x(1 - (d.x+d.x0)/100) + margin.left,
               width: x(d.x/100),
-              height: height/8*2.5
+              height: height/8*2.5,
+              fill: getRandomColor()
             });
             var tooltip_info = d.neuron+": "+ (d.x).toFixed(1) +"%("+Math.round(post_num*d.x/100).toString() +")";
             d3.select(this).append("title").text(tooltip_info);
