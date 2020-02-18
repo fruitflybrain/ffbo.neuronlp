@@ -351,7 +351,9 @@ require([
   dynamicNeuronMenu.dispatch.remove = function(id) {client.removeObjs(id)};
   dynamicNeuronMenu.dispatch.getInfo = function(id) {ffbomesh.select(id)};
   dynamicNeuropilMenu.dispatch.toggle = function(id) {ffbomesh.toggleVis(id)};
-
+  dynamicNeuropilMenu.dispatch.getInfo = function(id) {ffbomesh.toggleVis(id)};
+  dynamicNeuropilMenu.dispatch.highlight = function(id) {ffbomesh.highlight(id, true)};
+  dynamicNeuropilMenu.dispatch.resume = function(id) {ffbomesh.highlight(undefined)};
 
   ffbomesh.on('add',
               function(e) {
