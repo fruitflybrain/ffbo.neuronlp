@@ -128,6 +128,7 @@ moduleExporter(
         $("#" + btnId)
           .click( function() {
             var id = $(this).attr("id").substring(4);
+            id = uidEncode(id);
             _this.dispatch.getInfo(id);
         });
         $("#" + btnToggleId)
