@@ -53,8 +53,8 @@ requirejs.config({
     bootstrap: "//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min",
     blockui: "//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min",
     tageditor: "//cdnjs.cloudflare.com/ajax/libs/tag-editor/1.0.20/jquery.tag-editor.min",
-    izitoast: "'../lib/js/iziToast.min",
-    stats: "'../lib/js//stats.min"
+    izitoast: "//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@hemibrain/js/iziToast.min",
+    stats: "//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@hemibrain/js/stats.min"
     /* Notify, bootbox, colormaps, demos, mouse, vis_set, ResizeSensor, read_vars, colorm[aps */
   },
   shim: {
