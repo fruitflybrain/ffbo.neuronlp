@@ -472,7 +472,7 @@ require([
       });
   });
   demoLoad = false;
-  ffbomesh.settings.defaultSynapseRadius = 0.1;
+  ffbomesh.settings.defaultSynapseRadius = 0.4;
   $(document).ready(function(){
     if (isOnMobile)
       ffbomesh.backrenderSSAO.enabled = false;
