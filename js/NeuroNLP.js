@@ -146,9 +146,13 @@ require([
   window.NeuroNLPUI.onRetrieveTag = (tagsPanel.onRetrieveTag).bind(tagsPanel);
 
   var tagLoad = false;
+  var queryLoad = false;
   var searchParams = new URLSearchParams(document.location.search);
   if(searchParams.get('tag')){
     tagLoad = true;
+  }
+  if(searchParams.get('query')){
+      queryLoad = true;
   }
 
 
@@ -467,6 +471,7 @@ require([
         }else{
           client.loginStatus.on("change", function(){
             if(tagLoad) tagsPanel.retrieveTag(searchParams.get('tag'))
+            if(queryLoad) NLPsearch(searchParams.get('query'))
           }, "connected");
         }
       });
