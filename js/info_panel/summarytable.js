@@ -134,7 +134,16 @@ moduleExporter("SummaryTable",
 
 
     // extra name and color
-    var objName = ('uname' in data) ? data['uname'] : data['name'];
+    var objName;
+    var objType;
+    if ('uname' in data){
+        objName = data['uname'];
+        objType = data['name'];
+    }else{
+        objName = data['name'];
+        objType = data['name'];
+    }
+    var objName_changed = objName.replace('<', '&lt').replace('>', '&gt')
     if (data['class'] === 'Synapse'){
 //      objName = "Synapse between " + objName.split("--")[0]+ " and " + objName.split("--")[1];
         // removed as it is not consistent with uname naming, and cannot removal this synapse based on uname
@@ -144,8 +153,7 @@ moduleExporter("SummaryTable",
     var oRId = data['orid'];
     var objColor = this.parentObj.getAttr(objRId,'color');
 
-    var tableHtml = '<div> <p>Name :</p><p>' + objName;
-
+    var tableHtml = '<div> <p>Name :</p><p>' + objName_changed;
     if (this.parentObj.isInWorkspace(objRId)){
       tableHtml += '<button class="btn btn-remove btn-danger" id="btn-add-' + oRId + '" name="'+ objName + '" style="margin-left:20px;">-</button>';
     }else{
@@ -153,6 +161,8 @@ moduleExporter("SummaryTable",
     }
     tableHtml +=  '</p></div>';
 
+    tableHtml += '<div> <p>Type :</p><p>' + objType;
+    tableHtml +=  '</p></div>';
 
     if (objColor){
       // add choose color

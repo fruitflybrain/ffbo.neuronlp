@@ -180,6 +180,7 @@ moduleExporter("ConnTable",
     for(x in data[connDir]['details']){ // loop through all partners
       d = data[connDir]['details'][x];
       name = ('uname' in d) ? d['uname'] : d['name'];
+      name = name.replace('<', '&lt').replace('>', '&gt');
       N = ('number' in d) ? d['number'] : "";
 
       var row = table.insertRow(0);

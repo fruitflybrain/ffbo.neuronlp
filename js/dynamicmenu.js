@@ -100,13 +100,14 @@ moduleExporter(
         this.config.compare = compareFunc[this.config.compare];
 
       this.addNeuron = function(id, label) {
+        var changed_label = label.replace('<', '&lt');
         var btnId = "btn-" + uidDecode(id);
         var btnToggleId = "btn-toggle-" + uidDecode(id);
         var btnRmId = (_this.config.removable) ? "btn-rm-" + uidDecode(id): false;
         var btnPinSymId = (_this.config.pinnable) ? "btn-pin-symbol-" + uidDecode(id): false;
         var domStr = `<li id='li-${btnId}' class='mm-listitem'>` +
                       "<span>" +
-                      `<div id='${btnId}' role='button' label='${label}' class='btn-single-ob'>${label}</div>` +
+                      `<div id='${btnId}' role='button' label='${label}' class='btn-single-ob'>${changed_label}</div>` +
                       "<div class='btn-single-obj-ctrl'>" +
                         ((btnRmId) ? `<a id='${btnRmId}' role='button'>${_this.config.removeSymbol}</a>` : '') +
                         ((btnPinSymId) ? `<a id='${btnPinSymId}' class='btn-unpinned' role='button'>${_this.config.pinSymbol}</a>` : '') +
