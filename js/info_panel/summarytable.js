@@ -134,23 +134,35 @@ moduleExporter("SummaryTable",
 
 
     // extra name and color
-    var objName = ('uname' in data) ? data['uname'] : data['name'];
+    var objName;
+    var objType;
+    if ('uname' in data){
+        objName = data['uname'];
+        objType = data['name'];
+    }else{
+        objName = data['name'];
+        objType = data['name'];
+    }
+    var objName_changed = objName.replace('<', '&lt').replace('>', '&gt')
     if (data['class'] === 'Synapse'){
 //      objName = "Synapse between " + objName.split("--")[0]+ " and " + objName.split("--")[1];
-      objName = objName.split("--")[0]+ " to " + objName.split("--")[1];
+        // removed as it is not consistent with uname naming, and cannot removal this synapse based on uname
+      // objName = objName.split("--")[0]+ " to " + objName.split("--")[1];
     }
     var objRId = data['rid'];
+    var oRId = data['orid'];
     var objColor = this.parentObj.getAttr(objRId,'color');
 
-    var tableHtml = '<div> <p>Name :</p><p>' + objName;
-
+    var tableHtml = '<div> <p>Name :</p><p>' + objName_changed;
     if (this.parentObj.isInWorkspace(objRId)){
-      tableHtml += '<button class="btn btn-remove btn-danger" id="btn-add-' + objName + '" name="'+ objName + '" style="margin-left:20px;">-</button>';
+      tableHtml += '<button class="btn btn-remove btn-danger" id="btn-add-' + oRId + '" name="'+ objName + '" style="margin-left:20px;">-</button>';
     }else{
-      tableHtml += '<button class="btn btn-add btn-success" id="btn-add-' + objName + '" name="'+ objName +  '" style="margin-left:20px;">+</button>';
+      tableHtml += '<button class="btn btn-add btn-success" id="btn-add-' + oRId + '" name="'+ objName +  '" style="margin-left:20px;">+</button>';
     }
     tableHtml +=  '</p></div>';
 
+    tableHtml += '<div> <p>Type :</p><p>' + objType;
+    tableHtml +=  '</p></div>';
 
     if (objColor){
       // add choose color
@@ -280,15 +292,15 @@ moduleExporter("SummaryTable",
    * Setup Callback for add remove button
    */
   SummaryTable.prototype.setupCallbacks = function(){
-    let that = this;
-    $("#"+that.divId + " button").click(function(){
-      if(this.className.includes('add')){
-        that.parentObj.addByUname(this.name);
-      }else{
-        that.parentObj.removeByUname(this.name);
-      }
-    });
-  };
+      let that = this;
+      $("#"+that.divId + " button").click(function(){
+        if(this.className.includes('add')){
+            that.parentObj.addByRid(this.id.replace('btn-add-', ''))
+        }else{
+          that.parentObj.removeByRid(this.id.replace('btn-add-', ''))
+        }
+      });
+    };
 
 
 

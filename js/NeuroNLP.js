@@ -13,8 +13,8 @@ requirejs.config({
   baseUrl: '/js',
   paths: {
     // app: 'app',
-    mesh3d: '../lib/js/mesh3d',
-    propertymanager: '../lib/js/propertymanager',
+    mesh3d: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@hemibrain/js/mesh3d',
+    propertymanager: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@hemibrain/js/propertymanager',
     infopanel: "info_panel/infopanel",
     autobahn: '//cdn.jsdelivr.net/gh/crossbario/autobahn-js-browser@master/autobahn/autobahn.min',
     d3: '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min',
@@ -39,22 +39,22 @@ requirejs.config({
     bloompass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/BloomPass',
     unrealbloompass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/UnrealBloomPass',
     adaptivetonemappingpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/AdaptiveToneMappingPass',
-    trackballcontrols: '../lib/js/TrackballControls',
-    lightshelper: '../lib/js/lightshelper',
+    trackballcontrols: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@hemibrain/js/TrackballControls',
+    lightshelper: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@hemibrain/js/lightshelper',
     modernizr: "//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min",
     d3: "//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3",
     jqueryui: "//code.jquery.com/ui/1.12.1/jquery-ui",
     perfectscrollbar: "//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.7.0/js/perfect-scrollbar.jquery.min",
     "jquery.mobile": "//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min",
     spectrum: "//cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min",
-    "jquery.mmenu": "/lib/js/jquery.mmenu.all",
+    "jquery.mmenu": "//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@hemibrain/js/jquery.mmenu.all",
     bootsrapslider: "//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min",
     swiper: "//cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.2/js/swiper.min",
     bootstrap: "//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min",
     blockui: "//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min",
     tageditor: "//cdnjs.cloudflare.com/ajax/libs/tag-editor/1.0.20/jquery.tag-editor.min",
-    izitoast: "../lib/js/iziToast.min",
-    stats: "../lib/js/stats.min"
+    izitoast: "//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@hemibrain/js/iziToast.min",
+    stats: "//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@hemibrain/js/stats.min"
     /* Notify, bootbox, colormaps, demos, mouse, vis_set, ResizeSensor, read_vars, colorm[aps */
   },
   shim: {
@@ -146,9 +146,13 @@ require([
   window.NeuroNLPUI.onRetrieveTag = (tagsPanel.onRetrieveTag).bind(tagsPanel);
 
   var tagLoad = false;
+  var queryLoad = false;
   var searchParams = new URLSearchParams(document.location.search);
   if(searchParams.get('tag')){
     tagLoad = true;
+  }
+  if(searchParams.get('query')){
+      queryLoad = true;
   }
 
 
@@ -291,8 +295,32 @@ require([
     queryID = client.addByUname(uname, {success: dataCallback});
   };
 
+  infoPanel.addByRid = (rid) => {
+    queryID = client.addByRid(rid, {success: dataCallback});
+  };
+
+  infoPanel.addNeuronByUname = (uname) => {
+    queryID = client.addNeuronByUname(uname, {success: dataCallback});
+  };
+
+  infoPanel.addSynapseByUname = (uname) => {
+    queryID = client.addSynapseByUname(uname, {success: dataCallback});
+  };
+
   infoPanel.removeByUname = (uname) => {
     queryID = client.removeByUname(uname);
+  };
+
+  infoPanel.removeByRid = (rid) => {
+    queryID = client.removeByRid(rid);
+  };
+
+  infoPanel.removeNeuronByUname = (uname) => {
+    queryID = client.removeNeuronByUname(uname);
+  };
+
+  infoPanel.removeSynapseByUname = (uname) => {
+    queryID = client.removeSynapseByUname(uname);
   };
 
   infoPanel.getAttr = (id,attr) => {
@@ -327,7 +355,9 @@ require([
   dynamicNeuronMenu.dispatch.remove = function(id) {client.removeObjs(id)};
   dynamicNeuronMenu.dispatch.getInfo = function(id) {ffbomesh.select(id)};
   dynamicNeuropilMenu.dispatch.toggle = function(id) {ffbomesh.toggleVis(id)};
-
+  dynamicNeuropilMenu.dispatch.getInfo = function(id) {ffbomesh.toggleVis(id)};
+  dynamicNeuropilMenu.dispatch.highlight = function(id) {ffbomesh.highlight(id, true)};
+  dynamicNeuropilMenu.dispatch.resume = function(id) {ffbomesh.highlight(undefined)};
 
   ffbomesh.on('add',
               function(e) {
@@ -429,6 +459,7 @@ require([
     ffbomesh.addJson({
       ffbo_json: json,
       showAfterLoadAll: true}).then(function(){
+
         var c = json[Object.keys(json)[0]].color;
         var rgb = parseInt(c.b*255) | (parseInt(c.g*255) << 8) | (parseInt(c.r*255) << 16);
         var hex =  '#' + (0x1000000 + rgb).toString(16).slice(1);
@@ -440,11 +471,13 @@ require([
         }else{
           client.loginStatus.on("change", function(){
             if(tagLoad) tagsPanel.retrieveTag(searchParams.get('tag'))
+            if(queryLoad) NLPsearch(searchParams.get('query'))
           }, "connected");
         }
       });
   });
   demoLoad = false;
+  ffbomesh.settings.defaultSynapseRadius = 0.4;
   $(document).ready(function(){
     if (isOnMobile)
       ffbomesh.backrenderSSAO.enabled = false;
