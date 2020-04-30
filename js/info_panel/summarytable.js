@@ -188,7 +188,19 @@ moduleExporter("SummaryTable",
       }
 
       let fieldName = snakeToSentence(key);
-      let fieldValue = data[key];
+      if (key == 'data_source'){
+          fieldValue = [];
+          for (k in data[key]){
+              if (data[key][k] != ''){
+                  fieldValue.push(k + ' v' + data[key][k]);
+              }else{
+                  fieldValue.push(k);
+              }
+          }
+      }else{
+          fieldValue = data[key];
+      }
+
 
       if (key === 'vfb_id'){
         let vfbBtn = "<a target='_blank' href='http://virtualflybrain.org/reports/" + data[key] + "'>VFB link</a>";
@@ -226,7 +238,7 @@ moduleExporter("SummaryTable",
     }
 
     // flycircuit data
-    if (('data_source' in data) && (data['data_source'].indexOf("FlyCircuit") > -1)) { // see if flycircuit is in
+    if (('data_source' in data) && ("FlyCircuit" in data['data_source'])) { // see if flycircuit is in
       let extraTableHtml = "";
       var extraData = data['flycircuit_data'];
       let extraKeys = ["Lineage", "Author", "Driver", "Gender/Age",  "Soma Coordinate", "Putative birth time", "Stock"];
