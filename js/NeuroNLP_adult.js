@@ -138,12 +138,7 @@ require([
   var infoPanel = new InfoPanel("info-panel");
   var dynamicNeuronMenu = new FFBODynamicMenu({singleObjSel: '#single-neu > .mm-listview', pinnedObjSel: '#single-pin > .mm-listview', removable: true, pinnable: true});
   var dynamicNeuropilMenu = new FFBODynamicMenu({singleObjSel: '#toggle_neuropil > .mm-listview', compare: 'LeftRight'});
-  var ffbomesh = new FFBOMesh3D('vis-3d', undefined, 
-    {  "globalCenter": { 'x': 0, 'y': -250, 'z': 0 }, 
-    "enablePositionReset": true, 
-    "resetPosition": { 'x': 54655.7431422481, 'y': 39426.92341342993, 'z': -174729.78082825127 },
-    "upSign": -1.,
-  });
+  var ffbomesh = new FFBOMesh3D('vis-3d', undefined, {"globalCenter": {'x': 0, 'y':-250, 'z':0}});
   var tagsPanel = new Tags('tagsMenu');
   var client = new FFBOClient();
   var visualizationSettings = new FFBOVisualizationSettings(ffbomesh);
