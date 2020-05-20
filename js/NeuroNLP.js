@@ -139,10 +139,10 @@ require([
   var dynamicNeuronMenu = new FFBODynamicMenu({singleObjSel: '#single-neu > .mm-listview', pinnedObjSel: '#single-pin > .mm-listview', removable: true, pinnable: true});
   var dynamicNeuropilMenu = new FFBODynamicMenu({singleObjSel: '#toggle_neuropil > .mm-listview', compare: 'LeftRight'});
   var ffbomesh = new FFBOMesh3D('vis-3d', undefined, 
-    {  "globalCenter": { 'x': 0, 'y': -250, 'z': 0 }, 
-    "enablePositionReset": true, 
-    "resetPosition": { 'x': 54655.7431422481, 'y': 39426.92341342993, 'z': -174729.78082825127 },
-    "upSign": -1.,
+    { "globalCenter": { 'x': 0, 'y': -250, 'z': 0 }, 
+      "enablePositionReset": true, 
+      "resetPosition": { 'x': 54.655, 'y': 39.426, 'z': -174.729 },
+      "upSign": -1.,
   });
   var tagsPanel = new Tags('tagsMenu');
   var client = new FFBOClient();
@@ -160,10 +160,8 @@ require([
       queryLoad = true;
   }
 
+  client.startConnection("guest", "guestpass", "ws://amacrine.ee.columbia.edu:6651/ws");
 
-  client.startConnection("guest", "guestpass", "ws://localhost:8081/ws");
-
-  //ffbomesh.settings.neuron3d = 1;
   function dataCallback(data){
     ffbomesh.addJson({ffbo_json: data, type: 'morphology_json'});
   }

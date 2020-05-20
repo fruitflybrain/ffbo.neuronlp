@@ -131,8 +131,8 @@ moduleExporter(
 
 	    this.settings.toneMappingPass = new PropertyManager({brightness: 0.95});
 	    this.settings.bloomPass = new PropertyManager({radius: 0.2, strength: 0.2, threshold: 0.3});
-	    this.settings.effectFXAA = new PropertyManager({enabled: true});
-	    this.settings.backrenderSSAO = new PropertyManager({enabled: true});
+	    this.settings.effectFXAA = new PropertyManager({enabled: false});
+	    this.settings.backrenderSSAO = new PropertyManager({enabled: false});
 
 	    this.states = new PropertyManager({
 		mouseOver: false,
@@ -1276,6 +1276,9 @@ moduleExporter(
 	    delete set.backrenderSSAO;
 	    delete set.toneMappingPass;
 	    delete set.bloomPass;
+	    delete set.RadiusRange;
+	    delete set.SynaspeRadiusRange;
+	    delete set.SomaRadiusRange;
 	    return set;
 	}
 
