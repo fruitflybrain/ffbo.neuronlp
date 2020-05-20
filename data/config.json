@@ -20,5 +20,16 @@
         0.01,
         0.15
         ]
+    },
+    "CNS": {
+        "filename": "mesh/CNS_um.json",
+        "label": "CNS",
+        "highlight": false,
+        "background": true,
+        "color": [
+        0.15,
+        0.01,
+        0.15
+        ]
     }
 }
