@@ -488,6 +488,17 @@
                 create your own tag!
               </p>
               <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-tags')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-tags')"  onclick="NeuroNLPUI.onToggleTag()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Try Tags!</a>
+              <br><br>
+              <h4>Quick Query References</h4>
+              <ul><p>Here are a list of example queries you can try:</p>
+                <li><p><span style="color: #88CDF5">show $MBON$</span> : search for any neuron whose name contains text "MBON".</p></li>
+                <li><p><span style="color: #88CDF5">add /r(.*)DA1_(.*)_R_1/r</span> : add to the current workspace any neuron whose name matches the regular expression.</p></li>
+                <li><p><span style="color: #88CDF5">show $5813014882$</span> : show a single neuron corresponding to the Hemibrain BodyID 5813014882.</p></li>
+                <li><p><span style="color: #88CDF5">show /:referenceId:[5813014882, 912147912, 880875861]</span> : show all neurons with the listed Hemibrain BodyId.</p></li>
+                <li><p><span style="color: #88CDF5">show neurons in right MB</span> : show all neurons that has arborizations in MB.</p></li>
+                <li><p><span style="color: #88CDF5">add postsynaptic $PEG$ neurons with at least 10 synapses</span> : add all PEG neurons that are postsynaptic to the neurons in the current workspace and that has a connection with more than 10 synapses.</p></li>
+                <li><p><span style="color: #88CDF5">show neurons that has dendrites in EB and axons in PB</span> : show neurons that has input site from EB and has output sites in PB</p></li>
+              </ul>
             </div>
             <div id ="info-panel" style="display: none">
             </div>
@@ -670,9 +681,9 @@
         </div>
         <div id="neuronlp-switch" class="overlay">
           <div class="neuronlp-switch-wrapper">
-            <a class="info-try btn btn-xs" onclick="NeuroNLPUI.closeAllOverlay()">Stay at <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #999;">NeuroNLP .Adult</span></a>
+            <a class="info-try btn btn-xs" onclick="NeuroNLPUI.closeAllOverlay()">Stay at <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #999;">NeuroNLP.Hemibrain</span></a>
             <h5>Or</h5>
-            <a class="info-try btn btn-xs" href="https://neuronlp.larva.fruitflybrain.org">Switch to <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #999;">NeuroNLP .Larva</span></a>
+            <a class="info-try btn btn-xs" href="https://neuronlp.larva.fruitflybrain.org">Switch to <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #999;">NeuroNLP.Larva</span></a>
           </div>
         </div>
 
