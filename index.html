@@ -575,9 +575,13 @@
                     By combining various attributes of query targets, you can create some very powerful queries.
                   </p>
                   <ul>Here are a list of example queries you can try:
-                    <li>show glutamatergic local neurons in the left antennal lobe</li>
-                    <li> add dopaminergic neurons in the right MB </li>
-                    <li> add postsynaptic MBONs with at least 50 synapses</li>
+                    <li><span style="color: #88CDF5">show $MBON$</span> : search for any neuron whose name contains text "MBON".</li>
+                    <li><span style="color: #88CDF5">add /r(.*)DA1_(.*)_R_1/r</span> : add to the current workspace any neuron whose name matches the regular expression.</li>
+                    <li><span style="color: #88CDF5">show $5813014882$</span> : show a single neuron corresponding to the Hemibrain BodyID 5813014882.</li>
+                    <li><span style="color: #88CDF5">show /:referenceId:[5813014882, 912147912, 880875861]</span> : show all neurons with the listed Hemibrain BodyId.</li>
+                    <li><span style="color: #88CDF5">show neurons in right MB</span> : show all neurons that has arborizations in MB.</li>
+                    <li><span style="color: #88CDF5">add postsynaptic $PEG$ neurons with at least 10 synapses</span> : add all PEG neurons that are postsynaptic to the neurons in the current workspace and that has a connection with more than 10 synapses.</li>
+                    <li><span style="color: #88CDF5">show neurons that has dendrites in EB and axons in PB</span> : show neurons that has input site from EB and has output sites in PB</li>
                   </ul>
                   <blockquote><p> Note: <i> show </i> neurons will reset workspace (clear existing neurons, reset viewing angle). While <i>add</i> will preserve the current workspace. </p></blockquote>
 
