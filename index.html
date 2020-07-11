@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>NeuroNLP.Adult Beta</title>
+    <title>NeuroNLP.Hemibrain</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -53,7 +53,7 @@
               <a href="http://fruitflybrain.org" target="_blank"><img src="/img/ffbo_logo.png" role="button"></a>
               <span style="font-family:var(--title-font-family); font-size: 20px; color:var(--navbar-text-color);">NeuroNLP</span>
               <a onclick="NeuroNLPUI.onShowNeuroNLP()">
-                <span>.Adult</span>
+                <span>.Hemibrain</span>
               </a>
             </div>
             <button id="ui_menu_btn" type="button" class="navbar-toggle collapsed" onclick="NeuroNLPUI.openRightMenu()" style="z-index:1">
@@ -65,9 +65,10 @@
           </div>
           <div class="navbar-fixed-bottom">
             <ul class="nav navbar-nav">
-              <li >Copyright &copy; 2018 FFBO</li>
+              <li >Copyright &copy; 2018-2020 FFBO</li>
               <li>
                 <div id="search-wrapper" class="search-bottom input-group input-group-mid">
+                  <span class="input-group-btn"><button id = "info_btn" onclick="NeuroNLPUI.onShowReference()" class="btn btn-link" type="button" style="height:30px; bottom:2px;"><span class="glyphicon glyphicon-info-sign"></span></button></span>
                   <input id = "srch_box" type="text" class="form-control" title="please type in query string..."  placeholder="enter query here, ex. show gabaergic local neurons in ellipsoid body">
                   <span class="input-group-btn">
                     <button id = "srch_box_btn" class="btn btn-mid btn-primary" type="button"><span class="glyphicon glyphicon-search"></span></button>
@@ -456,16 +457,21 @@
                 NeuroNLP can be accessed from any browser supporting WebGL. Remember
                 to check it out on your smartphone!
               </p>
-              <br><br>
               <h4>Overview</h4>
               <p>
                 Check out the Overview for a brief description of the layout and menus.
               </p>
               <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-getting-started')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-getting-started')" onclick="NeuroNLPUI.onShowOverview()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Open Overview!</a>
               <br><br>
+              <h4>Quick Query Reference</h4>
+              <p>
+                  Check out the Quick Query Reference to be able to query data easily!
+              </p>
+              <a onmouseover="NeuroNLPUI.mimicMouseOver('#info_btn')" onmouseout="NeuroNLPUI.mimicMouseOut('#info_btn')" onclick="NeuroNLPUI.onShowReference()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Open Query Reference!</a>
+              <br><br>
               <h4>News</h4>
               <p>
-                Updates and announcements for <u style="text-decoration:none; font-family:'Rajdhani',sans-serif; color:grey;">NeuroNLP.Adult</u>.
+                Updates and announcements for <u style="text-decoration:none; font-family:'Rajdhani',sans-serif; color:grey;">NeuroNLP.Hemibrain</u>.
               </p>
               <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-getting-started')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-getting-started')" onclick="NeuroNLPUI.onShowAnnounce()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> See What's New!</a>
               <br><br>
@@ -488,17 +494,6 @@
                 create your own tag!
               </p>
               <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-tags')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-tags')"  onclick="NeuroNLPUI.onToggleTag()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Try Tags!</a>
-              <br><br>
-              <h4>Quick Query References</h4>
-              <ul><p>Here are a list of example queries you can try:</p>
-                <li><p><span style="color: #88CDF5">show $MBON$</span> : search for any neuron whose name contains text "MBON".</p></li>
-                <li><p><span style="color: #88CDF5">add /r(.*)DA1_(.*)_R_1/r</span> : add to the current workspace any neuron whose name matches the regular expression.</p></li>
-                <li><p><span style="color: #88CDF5">show $5813014882$</span> : show a single neuron corresponding to the Hemibrain BodyID 5813014882.</p></li>
-                <li><p><span style="color: #88CDF5">show /:referenceId:[5813014882, 912147912, 880875861]</span> : show all neurons with the listed Hemibrain BodyId.</p></li>
-                <li><p><span style="color: #88CDF5">show neurons in right MB</span> : show all neurons that has arborizations in MB.</p></li>
-                <li><p><span style="color: #88CDF5">add postsynaptic $PEG$ neurons with at least 10 synapses</span> : add all PEG neurons that are postsynaptic to the neurons in the current workspace and that has a connection with more than 10 synapses.</p></li>
-                <li><p><span style="color: #88CDF5">show neurons that has dendrites in EB and axons in PB</span> : show neurons that has input site from EB and has output sites in PB</p></li>
-              </ul>
             </div>
             <div id ="info-panel" style="display: none">
             </div>
@@ -513,7 +508,7 @@
 
         <div id="demo-panel" class='overlay'>
           <ul class="list-inline">
-            <li><h2>Demos </h2></li>
+            <li><h2>Demos</h2></li>
           </ul>
           <div id="demo-table-wrapper"></div>
         </div>
@@ -590,9 +585,9 @@
                     <li><span style="color: #88CDF5">add /r(.*)DA1_(.*)_R_1/r</span> : add to the current workspace any neuron whose name matches the regular expression.</li>
                     <li><span style="color: #88CDF5">show $5813014882$</span> : show a single neuron corresponding to the Hemibrain BodyID 5813014882.</li>
                     <li><span style="color: #88CDF5">show /:referenceId:[5813014882, 912147912, 880875861]</span> : show all neurons with the listed Hemibrain BodyId.</li>
-                    <li><span style="color: #88CDF5">show neurons in right MB</span> : show all neurons that has arborizations in MB.</li>
-                    <li><span style="color: #88CDF5">add postsynaptic $PEG$ neurons with at least 10 synapses</span> : add all PEG neurons that are postsynaptic to the neurons in the current workspace and that has a connection with more than 10 synapses.</li>
-                    <li><span style="color: #88CDF5">show neurons that has dendrites in EB and axons in PB</span> : show neurons that has input site from EB and has output sites in PB</li>
+                    <li><span style="color: #88CDF5">show neurons in right MB</span> : show all neurons that have arborizations in MB.</li>
+                    <li><span style="color: #88CDF5">add postsynaptic $PEG$ neurons with at least 10 synapses</span> : add all PEG neurons that are postsynaptic to the neurons in the current workspace and that have a connection with more than 10 synapses.</li>
+                    <li><span style="color: #88CDF5">show neurons that have dendrites in EB and axons in PB</span> : show neurons that have input site from EB and has output sites in PB</li>
                   </ul>
                   <blockquote><p> Note: <i> show </i> neurons will reset workspace (clear existing neurons, reset viewing angle). While <i>add</i> will preserve the current workspace. </p></blockquote>
 
@@ -632,6 +627,36 @@
               </band>
             </div>
           </div>
+        </div>
+
+
+        <div id="quick-reference-panel" class="overlay">
+            <ul id="overview-header" class="overview-header list-inline">
+              <li><h2>Quick Query Reference</h2></li>
+            </ul>
+            <div class="overview-text">
+                <h4>Search Bar</h4>
+                <band>
+                  <article>
+                    <p>
+                      The Search Bar is the central querying interface. It supports natural language queries of neurons, synaptic partners, etc.
+                      By combining various attributes of query targets, you can create some very powerful queries.
+                    </p>
+                    <ul>Here are a list of example queries you can try:
+                      <li><span style="color: #88CDF5">show $MBON$</span> : search for any neuron whose name contains text "MBON".</li>
+                      <li><span style="color: #88CDF5">add /r(.*)DA1_(.*)_R_1/r</span> : add to the current workspace any neuron whose name matches the regular expression.</li>
+                      <li><span style="color: #88CDF5">show $5813014882$</span> : show a single neuron corresponding to the Hemibrain BodyID 5813014882.</li>
+                      <li><span style="color: #88CDF5">show /:referenceId:[5813014882, 912147912, 880875861]</span> : show all neurons with the listed Hemibrain BodyId.</li>
+                      <li><span style="color: #88CDF5">show neurons in right MB</span> : show all neurons that have arborizations in MB.</li>
+                      <li><span style="color: #88CDF5">add postsynaptic $PEG$ neurons with at least 10 synapses</span> : add all PEG neurons that are postsynaptic to the neurons in the current workspace and that have a connection with more than 10 synapses.</li>
+                      <li><span style="color: #88CDF5">show neurons that have dendrites in EB and axons in PB</span> : show neurons that have input site from EB and has output sites in PB</li>
+                    </ul>
+                    <blockquote><p> Note: <i> show </i> neurons will reset workspace (clear existing neurons, reset viewing angle). While <i>add</i> will preserve the current workspace. </p></blockquote>
+  
+                  </article>
+                  <images></images>
+                </band>
+              </div>
         </div>
 
         <div id="arch-wrapper"></div>
@@ -683,7 +708,7 @@
           <div class="neuronlp-switch-wrapper">
             <a class="info-try btn btn-xs" onclick="NeuroNLPUI.closeAllOverlay()">Stay at <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #999;">NeuroNLP.Hemibrain</span></a>
             <h5>Or</h5>
-            <a class="info-try btn btn-xs" href="https://neuronlp.larva.fruitflybrain.org">Switch to <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #999;">NeuroNLP.Larva</span></a>
+            <a class="info-try btn btn-xs" href="https://neuronlp.fruitflybrain.org">Switch to <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #999;">NeuroNLP.FlyCircuit</span></a>
           </div>
         </div>
 
