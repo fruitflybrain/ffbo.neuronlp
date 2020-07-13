@@ -1,3 +1,130 @@
 {
-
-}
+    "basic_query1": {
+      "keyword": "Name-based Queries",
+      "script": [
+        ["notify", {"message": "Hi there!"}],
+        ["notify", {"message": "A quick way to find neurons whose name contains a string is to use the $$ syntax.", "pause": 5000}],
+        ["notify", {"message": "The following query searches for all neurons whose name contains the string 'MBON'.", "pause": 5000}],
+        ["search", {"query": "show $MBON$"}],
+        ["notify", {"message": "Regular expression can be used with the syntax /rRE/r, where RE should be replaced by the regex string. The following query is the equivalent to the previous one:", "pause": 5000}],
+        ["search", {"query": "show /r(.*)MBON(.*)/r"}],
+        ["notify", {"message": "Since MBON is a commonly known neuron type, one can also search for MBONs with the following query", "pause": 5000}],
+        ["search", {"query": "show MBON"}],
+        ["notify", {"message": "Try it yourself!", "pause": 0}]
+      ],
+      "description": "Query with string match, Regular Expression, and commonly known names of neuron types",
+      "category": "Basic Queries"
+    },
+    "basic_query2": {
+    "keyword": "Hemibrain BodyID-based Queries",
+    "script": [
+      ["notify", {"message": "Hi there!"}],
+      ["notify", {"message": "Let's load multiple neurons using their Hemibrain Body IDs.", "pause": 1000}],
+      ["search", {"query": "show /:referenceId:[5813014882, 912147912, 880875861]"}],
+      ["notify", {"message": "Try it yourself!", "pause": 0}]
+    ],
+    "description": "Load a list of neurons using their Hemibrain Body IDs using: show /:referenceId:[bodyId1, bodyId2, ...]",
+    "category": "Basic Queries"
+  },
+    "basic_query3": {
+      "keyword": "Arborization-based Queries",
+      "script": [
+        ["notify", {"message": "Hi there!"}],
+        ["notify", {"message": "Let's show all neurons that have arborizations in right AOTU.", "pause": 5000}],
+        ["search", {"query": "show neurons in right AOTU"}],
+        ["notify", {"message": "Let's show neurons that have input site from the NEUROPIL EB and has output sites in the SUBREGION PB glomerulus R3.", "pause": 5000}],
+        ["search", {"query": "show neurons that have dendrites in EB and axons in PB glomerulus R3"}],
+        ["notify", {"message": "Try it yourself!", "pause": 0}]
+      ],
+      "description": "Querying neurons based on arborization patterns.",
+      "category": "Basic Queries"
+    },
+    "basic_query4": {
+        "keyword": "Synaptic Partners-based Queries",
+        "script": [
+          ["notify", {"message": "Hi there!"}],
+          ["notify", {"message": "Let's display a EPG (EB-PB-LAL) neuron that has axon in PB glomerulus R5."}],
+          ["search", {"query": "show EPG neurons that has axon in PB glomerulus R5"}],
+          ["notify", {"message": "To add PEG (PB-EB-LAL) neurons that are postsyaptic to the neurons in the current workspace, and has at least 10 synapses from any one of these neurons, we use the following query.", "pause": 1000}],
+          ["search", {"query": "add postsynaptic PEG neurons with at least 10 synapses"}],
+          ["notify", {"message": "Try it yourself!", "pause": 0}]
+        ],
+        "description": "Querying neurons based on synaptic partners",
+        "category": "Basic Queries"
+      },
+    "basic_query5": {
+      "keyword": "Coloring",
+      "script": [
+        ["notify", {"message": "Hi there!"}],
+        ["notify", {"message": "Let's display α'-lobe compartment 1 MBONs on the right hemisphere.", "pause": 5000}],
+        ["search", {"query": "show MBON in alpha'1_r"}],
+        ["notify", {"message": "To color these MBONs cyan", "pause": 3000}],
+        ["search", {"query": "color MBON in alpha'1_r cyan"}],
+        ["notify", {"message": "Let's add DANs innervating the same compartment", "pause": 3000}],
+        ["search", {"query": "add DAN in alpha'1_r"}],
+        ["notify", {"message": "Try it yourself!", "pause": 0}],
+        ["notify", {"message": "To color these DAN purple", "pause": 3000}],
+        ["search", {"query": "color DAN in alpha'1_r purple"}],
+        ["notify", {"message": "Try it yourself!", "pause": 0}]
+      ],
+      "description": "Color groups of neurons",
+      "category": "Basic Queries"
+    },
+    "hemibrain_1": {
+      "keyword": "OSN",
+      "script": [
+        ["notify", {"message": "Hi there!"}],
+        ["notify", {"message": "Let's query for olfactory sensory neurons!"}],
+        ["search", {"query": "show OSN"}],
+        ["notify", {"message": "Try it yourself!", "pause": 0}]
+      ],
+      "description": "Show olfactory sensory neurons.",
+      "category": "Early Olfactory System"
+    },
+    "hemibrain_2": {
+      "keyword": "AL PN",
+      "script": [
+        ["notify", {"message": "Hi there!"}],
+        ["notify", {"message": "Let's query for antennal lobe projection neurons!"}],
+        ["search", {"query": "show PN"}],
+        ["notify", {"message": "Try it yourself!", "pause": 0}]
+      ],
+      "description": "Show antennal lobe projection neurons.",
+      "category": "Early Olfactory System"
+    },
+    "hemibrain_3": {
+      "keyword": "AL LN",
+      "script": [
+        ["notify", {"message": "Hi there!"}],
+        ["notify", {"message": "Let's query for local neurons in antennal lobe!"}],
+        ["search", {"query": "Show $LN$"}],
+        ["notify", {"message": "We accidentally received some non-antennal lobe local neurons. Let's remove them!", "pause": 10000}],
+        ["search", {"query": "keep $olfactory LN$"}],
+        ["notify", {"message": "Try it yourself!", "pause": 0}]
+      ],
+      "description": "Show local neurons in antennal lobe.",
+      "category": "Early Olfactory System"
+    },
+    "hemibrain_4": {
+      "keyword": "AL mPN",
+      "script": [
+        ["notify", {"message": "Hi there!"}],
+        ["notify", {"message": "Let's query for multiglomerular projection neurons!"}],
+        ["search", {"query": "show mPN"}],
+        ["notify", {"message": "Try it yourself!", "pause": 0}]
+      ],
+      "description": "Show multiglomerular projection neurons.",
+      "category": "Early Olfactory System"
+    },
+    "hemibrain_5": {
+      "keyword": "VA1v PN",
+      "script": [
+        ["notify", {"message": "Hi there!"}],
+        ["notify", {"message": "Let's query for VA1v projection neurons!"}],
+        ["search", {"query": "add /r(.*)_VA1v(.*)_R_1/r"}],
+        ["notify", {"message": "Try it yourself!", "pause": 0}]
+      ],
+      "description": "Show VA1v projection neurons.",
+      "category": "Early Olfactory System"
+    }
+  }
