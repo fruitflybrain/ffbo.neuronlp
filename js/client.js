@@ -68,15 +68,26 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
     if( typeof(serverInfo)=="object" && 'na' in serverInfo ){
       if( naServerID != undefined && !(naServerID in serverInfo.na ))
         naServerID = undefined
-      if( naServerID == undefined && Object.keys(serverInfo.na).length )
-        naServerID = Object.keys(serverInfo.na)[0]
+      if( naServerID == undefined && Object.keys(serverInfo.na).length ){
+          for(var key in serverInfo.na){
+              if (serverInfo.na[key]['dataset'] == 'hemibrain'){
+                  naServerID = key;
+              }
+          }
+      }
     }
     if( typeof(serverInfo)=="object" && 'nlp' in serverInfo ){
       if( nlpServerID != undefined && !(nlpServerID in serverInfo.nlp ))
         nlpServerID = undefined
-      if( nlpServerID == undefined && Object.keys(serverInfo.nlp).length )
-        nlpServerID = Object.keys(serverInfo.nlp)[0]
+      if( nlpServerID == undefined && Object.keys(serverInfo.nlp).length ){
+          for(var key in serverInfo.nlp){
+              if (serverInfo.nlp[key]['dataset'] == 'hemibrain'){
+                  nlpServerID = key;
+              }
+          }
+      }
     }
+
     if( typeof(serverInfo)=="object" && 'nk' in serverInfo ){
       if( nkServerID != undefined && !(nkServerID in serverInfo.nk ))
         nkServerID = undefined
