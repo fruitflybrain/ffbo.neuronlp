@@ -138,9 +138,9 @@ require([
   var infoPanel = new InfoPanel("info-panel");
   var dynamicNeuronMenu = new FFBODynamicMenu({singleObjSel: '#single-neu > .mm-listview', pinnedObjSel: '#single-pin > .mm-listview', removable: true, pinnable: true});
   var dynamicNeuropilMenu = new FFBODynamicMenu({singleObjSel: '#toggle_neuropil > .mm-listview', compare: 'LeftRight'});
-  var ffbomesh = new FFBOMesh3D('vis-3d', undefined, 
-    { "globalCenter": { 'x': 0, 'y': -250, 'z': 0 }, 
-      "enablePositionReset": true, 
+  var ffbomesh = new FFBOMesh3D('vis-3d', undefined,
+    { "globalCenter": { 'x': 0, 'y': -250, 'z': 0 },
+      "enablePositionReset": true,
       "resetPosition": { 'x': 54.655, 'y': 39.426, 'z': -174.729 },
       "upSign": -1.,
   });
@@ -160,7 +160,8 @@ require([
       queryLoad = true;
   }
 
-  client.startConnection("guest", "guestpass", "ws://amacrine.ee.columbia.edu:6651/ws");
+//DO NOT MODIFY THE FOLLOWING LINE, IT WILL BE AUTO CONFIGED USING CONFIG.INI.
+  client.startConnection("guest", "guestpass", "ws://localhost:8081/ws");
 
   function dataCallback(data){
     ffbomesh.addJson({ffbo_json: data, type: 'morphology_json'});
