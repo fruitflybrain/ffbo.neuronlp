@@ -160,7 +160,7 @@ require([
   }
 
 
-  client.startConnection("guest", "jije83b3jJN*31", "wss://hemibrain.neuronlp.fruitflybrain.org/ws");
+  client.startConnection("guest", "guestpass", "ws://localhost:8081/ws");
   
 function getreferenceid(value, data_raw) {
   var _value = value;
