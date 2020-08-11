@@ -10,51 +10,53 @@ define('three', ['https://cdn.rawgit.com/mrdoob/three.js/r92/build/three.min.js'
   return THREE;
 });
 requirejs.config({
-  baseUrl: 'js',
+  baseUrl: '/js',
   paths: {
     // app: 'app',
-    mesh3d: '../lib/js/mesh3d',
-    propertymanager: '../lib/js/propertymanager',
-    infopanel: "info_panel/infopanel",
-    autobahn: '//cdn.rawgit.com/crossbario/autobahn-js-built/master/autobahn.min',
+    mesh3d: 'mesh3d',
+    propertymanager: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@hemibrain/js/propertymanager',
+    infopanel: "//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@hemibrain/js/info_panel/infopanel",
+    autobahn: '//cdn.jsdelivr.net/gh/crossbario/autobahn-js-browser@master/autobahn/autobahn.min',
     d3: '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min',
     jquery: '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min',
-    detector: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/Detector',
-    simplifymodifier: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/utils/SceneUtils',
-    lut: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/math/Lut',
-    copyshader: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/shaders/CopyShader',
-    convolutionshader: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/shaders/ConvolutionShader',
-    fxaashader: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/shaders/FXAAShader',
-    ssaoshader: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/shaders/SSAOShader',
-    luminosityhighpassshader: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/shaders/LuminosityHighPassShader',
-    luminosityshader: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/shaders/LuminosityShader',
-    tonemapshader: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/shaders/ToneMapShader',
-    gammacorrectionshader: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/shaders/GammaCorrectionShader',
-    effectcomposer: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/postprocessing/EffectComposer',
-    renderpass: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/postprocessing/RenderPass',
-    ssaarenderpass: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/postprocessing/SSAARenderPass',
-    shaderpass: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/postprocessing/ShaderPass',
-    ssaopass: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/postprocessing/SSAOPass',
-    maskpass: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/postprocessing/MaskPass',
-    bloompass: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/postprocessing/BloomPass',
-    unrealbloompass: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/postprocessing/UnrealBloomPass',
-    adaptivetonemappingpass: '//cdn.rawgit.com/mrdoob/three.js/r92/examples/js/postprocessing/AdaptiveToneMappingPass',
-    trackballcontrols: '//cdn.rawgit.com/fruitflybrain/ffbo.lib/updates/js/three/libs/TrackballControls',
-    lightshelper: '../lib/js/lightshelper',
+    detector: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/Detector',
+    simplifymodifier: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/utils/SceneUtils',
+    lut: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/math/Lut',
+    copyshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/shaders/CopyShader',
+    gltfloader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/loaders/GLTFLoader',
+    convolutionshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/shaders/ConvolutionShader',
+    fxaashader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/shaders/FXAAShader',
+    ssaoshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/shaders/SSAOShader',
+    luminosityhighpassshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/shaders/LuminosityHighPassShader',
+    luminosityshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/shaders/LuminosityShader',
+    tonemapshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/shaders/ToneMapShader',
+    gammacorrectionshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/shaders/GammaCorrectionShader',
+    effectcomposer: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/EffectComposer',
+    renderpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/RenderPass',
+    ssaarenderpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/SSAARenderPass',
+    shaderpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/ShaderPass',
+    ssaopass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/SSAOPass',
+    maskpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/MaskPass',
+    bloompass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/BloomPass',
+    unrealbloompass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/UnrealBloomPass',
+    adaptivetonemappingpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/AdaptiveToneMappingPass',
+    trackballcontrols: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@hemibrain/js/TrackballControls',
+    lightshelper: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@hemibrain/js/lightshelper',
     modernizr: "//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min",
     d3: "//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3",
     jqueryui: "//code.jquery.com/ui/1.12.1/jquery-ui",
     perfectscrollbar: "//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.7.0/js/perfect-scrollbar.jquery.min",
     "jquery.mobile": "//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min",
     spectrum: "//cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min",
-    "jquery.mmenu": "/lib/js/jquery.mmenu.all",
+    "jquery.mmenu": "//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@hemibrain/js/jquery.mmenu.all",
     bootsrapslider: "//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min",
     swiper: "//cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.2/js/swiper.min",
     bootstrap: "//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min",
     blockui: "//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min",
     tageditor: "//cdnjs.cloudflare.com/ajax/libs/tag-editor/1.0.20/jquery.tag-editor.min",
-    izitoast: "//cdn.rawgit.com/dolce/iziToast/v1.3.0/dist/js/iziToast.min",
-    stats: "//cdn.rawgit.com/mrdoob/stats.js/28632bd8/build/stats.min"
+    izitoast: "//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@hemibrain/js/iziToast.min",
+    stats: "//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@hemibrain/js/stats.min",
+    
     /* Notify, bootbox, colormaps, demos, mouse, vis_set, ResizeSensor, read_vars, colorm[aps */
   },
   shim: {
@@ -65,6 +67,7 @@ requirejs.config({
     simplifymodifier: {deps: ['three']},
     lut: {deps: ['three']},
     copyshader: {deps: ['three']},
+    gltfloader: {deps: ['three']},
     convolutionshader: {deps: ['three']},
     fxaashader: {deps: ['three']},
     ssaoshader: {deps: ['three']},
@@ -82,7 +85,9 @@ requirejs.config({
     unrealbloompass: {deps: ['three', 'effectcomposer']},
     adaptivetonemappingpass: {deps: ['three', 'effectcomposer']},
     tageditor: {deps: ['jquery']},
-  }
+    
+  },
+  waitSeconds: 15
 });
 
 
@@ -145,23 +150,46 @@ require([
   window.NeuroNLPUI.onRetrieveTag = (tagsPanel.onRetrieveTag).bind(tagsPanel);
 
   var tagLoad = false;
+  var queryLoad = false;
   var searchParams = new URLSearchParams(document.location.search);
   if(searchParams.get('tag')){
     tagLoad = true;
   }
+  if(searchParams.get('query')){
+      queryLoad = true;
+  }
 
 
-  client.startConnection("guest", "guestpass", "wss://neuronlp.fruitflybrain.org:8888/ws");
+  client.startConnection("guest", "jije83b3jJN*31", "wss://hemibrain.neuronlp.fruitflybrain.org/ws");
+  
+function getreferenceid(value, data_raw) {
+  var _value = value;
+  queryID = client.getInfo(_value, {success: function(data){
+    refid = data['summary']['referenceId'];
+    console.log('Received data:', refid);
+    data_raw['referenceid'] = data['summary']['referenceId'];
+    console.log('DATARAW', data_raw);
+    var data_to_send = {};
+    data_to_send[_value] = data_raw;
+    ffbomesh.addJson({ffbo_json: data_to_send, type: 'gltf'});
+  }});
+}
 
   //ffbomesh.settings.neuron3d = 1;
   function dataCallback(data){
-    ffbomesh.addJson({ffbo_json: data, type: 'morphology_json'});
+    console.log(data);
+    
+    for (var i in data) {
+      console.log('rid:', i);
+      getreferenceid(i, data[i]);
+    }
+    // ffbomesh.addJson({ffbo_json: data, type: 'gltf'});
   }
 
-  //window.client = client;
-  //window.tagsPanel = tagsPanel;
+  window.client = client;
+  window.tagsPanel = tagsPanel;
   window.ffbomesh = ffbomesh;
-  //window.infoPanel = infoPanel;
+  window.infoPanel = infoPanel;
 
   function retrieveTagData(metadata){
     queryID = client.retrieveState({success: dataCallback});
@@ -290,8 +318,32 @@ require([
     queryID = client.addByUname(uname, {success: dataCallback});
   };
 
+  infoPanel.addByRid = (rid) => {
+    queryID = client.addByRid(rid, {success: dataCallback});
+  };
+
+  infoPanel.addNeuronByUname = (uname) => {
+    queryID = client.addNeuronByUname(uname, {success: dataCallback});
+  };
+
+  infoPanel.addSynapseByUname = (uname) => {
+    queryID = client.addSynapseByUname(uname, {success: dataCallback});
+  };
+
   infoPanel.removeByUname = (uname) => {
     queryID = client.removeByUname(uname);
+  };
+
+  infoPanel.removeByRid = (rid) => {
+    queryID = client.removeByRid(rid);
+  };
+
+  infoPanel.removeNeuronByUname = (uname) => {
+    queryID = client.removeNeuronByUname(uname);
+  };
+
+  infoPanel.removeSynapseByUname = (uname) => {
+    queryID = client.removeSynapseByUname(uname);
   };
 
   infoPanel.getAttr = (id,attr) => {
@@ -310,7 +362,9 @@ require([
   ffbomesh.on('click',   function(e){
     $("#info-intro").hide();
     //$("#info-panel").show();
+    console.log(e.value);
     queryID = client.getInfo(e.value, {success: function(data){
+      console.log('Received data:', data)
       data['summary']['rid'] = e.value;
       infoPanel.update(data);
     }});
@@ -326,7 +380,9 @@ require([
   dynamicNeuronMenu.dispatch.remove = function(id) {client.removeObjs(id)};
   dynamicNeuronMenu.dispatch.getInfo = function(id) {ffbomesh.select(id)};
   dynamicNeuropilMenu.dispatch.toggle = function(id) {ffbomesh.toggleVis(id)};
-
+  dynamicNeuropilMenu.dispatch.getInfo = function(id) {ffbomesh.toggleVis(id)};
+  dynamicNeuropilMenu.dispatch.highlight = function(id) {ffbomesh.highlight(id, true)};
+  dynamicNeuropilMenu.dispatch.resume = function(id) {ffbomesh.highlight(undefined)};
 
   ffbomesh.on('add',
               function(e) {
@@ -428,6 +484,7 @@ require([
     ffbomesh.addJson({
       ffbo_json: json,
       showAfterLoadAll: true}).then(function(){
+
         var c = json[Object.keys(json)[0]].color;
         var rgb = parseInt(c.b*255) | (parseInt(c.g*255) << 8) | (parseInt(c.r*255) << 16);
         var hex =  '#' + (0x1000000 + rgb).toString(16).slice(1);
@@ -439,16 +496,18 @@ require([
         }else{
           client.loginStatus.on("change", function(){
             if(tagLoad) tagsPanel.retrieveTag(searchParams.get('tag'))
+            if(queryLoad) NLPsearch(searchParams.get('query'))
           }, "connected");
         }
       });
   });
   demoLoad = false;
+  ffbomesh.settings.defaultSynapseRadius = 0.4;
   $(document).ready(function(){
     if (isOnMobile)
       ffbomesh.backrenderSSAO.enabled = false;
     FFBODemoPlayer = new FFBODemoPlayer(ffbomesh, $('#ui_menu_nav').data('mmenu'));
-    //window.FFBODemoPlayer = FFBODemoPlayer;
+    window.FFBODemoPlayer = FFBODemoPlayer;
     FFBODemoPlayer.onLoadingTag = () => {
       tagLoad = true;
     };

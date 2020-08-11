@@ -182,9 +182,17 @@ moduleExporter(
                  }
                });
              }else if(panel == this.menuSels.top){
-               this.menu.open();
-               this.menu.openPanel($(panel));
-               setTimeout(function(){resolve()}, panelOpenPause + this._timeOutPause);
+               if($('#ui_menu_btn').is(':visible') && moveTo){
+                 this._moveTo('#ui_menu_btn', moveToDur).then(() =>{
+                   this.cursor.click();
+                   this.menu.openPanel($(panel));
+                   setTimeout(function(){resolve()}, panelOpenPause + this._timeOutPause);
+                 }).catch(reject);
+               }else{
+                 this.menu.open();
+                 this.menu.openPanel($(panel));
+                 setTimeout(function(){resolve()}, panelOpenPause + this._timeOutPause);
+               }
              }
            }catch(err){
              reject(err)
@@ -207,6 +215,7 @@ moduleExporter(
              }else{
                $(sel).mouseover();
                setTimeout(() => {$(sel)[0].click();}, hoverPause)
+               setTimeout(() => {resolve();}, hoverPause + this._longerPause)
              }
            }catch(err){
              reject(err);
@@ -352,18 +361,26 @@ moduleExporter(
                }
              }
              else if('selector' in object){
+                 pause = this._longerPause;
+                 if('pause' in object){
+                     pause = object.pause;
+                 }
                // Can be used for Info Panel now. Should be later replaced by an API
                this._clickMenu(object.selector, object.cursorMove, object.cursorMoveDuration)
                  .then(() => {
-                   setTimeout(() => {resolve();}, this._longerPause);
+                   setTimeout(() => {resolve();}, Math.max(this._longerPause, pause));
                  }).catch(reject);
              }
              else if('label' in object || 'rid' in object){
-               this._highlight(object).then( () => {
+                 pause = this._longerPause;
+                 if('pause' in object){
+                     pause = object.pause;
+                 }
+                 this._highlight(object).then( () => {
                  rid = 'label' in object ? this.ffbomesh._labelToRid[object.label] : object.rid;
                  if(object.cursorMove) this.cursor.click();
                  this.ffbomesh.select(rid);
-                 setTimeout(() => {resolve();}, this._longerPause);
+                 setTimeout(() => {resolve();}, Math.max(this._longerPause, pause));
                }).catch(reject)
              }
              else{
@@ -437,7 +454,6 @@ moduleExporter(
                resolve();
                return;
              }
-             object = Object.assign({}, {pause: 1000}, object);
              rid = 'label' in object ? this.ffbomesh._labelToRid[object.label] : object.rid;
              this.ffbomesh.select(rid);
              setTimeout(() => {resolve();}, object.pause);
@@ -500,20 +516,6 @@ moduleExporter(
            }
          });
        },
-       _loadTag: function(max, object){
-        return new Promise((resolve, reject) => {
-          cls = max ? 'vis-info-pin' : 'vis-info-sm';
-          try{
-            // console.log('Running...');
-            resolve();
-            this.onLoadingTag();
-            tagsPanel.retrieveTag(object.name);
-            
-          }catch(err){
-            reject(err);
-          }
-        });
-      },
        addDemos: function(demoJson){
          Object.assign(this._demoJson, demoJson)
        },
@@ -554,12 +556,19 @@ moduleExporter(
          return new Promise((resolve, reject) => {
            try{
              pause = 4000;
+             timeout = 6000;
              if(object.settings && 'pause' in object.settings){
                pause = object.settings.pause;
                delete object.settings.pause;
              }
-             object.settings = Object.assign({timeout: 6000}, object.settings);
-             this.notify(object.message, object.settings);
+             if('pause' in object){
+                      pause = object.pause;
+                  }
+                  if('timeout' in object){
+                      timeout = object.timeout;
+                  }
+                  object.settings = Object.assign({timeout: timeout}, object.settings);
+               this.notify(object.message, object.settings);
              setTimeout(resolve, pause);
            }catch(err){
              reject(err);
@@ -597,9 +606,6 @@ moduleExporter(
                  break;
                case "select":
                  p = this._select(json[i][1])
-                 break;
-               case "loadTag":
-                 p = this._loadTag(true, json[i][1]);
                  break;
                case "maxInfoPanel":
                  p = this._minMaxInfoPanel(true, json[i][1]);
@@ -910,4 +916,3 @@ moduleExporter(
      return FFBODemoPlayer;
    }
 )
-
