@@ -30,6 +30,7 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "jquery.mmenu"], function($, 
 
     this.GUIinfoOverlay = new Overlay("gui-3d", "");
     this.overviewPanel = new Overlay("overview-panel", "");
+    this.referencePanel = new Overlay("quick-reference-panel", "");
     this.announcePanel = new Overlay("announce-panel", "");
     this.neuronlpSwitch = new Overlay("neuronlp-switch", "");
     this.demoTable = new Overlay("demo-panel", `
@@ -61,6 +62,10 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "jquery.mmenu"], function($, 
     this.onShowOverview = () => {
       mm_menu_right.close();
       this.overviewPanel.show();
+    }
+    this.onShowReference = () => {
+      mm_menu_right.close();
+      this.referencePanel.show();
     }
     this.onShowAnnounce = () => {
       mm_menu_right.close();
