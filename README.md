@@ -15,3 +15,4 @@ with
 ```
 client.startConnection("guest", "jije83b3jJN*31", "wss://hemibrain.neuronlp.fruitflybrain.org/ws");
 ```
+This version of NeuroNLP will work with FFBO Hemibrain releases.
