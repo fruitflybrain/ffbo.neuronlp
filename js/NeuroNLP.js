@@ -591,3 +591,8 @@ require([
     }});
   });
 });
+
+
+window.onbeforeunload = function() {
+    return true;
+};
