@@ -209,7 +209,7 @@ moduleExporter("SummaryTable",
       }
 
       if (key === 'referenceId'){
-            fieldName = 'Hemibrain BodyID';
+            fieldName = 'ID in Datasource';
       }
 
       tableHtml += "<div><p>" + fieldName + ":</p><p>" + fieldValue +"</p></div>" ;
