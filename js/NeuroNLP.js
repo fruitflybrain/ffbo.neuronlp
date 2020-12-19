@@ -270,8 +270,13 @@ require([
         iziToast.success({message: message})
     }
 
-  client.notifyError = function(message){
-    iziToast.error({message: message, timeout: false});
+  client.notifyError = function(message, timeout){
+    if(timeout == undefined){
+        iziToast.error({message: message, timeout: false});
+    }
+    else{
+        iziToast.error({message: message, timeout: timeout});
+    }
     $('#ui-blocker').hide();
   }
 
