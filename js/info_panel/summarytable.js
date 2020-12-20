@@ -178,7 +178,7 @@ moduleExporter("SummaryTable",
       //do nothing;
     }
 
-    let displayKeys = ['class','vfb_id','data_source','transgenic_lines','transmitters','expresses'];
+    let displayKeys = ['class','vfb_id','data_source','transgenic_lines','transmitters','expresses','referenceId'];
     var displayCtr = 0;
 
     let keyCounter = 0;
@@ -206,6 +206,10 @@ moduleExporter("SummaryTable",
         let vfbBtn = "<a target='_blank' href='http://virtualflybrain.org/reports/" + data[key] + "'>VFB link</a>";
         fieldName = 'External Link';
         fieldValue = vfbBtn;
+      }
+
+      if (key === 'referenceId'){
+            fieldName = 'FlyCircuit ID';
       }
 
       tableHtml += "<div><p>" + fieldName + ":</p><p>" + fieldValue +"</p></div>" ;

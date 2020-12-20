@@ -21,6 +21,7 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
   epServerID = undefined;
   // nk server crossbar id
   nkServerID = undefined;
+  notified_no_connnect = false;
 
   autobahn = autobahn || window.autobahn;
   PropertyManager = PropertyManager || window.PropertyManager;
@@ -66,16 +67,38 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
     if(serverInfo.hasOwnProperty(0))
       serverInfo = serverInfo[0];
     if( typeof(serverInfo)=="object" && 'na' in serverInfo ){
+      if( naServerID == undefined && !(Object.keys(serverInfo.na).length))
+      {
+          client.notifyError('NeuroArch server not detected.');
+      }
       if( naServerID != undefined && !(naServerID in serverInfo.na ))
-        naServerID = undefined
+      {
+        naServerID = undefined;
+        client.notifyError('NeuroArch server lost.');
+      }
       if( naServerID == undefined && Object.keys(serverInfo.na).length )
-        naServerID = Object.keys(serverInfo.na)[0]
+      {
+        naServerID = Object.keys(serverInfo.na)[0];
+        client.notifySuccess('NeuroArch server detected.')
+      }
+
     }
     if( typeof(serverInfo)=="object" && 'nlp' in serverInfo ){
+      if( nlpServerID == undefined && !(Object.keys(serverInfo.nlp).length))
+      {
+        client.notifyError('NLP server not detected.');
+      }
       if( nlpServerID != undefined && !(nlpServerID in serverInfo.nlp ))
-        nlpServerID = undefined
+      {
+        nlpServerID = undefined;
+        client.notifyError('NLP server lost');
+      }
       if( nlpServerID == undefined && Object.keys(serverInfo.nlp).length )
-        nlpServerID = Object.keys(serverInfo.nlp)[0]
+      {
+        nlpServerID = Object.keys(serverInfo.nlp)[0];
+        client.notifySuccess('NLP server detected.');
+      }
+
     }
     if( typeof(serverInfo)=="object" && 'nk' in serverInfo ){
       if( nkServerID != undefined && !(nkServerID in serverInfo.nk ))
@@ -89,6 +112,7 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
       if( epServerID == undefined && Object.keys(serverInfo.ep).length )
         epServerID = Object.keys(serverInfo.ep)[0]
     }
+
   }
 
   guidGenerator = function() {
@@ -531,6 +555,8 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
       this.session = session
       setTimeout(() => {this.loginStatus.connected = true;}, 500);
       console.log("connected to FFBO");
+      this.notifySuccess('Connected to FFBO processor')
+      notified_no_connect = false;
       this.loginStatus.sessionID = session.id;
       this.loginStatus.username = details.authid;
     }).bind(this);
@@ -540,6 +566,16 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
     //
     connection.onclose = (function(reason, details) {
       console.log("Connection lost: " + reason);
+      if(this.loginStatus.connected){
+          this.notifyError('Lost connection to FFBO processor: ' + reason);
+          notified_no_connnect = true;
+      }else{
+          if(!notified_no_connnect)
+          {
+              this.notifyError('Connection to FFBO processor at ' + url + ' cannot be established: ' + reason);
+              notified_no_connnect = true;
+          }
+      }
       this.loginStatus.connected = false;
       this.loginStatus.sessionID = undefined;
       this.loginStatus.username = undefined;
