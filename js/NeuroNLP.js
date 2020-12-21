@@ -141,7 +141,7 @@ require([
   var ffbomesh = new FFBOMesh3D('vis-3d', undefined,
     { "globalCenter": { 'x': 0, 'y': -250, 'z': 0 },
       "enablePositionReset": true,
-      "resetPosition": { 'x': 54.655, 'y': 39.426, 'z': -4740.729 },
+      "resetPosition": { 'x': 238.5652665362618, 'y': -57.231396545007044, 'z': -4015.343735317172 },
       "upSign": -1.,
   });
   var tagsPanel = new Tags('tagsMenu');

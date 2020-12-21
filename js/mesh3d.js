@@ -312,27 +312,27 @@ moduleExporter(
 
             let height = this.container.clientHeight;
             let width = this.container.clientWidth;
-	    
+
             this.fov = 20;
             this.prevhfov = 2 * Math.atan(Math.tan(Math.PI * this.fov / 2 / 180) * width / height);
-	    
+
             let camera = new THREE.PerspectiveCamera(this.fov, width / height, 0.1, 10000000 );
             camera.position.z = 1800;
-	    
+
             if (width < 768 && width / height < 1)
 		camera.position.z = 3800;
             if (width < 768 && width / height >= 1)
 		camera.position.z = 2600;
-	    
+
             if (this._metadata["enablePositionReset"] == true) {
 		camera.position.z = this._metadata["resetPosition"]['z'];
 		camera.position.y = this._metadata["resetPosition"]['y'];
 		camera.position.x = this._metadata["resetPosition"]['x'];
 		camera.up.y = this._metadata["upSign"];
             }
-	    
+
             return camera;
-	}    
+	}
 
 	FFBOMesh3D.prototype.initRenderer = function () {
 	    renderer = new THREE.WebGLRenderer({'logarithmicDepthBuffer': true});
@@ -392,6 +392,9 @@ moduleExporter(
 	    this.composer.addPass( this.bloomPass );
 	    this.composer.setSize( width*window.devicePixelRatio,
 				   height*window.devicePixelRatio);
+
+        this.composer.passes[1].enabled = this.settings.backrenderSSAO.enabled;
+        this.composer.passes[3].enabled = this.settings.effectFXAA.enabled;
 
 	}
 
