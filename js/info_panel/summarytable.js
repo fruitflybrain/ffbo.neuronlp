@@ -209,7 +209,7 @@ moduleExporter("SummaryTable",
       }
 
       if (key === 'referenceId'){
-            fieldName = 'Hemibrain BodyID';
+            fieldName = 'Medulla FIB25 BodyID';
       }
 
       tableHtml += "<div><p>" + fieldName + ":</p><p>" + fieldValue +"</p></div>" ;

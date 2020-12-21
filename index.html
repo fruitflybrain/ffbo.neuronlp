@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>NeuroNLP.Hemibrain</title>
+    <title>NeuroNLP.Medulla</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -53,7 +53,7 @@
               <a href="http://fruitflybrain.org" target="_blank"><img src="/img/ffbo_logo.png" role="button"></a>
               <span style="font-family:var(--title-font-family); font-size: 20px; color:var(--navbar-text-color);">NeuroNLP</span>
               <a onclick="NeuroNLPUI.onShowNeuroNLP()">
-                <span>.Hemibrain</span>
+                <span>.Medulla</span>
               </a>
             </div>
             <button id="ui_menu_btn" type="button" class="navbar-toggle collapsed" onclick="NeuroNLPUI.openRightMenu()" style="z-index:1">
@@ -581,13 +581,13 @@
                     By combining various attributes of query targets, you can create some very powerful queries.
                   </p>
                   <ul>Here are a list of example queries you can try:
-                    <li><span style="color: #88CDF5">show $MBON$</span> : search for any neuron whose name contains text "MBON".</li>
-                    <li><span style="color: #88CDF5">add /r(.*)DA1_(.*)_R_1/r</span> : add to the current workspace any neuron whose name matches the regular expression.</li>
-                    <li><span style="color: #88CDF5">show $5813014882$</span> : show a single neuron corresponding to the Hemibrain BodyID 5813014882.</li>
-                    <li><span style="color: #88CDF5">show /:referenceId:[5813014882, 912147912, 880875861]</span> : show all neurons with the listed Hemibrain BodyId.</li>
-                    <li><span style="color: #88CDF5">show neurons in right MB</span> : show all neurons that have arborizations in MB.</li>
-                    <li><span style="color: #88CDF5">add postsynaptic $PEG$ neurons with at least 10 synapses</span> : add all PEG neurons that are postsynaptic to the neurons in the current workspace and that have a connection with more than 10 synapses.</li>
-                    <li><span style="color: #88CDF5">show neurons that have dendrites in EB and axons in PB</span> : show neurons that have input site from EB and has output sites in PB</li>
+                    <li><span style="color: #88CDF5">show $Mi15$</span> : search for any neuron whose name contains text "Mi15".</li>
+                    <li><span style="color: #88CDF5">add /r(.*)Mi1-(.*)/r</span> : add to the current workspace any neuron whose name matches the regular expression.</li>
+                    <li><span style="color: #88CDF5">show $5813014882$</span> : show a single neuron corresponding to the Medulla FIB25 BodyID 5813014882.</li>
+                    <li><span style="color: #88CDF5">show /:referenceId:[5813014882, 912147912, 880875861]</span> : show all neurons with the listed Medulla FIB25 BodyId.</li>
+                    <li><span style="color: #88CDF5">show neurons in right m2</span> : show all neurons that have arborizations in stratum M2.</li>
+                    <li><span style="color: #88CDF5">add postsynaptic $PM2$ neurons with at least 10 synapses</span> : add all PM2 neurons that are postsynaptic to the neurons in the current workspace and that have a connection with more than 10 synapses.</li>
+                    <li><span style="color: #88CDF5">show neurons that have dendrites in m2 and axons in m5</span> : show neurons that have input site from stratum M2 and has output sites in stratum M5</li>
                   </ul>
                   <blockquote><p> Note: <i> show </i> neurons will reset workspace (clear existing neurons, reset viewing angle). While <i>add</i> will preserve the current workspace. </p></blockquote>
 
@@ -643,16 +643,16 @@
                       By combining various attributes of query targets, you can create some very powerful queries.
                     </p>
                     <ul>Here are a list of example queries you can try:
-                      <li><span style="color: #88CDF5">show $MBON$</span> : search for any neuron whose name contains text "MBON".</li>
-                      <li><span style="color: #88CDF5">add /r(.*)DA1_(.*)_R_1/r</span> : add to the current workspace any neuron whose name matches the regular expression.</li>
-                      <li><span style="color: #88CDF5">show $5813014882$</span> : show a single neuron corresponding to the Hemibrain BodyID 5813014882.</li>
-                      <li><span style="color: #88CDF5">show /:referenceId:[5813014882, 912147912, 880875861]</span> : show all neurons with the listed Hemibrain BodyId.</li>
-                      <li><span style="color: #88CDF5">show neurons in right MB</span> : show all neurons that have arborizations in MB.</li>
-                      <li><span style="color: #88CDF5">add postsynaptic $PEG$ neurons with at least 10 synapses</span> : add all PEG neurons that are postsynaptic to the neurons in the current workspace and that have a connection with more than 10 synapses.</li>
-                      <li><span style="color: #88CDF5">show neurons that have dendrites in EB and axons in PB</span> : show neurons that have input site from EB and has output sites in PB</li>
+                        <li><span style="color: #88CDF5">show $Mi15$</span> : search for any neuron whose name contains text "Mi15".</li>
+                        <li><span style="color: #88CDF5">add /r(.*)Mi1-(.*)/r</span> : add to the current workspace any neuron whose name matches the regular expression.</li>
+                        <li><span style="color: #88CDF5">show $5813014882$</span> : show a single neuron corresponding to the Medulla FIB25 BodyID 5813014882.</li>
+                        <li><span style="color: #88CDF5">show /:referenceId:[5813014882, 912147912, 880875861]</span> : show all neurons with the listed Medulla FIB25 BodyId.</li>
+                        <li><span style="color: #88CDF5">show neurons in right m2</span> : show all neurons that have arborizations in stratum M2.</li>
+                        <li><span style="color: #88CDF5">add postsynaptic $PM2$ neurons with at least 10 synapses</span> : add all PM2 neurons that are postsynaptic to the neurons in the current workspace and that have a connection with more than 10 synapses.</li>
+                        <li><span style="color: #88CDF5">show neurons that have dendrites in m2 and axons in m5</span> : show neurons that have input site from stratum M2 and has output sites in stratum M5</li>
                     </ul>
                     <blockquote><p> Note: <i> show </i> neurons will reset workspace (clear existing neurons, reset viewing angle). While <i>add</i> will preserve the current workspace. </p></blockquote>
-  
+
                   </article>
                   <images></images>
                 </band>
@@ -706,9 +706,9 @@
         </div>
         <div id="neuronlp-switch" class="overlay">
           <div class="neuronlp-switch-wrapper">
-            <a class="info-try btn btn-xs" onclick="NeuroNLPUI.closeAllOverlay()">Stay at <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #999;">NeuroNLP.Hemibrain</span></a>
-            <h5>Or</h5>
             <a class="info-try btn btn-xs" href="https://neuronlp.fruitflybrain.org">Switch to <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #999;">NeuroNLP.FlyCircuit</span></a>
+            <h5>Or</h5>
+            <a class="info-try btn btn-xs" onclick="NeuroNLPUI.closeAllOverlay()">Stay at <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #999;">NeuroNLP.Medulla</span></a>
           </div>
         </div>
 
