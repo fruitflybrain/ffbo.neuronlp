@@ -164,6 +164,7 @@ require([
 
     function getreferenceid(value, data_raw) {
       var _value = value;
+      /*
       queryID = client.getInfo(_value, {
         success: function (data) {
           refid = data['summary']['referenceId'];
@@ -174,7 +175,10 @@ require([
           data_to_send[_value] = data_raw;
           ffbomesh.addJson({ ffbo_json: data_to_send, type: 'gltf' });
         }
-      });
+      });*/
+      var data_to_send = {};
+      data_to_send[_value] = data_raw;
+      ffbomesh.addJson({ ffbo_json: data_to_send, type: 'gltf' });
     }
 
     //ffbomesh.settings.neuron3d = 1;
@@ -183,6 +187,7 @@ require([
       synapse_data = {};
       for (var i in data) {
         // console.log('rid:', i);
+        console.log(data[i]);
         if (data[i]['uname'].includes('--')) {
           synapse_data[i] = data[i];
         }

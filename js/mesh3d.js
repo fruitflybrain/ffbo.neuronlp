@@ -274,6 +274,10 @@ moduleExporter(
       this.settings.on('change', (function (e) {
         this.setBackgroundColor(e.value);
       }).bind(this), 'backgroundColor');
+      this.settings.on('change', (function (e) {
+        this.setSceneBackgroundColor(e.value);
+      }).bind(this), 'sceneBackgroundColor');
+
 
       if (data != undefined && Object.keys(data).length > 0)
         this.addJson(data);
@@ -322,9 +326,11 @@ moduleExporter(
     }
 
     FFBOMesh3D.prototype.initRenderer = function () {
-      renderer = new THREE.WebGLRenderer({ 'logarithmicDepthBuffer': true });
+      renderer = new THREE.WebGLRenderer({ 'logarithmicDepthBuffer': true, alpha: true });
       renderer.setPixelRatio(window.devicePixelRatio);
       renderer.setSize(this.container.clientWidth, this.container.clientHeight);
+      renderer.setClearColor( 0x000000, 0 );
+      
       this.container.appendChild(renderer.domElement);
       return renderer;
     }
@@ -796,9 +802,10 @@ moduleExporter(
       return function (jsonString) {
         var color = unit['color'];
         var loader = new THREE.GLTFLoader();
+        console.log(unit);
         loader.load(
           // resource URL
-          'https://ffbodata.neuronlp.fruitflybrain.org/gltf_unsimplified_2/' + unit['referenceid'] + '.obj',
+          'https://ffbodata.neuronlp.fruitflybrain.org/gltf_unsimplified_2/' + unit['referenceId'] + '.obj',
           // called when the resource is loaded
           function (gltf) {
             // console.log(gltf.scene.children[0].children[0]);
@@ -1666,6 +1673,10 @@ moduleExporter(
         }
         this.meshDict[id[i]].color = new THREE.Color(color);
       }
+    }
+
+    FFBOMesh3D.prototype.setSceneBackgroundColor = function (color) {
+      this.scenes.back.background.set(color);
     }
 
     FFBOMesh3D.prototype.setBackgroundColor = function (color) {
