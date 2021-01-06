@@ -164,7 +164,19 @@ require([
   client.startConnection("guest", "guestpass", "ws://localhost:8081/ws");
 
   function dataCallback(data){
-    ffbomesh.addJson({ffbo_json: data, type: 'morphology_json'});
+      morph_data = {};
+      for(var key in data){
+          var unit = data[key];
+          if('MorphologyData' in unit){
+              var morphology = unit['MorphologyData'];
+              for(var key1 in morphology){
+                  unit[key1] = morphology[key1];
+              }
+              delet unit['MorphologyData'];
+          }
+          morph_data[unit['rid']] = unit;
+      }
+    ffbomesh.addJson({ffbo_json: morph_data, type: 'morphology_json'});
   }
 
   window.client = client;
