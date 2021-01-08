@@ -164,18 +164,28 @@ require([
   client.startConnection("guest", "guestpass", "ws://localhost:8081/ws");
 
   function dataCallback(data){
-      morph_data = {};
-      for(var key in data){
-          var unit = data[key];
-          if('MorphologyData' in unit){
-              var morphology = unit['MorphologyData'];
-              for(var key1 in morphology){
-                  unit[key1] = morphology[key1];
-              }
-              delet unit['MorphologyData'];
-          }
-          morph_data[unit['rid']] = unit;
-      }
+      var morph_data = {};
+        var nodes = data['nodes'];
+        var edges = data['edges'];
+        var rid;
+        for(var key in nodes){
+            var unit = nodes[key];
+            if(unit['class'] != 'MorphologyData'){
+                for(var i = 0; i < edges.length; i++){
+                    if(edges[i][0] == key && edges[i][2]['class'] == 'HasData'){
+                        rid = edges[i][1];
+                        var morphology = nodes[edges[i][1]];
+                        if(morphology['class'] == 'MorphologyData'){
+                            for(var key1 in morphology){
+                                unit[key1] = morphology[key1];
+                            }
+                            morph_data[rid] = unit;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
     ffbomesh.addJson({ffbo_json: morph_data, type: 'morphology_json'});
   }
 
