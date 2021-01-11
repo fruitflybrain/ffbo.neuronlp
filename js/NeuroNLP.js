@@ -509,33 +509,32 @@ require([
     $('#ui-blocker').show();
     client.getConnectivity({success: function(res){
       iziToast.hide({transitionOut:'fadeOut'},document.querySelector('.fetching_conn_notification'));
-      csv = 'If Inferred=1, the connectivity between neurons was inferred using axonic/dendritic polarity predicted by SPIN:Skeleton-based Polarity Identification for Neurons. Please refer to \nSPIN: A Method of Skeleton-based Polarity Identification for Neurons. Neurinformatics 12:487-507. Yi-Hsuan Lee, Yen-Nan Lin, Chao-Chun Chuang and Chung-Chuan Lo (2014)\nfor more details\n'
-      csv += 'PreSynaptic Neuron,PostSynaptic Neuron,N,Inferred'
-      nodes = res['nodes']
-      edges = res['edges']
+      nodes = res['nodes'];
+      edges = res['edges'];
 
-      for(e_pre in edges){
-        if(nodes[e_pre]['class'] == 'Neuron'){
-          if('uname' in nodes[e_pre])
-            pre = nodes[e_pre]['uname']
-          else
-            pre = nodes[e_pre]['name']
-          synapse_nodes = edges[e_pre]
-          for(synapse in synapse_nodes){
-            if(nodes[synapse]['class'] == 'Synapse')
-              inferred=0
-            else
-              inferred=1
-            N = nodes[synapse]['N']
-            post_node = nodes[Object.keys(edges[synapse])[0]]
-            if('uname' in post_node)
-              post = post_node['uname']
-            else
-              post = post_node['name']
-            csv += ('\n' + pre + ',' + post + ',' + N + ',' + inferred)
-          }
+      let outgoing_edges = edges.filter(edge => nodes[edge[0]].class=='Neuron');
+      let incoming_edges = edges.filter(edge => !outgoing_edges.includes(edge));
+      let connectivity = [];
+      for (let edge of incoming_edges){
+        let edge_id = edge[0];
+        let inferred = (nodes[edge[0]].class == 'InferredSynapse') ? 1:0;
+        let pre_outgoing_edge = outgoing_edges.filter(edge => edge[1] == edge_id);
+        if (pre_outgoing_edge.length != 1) {
+          console.error(`Cannot find outgoing edge from presynaptic neuron for edge ${edge}`);
+          continue
         }
+        let pre_node = pre_outgoing_edge[0][0];
+        let post_node = edge[1];
+        let N = nodes[edge_id].N;
+        let pre_name = 'uname' in nodes[pre_node] ? nodes[pre_node].uname : nodes[pre_node].name;
+        let post_name = 'uname' in nodes[post_node] ? nodes[post_node].uname : nodes[post_node].name;
+        connectivity.push([pre_name, post_name, N, inferred])
+
       }
+
+      csv = `PreSynaptic Neuron,PostSynaptic Neuron,N,Inferred
+${connectivity.map(conn=>`${conn[0]},${conn[1]},${conn[2]},${conn[3]}\n`).join('')}`;
+
       var data = new Blob([csv], {type: 'text/csv'});
       // If we are replacing a previously generated file we need to
       // manually revoke the object URL to avoid memory leaks.
