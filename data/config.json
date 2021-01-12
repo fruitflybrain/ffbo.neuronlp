@@ -1,6 +1,6 @@
 {
     "AL": {
-      "filename": "mesh/AL_um.json",
+      "filename": "https://cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@l1em/mesh/AL_um.json",
       "label": "AL",
       "highlight": false,
       "background": true,
@@ -11,7 +11,7 @@
       ]
     },
     "MB": {
-        "filename": "mesh/MB_um.json",
+        "filename": "https://cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@l1em/mesh/MB_um.json",
         "label": "MB",
         "highlight": false,
         "background": true,
@@ -22,7 +22,7 @@
         ]
     },
     "CNS": {
-        "filename": "mesh/CNS_um.json",
+        "filename": "https://cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@l1em/mesh/CNS_um.json",
         "label": "CNS",
         "highlight": false,
         "background": true,
