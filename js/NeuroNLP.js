@@ -13,9 +13,21 @@ requirejs.config({
   baseUrl: '/js',
   paths: {
     // app: 'app',
-    mesh3d: 'mesh3d',
-    propertymanager: '../lib/js/propertymanager',
-    infopanel: "info_panel/infopanel",
+    mesh3d: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@l1em/js/mesh3d',
+    propertymanager: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@l1em/js/propertymanager',
+    client: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@l1em/js/client',
+    overlay: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@l1em/js/overlay',
+    visualizationsettings: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@l1em/js/visualizationsettings',
+    ffbodemoplayer: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@l1em/js/ffbodemoplayer',
+    dynamicmenu: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@l1em/js/dynamicmenu',
+    tags: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@l1em/js/tags',
+    propertymanager: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@l1em/js/propertymanager',
+    ui: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@l1em/js/ui',
+    infopanel: 'info_panel/infopanel', //'//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@flycircuit/js/info_panel/infopanel',                                
+    connsvg: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@l1em/js/info_panel/connsvg',
+    conntable: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@l1em/js/info_panel/conntable',
+    preprocess: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@l1em/js/info_panel/preprocess',
+    summarytable: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@l1em/js/info_panel/summarytable',
     autobahn: '//cdn.jsdelivr.net/gh/crossbario/autobahn-js-browser@master/autobahn/autobahn.min',
     d3: '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min',
     jquery: '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min',
@@ -39,22 +51,22 @@ requirejs.config({
     bloompass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/BloomPass',
     unrealbloompass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/UnrealBloomPass',
     adaptivetonemappingpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/AdaptiveToneMappingPass',
-    trackballcontrols: '..lib/js/TrackballControls',
-    lightshelper: '../lib/js/lightshelper',
+    trackballcontrols: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@l1em/js/TrackballControls',
+    lightshelper: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@l1em/js/lightshelper',
     modernizr: "//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min",
     d3: "//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3",
     jqueryui: "//code.jquery.com/ui/1.12.1/jquery-ui",
     perfectscrollbar: "//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.7.0/js/perfect-scrollbar.jquery.min",
     "jquery.mobile": "//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min",
     spectrum: "//cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min",
-    "jquery.mmenu": "../lib/js/jquery.mmenu.all",
+    "jquery.mmenu": "//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@l1em/js/jquery.mmenu.all",
     bootsrapslider: "//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min",
     swiper: "//cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.2/js/swiper.min",
     bootstrap: "//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min",
     blockui: "//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min",
     tageditor: "//cdnjs.cloudflare.com/ajax/libs/tag-editor/1.0.20/jquery.tag-editor.min",
-    izitoast: "../lib/js/iziToast.min",
-    stats: "../lib/js/stats.min"
+    izitoast: "//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@l1em/js/iziToast.min",
+    stats: "//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@l1em/js/stats.min"
     /* Notify, bootbox, colormaps, demos, mouse, vis_set, ResizeSensor, read_vars, colorm[aps */
   },
   shim: {
@@ -161,32 +173,44 @@ require([
   }
 
 //DO NOT MODIFY THE FOLLOWING LINE, IT WILL BE AUTO CONFIGED USING CONFIG.INI.
-  client.startConnection("guest", "guestpass", "ws://localhost:8081/ws");
+  client.startConnection("guest", "FENIjf983nFi9*12", "wss://larva.neuronlp.fruitflybrain.org/ws");
 
   function dataCallback(data){
       var morph_data = {};
-        var nodes = data['nodes'];
-        var edges = data['edges'];
-        var rid;
-        for(var key in nodes){
-            var unit = nodes[key];
-            if(unit['class'] != 'MorphologyData'){
-                for(var i = 0; i < edges.length; i++){
-                    if(edges[i][0] == key && edges[i][2]['class'] == 'HasData'){
-                        rid = edges[i][1];
-                        var morphology = nodes[edges[i][1]];
-                        if(morphology['class'] == 'MorphologyData'){
-                            for(var key1 in morphology){
-                                unit[key1] = morphology[key1];
-                            }
-                            morph_data[rid] = unit;
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-    ffbomesh.addJson({ffbo_json: morph_data, type: 'morphology_json'});
+
+      for(var key in data){
+          var unit = data[key];
+          if('MorphologyData' in unit){
+              var morphology = unit['MorphologyData'];
+              for(var key1 in morphology){
+                  unit[key1] = morphology[key1];
+              }
+              delete unit['MorphologyData'];
+          }
+          morph_data[unit['rid']] = unit;
+      }
+      // var nodes = data['nodes'];
+      // var edges = data['edges'];
+      // var rid;
+      // for(var key in nodes){
+      //     var unit = nodes[key];
+      //     if(unit['class'] != 'MorphologyData'){
+      //         for(var i = 0; i < edges.length; i++){
+      //             if(edges[i][0] == key && edges[i][2]['class'] == 'HasData'){
+      //                 rid = edges[i][1];
+      //                 var morphology = nodes[edges[i][1]];
+      //                 if(morphology['class'] == 'MorphologyData'){
+      //                     for(var key1 in morphology){
+      //                         unit[key1] = morphology[key1];
+      //                     }
+      //                     morph_data[rid] = unit;
+      //                     break;
+      //                 }
+      //             }
+      //         }
+      //     }
+      // }
+      ffbomesh.addJson({ffbo_json: morph_data, type: 'morphology_json'});
   }
 
   window.client = client;
@@ -199,6 +223,7 @@ require([
     client.status.on("change", function(){
       ffbomesh.import_state(metadata);
       $('#ui-blocker').hide();
+      ffbomesh.resetVisibleView();	
     }, queryID);
   }
 
@@ -258,22 +283,22 @@ require([
     client.status.on("change", function(e){ if(e.value == -1) $('#ui-blocker').hide(); }, queryID);
   }
 
-  var ex_tag = {'name': 'nikul_7', 'desc': 'This tag shows the alpha lobe of the mushroom body.', 'keywords': ['mushroom body', 'alpha lobe'], 'FFBOdata': {extra: 'This tag has been created by the FFBO team.'}};
-  tagsPanel.populateTags([ex_tag]);
-    /*
+  /** Retrieve Tags from data and populate tags panel*/
+  $.getJSON("/data/larva_tag_displays.json", tags => {
+    tagsPanel.populateTags(tags);
+  });
+
+  /*
    * Add tag retrieval functionality.
    */
   tagsPanel.activateTagLinks = (function(tagName){
-    $('.tag-el').click( () => {
-      this.retrieveTag($(this).attr('tag_name'));
+    $('.tag-el').click( (e) => {
+      let tag_name = $(e.currentTarget).attr('tag_name');
+      this.retrieveTag(tag_name);
       this.overlay.closeAll();
     });
   }).bind(tagsPanel)
   tagsPanel.activateTagLinks();
-    /*
-   * Hide the tag search menu for now.
-   */
-  $('#tagSearchMenuWrapper').hide();
 
   var oldHeight = ffbomesh.container.clientHeight;
   var oldWidth = ffbomesh.container.clientWidth;
@@ -574,33 +599,31 @@ require([
     $('#ui-blocker').show();
     client.getConnectivity({success: function(res){
       iziToast.hide({transitionOut:'fadeOut'},document.querySelector('.fetching_conn_notification'));
-      csv = 'If Inferred=1, the connectivity between neurons was inferred using axonic/dendritic polarity predicted by SPIN:Skeleton-based Polarity Identification for Neurons. Please refer to \nSPIN: A Method of Skeleton-based Polarity Identification for Neurons. Neurinformatics 12:487-507. Yi-Hsuan Lee, Yen-Nan Lin, Chao-Chun Chuang and Chung-Chuan Lo (2014)\nfor more details\n'
-      csv += 'PreSynaptic Neuron,PostSynaptic Neuron,N,Inferred'
       nodes = res['nodes']
       edges = res['edges']
-
-      for(e_pre in edges){
-        if(nodes[e_pre]['class'] == 'Neuron'){
-          if('uname' in nodes[e_pre])
-            pre = nodes[e_pre]['uname']
-          else
-            pre = nodes[e_pre]['name']
-          synapse_nodes = edges[e_pre]
-          for(synapse in synapse_nodes){
-            if(nodes[synapse]['class'] == 'Synapse')
-              inferred=0
-            else
-              inferred=1
-            N = nodes[synapse]['N']
-            post_node = nodes[Object.keys(edges[synapse])[0]]
-            if('uname' in post_node)
-              post = post_node['uname']
-            else
-              post = post_node['name']
-            csv += ('\n' + pre + ',' + post + ',' + N + ',' + inferred)
-          }
+      let outgoing_edges = edges.filter(edge => nodes[edge[0]].class=='Neuron');
+      let incoming_edges = edges.filter(edge => !outgoing_edges.includes(edge));
+      let connectivity = [];
+      for (let edge of incoming_edges){
+        let edge_id = edge[0];
+        let inferred = (nodes[edge[0]].class == 'InferredSynapse') ? 1:0;
+        let pre_outgoing_edge = outgoing_edges.filter(edge => edge[1] == edge_id);
+        if (pre_outgoing_edge.length != 1) {
+          console.error(`Cannot find outgoing edge from presynaptic neuron for edge ${edge}`);
+          continue
         }
+        let pre_node = pre_outgoing_edge[0][0];
+        let post_node = edge[1];
+        let N = nodes[edge_id].N;
+        let pre_name = 'uname' in nodes[pre_node] ? nodes[pre_node].uname : nodes[pre_node].name;
+        let post_name = 'uname' in nodes[post_node] ? nodes[post_node].uname : nodes[post_node].name;
+        connectivity.push([pre_name, post_name, N, inferred])
+
       }
+
+      var csv = `PreSynaptic Neuron,PostSynaptic Neuron,N,Inferred
+${connectivity.map(conn=>`${conn[0]},${conn[1]},${conn[2]},${conn[3]}\n`).join('')}`;
+
       var data = new Blob([csv], {type: 'text/csv'});
       // If we are replacing a previously generated file we need to
       // manually revoke the object URL to avoid memory leaks.
