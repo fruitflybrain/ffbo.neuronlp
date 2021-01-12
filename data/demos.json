@@ -1,3 +1,108 @@
 {
-
+  "basic_query1": {
+    "keyword": "Name-based Queries",
+    "script": [
+      ["notify", {"message": "Hi there!"}],
+      ["notify", {"message": "A quick way to find neurons whose name contains a string is to use the $$ syntax.", "pause": 5000}],
+      ["notify", {"message": "The following query searches for all neurons whose name contains the string 'MBON'.", "pause": 5000}],
+      ["search", {"query": "show $MBON$"}],
+      ["notify", {"message": "Regular expression can be used with the syntax /rRE/r, where RE should be replaced by the regex string. The following query is the equivalent to the previous one:", "pause": 5000}],
+      ["search", {"query": "show /r(.*)MBON(.*)/r"}],
+      ["notify", {"message": "Since MBON is a commonly known neuron type, one can also search for MBONs with the following query", "pause": 5000}],
+      ["search", {"query": "show MBON"}],
+      ["notify", {"message": "Try it yourself!", "pause": 0}]
+    ],
+    "description": "Query with string match, Regular Expression, and commonly known names of neuron types",
+    "category": "Basic Queries"
+  },
+  "basic_query2": {
+    "keyword": "Larva L1EM Skeleton ID-based Queries",
+    "script": [
+      ["notify", {"message": "Hi there!"}],
+      ["notify", {"message": "Let's load multiple neurons using their Larva L1EM Skeleton IDs.", "pause": 1000}],
+      ["search", {"query": "show /:referenceId:[6699205, 15398730, 3299214]"}],
+      ["notify", {"message": "Try it yourself!", "pause": 0}]
+    ],
+    "description": "Load a list of neurons using their Larva L1EM Skeleton IDs using: show /:referenceId:[bodyId1, bodyId2, ...]",
+    "category": "Basic Queries"
+  },
+  "basic_query3": {
+    "keyword": "Arborization-based Queries",
+    "script": [
+      ["notify", {"message": "Hi there!"}],
+      ["notify", {"message": "Let's show all neurons that have arborizations in right Antennal Lobe.", "pause": 5000}],
+      ["search", {"query": "show neurons in right AL"}],
+      ["notify", {"message": "Try it yourself!", "pause": 0}]
+    ],
+    "description": "Querying neurons based on arborization patterns.",
+    "category": "Basic Queries"
+  },
+  "basic_query4": {
+    "keyword": "Synaptic Partners-based Queries",
+    "script": [
+      ["notify", {"message": "Hi there!"}],
+      ["notify", {"message": "Let's display an OSN and its synaptic partners."}],
+      ["search", {"query": "show $OSN-22c$"}],
+      ["notify", {"message": "To add Projection Neurons postsyaptic to the neurons in the current workspace, and has at least 10 synapses from any one of these neurons, we use the following query.", "pause": 1000}],
+      ["search", {"query": "add postsynaptic PN with at least 10 synapses"}],
+      ["notify", {"message": "Try it yourself!", "pause": 0}]
+    ],
+    "description": "Querying neurons based on synaptic partners",
+    "category": "Basic Queries"
+  },
+  "l1em_1": {
+    "keyword": "OSN",
+    "script": [
+      ["notify", {"message": "Hi there!"}],
+      ["notify", {"message": "Let's query for olfactory sensory neurons!"}],
+      ["search", {"query": "show OSN"}],
+      ["notify", {"message": "Try it yourself!", "pause": 0}]
+    ],
+    "description": "Show olfactory sensory neurons.",
+    "category": "Early Olfactory System"
+  },
+  "l1em_2": {
+    "keyword": "AL uni-Glomerular PN",
+    "script": [
+      ["notify", {"message": "Hi there!"}],
+      ["notify", {"message": "Let's query for antennal lobe uniglomerular projection neurons!"}],
+      ["search", {"query": "show uPN"}],
+      ["notify", {"message": "Try it yourself!", "pause": 0}]
+    ],
+    "description": "Show antennal lobe projection neurons.",
+    "category": "Early Olfactory System"
+  },
+  "l1em_3": {
+    "keyword": "AL LN",
+    "script": [
+      ["notify", {"message": "Hi there!"}],
+      ["notify", {"message": "Let's query for local neurons in antennal lobe!"}],
+      ["search", {"query": "Show LN in AL"}],
+      ["notify", {"message": "Try it yourself!", "pause": 0}]
+    ],
+    "description": "Show local neurons in antennal lobe.",
+    "category": "Early Olfactory System"
+  },
+  "l1em_4": {
+    "keyword": "AL mPN",
+    "script": [
+      ["notify", {"message": "Hi there!"}],
+      ["notify", {"message": "Let's query for multiglomerular projection neurons!"}],
+      ["search", {"query": "show mPN"}],
+      ["notify", {"message": "Try it yourself!", "pause": 0}]
+    ],
+    "description": "Show multiglomerular projection neurons.",
+    "category": "Early Olfactory System"
+  },
+  "l1em_5": {
+    "keyword": "LON VPN",
+    "script": [
+      ["notify", {"message": "Hi there!"}],
+      ["notify", {"message": "Let's query for Visual Projection Neurons!"}],
+      ["search", {"query": "add VPNs"}],
+      ["notify", {"message": "Try it yourself!", "pause": 0}]
+    ],
+    "description": "Show Visual Projection Neurons in Larval Optic Neuropil (LON).",
+    "category": "Early Visual System"
+  }
 }
