@@ -407,7 +407,7 @@ require([
   ffbomesh.on('pinned', function(e) { dynamicNeuronMenu.updatePinnedNeuron(e.path[0], e.obj.label, e.value)});
 
 
-  function updateThreshold(e) {client.threshold = e.value ? 1 : 20;}
+  function updateThreshold(e) {client.threshold = e.value ? "auto" : "auto";}
   updateThreshold({value: ffbomesh.settings.neuron3d})
   ffbomesh.settings.on('change', updateThreshold, 'neuron3d')
 
