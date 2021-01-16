@@ -134,7 +134,7 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function (autobahn
       });
 
     // Threshold for chunking data
-    this.threshold = 20;
+    this.threshold = "auto";
     // Language for NLP queries
     this.language = "en";
 
