@@ -406,7 +406,7 @@ require([
   ffbomesh.on('pinned', function(e) { dynamicNeuronMenu.updatePinnedNeuron(e.path[0], e.obj.label, e.value)});
 
 
-  function updateThreshold(e) {client.threshold = e.value ? 1 : 20;}
+  function updateThreshold(e) {client.threshold = e.value ? "auto" : "auto";}
   updateThreshold({value: ffbomesh.settings.neuron3d})
   ffbomesh.settings.on('change', updateThreshold, 'neuron3d')
 
@@ -551,71 +551,24 @@ require([
     });
   });
   var textFile = null;
-  ffbomesh.on("downData", function() {
-    if( !ffbomesh.uiVars.frontNum ){
-      client.notifyError( "No neurons present in scene" );
+  ffbomesh.on("downData", function () {
+    if (!ffbomesh.uiVars.frontNum) {
+      client.notifyError("No neurons present in scene");
       return;
     }
-    if( ffbomesh.uiVars.frontNum > 500 ){
-      client.notifyError( "NeuroNLP currently limits this feature for use with upto 500 neurons" );
+    if (ffbomesh.uiVars.frontNum > 500) {
+      client.notifyError("NeuroNLP currently limits this feature for use with upto 500 neurons");
       return;
     }
     iziToast.info({
       class: 'fetching_conn_notification',
       message: "Fetching Connectivity Data",
-      timeout: false,
+      timeout: 2000,
       color: 'green',
       close: false
     })
     $('#ui-blocker').show();
-    client.getConnectivity({success: function(res){
-      iziToast.hide({transitionOut:'fadeOut'},document.querySelector('.fetching_conn_notification'));
-      csv = 'If Inferred=1, the connectivity between neurons was inferred using axonic/dendritic polarity predicted by SPIN:Skeleton-based Polarity Identification for Neurons. Please refer to \nSPIN: A Method of Skeleton-based Polarity Identification for Neurons. Neurinformatics 12:487-507. Yi-Hsuan Lee, Yen-Nan Lin, Chao-Chun Chuang and Chung-Chuan Lo (2014)\nfor more details\n'
-      csv += 'PreSynaptic Neuron,PostSynaptic Neuron,N,Inferred'
-      nodes = res['nodes']
-      edges = res['edges']
-
-      for(e_pre in edges){
-        if(nodes[e_pre]['class'] == 'Neuron'){
-          if('uname' in nodes[e_pre])
-            pre = nodes[e_pre]['uname']
-          else
-            pre = nodes[e_pre]['name']
-          synapse_nodes = edges[e_pre]
-          for(synapse in synapse_nodes){
-            if(nodes[synapse]['class'] == 'Synapse')
-              inferred=0
-            else
-              inferred=1
-            N = nodes[synapse]['N']
-            post_node = nodes[Object.keys(edges[synapse])[0]]
-            if('uname' in post_node)
-              post = post_node['uname']
-            else
-              post = post_node['name']
-            csv += ('\n' + pre + ',' + post + ',' + N + ',' + inferred)
-          }
-        }
-      }
-      var data = new Blob([csv], {type: 'text/csv'});
-      // If we are replacing a previously generated file we need to
-      // manually revoke the object URL to avoid memory leaks.
-      if (textFile !== null) {
-        window.URL.revokeObjectURL(textFile);
-      }
-      textFile = window.URL.createObjectURL(data);
-      var link = document.createElement('a');
-      link.setAttribute('download', 'ffbo_connectivity.csv');
-      link.href = textFile;
-      document.body.appendChild(link);
-      // wait for the link to be added to the document
-      window.requestAnimationFrame(function () {
-        var event = new MouseEvent('click');
-        link.dispatchEvent(event);
-        document.body.removeChild(link);
-      });
-      $('#ui-blocker').hide();
-    }});
+    client.getConnectivity(function () {$('#ui-blocker').hide();});
   });
 });
 
