@@ -411,7 +411,7 @@ require([
   ffbomesh.on('pinned', function(e) { dynamicNeuronMenu.updatePinnedNeuron(e.path[0], e.obj.label, e.value)});
 
 
-  function updateThreshold(e) {client.threshold = e.value ? 1 : 20;}
+  function updateThreshold(e) {client.threshold = e.value ? "auto" : "auto";}
   updateThreshold({value: ffbomesh.settings.neuron3d})
   ffbomesh.settings.on('change', updateThreshold, 'neuron3d')
 
@@ -556,69 +556,24 @@ require([
     });
   });
   var textFile = null;
-  ffbomesh.on("downData", function() {
-    if( !ffbomesh.uiVars.frontNum ){
-      client.notifyError( "No neurons present in scene" );
+  ffbomesh.on("downData", function () {
+    if (!ffbomesh.uiVars.frontNum) {
+      client.notifyError("No neurons present in scene");
       return;
     }
-    if( ffbomesh.uiVars.frontNum > 500 ){
-      client.notifyError( "NeuroNLP currently limits this feature for use with upto 500 neurons" );
+    if (ffbomesh.uiVars.frontNum > 500) {
+      client.notifyError("NeuroNLP currently limits this feature for use with upto 500 neurons");
       return;
     }
     iziToast.info({
       class: 'fetching_conn_notification',
       message: "Fetching Connectivity Data",
-      timeout: false,
+      timeout: 2000,
       color: 'green',
       close: false
     })
     $('#ui-blocker').show();
-    client.getConnectivity({success: function(res){
-      iziToast.hide({transitionOut:'fadeOut'},document.querySelector('.fetching_conn_notification'));
-      nodes = res['nodes']
-      edges = res['edges']
-      let outgoing_edges = edges.filter(edge => nodes[edge[0]].class=='Neuron');
-      let incoming_edges = edges.filter(edge => !outgoing_edges.includes(edge));
-      let connectivity = [];
-      for (let edge of incoming_edges){
-        let edge_id = edge[0];
-        let inferred = (nodes[edge[0]].class == 'InferredSynapse') ? 1:0;
-        let pre_outgoing_edge = outgoing_edges.filter(edge => edge[1] == edge_id);
-        if (pre_outgoing_edge.length != 1) {
-          console.error(`Cannot find outgoing edge from presynaptic neuron for edge ${edge}`);
-          continue
-        }
-        let pre_node = pre_outgoing_edge[0][0];
-        let post_node = edge[1];
-        let N = nodes[edge_id].N;
-        let pre_name = 'uname' in nodes[pre_node] ? nodes[pre_node].uname : nodes[pre_node].name;
-        let post_name = 'uname' in nodes[post_node] ? nodes[post_node].uname : nodes[post_node].name;
-        connectivity.push([pre_name, post_name, N, inferred])
-
-      }
-
-      var csv = `PreSynaptic Neuron,PostSynaptic Neuron,N,Inferred
-${connectivity.map(conn=>`${conn[0]},${conn[1]},${conn[2]},${conn[3]}\n`).join('')}`;
-
-      var data = new Blob([csv], {type: 'text/csv'});
-      // If we are replacing a previously generated file we need to
-      // manually revoke the object URL to avoid memory leaks.
-      if (textFile !== null) {
-        window.URL.revokeObjectURL(textFile);
-      }
-      textFile = window.URL.createObjectURL(data);
-      var link = document.createElement('a');
-      link.setAttribute('download', 'ffbo_connectivity.csv');
-      link.href = textFile;
-      document.body.appendChild(link);
-      // wait for the link to be added to the document
-      window.requestAnimationFrame(function () {
-        var event = new MouseEvent('click');
-        link.dispatchEvent(event);
-        document.body.removeChild(link);
-      });
-      $('#ui-blocker').hide();
-    }});
+    client.getConnectivity(function () {$('#ui-blocker').hide();});
   });
 });
 

@@ -138,7 +138,7 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
        });
 
     // Threshold for chunking data
-    this.threshold = 20;
+    this.threshold = "auto";
     // Language for NLP queries
     this.language = "en";
 
@@ -271,6 +271,7 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
           object: { state: 0 }
         }
       ],
+      threshold: "auto",
       temp: true
     }, callbacks, format);
     // Setting 'temp': true won't append results to the state memory, keeping front end interactions independent of this query
@@ -556,7 +557,7 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function(autobahn,
       setTimeout(() => {this.loginStatus.connected = true;}, 500);
       console.log("connected to FFBO");
       this.notifySuccess('Connected to FFBO processor');
-      this.notifySuccess('Please hard refresh this page to get the latest updates.');
+      this.notifySuccess('If you have not done so, please hard refresh this page to get the latest updates.');
       notified_no_connect = false;
       this.loginStatus.sessionID = session.id;
       this.loginStatus.username = details.authid;
