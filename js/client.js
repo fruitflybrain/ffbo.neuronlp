@@ -275,6 +275,7 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function (autobahn
           object: { state: 0 }
         }
       ],
+      threshold: "auto",
       temp: true
     }, { success: graphDataCallback });
     _this.status.on("change", function (e) {
