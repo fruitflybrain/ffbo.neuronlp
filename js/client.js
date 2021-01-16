@@ -301,7 +301,7 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function (autobahn
       }
 
       csv = `PreSynaptic Neuron,PostSynaptic Neuron,N,Inferred
-        ${connectivity.map(conn => `${conn[0]},${conn[1]},${conn[2]},${conn[3]}\n`).join('')}`;
+${connectivity.map(conn => `${conn[0]},${conn[1]},${conn[2]},${conn[3]}\n`).join('')}`;
       var data = new Blob([csv], { type: 'text/csv' });
       // If we are replacing a previously generated file we need to
       // manually revoke the object URL to avoid memory leaks.
