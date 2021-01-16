@@ -621,6 +621,7 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function (autobahn
       setTimeout(() => { this.loginStatus.connected = true; }, 500);
       console.log("connected to FFBO");
       this.notifySuccess('Connected to FFBO processor')
+      this.notifySuccess('If you have not done so, please hard refresh this page to get the latest updates.');
       notified_no_connect = false;
       this.loginStatus.sessionID = session.id;
       this.loginStatus.username = details.authid;
