@@ -13,21 +13,9 @@ requirejs.config({
   baseUrl: '/js',
   paths: {
     // app: 'app',
-    mesh3d: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@l1em/js/mesh3d',
-    propertymanager: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@l1em/js/propertymanager',
-    client: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@l1em/js/client',
-    overlay: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@l1em/js/overlay',
-    visualizationsettings: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@l1em/js/visualizationsettings',
-    ffbodemoplayer: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@l1em/js/ffbodemoplayer',
-    dynamicmenu: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@l1em/js/dynamicmenu',
-    tags: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@l1em/js/tags',
-    propertymanager: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@l1em/js/propertymanager',
-    ui: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@l1em/js/ui',
-    infopanel: 'info_panel/infopanel', //'//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@flycircuit/js/info_panel/infopanel',                                
-    connsvg: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@l1em/js/info_panel/connsvg',
-    conntable: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@l1em/js/info_panel/conntable',
-    preprocess: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@l1em/js/info_panel/preprocess',
-    summarytable: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@l1em/js/info_panel/summarytable',
+    mesh3d: 'mesh3d',
+    propertymanager: '../lib/js/propertymanager',
+    infopanel: "info_panel/infopanel",
     autobahn: '//cdn.jsdelivr.net/gh/crossbario/autobahn-js-browser@master/autobahn/autobahn.min',
     d3: '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min',
     jquery: '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min',
@@ -51,22 +39,22 @@ requirejs.config({
     bloompass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/BloomPass',
     unrealbloompass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/UnrealBloomPass',
     adaptivetonemappingpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/AdaptiveToneMappingPass',
-    trackballcontrols: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@l1em/js/TrackballControls',
-    lightshelper: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@l1em/js/lightshelper',
+    trackballcontrols: '..lib/js/TrackballControls',
+    lightshelper: '../lib/js/lightshelper',
     modernizr: "//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min",
     d3: "//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3",
     jqueryui: "//code.jquery.com/ui/1.12.1/jquery-ui",
     perfectscrollbar: "//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.7.0/js/perfect-scrollbar.jquery.min",
     "jquery.mobile": "//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min",
     spectrum: "//cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min",
-    "jquery.mmenu": "//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@l1em/js/jquery.mmenu.all",
+    "jquery.mmenu": "../lib/js/jquery.mmenu.all",
     bootsrapslider: "//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min",
     swiper: "//cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.2/js/swiper.min",
     bootstrap: "//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min",
     blockui: "//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min",
     tageditor: "//cdnjs.cloudflare.com/ajax/libs/tag-editor/1.0.20/jquery.tag-editor.min",
-    izitoast: "//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@l1em/js/iziToast.min",
-    stats: "//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@l1em/js/stats.min"
+    izitoast: "../lib/js/iziToast.min",
+    stats: "../lib/js/stats.min"
     /* Notify, bootbox, colormaps, demos, mouse, vis_set, ResizeSensor, read_vars, colorm[aps */
   },
   shim: {
@@ -173,44 +161,32 @@ require([
   }
 
 //DO NOT MODIFY THE FOLLOWING LINE, IT WILL BE AUTO CONFIGED USING CONFIG.INI.
-  client.startConnection("guest", "FENIjf983nFi9*12", "wss://larva.neuronlp.fruitflybrain.org/ws");
+  client.startConnection("guest", "guestpass", "ws://localhost:8081/ws");
 
   function dataCallback(data){
       var morph_data = {};
-
-      for(var key in data){
-          var unit = data[key];
-          if('MorphologyData' in unit){
-              var morphology = unit['MorphologyData'];
-              for(var key1 in morphology){
-                  unit[key1] = morphology[key1];
-              }
-              delete unit['MorphologyData'];
-          }
-          morph_data[unit['rid']] = unit;
-      }
-      // var nodes = data['nodes'];
-      // var edges = data['edges'];
-      // var rid;
-      // for(var key in nodes){
-      //     var unit = nodes[key];
-      //     if(unit['class'] != 'MorphologyData'){
-      //         for(var i = 0; i < edges.length; i++){
-      //             if(edges[i][0] == key && edges[i][2]['class'] == 'HasData'){
-      //                 rid = edges[i][1];
-      //                 var morphology = nodes[edges[i][1]];
-      //                 if(morphology['class'] == 'MorphologyData'){
-      //                     for(var key1 in morphology){
-      //                         unit[key1] = morphology[key1];
-      //                     }
-      //                     morph_data[rid] = unit;
-      //                     break;
-      //                 }
-      //             }
-      //         }
-      //     }
-      // }
-      ffbomesh.addJson({ffbo_json: morph_data, type: 'morphology_json'});
+        var nodes = data['nodes'];
+        var edges = data['edges'];
+        var rid;
+        for(var key in nodes){
+            var unit = nodes[key];
+            if(unit['class'] != 'MorphologyData'){
+                for(var i = 0; i < edges.length; i++){
+                    if(edges[i][0] == key && edges[i][2]['class'] == 'HasData'){
+                        rid = edges[i][1];
+                        var morphology = nodes[edges[i][1]];
+                        if(morphology['class'] == 'MorphologyData'){
+                            for(var key1 in morphology){
+                                unit[key1] = morphology[key1];
+                            }
+                            morph_data[rid] = unit;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    ffbomesh.addJson({ffbo_json: morph_data, type: 'morphology_json'});
   }
 
   window.client = client;
@@ -223,7 +199,7 @@ require([
     client.status.on("change", function(){
       ffbomesh.import_state(metadata);
       $('#ui-blocker').hide();
-      ffbomesh.resetVisibleView();	
+      ffbomesh.resetVisibleView();
     }, queryID);
   }
 
