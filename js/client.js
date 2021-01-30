@@ -542,6 +542,7 @@ ${connectivity.map(conn => `${conn[0]},${conn[1]},${conn[2]},${conn[3]}\n`).join
      * Query to keep a list of Objs based on their Rids. rids must be an array
      */
     return this.executeNAquery({
+      verb: "add",
       command: {
         retrieve: {
           state: 0
