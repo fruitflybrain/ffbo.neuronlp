@@ -1,0 +1,156 @@
+{
+  "centre_view": {
+    "script": [
+      ["notify", {"message": "Let's hide everything first"}],
+      ["click", {"uiBtn": {"type": "hideAll"}}],
+      ["notify", {"message": "And then pull up Mi1 neurons from the medulla connectome"}],
+      ["search", {"query": "show Mi1 neurons in medulla"}],
+      ["notify", {"message": "We can center the view into visible neurons by clicking on the <i class='fa fa-align-justify'></i> icon on the topright"}],
+      ["click", {"uiBtn": {"type": "resetVisibleView"}}],
+      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
+    ],
+    "neuron3d": false,
+    "keyword": "Center/Zoom View",
+    "description": "Center and zoom  to visible neurons",
+    "category": "New Features"
+  },
+  "synapse_vis": {
+    "script": [
+      ["notify", {"message": "Let's hide everything first", "pause": 1000}],
+      ["click", {"uiBtn": {"type": "hideAll"}}],
+      ["notify", {"message": "And then pull up Mi1 neuron from the home column", "pause": 1000}],
+      ["search", {"query": "show $Mi1-home$"}],
+      ["click", {"uiBtn": {"type": "resetVisibleView"}}],
+      ["maxInfoPanel", {} ],
+      ["click", {"label": "Mi1-home"}],
+      ["notify", {"message": "Let's add T4a-fb-home from the info panel"}],
+      ["click", {"selector": "#btn-post-add-T4a-fb-home"}],
+      ["notify", {"message": "Now let's add the synapse locations between these neurons to the scene"}],
+      ["click", {"selector": "#btn-post-syn-add-Mi1-home--T4a-fb-home"}],
+      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
+    ],
+    "neuron3d": true,
+    "keyword": "Synapse Visualization",
+    "description": "Visualize synapses between Mi1 and T4a in the home column",
+    "category": "New Features"
+  },
+  "connectivity_2": {
+    "script": [
+      ["notify", {"message": "Let's explore some connectivity in the motion detection pathway", "pause": 4000}],
+      ["search", {"query": "Show Mi1, Tm3 and T4a neurons"}],
+      ["click", {"uiBtn": {"type": "resetVisibleView"}}],
+      ["notify", {"message": "Now let's download the connectivity between these neurons by using the <i class='fa fa-download'></i> button", "pause": 1000}],
+      ["click", {"uiBtn": {"type": "downData"}, "waitForUI": true}],
+      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
+    ],
+    "neuron3d": "desktop",
+    "keyword": "Connectivity",
+    "description": "Explore connectivity between Mi1, Tm3 and T4a neurons",
+    "category": "New Features"
+  },
+  "show_2": {
+    "keyword": "Show",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query T4 neurons!"}],
+      ["search", {"query": "Show T4 Neurons"}],
+      ["notify", {"message": "Done!", "pause": 0}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Visualize T4 neurons in the Medulla.",
+    "category": "Basic Usage"
+  },
+  "add_2": {
+    "keyword": "Add",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for L1 neurons!"}],
+      ["search", {"query": "Show L1 neurons"}],
+      ["notify", {"message": "Now let's add Mi1 neurons:"}],
+      ["search", {"query": "Add Mi1 neurons"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Visualize L1 neurons and then add Mi1 neurons.",
+    "category": "Basic Usage"
+  },
+  "fig2a": {
+    "script": [
+      ["notify", {"message": "In NeuroNLP, neurons of existing cell types can be directly queried by their name",
+                   "pause": 5000, "timeout": 6000}],
+      ["search", {"query": "add $Mi1-home$ in medulla"}],
+      ["search", {"query": "color orange"}],
+      ["search", {"query": "add $Mi4-A$ in medulla"}],
+      ["search", {"query": "color f000f6"}],
+      ["search", {"query": "add $Mi9-B$ in medulla"}],
+      ["search", {"query": "color white"}],
+      ["search", {"query": "add $Dm8-C$ in medulla"}],
+      ["search", {"query": "color yellow"}],
+      ["search", {"query": "add $Dm2-E$ in medulla"}],
+      ["search", {"query": "color cyan"}],
+      ["notify", {"message": "Done! Explore it yourself!", "pause": 5000}]
+    ],
+    "neuron3d": true,
+    "keyword": "Fig 2a. Selected neuron types in the Medulla",
+    "description": "Neurons of existing cell types can be directly queried by their name.",
+    "category": "FFBO Paper"
+  },
+  "columns": {
+    "script": [
+      ["notify", {"message": "In this demo, we build the columns in the Medulla.", "pause": 5000, "timeout": 6000}],
+      ["search", {"query": "show $L1-home$"}],
+      ["search", {"query": "color blue"}],
+      ["search", {"query": "add $L2-home$"}],
+      ["search", {"query": "color green"}],
+      ["search", {"query": "add $L3-home$"}],
+      ["search", {"query": "color cyan"}],
+      ["search", {"query": "add $L5-home$"}],
+      ["search", {"query": "color magenta"}],
+      ["search", {"query": "add $Mi1-home$"}],
+      ["search", {"query": "color red"}],
+      ["search", {"query": "add $Tm3-home$"}],
+      ["search", {"query": "color white"}],
+      ["search", {"query": "add $T4a-fb-home$"}],
+      ["search", {"query": "color yellow"}],
+      ["nofify", {"message": "Now we color this home column circuit orange and add other columns.", "pause": 5000, "timeout": 6000}],
+      ["search", {"query": "color $-home$ orange"}],
+      ["search", {"query": "add /r(L1|L2|L3|L5|Mi1|Tm3|T4a-fb)-A/r"}],
+      ["search", {"query": "color blue"}],
+      ["search", {"query": "add /r(L1|L2|L3|L5|Mi1|Tm3|T4a-fb)-B/r"}],
+      ["search", {"query": "color cyan"}],
+      ["search", {"query": "add /r(L1|L2|L3|L5|Mi1|Tm3|T4a-fb)-C/r"}],
+      ["search", {"query": "color magenta"}],
+      ["search", {"query": "add /r(L1|L2|L3|L5|Mi1|Tm3|T4a-fb)-D/r"}],
+      ["search", {"query": "color green"}],
+      ["search", {"query": "add /r(L1|L2|L3|L5|Mi1|Tm3|T4a-fb)-E/r"}],
+      ["search", {"query": "color yellow"}],
+      ["search", {"query": "add /r(L1|L2|L3|L5|Mi1|Tm3|T4a-fb)-F/r"}],
+      ["search", {"query": "color red"}]
+    ],
+    "neuron3d": true,
+    "keyword": "Builidng Column Circuits",
+    "description": "Building circuits based on neurons in a column.",
+    "category": "Circuits"
+  },
+  "motion": {
+    "script": [
+      ["notify", {"message": "In this demo, we build circuits related to T4a neurons that sense front-to-back motion.", "pause": 5000, "timeout": 6000}],
+      ["search", {"query": "show T4a"}],
+      ["search", {"query": "color white"}],
+      ["search", {"query": "add Mi1, Tm3, Mi4 and Mi9 neurons presynaptic to T4a"}],
+      ["click", {"uiBtn": {"type": "resetVisibleView"}}],
+      ["search", {"query": "color Mi1 lime green"}],
+      ["search", {"query": "color Tm3 magenta"}],
+      ["search", {"query": "color Mi4 cyan"}],
+      ["search", {"query": "color Mi9 orange"}],
+      ["search", {"query": "add presynaptic L1 neurons"}],
+      ["search", {"query": "color red"}],
+      ["search", {"query": "add presynaptic L5 neurons"}],
+      ["search", {"query": "color blue"}]
+    ],
+    "neuron3d": true,
+    "keyword": "Builidng Motion Detection Circuit for T4a",
+    "description": "Building circuits from T4a backwards.",
+    "category": "Circuits"
+  }
+}

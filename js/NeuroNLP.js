@@ -541,7 +541,7 @@ require([
       });
       window.NeuroNLPUI.closeAllOverlay();
     }).bind(FFBODemoPlayer);
-    $.getJSON("/data/demos.json", function(json) {
+    $.getJSON("/data/demos_medulla.json", function(json) {
       FFBODemoPlayer.addDemos(json);
       FFBODemoPlayer.updateDemoTable('#demo-table-wrapper');
       if(searchParams.get('demo') && !searchParams.get('tag')){
