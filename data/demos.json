@@ -4,20 +4,20 @@
       ["notify", {"message": "The settings menu can be accessed by clicking on <i class='fa fa-cog'></i> icon on the topright"}],
       ["click", {"uiBtn": {"type": "showSettings"}}],
       ["click", {"selector": "label[for=vis-3d-rendering]"}],
-      ["notify", {"message": "Neurons will now be loaded in 3d. Let's query for neurons in EB."}],
-      ["search", {"query": "EB"}],
+      ["notify", {"message": "Neurons will now be loaded in 3d. Let's query for local neurons in EB."}],
+      ["search", {"query": "show local neurons in EB"}],
       ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
     ],
     "neuron3d": false,
     "keyword": "3d Mode",
-    "description": "Turn on 3d mode and show neurons in EB",
+    "description": "Turn on 3d mode and show local neurons in EB",
     "category": "New Features"
   },
   "centre_view": {
     "script": [
       ["notify", {"message": "Let's hide everything first"}],
       ["click", {"uiBtn": {"type": "hideAll"}}],
-      ["notify", {"message": "And then pull up dopaminergic neurons in the medulla"}],
+      ["notify", {"message": "And then pull up dopaminergic neurons that innervate the medulla"}],
       ["search", {"query": "show dopaminergic neurons in right medulla"}],
       ["notify", {"message": "We can center the view into visible neurons by clicking on the <i class='fa fa-align-justify'></i> icon on the topright"}],
       ["click", {"uiBtn": {"type": "resetVisibleView"}}],
@@ -48,8 +48,8 @@
       ["notify", {"message": "We first add some tentative EB ring neurons", "pause": 2000}],
       ["search", {"query": "show neurons connecting lat to eb"}],
       ["notify", {"message": "We then add some tentative EPG, PEG and PEN neurons", "pause": 2000}],
-      ["search", {"query": "add neurons with inputs in the ellipsoid body and axons in both pb and idfp"}],
-      ["search", {"query": "add neurons with dendrites in pb and axons in both eb and idfp"}],
+      ["search", {"query": "add neurons with inputs in the ellipsoid body and outputs in both pb and idfp"}],
+      ["search", {"query": "add neurons with inputs in pb and outputs in both eb and idfp"}],
       ["search", {"query": "add neurons with inputs in pb and outputs in eb and noduli"}],
       ["notify", {"message": "Now let's download the inferred connectivity between these neurons by using the <i class='fa fa-download'></i> button", "pause": 1000}],
       ["click", {"uiBtn": {"type": "downData"}, "waitForUI": true}],
@@ -64,49 +64,60 @@
     "keyword": "Show",
     "script": [
       ["notify", {"message": "Hi there!"}],
-      ["notify", {"message": "Let's query for neurons in the Ellipsoid Body!"}],
-      ["search", {"query": "Show Neurons in the Ellipsoid Body"}],
+      ["notify", {"message": "Let's query for neurons that innervate the Ellipsoid Body!"}],
+      ["search", {"query": "Show neurons in the Ellipsoid Body"}],
       ["notify", {"message": "Try it yourself!", "pause": 0}]
     ],
-    "description": "Show neurons in the Ellipsoid Body.",
+    "description": "Show neurons that innervate the Ellipsoid Body.",
     "category": "Basic Usage"
   },
   "show_2": {
     "keyword": "Show",
     "script": [
-      ["notify", {"message": "Hi!"}],
-      ["notify", {"message": "Let's query for neurons in the PB (Protocerebral Bridge)!"}],
-      ["search", {"query": "Show neurons in the PB"}],
-      ["notify", {"message": "Done!", "pause": 1000}],
-      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+      ["notify", {"message": "Hi there!"}],
+      ["notify", {"message": "Let's query for local neurons in the Ellipsoid Body!"}],
+      ["search", {"query": "Show local neurons in the Ellipsoid Body"}],
+      ["notify", {"message": "Try it yourself!", "pause": 0}]
     ],
-    "description": "Visualize neurons in the protocerebral bridge.",
+    "description": "Show local neurons in the Ellipsoid Body.",
     "category": "Basic Usage"
   },
   "show_3": {
     "keyword": "Show",
     "script": [
       ["notify", {"message": "Hi!"}],
-      ["notify", {"message": "Let's query for neurons in the left lateral horn!"}],
-      ["search", {"query": "Show neurons in left lateral horn"}],
+      ["notify", {"message": "Let's query for local neurons in the PB (Protocerebral Bridge)!"}],
+      ["search", {"query": "Show local neurons in the PB"}],
+      ["notify", {"message": "Done!", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Visualize local neurons in the protocerebral bridge.",
+    "category": "Basic Usage"
+  },
+  "show_4": {
+    "keyword": "Show",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for local neurons in the left lateral horn!"}],
+      ["search", {"query": "Show local neurons in left lateral horn"}],
       ["notify", {"message": "Done!" , "pause": 1000}],
       ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
-    "description": "Visualize neurons in the left lateral horn.",
+    "description": "Visualize local neurons in the left lateral horn.",
     "category": "Basic Usage"
   },
   "add_1": {
     "keyword": "Add",
     "script": [
       ["notify", {"message": "Hi!"}],
-      ["notify", {"message": "Let's query for neurons in the ellipsoid body!"}],
-      ["search", {"query": "Show neurons in eb"}],
+      ["notify", {"message": "Let's query for local neurons in the ellipsoid body!"}],
+      ["search", {"query": "Show local neurons in eb"}],
       ["notify", {"message": "Now let's bring in neurons from protocerebral bridge."}],
-      ["search", {"query": "Add neurons in protocerebral bridge"}],
+      ["search", {"query": "Add local neurons in protocerebral bridge"}],
       ["notify", {"message": "Done", "pause": 1000}],
       ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
-    "description": "Visualize neurons in Ellipsoid Body and then add neurons in the Protocerebral Bridge.",
+    "description": "Visualize local neurons in Ellipsoid Body and then add local neurons in the Protocerebral Bridge.",
     "category": "Basic Usage"
   },
   "undo_1": {
@@ -114,13 +125,13 @@
     "script": [
       ["notify", {"message": "Hi!"}],
       ["notify", {"message": "Let's query for neurons in the ellipsoid body!"}],
-      ["search", {"query": "Show neurons in eb"}],
+      ["search", {"query": "Show local neurons in eb"}],
       ["notify", {"message": "Now let's add neurons in the optic glomeruli."}],
-      ["search", {"query": "Add neurons in og"}],
+      ["search", {"query": "Add local neurons in og"}],
       ["notify", {"message": "Now let's undo what we just did."}],
       ["search", {"query": "Undo"}],
       ["notify", {"message": "Now let's add neurons from the PB."}],
-      ["search", {"query": "Add neurons in PB"}],
+      ["search", {"query": "Add local neurons in PB"}],
       ["notify", {"message": "Done", "pause": 1000}],
       ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
@@ -131,8 +142,8 @@
     "keyword": "Keep",
     "script": [
       ["notify", {"message": "Hi!"}],
-      ["notify", {"message": "Let's query for neurons from the entire caudoventrolateral protocerebrum!"}],
-      ["search", {"query": "Show neurons in cvlp"}],
+      ["notify", {"message": "Let's query for local neurons from the entire caudoventrolateral protocerebrum!"}],
+      ["search", {"query": "Show local neurons in cvlp"}],
       ["notify", {"message": "Now let's only keep known fruitless neurons and remove the rest."}],
       ["search", {"query": "Keep fruitless neurons in cvlp"}],
       ["notify", {"message": "Done", "pause": 1000}],
@@ -146,7 +157,7 @@
     "script": [
       ["notify", {"message": "Hi!"}],
       ["notify", {"message": "Let's query for local neurons from the left antenna lobe"}],
-      ["search", {"query": "Show neurons in the left al"}],
+      ["search", {"query": "Show local neurons in the left al"}],
       ["notify", {"message": "Now let's only keep known gabaergic neurons and remove the rest."}],
       ["search", {"query": "Keep gabaergic neurons in the left al"}],
       ["notify", {"message": "Done", "pause": 1000}],
@@ -159,10 +170,10 @@
     "keyword": "Remove",
     "script": [
       ["notify", {"message": "Hi!"}],
-      ["notify", {"message": "Let's query for neurons from the right antennal lobe!"}],
-      ["search", {"query": "Show neurons in right al"}],
+      ["notify", {"message": "Let's query for local neurons from the right antennal lobe!"}],
+      ["search", {"query": "Show local neurons in right al"}],
       ["notify", {"message": "Now let's only remove the projection neurons."}],
-      ["search", {"query": "Remove projection neurons from the right al"}],
+      ["search", {"query": "Remove glutamatergic neurons from the right al"}],
       ["notify", {"message": "Done", "pause": 1000}],
       ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
@@ -174,7 +185,7 @@
     "script": [
       ["notify", {"message": "Hi!"}],
       ["notify", {"message": "Let's first bring up neurons in the Ellipsoid Body!"}],
-      ["search", {"query": "Show Neurons in the Ellipsoid Body"}],
+      ["search", {"query": "Show local neurons in the Ellipsoid Body"}],
       ["notify", {"message": "Let's move the cursor over the neurons to highlight them!"}],
       ["highlight", {"label": "VGlut-F-200478"}],
       ["notify", {"message": "Try it yourself!", "pause": 0}]
@@ -187,7 +198,7 @@
     "script": [
       ["notify", {"message": "Hi!"}],
       ["notify", {"message": "Let's first bring up neurons in the Ellipsoid Body!"}],
-      ["search", {"query": "Show Neurons in the Ellipsoid Body"}],
+      ["search", {"query": "Show local neurons in the Ellipsoid Body"}],
       ["notify", {"message": "Let's move the cursor over a neuron, and click on it!"}],
       ["click", {"label": "VGlut-F-200478"}],
       ["notify", {"message": "The information of the selected neuron has been loaded from the FlyCircuit Database!"}],
@@ -201,69 +212,43 @@
     "script": [
       ["notify", {"message": "Hi!"}],
       ["notify", {"message": "Let's first bring up gabaergic neurons in the Ellipsoid Body!"}],
-      ["search", {"query": "Show gabaergic neurons in eb"}],
+      ["search", {"query": "Show gabaergic local neurons in eb"}],
       ["notify", {"message": "Let's move the cursor over some neurons, and use 'double click' to pin them!"}],
-      ["pin", {"label": "Gad1-F-400328"}],
+      ["pin", {"label": "Gad1-F-400135"}],
       ["pin", {"label": "Gad1-F-200171"}],
-      ["pin", {"label": "Gad1-F-600135"}],
-      ["select", {"label": "Gad1-F-600135"}],
+      ["pin", {"label": "Gad1-F-500712"}],
+      ["select", {"label": "Gad1-F-200171"}],
       ["notify", {"message": "The pinned neurons always remain highlighted."}],
       ["notify", {"message": "Let's remove all unpinned neurons."}],
       ["click", {"menu":{"type": "pinKeep"}}],
       ["notify", {"message": "Now we only have pinned neurons in the scene."}],
       ["notify", {"message": "Want to unpin a neuron? Use 'Double click' on a pinned neuron to unpin it."}],
-      ["pin", {"label": "Gad1-F-400328"}],
-      ["select", {"label": "Gad1-F-400328"}],
+      ["pin", {"label": "Gad1-F-400135"}],
+      ["select", {"label": "Gad1-F-400135"}],
       ["notify", {"message": "Try it yourself!", "pause": 0}]
     ],
     "description": "Pin a neuron via 'Double Click' to make it stick in the scene.",
     "category": "GUI Usage"
-  },
-  "projection_1": {
-    "keyword": "Projection Neuron",
-    "script": [
-      ["notify", {"message": "Hi!"}],
-      ["notify", {"message": "Let's query for projection neurons in the left mushroom body!"}],
-      ["search", {"query": "Show projection neurons in the left mushroom body"}],
-      ["notify", {"message": "Done", "pause": 1000}],
-      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
-    ],
-    "description": "Show projection neurons in the left mushroom body.",
-    "category": "Neurons and Neurotransmitters"
-  },
-  "local_1": {
-    "keyword": "Local Neuron/Interneurons",
-    "script": [
-      ["notify", {"message": "Hi!"}],
-      ["notify", {"message": "Let's query for local neurons in the right antennal lobe!"}],
-      ["search", {"query": "Show local neurons in the right antennal lobe"}],
-      ["notify", {"message": "Let's add interneurons in the left antennal lobe!"}],
-      ["search", {"query": "Add interneurons in the left antennal lobe"}],
-      ["notify", {"message": "Done", "pause": 1000}],
-      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
-    ],
-    "description": "Show local neurons in the right antennal lobe, and add interneurons in the left antennal lobe.",
-    "category": "Neurons and Neurotransmitters"
   },
   "neurotransmitter_1": {
     "keyword": "Serotonergic/Glutamatergic/Cholinergic/Dopaminergic/Gabaergic Neurons",
     "script": [
       ["notify", {"message": "Hi!"}],
       ["notify", {"message": "Let's query for serotonergic neurons in the Ellipsoid Body!"}],
-      ["search", {"query": "Show serotonergic neurons in eb"}],
+      ["search", {"query": "Show serotonergic local neurons in eb"}],
       ["notify", {"message": "Let's bring in glutamatergic neurons in the Ellipsoid Body!"}],
-      ["search", {"query": "Add glutamatergic neurons in eb"}],
+      ["search", {"query": "Add glutamatergic local neurons in eb"}],
       ["notify", {"message": "Let's add cholinergic neurons in the Ellipsoid Body!"}],
-      ["search", {"query": "Add cholinergic neurons in eb"}],
+      ["search", {"query": "Add cholinergic local neurons in eb"}],
       ["notify", {"message": "Let's also have dopaminergic neurons in the Ellipsoid Body!"}],
-      ["search", {"query": "Add dopaminergic neurons in eb"}],
+      ["search", {"query": "Add dopaminergic local neurons in eb"}],
       ["notify", {"message": "Finally, let's add gabaergic neurons in the Ellipsoid Body!"}],
-      ["search", {"query": "Add gabaergic neurons in eb"}],
+      ["search", {"query": "Add gabaergic local neurons in eb"}],
       ["notify", {"message": "Done", "pause": 1000}],
       ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
-    "description": "Show serotonegic neurons in the Ellipsoid Body, and sequentially add glutamatergic, cholinergic, dopaminergic and gabaergic neurons.",
-    "category": "Neurons and Neurotransmitters"
+    "description": "Show serotonegic local neurons in the Ellipsoid Body, and sequentially add glutamatergic, cholinergic, dopaminergic and gabaergic neurons.",
+    "category": "Basic Usage"
   },
   "connecting_1": {
     "keyword": "Tract based queries",
@@ -472,7 +457,7 @@
                    "pause": 15000, "timeout": 20000}],
       ["notify", {"message": "We first query glutamatergic neurons in the LOP and select neurons that resemble the tiling pattern of LPi 3-4 neurons.",
                   "pause": 6000, "timeout": 8000}],
-      ["search", {"query": "show glutamatergic neurons in lop"}],
+      ["search", {"query": "show glutamatergic local neurons in lop"}],
       ["notify", {"message": "Here, we observe that there are some neurons that have smaller arborization fields that matches the description of LPi 3-4 in Mauss et al. (2015). We pick out these neurons in the left LOP and look at their tiling pattern.",
                   "pause": 10000, "timeout": 20000}],
       ["pin", {"label": "VGlut-F-200148"}],
@@ -496,10 +481,10 @@
       ["click", {"menu": {"type": "unpinAll"}}],
       ["notify", {"message": "Are there any other local neurons in the LOP?",
                   "pause": 5000, "timeout": 10000}],
-      ["search", {"query": "show GABAergic neurons in lop"}],
+      ["search", {"query": "show GABAergic local neurons in lop"}],
       ["notify", {"message": "It looks like there are a few GABAergic local neurons, with similar shapes as glutamatergic local neurons.",
                   "pause": 10000, "timeout": 10000}],
-      ["search", {"query": "show cholinergic neurons in lop"}],
+      ["search", {"query": "show cholinergic local neurons in lop"}],
       ["notify", {"message": "There are also more cholinergic local neurons of similar shapes as glutamatergic local neurons. However, from the sample of neurons in the database, glutamatergic neurons are majority of local neurons in the LOP.",
                   "pause": 10000, "timeout": 10000}],
       ["notify", {"message": "Done! Explore it yourself!", "pause": 5000}]
