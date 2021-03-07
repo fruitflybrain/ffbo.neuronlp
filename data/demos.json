@@ -43,8 +43,8 @@
         "keyword": "Synaptic Partners-based Queries",
         "script": [
           ["notify", {"message": "Hi there!"}],
-          ["notify", {"message": "Let's display a EPG (EB-PB-LAL) neuron that has axon in PB glomerulus R5."}],
-          ["search", {"query": "show EPG neurons that has axon in PB glomerulus R5"}],
+          ["notify", {"message": "Let's display a EPG (EB-PB-LAL) neuron that has outputs in PB glomerulus R5."}],
+          ["search", {"query": "show EPG neurons that has outputs in PB glomerulus R5"}],
           ["notify", {"message": "To add PEG (PB-EB-LAL) neurons that are postsyaptic to the neurons in the current workspace, and has at least 10 synapses from any one of these neurons, we use the following query.", "pause": 1000}],
           ["search", {"query": "add postsynaptic PEG neurons with at least 10 synapses"}],
           ["notify", {"message": "Try it yourself!", "pause": 0}]
