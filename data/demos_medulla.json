@@ -1,5 +1,5 @@
 {
-  "centre_view": {
+  "center_view": {
     "script": [
       ["notify", {"message": "Let's hide everything first"}],
       ["click", {"uiBtn": {"type": "hideAll"}}],
@@ -19,7 +19,7 @@
       ["notify", {"message": "Let's hide everything first", "pause": 1000}],
       ["click", {"uiBtn": {"type": "hideAll"}}],
       ["notify", {"message": "And then pull up Mi1 neuron from the home column", "pause": 1000}],
-      ["search", {"query": "show $Mi1-home$"}],
+      ["search", {"query": "show Mi1 in home column"}],
       ["click", {"uiBtn": {"type": "resetVisibleView"}}],
       ["maxInfoPanel", {} ],
       ["click", {"label": "Mi1-home"}],
