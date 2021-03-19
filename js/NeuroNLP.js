@@ -424,12 +424,13 @@ require([
   var srchBtn = document.getElementById('srch_box_btn');
 
   window.NLPsearch = function(query){
+    window.NeuroNLPUI.closeAllOverlay();
     return new Promise(function(resolve, reject){
       if(query == undefined){
         query = document.getElementById('srch_box').value;
-        $("#search-wrapper").block({ message: null });
-        srchInput.blur();
       }
+      $("#search-wrapper").block({ message: null });
+      srchInput.blur();
       queryID = client.executeNLPquery(query, {success: dataCallback});
       client.status.on("change", function(e){
         $("#search-wrapper").unblock();
