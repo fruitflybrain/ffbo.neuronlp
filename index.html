@@ -4,6 +4,7 @@
     <title>NeuroNLP.Medulla</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta http-equiv="Cache-Control" content="max-age=1800">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <meta name="author" content="FFBO Team">
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -453,7 +454,7 @@
                 NeuroNLP provides a modern web-based portal for navigating fruit fly
                 brain circuit data. It enables in-depth exploration and investigation
                 of brain structure, using intuitive plain English queries, such as
-                <br><br><u style="font-style:italic">"show glutamatergic local neurons in the left antennal lobe".</u></br></br>
+                <a onclick="window.NLPsearch('show cholinergic neurons presynaptic to T4a in column C with at least 5 synapses')"><br><br><u style="font-style:italic">"show cholinergic neurons presynaptic to T4a in column C with at least 5 synapses".</u></br></br></a>
                 NeuroNLP can be accessed from any browser supporting WebGL. Remember
                 to check it out on your smartphone!
               </p>
@@ -471,7 +472,7 @@
               <br><br>
               <h4>News</h4>
               <p>
-                Updates and announcements for <u style="text-decoration:none; font-family:'Rajdhani',sans-serif; color:grey;">NeuroNLP.Hemibrain</u>.
+                Updates and announcements for <u style="text-decoration:none; font-family:'Rajdhani',sans-serif; color:grey;">NeuroNLP.Medulla</u>.
               </p>
               <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-getting-started')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-getting-started')" onclick="NeuroNLPUI.onShowAnnounce()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> See What's New!</a>
               <br><br>
@@ -490,8 +491,8 @@
               <br><br> -->
               <h4>Sharing Query Results</h4>
               <p>
-                Sharing query results is easy with the "Tags" feature. Try retrieving the tag "ffbo" or
-                create your own tag!
+                Sharing query results is easy with the "Tags" feature.
+                Create your own tag!
               </p>
               <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-tags')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-tags')"  onclick="NeuroNLPUI.onToggleTag()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Try Tags!</a>
             </div>
@@ -578,19 +579,8 @@
                 <article>
                   <p>
                     The Search Bar is the central querying interface. It supports natural language queries of neurons, synaptic partners, etc.
-                    By combining various attributes of query targets, you can create some very powerful queries.
+                    By combining various attributes of query targets, you can create some very powerful queries. Click on the info button left to the query bar for more information.
                   </p>
-                  <ul>Here are a list of example queries you can try:
-                    <li><span style="color: #88CDF5">show $Mi15$</span> : search for any neuron whose name contains text "Mi15".</li>
-                    <li><span style="color: #88CDF5">add /r(.*)Mi1-(.*)/r</span> : add to the current workspace any neuron whose name matches the regular expression.</li>
-                    <li><span style="color: #88CDF5">show $30465$</span> : show a single neuron corresponding to the Medulla FIB25 BodyID 5813014882.</li>
-                    <li><span style="color: #88CDF5">show /:referenceId:[30465, 516159]</span> : show all neurons with the listed Medulla FIB25 BodyId.</li>
-                    <li><span style="color: #88CDF5">show neurons in m2</span> : show all neurons that have arborizations in stratum M2.</li>
-                    <li><span style="color: #88CDF5">add postsynaptic $Pm2$ neurons with at least 10 synapses</span> : add all Pm2 neurons that are postsynaptic to the neurons in the current workspace and that have a connection with more than 10 synapses.</li>
-                    <li><span style="color: #88CDF5">show neurons that have dendrites in m2 and axons in m5</span> : show neurons that have input site from stratum M2 and has output sites in stratum M5</li>
-                  </ul>
-                  <blockquote><p> Note: <i> show </i> neurons will reset workspace (clear existing neurons, reset viewing angle). While <i>add</i> will preserve the current workspace. </p></blockquote>
-
                 </article>
                 <images></images>
               </band>
@@ -642,17 +632,67 @@
                       The Search Bar is the central querying interface. It supports natural language queries of neurons, synaptic partners, etc.
                       By combining various attributes of query targets, you can create some very powerful queries.
                     </p>
-                    <ul>Here are a list of example queries you can try:
-                        <li><span style="color: #88CDF5">show $Mi15$</span> : search for any neuron whose name contains text "Mi15".</li>
-                        <li><span style="color: #88CDF5">add /r(.*)Mi1-(.*)/r</span> : add to the current workspace any neuron whose name matches the regular expression.</li>
-                        <li><span style="color: #88CDF5">show $30465$</span> : show a single neuron corresponding to the Medulla FIB25 BodyID 5813014882.</li>
-                        <li><span style="color: #88CDF5">show /:referenceId:[30465, 516159]</span> : show all neurons with the listed Medulla FIB25 BodyId.</li>
-                        <li><span style="color: #88CDF5">show neurons in m2</span> : show all neurons that have arborizations in stratum M2.</li>
-                        <li><span style="color: #88CDF5">add postsynaptic $Pm2$ neurons with at least 10 synapses</span> : add all Pm2 neurons that are postsynaptic to the neurons in the current workspace and that have a connection with more than 10 synapses.</li>
-                        <li><span style="color: #88CDF5">show neurons that have dendrites in m2 and axons in m5</span> : show neurons that have input site from stratum M2 and has output sites in stratum M5</li>
+                    <ul>Your queries should start with a verb; the verbs supported right now are:
+                        <li><span style="color: #88CDF5">show</span>: clear workspace and then show the queried neurons,
+                        <li><span style="color: #88CDF5">add</span>: add to the workspace the neurons queried,
+                        <li><span style="color: #88CDF5">remove</span>/span>: remove from the workspace the queried neuron,
+                        <li><span style="color: #88CDF5">keep</span>: keep in the workspace only the neurons that meet the criterion of the query,
+                        <li><span style="color: #88CDF5">hide</span>: hide the neurons that meet the criterion of the query (this does not remove them from workspace, but reduce their visibility),
+                        <li><span style="color: #88CDF5">pin</span>: pin the neurons that meet the criterion of the query. Pinned neurons are automatically highlighted, and cannot be removed by the "trash can" button on top of the NeuroNLP window.
+                        <li><span style="color: #88CDF5">unpin</span>: unpin the neurons that meet the criterion of the query,
+                        <li><span style="color: #88CDF5">color</span>: color the neurons that meet the criterion of the query with a user defined color (can be hex color code, e.g., FF0000 for red), or these predefined colors.
+                        <li><span style="color: #88CDF5">clear</span>: clear up the workspace, removing all neurons and synapses.
                     </ul>
-                    <blockquote><p> Note: <i> show </i> neurons will reset workspace (clear existing neurons, reset viewing angle). While <i>add</i> will preserve the current workspace. </p></blockquote>
-
+                    <ul>Next, we explain the rules for defining the criterion of the query, using the verb show as an example. 
+                        <li><span style="color: #88CDF5">show cell-type neurons</span>: Shows the neurons of the cell type. Example:
+                            <ul>
+                                <li><a onclick="window.NLPsearch('show Mi1')"><span style="color: #97ba67">show Mi1 neurons</span></a>, or simply <a onclick="window.NLPsearch('show Mi1')"><span style="color: #97ba67">show mi1</span></a>.</li>
+                            </ul>
+                        </li>
+                        <li><span style="color: #88CDF5">show $string$ neurons</span>: Shows neurons with a name that contains the string. Example:
+                            <ul>
+                                <li><a onclick="window.NLPsearch('show $T4a$ neurons')"><span style="color: #97ba67">show $T4a$ neurons</span></a>, or simply <a onclick="window.NLPsearch('show $T4a$')"><span style="color: #97ba67">show $T4a$</span></a>, will query any neuron whose name contain the string *T4a*.</li>
+                            </ul>
+                        </li>
+                        <li><span style="color: #88CDF5"></span>show /rstring/r neurons</span>: Show neurons whose name matches the regular expressing string (This requires some knowledge of how the neurons are named in each dataset). Example:
+                            <ul>
+                                <li><a onclick="window.NLPsearch('show /rTm2-[A-C]/r neurons')"><span style="color: #97ba67">show /rTm2-[A-C]/r neurons</span></a>, or simply <a onclick="window.NLPsearch('show /rTm2-[A-C]/r')"><span style="color: #97ba67">show /rTm2-[A-C]/r</span></a> will show the PEG neurons that innervate PB glomerulus R1.</li>
+                            </ul>
+                        </li>
+                        <li><span style="color: #88CDF5">show neurons with|that have inputs|outputs in neuropil/subregion</span>: More specific then the previous query on the inputs or outputs. Examples:
+                            <ul>
+                                <li><a onclick="window.NLPsearch('show neurons in column A with outputs in m10')"><span style="color: #97ba67">show neurons in column A with outputs in m10</span></a></li>
+                            </ul>
+                        </li>
+                        <li><span style="color: #88CDF5">show neurons presynaptic|postsynaptic to</span>: Shows the neurons that are presynaptic or postsynaptic to the neurons defined after the word to. Exmples:
+                            <ul>
+                                <li><a onclick="window.NLPsearch('show neurons presynaptic to $T4a-fb-home$')"><span style="color: #97ba67">show neurons presynaptic to $T4a-fb-home$</span></a>,</li>
+                                <li><a onclick="window.NLPsearch('show Pm2 postsynaptic to Mi1 with at least 5 synapses')"><span style="color: #97ba67">show Pm2 postsynaptic to Mi1 with at least 5 synapses</span></a>,</li>
+                            </ul>
+                        </li>
+                        <li><span style="color: #88CDF5">show presynaptic|postsynaptic neurons</span>: Shows the neurons that are presynaptic or postsynaptic to the neurons already in workspace. Examples:
+                            <ul>
+                                <li><span style="color: #97ba67">show presynaptic neurons</span>,</li>
+                                <li><span style="color: #97ba67">show postsynaptic neurons with at least 10 synapses</span></li>
+                                <li><span style="color: #97ba67">show postynaptic Dm1</span></li>
+                            </ul>
+                        </li>
+                        <li><span style="color: #88CDF5">show neurotransmitter neurons</span>: Shows the neurons that express the neurotramsitter. Examples:
+                            <ul>
+                                <li><a onclick="window.NLPsearch('show GABAergic neurons')"><span style="color: #97ba67">show GABAergic neurons</span></a></li>
+                                <li><span style="color: #97ba67">show cholinergic presynaptic neurons</span></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul>Other short-hands:
+                        <li><span style="color: #88CDF5">show /:referenceId:[Mi1-A, Tm2-home]</span>: Shows the neurons whose referenceId in the original dataset is in the list. It can be used similar to \$ \\$ and regular expression and combined with other types of criteria. Examples:
+                            <ul>
+                                <li><a onclick="window.NLPsearch('show /:referenceId:[Mi1-A, Tm2-home]')"><span style="color: #97ba67">show /:referenceId:[Mi1-A, Tm2-home]</span></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                
+                    <p><span style="color: #88CDF5">Coloring</span>: if no criteria are specified, the color will be applied to the neurons added in the most recent query. For example, if you query: <span style="color: #97ba67">show A neurons</span>, then <span style="color: #97ba67">add B neurons</span>, <span style="color: #97ba67">color red</span> will color B neurons red. <span style="color: #97ba67">color A neurons 0000FF</span> will then <span style="color: #97ba67">color A neurons blue</span>.</p>
                   </article>
                   <images></images>
                 </band>

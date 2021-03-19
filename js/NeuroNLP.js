@@ -430,7 +430,7 @@ require([
         query = document.getElementById('srch_box').value;
       }
       $("#search-wrapper").block({ message: null });
-        srchInput.blur();
+      srchInput.blur();
       queryID = client.executeNLPquery(query, {success: dataCallback});
       client.status.on("change", function(e){
         $("#search-wrapper").unblock();
