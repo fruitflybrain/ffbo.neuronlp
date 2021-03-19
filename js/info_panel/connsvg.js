@@ -162,7 +162,7 @@ moduleExporter("ConnSVG",
 
     // SVG x-axis setup
     var x = d3.scale.linear()
-                      .rangeRound([0,width]);
+                      .range([0,width]);
 
     // SVG y-axis setup
     var y = d3.scale.ordinal()
