@@ -537,11 +537,13 @@ ${connectivity.map(conn => `${conn[0]},${conn[1]},${conn[2]},${conn[3]}\n`).join
     }, callbacks, format);
   }
 
-  FFBOClient.prototype.retrieveState = function (callbacks, format) {
+  FFBOClient.prototype.retrieveState = function (callbacks, verb, format) {
     /**
      * Query to keep a list of Objs based on their Rids. rids must be an array
      */
+    if(verb == undefined) { verb = "show" }
     return this.executeNAquery({
+      verb: "verb",
       command: {
         retrieve: {
           state: 0

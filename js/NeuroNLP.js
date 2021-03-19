@@ -195,7 +195,7 @@ require([
   window.infoPanel = infoPanel;
 
   function retrieveTagData(metadata){
-    queryID = client.retrieveState({success: dataCallback});
+    queryID = client.retrieveState({success: dataCallback}, "show");
     client.status.on("change", function(){
       ffbomesh.import_state(metadata);
       $('#ui-blocker').hide();
