@@ -543,7 +543,7 @@ ${connectivity.map(conn => `${conn[0]},${conn[1]},${conn[2]},${conn[3]}\n`).join
      */
     if(verb == undefined) { verb = "show" }
     return this.executeNAquery({
-      verb: "verb",
+      verb: verb,
       command: {
         retrieve: {
           state: 0
