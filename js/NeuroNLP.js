@@ -521,8 +521,8 @@ require([
   demoLoad = false;
   ffbomesh.settings.defaultSynapseRadius = 0.4;
   $(document).ready(function(){
-    window.ffbomesh.createUIBtn("showGraph", "fa-bar-chart", "Show Connectivity Graph")
-    window.ffbomesh.createUIBtn("showCellGraph", "fa-cubes", "Show Cell-Type Level Connectivity Graph")
+    window.ffbomesh.createUIBtn("showGraph", "fa-bar-chart", "Show Connectivity Graph");
+    // window.ffbomesh.createUIBtn("showCellGraph", "fa-cubes", "Show Cell-Type Level Connectivity Graph");
     GvisInitCallbacks();
     GvisInitGraphs();
     if (isOnMobile)
