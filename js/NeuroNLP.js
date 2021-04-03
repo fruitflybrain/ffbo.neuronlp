@@ -13,9 +13,21 @@ requirejs.config({
   baseUrl: '/js',
   paths: {
     // app: 'app',
-    mesh3d: '../lib/js/mesh3d',
-    propertymanager: '../lib/js/propertymanager',
-    infopanel: "info_panel/infopanel",
+    mesh3d: '../lib/js/mesh3d', //'//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@hemibrain/js/mesh3d',
+    propertymanager: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@hemibrain/js/propertymanager',
+    client: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@hemibrain/js/client',
+    overlay: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@hemibrain/js/overlay',
+    visualizationsettings: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@hemibrain/js/visualizationsettings',
+    ffbodemoplayer: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@hemibrain/js/ffbodemoplayer',
+    dynamicmenu: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@hemibrain/js/dynamicmenu',
+    tags: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@hemibrain/js/tags',
+    propertymanager: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@hemibrain/js/propertymanager',
+    ui: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@hemibrain/js/ui',
+    infopanel: 'info_panel/infopanel', //'//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@flycircuit/js/info_panel/infopanel',
+    connsvg: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@hemibrain/js/info_panel/connsvg',
+    conntable: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@hemibrain/js/info_panel/conntable',
+    preprocess: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@hemibrain/js/info_panel/preprocess',
+    summarytable: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.neuronlp@hemibrain/js/info_panel/summarytable',
     autobahn: '//cdn.jsdelivr.net/gh/crossbario/autobahn-js-browser@master/autobahn/autobahn.min',
     d3: '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min',
     jquery: '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min',
@@ -39,22 +51,22 @@ requirejs.config({
     bloompass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/BloomPass',
     unrealbloompass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/UnrealBloomPass',
     adaptivetonemappingpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/AdaptiveToneMappingPass',
-    trackballcontrols: '../lib/js/TrackballControls',
-    lightshelper: '../lib/js/lightshelper',
+    trackballcontrols: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@hemibrain/js/TrackballControls',
+    lightshelper: '//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@hemibrain/js/lightshelper',
     modernizr: "//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min",
     d3: "//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3",
     jqueryui: "//code.jquery.com/ui/1.12.1/jquery-ui",
     perfectscrollbar: "//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.7.0/js/perfect-scrollbar.jquery.min",
     "jquery.mobile": "//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min",
     spectrum: "//cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min",
-    "jquery.mmenu": "../lib/js/jquery.mmenu.all",
+    "jquery.mmenu": "//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@hemibrain/js/jquery.mmenu.all",
     bootsrapslider: "//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min",
     swiper: "//cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.2/js/swiper.min",
     bootstrap: "//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min",
     blockui: "//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min",
     tageditor: "//cdnjs.cloudflare.com/ajax/libs/tag-editor/1.0.20/jquery.tag-editor.min",
-    izitoast: "../lib/js/iziToast.min",
-    stats: "../lib/js/stats.min"
+    izitoast: "//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@hemibrain/js/iziToast.min",
+    stats: "//cdn.jsdelivr.net/gh/fruitflybrain/ffbo.lib@hemibrain/js/stats.min"
     /* Notify, bootbox, colormaps, demos, mouse, vis_set, ResizeSensor, read_vars, colorm[aps */
   },
   shim: {
@@ -156,7 +168,7 @@ require([
   }
 
 
-  client.startConnection("guest", "guestpass", "ws://localhost:8081/ws");
+  client.startConnection("guest", "jije83b3jJN*31", "wss://hemibrain.neuronlp.fruitflybrain.org/ws");
 
   //ffbomesh.settings.neuron3d = 1;
   function dataCallback(data){
@@ -407,7 +419,7 @@ require([
   ffbomesh.on('pinned', function(e) { dynamicNeuronMenu.updatePinnedNeuron(e.path[0], e.obj.label, e.value)});
 
 
-  function updateThreshold(e) {client.threshold = e.value ? "auto" : "auto";}
+    function updateThreshold(e) {client.threshold = e.value ? "auto": "auto";}
   updateThreshold({value: ffbomesh.settings.neuron3d})
   ffbomesh.settings.on('change', updateThreshold, 'neuron3d')
 
@@ -424,14 +436,15 @@ require([
   var srchInput = document.getElementById('srch_box');
   var srchBtn = document.getElementById('srch_box_btn');
 
-  window.NLPsearch = function(query){
-    window.NeuroNLPUI.closeAllOverlay();
+    window.NLPsearch = function(query){
+	window.NeuroNLPUI.closeAllOverlay();
     return new Promise(function(resolve, reject){
       if(query == undefined){
-        query = document.getElementById('srch_box').value;
+          query = document.getElementById('srch_box').value;
       }
-      $("#search-wrapper").block({ message: null });
-      srchInput.blur();
+        $("#search-wrapper").block({ message: null });
+        srchInput.blur();
+      
       queryID = client.executeNLPquery(query, {success: dataCallback});
       client.status.on("change", function(e){
         $("#search-wrapper").unblock();
