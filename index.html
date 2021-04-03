@@ -449,6 +449,9 @@
                    panel.
             </div> -->
             <div id="info-intro" class="ffbo-intro">
+	      <h4>This NeuroNLP application contains data from <a href="http://flycircuit.tw">FlyCircuit 1.2</a> datasets.</h4>
+	      <p>Medulla 7 column dataset has been moved to <a href="http://medulla.neuronlp.fruitflybrain.org">NeuronNLP.Medulla</a>.</p>
+              <p></p>
               <h4>What is NeuroNLP?</h4>
               <p>
                 NeuroNLP provides a modern web-based portal for navigating fruit fly
@@ -581,6 +584,15 @@
                     The Search Bar is the central querying interface. It supports natural language queries of neurons, synaptic partners, etc.
                     By combining various attributes of query targets, you can create some very powerful queries. Click on the info button to the left of the search bar for more information.
                   </p>
+                  <!--
+                    <ul>Here are a list of example queries you can try:
+                    <li><span style="color: #88CDF5">show glutamatergic neurons in the left antennal lobe</li>
+                    <li><span style="color: #88CDF5">add dopaminergic neurons in the right MB </li>
+                    <li><span style="color: #88CDF5">add postsynaptic MBONs with at least 50 synapses</li>
+                    <li><span style="color: #88CDF5">show neurons that has dendrites in medulla and axons in optu</li>
+                  </ul>
+                  <blockquote><p> Note: <i> show </i> neurons will reset workspace (clear existing neurons, reset viewing angle). While <i>add</i> will preserve the current workspace. </p></blockquote>
+                  -->
                 </article>
                 <images></images>
               </band>
@@ -701,6 +713,8 @@
                     </ul>
 
                     <p><span style="color: #88CDF5">Coloring</span>: if no criteria are specified, the color will be applied to the neurons added in the most recent query. For example, if you query: <span style="color: #97ba67">show A neurons</span>, then <span style="color: #97ba67">add B neurons</span>, <span style="color: #97ba67">color red</span> will color B neurons red. <span style="color: #97ba67">color A neurons 0000FF</span> will then <span style="color: #97ba67">color A neurons blue</span>.</p>
+                    <!-- <blockquote><p> Note: <i> show </i> neurons will reset workspace (clear existing neurons, reset viewing angle). While <i>add</i> will preserve the current workspace. </p></blockquote> -->
+
                   </article>
                   <images></images>
                 </band>
@@ -754,11 +768,13 @@
         </div>
         <div id="neuronlp-switch" class="overlay">
           <div class="neuronlp-switch-wrapper">
-            <a class="info-try btn btn-xs" onclick="NeuroNLPUI.closeAllOverlay()">Stay at <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #999;">NeuroNLP.FlyCircuit</span></a>
+            <a class="info-try btn btn-xs" onclick="NeuroNLPUI.closeAllOverlay()">Stay at <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #FFEF35;">NeuroNLP.FlyCircuit</span></a>
             <h5>Or</h5>
-            <a class="info-try btn btn-xs" href="https://larva.neuronlp.fruitflybrain.org">Switch to <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #999;">NeuroNLP.Larva</span></a>
-            <h5>Or</h5>
-            <a class="info-try btn btn-xs" href="https://hemibrain.neuronlp.fruitflybrain.org">Switch to <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #999;">NeuroNLP.Hemibrain</span></a>
+            <a class="info-try btn btn-xs" href="https://hemibrain.neuronlp.fruitflybrain.org">Switch to <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #FFEF35;">NeuroNLP.Hemibrain</span></a>
+	    <h5>Or</h5>
+            <a class="info-try btn btn-xs" href="https://larva.neuronlp.fruitflybrain.org">Switch to <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #FFEF35;">NeuroNLP.Larva</span></a>
+	    <h5>Or</h5>
+            <a class="info-try btn btn-xs" href="https://medulla.neuronlp.fruitflybrain.org">Switch to <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #FFEF35;">NeuroNLP.Medulla</span></a>
           </div>
         </div>
 
