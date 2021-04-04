@@ -121,7 +121,7 @@
       "script": [
         ["notify", {"message": "Hi there!"}],
         ["notify", {"message": "Let's query for VA1v projection neurons!"}],
-        ["search", {"query": "add /r(.*)_VA1v(.*)_R_1/r"}],
+        ["search", {"query": "add /rVA1v_(.*)PN_(.*)/r"}],
         ["notify", {"message": "Try it yourself!", "pause": 0}]
       ],
       "description": "Show VA1v projection neurons.",
