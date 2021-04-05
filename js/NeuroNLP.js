@@ -458,7 +458,7 @@ require([
 
     srchInput.addEventListener("keyup", function (event) {
       event.preventDefault();
-      if (event.keyCode == 13)
+      if (event.key == "Enter")
         srchBtn.click();
     });
 
