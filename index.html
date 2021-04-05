@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>NeuroNLP.Hemibrain</title>
-
+    
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
     <meta http-equiv="Cache-Control" content="max-age=1800">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -19,7 +19,6 @@
          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap-theme.min.css"> -->
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/FrDH/jQuery.mmenu@v7.0.3/dist/jquery.mmenu.all.css"/>
-    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/FrDH/jQuery.mmenu/v7.0.3/dist/jquery.mmenu.all.css"/>
     <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.7.0/css/perfect-scrollbar.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css" />
@@ -28,7 +27,7 @@
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/dolce/iziToast@v1.3.0/dist/css/iziToast.min.css">
 
-    <script src="https://cdn.jsdelivr.net/gh/mkturkcan/neuronlp.graphutils/sigma.js/sigma.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/mkturkcan/neuronlp.graphutils@be2fc20a823f6f4f54824653104b3f207846f715/sigma.js/sigma.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.exporters.svg.min.js" integrity="sha512-IbAQlrGEnp55edX0a9RwxGGS1F5qfmPlukd1zjrxbPEuIWwgTMrryaDTdL7zugFsWczRAd2Hq1C5L17jJGr27A==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.layout.forceAtlas2.min.js" integrity="sha512-RuRd3WCUb6GCaiaEJ2UDkaVblIVAHJNLaDG6Df2OWpzg4kQurQqh/GC/a3eFSopnRiNrwePMFvI13pbYZ1WnAw==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.layout.noverlap.min.js" integrity="sha512-U0UOV2CPSrFlOxjSnHr6GMKsRjQIYmarSCgVp9R6FAcby2gLNPgQtGLXylELTBDLbS/R5g1vj5CFS4mLDdDfxQ==" crossorigin="anonymous"></script>
@@ -41,7 +40,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.plugins.filter.min.js" integrity="sha512-mu+dW4fJz+3b5WxfWUdwgHOvmDp5v7+8wa6zMGeQ40kVQt45l5NYRVuFIgdPtlS6IBThjKyCcEWz1TXMtUcnuQ==" crossorigin="anonymous"></script>
 
     <script data-main="js/NeuroNLP" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/mkturkcan/neuronlp.graphutils/js/graphvis.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/mkturkcan/neuronlp.graphutils@be2fc20a823f6f4f54824653104b3f207846f715/js/graphvis.js"></script>
     <link rel="stylesheet" type="text/css" href="/lib/css/ffbo.theme_settings.css">
     <link rel="stylesheet" id="current_theme" type="text/css" href="/lib/css/ffbo.default_theme.css">
     <link rel="stylesheet" id="main_css" type="text/css" href="/lib/css/ffbo.Client.css">
@@ -461,10 +460,6 @@
                    panel.
             </div> -->
             <div id="info-intro" class="ffbo-intro">
-	      <h4>NeuroNLP.Hemibrain has been updated to include data from Hemibrain release 1.1.</h4>
-	      <!--<p>Previous version with Hemibrain release 1.0.1 will be served under <a href="https://hemibrain101.neuronlp.fruitflybrain.org">this URL</a> until Feb 28, 2021.</p> -->
-	      <p>NeuroNLP with Hemibrain release 1.2 is available as beta version under <a href="https://hemibrain12.neuronlp.fruitflybrain.org">this URL</a>.</p>
-	      
               <h4>What is NeuroNLP?</h4>
               <p>
                 NeuroNLP provides a modern web-based portal for navigating fruit fly
@@ -507,7 +502,8 @@
               <br><br> -->
               <h4>Sharing Query Results</h4>
               <p>
-                Sharing query results is easy with the "Tags" feature. Create your own tag!
+                Sharing query results is easy with the "Tags" feature. 
+                Create your own tags!
               </p>
               <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-tags')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-tags')"  onclick="NeuroNLPUI.onToggleTag()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Try Tags!</a>
             </div>
@@ -596,18 +592,6 @@
                     The Search Bar is the central querying interface. It supports natural language queries of neurons, synaptic partners, etc.
                     By combining various attributes of query targets, you can create some very powerful queries. Click on the info button to the left of the search bar.
                   </p>
-                  <!-- <ul>Here are a list of example queries you can try: 
-                    <li><span style="color: #88CDF5">show $MBON$</span> : search for any neuron whose name contains text "MBON".</li>
-                    <li><span style="color: #88CDF5">add /r(.*)DA1_(.*)_R_1/r</span> : add to the current workspace any neuron whose name matches the regular expression.</li>
-                    <li><span style="color: #88CDF5">show $5813014882$</span> : show a single neuron corresponding to the Hemibrain BodyID 5813014882.</li>
-                    <li><span style="color: #88CDF5">show /:referenceId:[5813014882, 912147912, 880875861]</span> : show all neurons with the listed Hemibrain BodyId.</li>
-                    <li><span style="color: #88CDF5">show neurons in right MB</span> : show all neurons that have arborizations in MB.</li>
-                    <li><span style="color: #88CDF5">add postsynaptic $PEG$ neurons with at least 10 synapses</span> : add all PEG neurons that are postsynaptic to the neurons in the current workspace and that have a connection with more than 10 synapses.</li>
-                    <li><span style="color: #88CDF5">show neurons that have inputs in EB and outputs in PB</span> : show neurons that have input site from EB and has output sites in PB</li>
-                  </ul>
-                  <blockquote><p> Note: <i> show </i> neurons will reset workspace (clear existing neurons, reset viewing angle). While <i>add</i> will preserve the current workspace. </p></blockquote>
-                  </-->
-
                 </article>
                 <images></images>
               </band>
@@ -749,8 +733,6 @@
                     </ul>
                 
                     <p><span style="color: #88CDF5">Coloring</span>: if no criteria are specified, the color will be applied to the neurons added in the most recent query. For example, if you query: <span style="color: #97ba67">show A neurons</span>, then <span style="color: #97ba67">add B neurons</span>, <span style="color: #97ba67">color red</span> will color B neurons red. <span style="color: #97ba67">color A neurons 0000FF</span> will then <span style="color: #97ba67">color A neurons blue</span>.</p>
-                    <!-- <blockquote><p> Note: <i> show </i> neurons will reset workspace (clear existing neurons, reset viewing angle). While <i>add</i> will preserve the current workspace. </p></blockquote> -->
-                
                   </article>
                   <images></images>
                 </band>
@@ -804,13 +786,9 @@
         </div>
         <div id="neuronlp-switch" class="overlay">
           <div class="neuronlp-switch-wrapper">
-            <a class="info-try btn btn-xs" href="https://neuronlp.fruitflybrain.org">Switch to <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #FFEF35;">NeuroNLP.FlyCircuit</span></a>
-	    <h5>Or</h5>
-	    <a class="info-try btn btn-xs" onclick="NeuroNLPUI.closeAllOverlay()">Stay at <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #FFEF35;">NeuroNLP.Hemibrain</span></a>
+            <a class="info-try btn btn-xs" onclick="NeuroNLPUI.closeAllOverlay()">Stay at <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #999;">NeuroNLP.Hemibrain</span></a>
             <h5>Or</h5>
-            <a class="info-try btn btn-xs" href="https://larva.neuronlp.fruitflybrain.org">Switch to <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #FFEF35;">NeuroNLP.Larva</span></a>
-	    <h5>Or</h5>
-            <a class="info-try btn btn-xs" href="https://medulla.neuronlp.fruitflybrain.org">Switch to <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #FFEF35;">NeuroNLP.Medulla</span></a>
+            <a class="info-try btn btn-xs" href="https://neuronlp.fruitflybrain.org">Switch to <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #999;">NeuroNLP.FlyCircuit</span></a>
           </div>
         </div>
 
