@@ -126,5 +126,33 @@
       ],
       "description": "Show VA1v projection neurons.",
       "category": "Early Olfactory System"
+    },
+    "cell_connectivity": {
+      "script": [
+        ["notify", {"message": "Hi there!"}],
+        ["notify", {"message": "Let's query for VA1v projection neurons!"}],
+        ["search", {"query": "show /rVA1v_(.*)PN_(.*)/r"}],
+        ["notify", {"message": "Now, let us click the 'Show Connectivity Graph' button on the top right."}],
+        ["click", {"uiBtn": {"type": "showGraph"}}],
+        ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
+      ],
+      "neuron3d": false,
+      "keyword": "Connectivity Graph Visualization",
+      "description": "Visualize the connectivity at single-cell scale.",
+      "category": "New Features"
+    },
+    "type_connectivity": {
+      "script": [
+        ["notify", {"message": "Hi there!"}],
+        ["notify", {"message": "Let's query for VA1v neurons!"}],
+        ["search", {"query": "show $VA1v$"}],
+        ["notify", {"message": "Now, let us click the 'Show Cell-Type Connectivity Graph' button on the top right."}],
+        ["click", {"uiBtn": {"type": "showCellGraph"}}],
+        ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
+      ],
+      "neuron3d": false,
+      "keyword": "Cell-Type Connectivity Graph Visualization",
+      "description": "Visualize the connectivity at cell-type scale.",
+      "category": "New Features"
     }
   }
