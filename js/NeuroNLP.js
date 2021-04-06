@@ -189,6 +189,7 @@ require([
     window.tagsPanel = tagsPanel;
     window.ffbomesh = ffbomesh;
     window.infoPanel = infoPanel;
+    window.dynamicNeuronMenu = dynamicNeuronMenu;
 
     function retrieveTagData(metadata) {
       queryID = client.retrieveState({ success: dataCallback }, "add");
