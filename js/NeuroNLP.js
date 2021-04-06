@@ -479,6 +479,8 @@ require([
     ffbomesh.createUIBtn("hideAll", "fa-eye-slash", "Hide All")
     ffbomesh.createUIBtn("removeUnpin", "fa-trash", "Remove Unpinned Neurons")
     ffbomesh.createUIBtn("downData", "fa-download", "Download Connectivity")
+    ffbomesh.createUIBtn("showGraph", "fa-bar-chart", "Show Connectivity Graph");
+    ffbomesh.createUIBtn("showCellGraph", "fa-cubes", "Show Cell-Type Connectivity Graph");
 
     ffbomesh.on('showSettings', (function () { window.NeuroNLPUI.onClickVisualizationSettings() }));
     ffbomesh.on('resetView', (function () { ffbomesh.resetView() }));
@@ -514,8 +516,6 @@ require([
     demoLoad = false;
     ffbomesh.settings.defaultSynapseRadius = 0.4;
     $(document).ready(function () {
-      window.ffbomesh.createUIBtn("showGraph", "fa-bar-chart", "Show Connectivity Graph");
-      window.ffbomesh.createUIBtn("showCellGraph", "fa-cubes", "Show Cell-Type Connectivity Graph");
       GvisInitCallbacks();
       GvisInitGraphs();
       if (isOnMobile)
