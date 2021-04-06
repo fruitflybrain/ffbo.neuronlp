@@ -20,8 +20,7 @@
   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap-theme.min.css"> -->
 
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/hamburgers/0.5.0/hamburgers.min.css">
-  <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/FrDH/jQuery.mmenu/v7.0.3/dist/jquery.mmenu.all.css" />
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/FrDH/jQuery.mmenu@v7.0.3/dist/jquery.mmenu.all.css"/>
   <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.7.0/css/perfect-scrollbar.min.css"
   />
@@ -31,7 +30,7 @@
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dolce/iziToast/v1.3.0/dist/css/iziToast.min.css">
 
-  <script src="https://cdn.jsdelivr.net/gh/mkturkcan/neuronlp.graphutils/sigma.js/sigma.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/mkturkcan/neuronlp.graphutils@be2fc20a823f6f4f54824653104b3f207846f715/sigma.js/sigma.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.exporters.svg.min.js" integrity="sha512-IbAQlrGEnp55edX0a9RwxGGS1F5qfmPlukd1zjrxbPEuIWwgTMrryaDTdL7zugFsWczRAd2Hq1C5L17jJGr27A=="
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.layout.forceAtlas2.min.js" integrity="sha512-RuRd3WCUb6GCaiaEJ2UDkaVblIVAHJNLaDG6Df2OWpzg4kQurQqh/GC/a3eFSopnRiNrwePMFvI13pbYZ1WnAw=="
@@ -52,7 +51,7 @@
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.plugins.filter.min.js" integrity="sha512-mu+dW4fJz+3b5WxfWUdwgHOvmDp5v7+8wa6zMGeQ40kVQt45l5NYRVuFIgdPtlS6IBThjKyCcEWz1TXMtUcnuQ=="
     crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/gh/mkturkcan/neuronlp.graphutils/js/graphvis.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/mkturkcan/neuronlp.graphutils@be2fc20a823f6f4f54824653104b3f207846f715/js/graphvis.js"></script>
   <script data-main="js/NeuroNLP" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
 
   <link rel="stylesheet" type="text/css" href="/lib/css/ffbo.theme_settings.css">
@@ -521,51 +520,48 @@
                    Click on a neuron to display its detailed information in this
                    panel.
             </div> -->
-          <div id="info-intro" class="ffbo-intro">
-            <h4>This NeuroNLP application contains data from <a href="http://flycircuit.tw">FlyCircuit 1.2</a> datasets.</h4>
-            <p>Medulla 7 column dataset has been moved to <a href="http://medulla.neuronlp.fruitflybrain.org">NeuronNLP.Medulla</a>.</p>
-            <p></p>
-            <h4>What is NeuroNLP?</h4>
-            <p>
-              NeuroNLP provides a modern web-based portal for navigating fruit fly brain circuit data. It enables in-depth exploration
-              and investigation of brain structure, using intuitive plain English queries, such as
-              <a onclick="window.NLPsearch('show glutamatergic local neurons in the left antennal lobe')"><br><br><u style="font-style:italic">"show
-                  glutamatergic local neurons in the left antennal lobe".</u></br></br></a>
-              NeuroNLP can be accessed from any browser supporting WebGL. Remember to check it out on your smartphone!
-            </p>
-            <h4>Overview</h4>
-            <p>
-              Check out the Overview for a brief description of the layout and menus.
-            </p>
-            <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-getting-started')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-getting-started')"
-              onclick="NeuroNLPUI.onShowOverview()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right"
-                aria-hidden="true"></i> Open Overview!</a>
-            <br><br>
-            <h4>Quick Query Reference</h4>
-            <p>
-              Check out the Quick Query Reference to be able to query data easily!
-            </p>
-            <a onmouseover="NeuroNLPUI.mimicMouseOver('#info_btn')" onmouseout="NeuroNLPUI.mimicMouseOut('#info_btn')" onclick="NeuroNLPUI.onShowReference()"
-              class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Open Query
-              Reference!</a>
-            <br><br>
-            <h4>News</h4>
-            <p>
-              Updates and announcements for <u style="text-decoration:none; font-family:'Rajdhani',sans-serif; color:grey;">NeuroNLP.FlyCircuit</u>.
-            </p>
-            <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-getting-started')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-getting-started')"
-              onclick="NeuroNLPUI.onShowAnnounce()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right"
-                aria-hidden="true"></i> See What's New!</a>
-            <br><br>
-            <h4>Quick Demos</h4>
-            <p>
-              Want to get started? Go check out some real-time "Demos" for NLP queries and GUI usage!
-            </p>
-            <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-getting-started')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-getting-started')"
-              onclick="NeuroNLPUI.onShowDemo()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right"
-                aria-hidden="true"></i> Try Demos!</a>
-            <br><br>
-            <!--
+            <div id="info-intro" class="ffbo-intro">
+              <h4>What is NeuroNLP?</h4>
+              <p>
+                NeuroNLP provides a modern web-based portal for navigating fruit fly brain circuit data. It enables in-depth exploration
+                and investigation of brain structure, using intuitive plain English queries, such as
+                <a onclick="window.NLPsearch('show glutamatergic local neurons in the left antennal lobe')"><br><br><u style="font-style:italic">"show
+                    glutamatergic local neurons in the left antennal lobe".</u></br></br></a>
+                NeuroNLP can be accessed from any browser supporting WebGL. Remember to check it out on your smartphone!
+              </p>
+              <h4>Overview</h4>
+              <p>
+                Check out the Overview for a brief description of the layout and menus.
+              </p>
+              <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-getting-started')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-getting-started')"
+                onclick="NeuroNLPUI.onShowOverview()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right"
+                  aria-hidden="true"></i> Open Overview!</a>
+              <br><br>
+              <h4>Quick Query Reference</h4>
+              <p>
+                Check out the Quick Query Reference to be able to query data easily!
+              </p>
+              <a onmouseover="NeuroNLPUI.mimicMouseOver('#info_btn')" onmouseout="NeuroNLPUI.mimicMouseOut('#info_btn')" onclick="NeuroNLPUI.onShowReference()"
+                class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Open Query
+                Reference!</a>
+              <br><br>
+              <h4>News</h4>
+              <p>
+                Updates and announcements for <u style="text-decoration:none; font-family:'Rajdhani',sans-serif; color:grey;">NeuroNLP.FlyCircuit</u>.
+              </p>
+              <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-getting-started')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-getting-started')"
+                onclick="NeuroNLPUI.onShowAnnounce()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right"
+                  aria-hidden="true"></i> See What's New!</a>
+              <br><br>
+              <h4>Quick Demos</h4>
+              <p>
+                Want to get started? Go check out some real-time "Demos" for NLP queries and GUI usage!
+              </p>
+              <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-getting-started')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-getting-started')"
+                onclick="NeuroNLPUI.onShowDemo()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right"
+                  aria-hidden="true"></i> Try Demos!</a>
+              <br><br>
+              <!--
               <h4>Tutorial Video</h4>
               <p>
                 Want to learn more? Go watch the "Tutorial Video" covering details and features of NeuroNLP!
@@ -673,15 +669,6 @@
                   By combining various attributes of query targets, you can create some very powerful queries. Click on the
                   info button to the left of the search bar for more information.
                 </p>
-                <!--
-                    <ul>Here are a list of example queries you can try:
-                    <li><span style="color: #88CDF5">show glutamatergic neurons in the left antennal lobe</li>
-                    <li><span style="color: #88CDF5">add dopaminergic neurons in the right MB </li>
-                    <li><span style="color: #88CDF5">add postsynaptic MBONs with at least 50 synapses</li>
-                    <li><span style="color: #88CDF5">show neurons that has dendrites in medulla and axons in optu</li>
-                  </ul>
-                  <blockquote><p> Note: <i> show </i> neurons will reset workspace (clear existing neurons, reset viewing angle). While <i>add</i> will preserve the current workspace. </p></blockquote>
-                  -->
               </article>
               <images></images>
             </band>
@@ -870,8 +857,6 @@
                   A neurons</span>, then <span style="color: #97ba67">add B neurons</span>, <span style="color: #97ba67">color
                   red</span> will color B neurons red. <span style="color: #97ba67">color A neurons 0000FF</span> will then
                 <span style="color: #97ba67">color A neurons blue</span>.</p>
-              <!-- <blockquote><p> Note: <i> show </i> neurons will reset workspace (clear existing neurons, reset viewing angle). While <i>add</i> will preserve the current workspace. </p></blockquote> -->
-
             </article>
             <images></images>
           </band>
