@@ -138,7 +138,12 @@ require([
     var infoPanel = new InfoPanel("info-panel");
     var dynamicNeuronMenu = new FFBODynamicMenu({ singleObjSel: '#single-neu > .mm-listview', pinnedObjSel: '#single-pin > .mm-listview', removable: true, pinnable: true });
     var dynamicNeuropilMenu = new FFBODynamicMenu({ singleObjSel: '#toggle_neuropil > .mm-listview', compare: 'LeftRight' });
-    var ffbomesh = new FFBOMesh3D('vis-3d', undefined, { "globalCenter": { 'x': 0, 'y': -250, 'z': 0 } });
+    var ffbomesh = new FFBOMesh3D('vis-3d', undefined,
+      { "globalCenter": { 'x': 0, 'y': -250, 'z': 0 },
+      "enablePositionReset": true,
+      "resetPosition": { 'x': 238.5652665362618, 'y': -57.231396545007044, 'z': -4015.343735317172 },
+      "upSign": -1.,
+    });
     var tagsPanel = new Tags('tagsMenu');
     var client = new FFBOClient();
     var visualizationSettings = new FFBOVisualizationSettings(ffbomesh);
@@ -155,7 +160,7 @@ require([
       queryLoad = true;
     }
 
-
+    //DO NOT MODIFY THE FOLLOWING LINE, IT WILL BE AUTO CONFIGED USING CONFIG.INI.
     client.startConnection("guest", "guestpass", "ws://localhost:8081/ws");
 
     //ffbomesh.settings.neuron3d = 1;
