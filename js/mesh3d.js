@@ -109,7 +109,7 @@ moduleExporter(
 		defaultOpacity: 0.7,
 		synapseOpacity: 1.0,
 		meshOscAmp: 0.0,
-		nonHighlightableOpacity: 0.1,
+		nonHighlightableOpacity: 0.0,
 		lowOpacity: 0.1,
 		pinOpacity: 0.9,
 		pinLowOpacity: 0.15,
@@ -126,7 +126,8 @@ moduleExporter(
 		neuron3dMode: 1,
 		synapseMode: 1,
 		meshWireframe: true,
-		backgroundColor: undefined,
+		backgroundColor: '#260226',
+        sceneBackgroundColor: '#030305',
 	    });
 
 	    this.settings.toneMappingPass = new PropertyManager({brightness: 0.95});
@@ -283,8 +284,11 @@ moduleExporter(
 	    }).bind(this), 'brightness');
 
 	    this.settings.on('change', (function (e) {
-		this.setBackgroundColor(e.value);
+		    this.setBackgroundColor(e.value);
 	    }).bind(this), 'backgroundColor');
+		this.settings.on('change', (function (e) {
+			this.setSceneBackgroundColor(e.value);
+		}).bind(this), 'sceneBackgroundColor');
 
 	    if ( data != undefined && Object.keys(data).length > 0)
 		this.addJson( data );
@@ -335,11 +339,16 @@ moduleExporter(
 	}
 
 	FFBOMesh3D.prototype.initRenderer = function () {
-	    renderer = new THREE.WebGLRenderer({'logarithmicDepthBuffer': true});
+	    renderer = new THREE.WebGLRenderer({'logarithmicDepthBuffer': true, alpha: true});
 	    renderer.setPixelRatio( window.devicePixelRatio );
 	    renderer.setSize( this.container.clientWidth, this.container.clientHeight );
+		renderer.setClearColor( 0x000000, 0 );
 	    this.container.appendChild(renderer.domElement);
 	    return renderer;
+	}
+
+	FFBOMesh3D.prototype.setSceneBackgroundColor = function (color) {
+		this.scenes.back.background.set(color);
 	}
 
 	FFBOMesh3D.prototype.initControls = function () {
