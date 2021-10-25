@@ -163,6 +163,36 @@ moduleExporter(
       });
     }
 
+    if(Modernizr.inputtypes.color)
+    $("#vis-background-color").attr("type", "color");
+else
+    $("#vis-background-color").attr("type", "text");
+
+this.setColorPickerSceneBackground = function (c) {
+  $("#vis-background-color-wrapper").css("background-color", c);
+  $("#vis-background-color").attr("value", c);
+}
+
+if (!Modernizr.inputtypes.color) {
+  $("#vis-background-color").spectrum({
+    showInput: true,
+    showPalette: true,
+    showSelectionPalette: true,
+    showInitial: true,
+    localStorageKey: "spectrum.neuronlp.back",
+    showButtons: false,
+    move: function(c){
+      var ch = c.toHexString();
+      ffbomesh.settings.sceneBackgroundColor = ch;
+    }
+  });
+} else {
+  $('#vis-background-color').on('change', function(){
+    var ch = $('#vis-background-color')[0].value;
+    ffbomesh.settings.sceneBackgroundColor = ch;
+  });
+}
+
     $('#vis-background-opacity')
       .bootstrapSlider({value: ffbomesh.settings.backgroundOpacity})
       .on("change", function(e){
@@ -373,6 +403,11 @@ moduleExporter(
     ffbomesh.settings.on('change', function(e) {
       _this.setColorPickerBackground(e.value);
     }, 'backgroundColor');
+
+    ffbomesh.settings.on('change', function(e) {
+      _this.setColorPickerSceneBackground(e.value);
+    }, 'sceneBackgroundColor');
+
 
   }
   return FFBOVisualizationSettings;
