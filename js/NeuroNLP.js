@@ -174,7 +174,9 @@ require([
               var morphology = nodes[edges[i][1]];
               if (morphology['class'] == 'MorphologyData') {
                 for (var key1 in morphology) {
-                  unit[key1] = morphology[key1];
+                  if (key1 != 'class') {
+                    unit[key1] = morphology[key1];
+                  }
                 }
                 morph_data[rid] = unit;
                 break;
