@@ -168,21 +168,33 @@
                   <li>
                     <h4> Neuron Rendering </h4>
                   </li>
-                  <li class="vis-settings-sub">
+                  <!-- <li class="vis-settings-sub">
                     <a href="#">
                       <div class="wrap">3D Neuron Rendering *</div>
                       <input id="vis-3d-rendering" type="checkbox" class="Toggle" />
                     </a>
-                  </li>
+                  </li> -->
                   <li id="vis-3d-mode-option" class="vis-settings-sub">
                     <a>
-                      <div>3D Neuron Rendering Mode *</div>
+                      <div>Rendering Mode *</div>
+                      <input type="radio" name="mode3d" id="rd0" value="0"/>
+                      <label for="rd0">Lines</label><br/>
                       <input checked="checked" type="radio" name="mode3d" id="rd1" value="1"/>
-                      <label for="rd1">Cylinders</label><br/>
+		                  <label for="rd1">Lines with Width</label><br/>
                       <input type="radio" name="mode3d" id="rd2" value="2"/>
-                      <label for="rd2">Cylinders&Spheres(Intensive)</label><br/>
-                      <input type="radio" name="mode3d" id="rd3" value="3"/>
-                      <label for="rd3">Cylinders&Tubes(Intensive+)</label>
+                      <label for="rd2">Spheres</label><br/>
+		                  <input type="radio" name="mode3d" id="rd3" value="3"/>
+                      <label for="rd3">Cylinders</label><br/>
+                      <input type="radio" name="mode3d" id="rd4" value="4"/>
+                      <label for="rd4">Cylinders&Spheres(Intensive)</label><br/>
+                      <input type="radio" name="mode3d" id="rd5" value="5"/>
+                      <label for="rd5">Cylinders&Tubes(Intensive+)</label>
+                    </a>
+                  </li>
+                  <li class="vis-settings-sub" id="vis-linewidth_enclose">
+                    <a>
+                      <div>Linewidth</div>
+                      <input id="vis-linewidth" data-slider-id='def_width_slider' class="slider" type="text" data-slider-min="0.1" data-slider-max="10.0" data-slider-step="0.1" data-slider-value="2.5"/>
                     </a>
                   </li>
                   <li class="vis-settings-sub">
@@ -420,30 +432,36 @@
                       <input type="checkbox" id="vis-fxaa" class="Toggle"/>
                     </a>
                   </li>
-                  <li class="vis-settings-sub">
+                  <!-- <li class="vis-settings-sub">
                     <a>
                       <div>Brightness</div>
-                      <input id="vis-tonemappingbright" data-slider-id='tm_brght_slider' type="text" data-slider-min="0.01" data-slider-max="0.99" data-slider-step="0.01" data-slider-value="0.95"/>
+                      <input id="vis-brightness" data-slider-id='tm_brght_slider' type="text" data-slider-min="0.01" data-slider-max="10" data-slider-step="0.01" data-slider-value="1.0"/>
                     </a>
-                  </li>
-                  <li>
+                  </li> -->
+                  <!-- <li>
                     <a>
                       <h5>Bloom Pass Settings</h5>
                     </a>
-                  </li>
+                  </li> -->
                   <li class="vis-settings-sub">
                     <a>
-                      <div>Radius</div>
+                      <div>Bloom Pass</div>
+                      <input type="checkbox" id="vis-bloom" class="Toggle"/>
+                    </a>
+                  </li>
+                  <li class="vis-settings-sub" id="vis-bloom-radius_enclose">
+                    <a>
+                      <div>Bloom Pass Radius</div>
                       <input id="vis-bloom-radius" data-slider-id='blm_rad_slider' type="text" data-slider-min="0.05" data-slider-max="10.0" data-slider-step="0.05" data-slider-value="0.8"/>
                     </a>
                   </li>
-                  <li class="vis-settings-sub">
+                  <li class="vis-settings-sub" id="vis-bloom-threshold_enclose">
                     <a>
                       <div>Threshold</div>
                       <input id="vis-bloom-threshold" data-slider-id='blm_th_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
                     </a>
                   </li>
-                  <li class="vis-settings-sub">
+                  <li class="vis-settings-sub" id="vis-bloom-strength_enclose">
                     <a>
                       <div>Strength</div>
                       <input id="vis-bloom-strength" data-slider-id='blm_st_slider' type="text" data-slider-min="0" data-slider-max="2.0" data-slider-step="0.01" data-slider-value="0.8"/>

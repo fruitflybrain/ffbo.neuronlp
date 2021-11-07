@@ -20,21 +20,38 @@ moduleExporter(
   var FFBOVisualizationSettings = function(ffbomesh) {
 
     var _this = this;
-    $('#vis-3d-rendering')[0].checked = ffbomesh.settings.neuron3d;
-    if(!ffbomesh.settings.neuron3d)
-        $("#vis-3d-mode-option").hide()
+    // $('#vis-3d-rendering')[0].checked = ffbomesh.settings.neuron3d;
+    // if(!ffbomesh.settings.neuron3d)
+    //     $("#vis-3d-mode-option").hide()
 
-    $('#vis-3d-rendering').change(function(){
-        ffbomesh.settings.neuron3d = !ffbomesh.settings.neuron3d;
-        if (ffbomesh.settings.neuron3d)
-          $("#vis-3d-mode-option").show("slide", { direction: "right" }, 800);
-        else
-          $("#vis-3d-mode-option").hide("slide", { direction: "right" }, 800);
-    });
+    // $('#vis-3d-rendering').change(function(){
+    //     ffbomesh.settings.neuron3d = !ffbomesh.settings.neuron3d;
+    //     if (ffbomesh.settings.neuron3d)
+    //       $("#vis-3d-mode-option").show("slide", { direction: "right" }, 800);
+    //     else
+    //       $("#vis-3d-mode-option").hide("slide", { direction: "right" }, 800);
+    // });
+
+    if(ffbomesh.settings.neuron3dMode != 1) {
+      $("#vis-linewidth_enclose").hide();
+    }
+
+    $("#rd"+ffbomesh.settings.neuron3dMode)[0].checked = true;
 
     $('input[type=radio][name=mode3d]').change(function(){
         ffbomesh.settings.neuron3dMode = parseInt($(this).val());
+        if(ffbomesh.settings.neuron3dMode != 1) {
+          $("#vis-linewidth_enclose").hide("slide", { direction: "right" }, 800);
+        }else{
+          $("#vis-linewidth_enclose").show("slide", { direction: "right" }, 800);
+        }
     });
+
+    $('#vis-linewidth')
+      .bootstrapSlider({value: ffbomesh.settings.linewidth})
+      .on("change", function(e){
+        ffbomesh.settings.linewidth = e.value.newValue;
+      });
 
     $('#vis-default-nerite-radius')
       .bootstrapSlider({value: ffbomesh.settings.defaultRadius})
@@ -287,12 +304,36 @@ if (!Modernizr.inputtypes.color) {
         ffbomesh.settings.effectFXAA.enabled = !ffbomesh.settings.effectFXAA.enabled;
     });
 
-    $('#vis-tonemappingbright')
-      .bootstrapSlider({value: ffbomesh.settings.toneMappingPass.brightness})
-      .on("change", function(e){
-        ffbomesh.settings.toneMappingPass.brightness = e.value.newValue;
-      });
+    // $('#vis-tonemappingbright')
+    //   .bootstrapSlider({value: ffbomesh.settings.toneMappingPass.brightness})
+    //   .on("change", function(e){
+    //     ffbomesh.settings.toneMappingPass.brightness = e.value.newValue;
+    //   });
+    // $('#vis-brightness')
+    //   .bootstrapSlider({value: ffbomesh.settings.brightness})
+    //   .on("change", function(e){
+    //     ffbomesh.settings.brightness = e.value.newValue;
+    //   });
 
+    $('#vis-bloom')[0].checked = ffbomesh.settings.bloomPass.enabled;
+    if(!ffbomesh.settings.bloomPass.enabled) {
+      $("#vis-bloom-radius_enclose").hide();
+      $("#vis-bloom-threshold_enclose").hide();
+      $("#vis-bloom-strength_enclose").hide();
+    }
+    $('#vis-bloom').change(function(){
+      ffbomesh.settings.bloomPass.enabled = !ffbomesh.settings.bloomPass.enabled;
+      if (ffbomesh.settings.bloomPass.enabled){
+        $("#vis-bloom-radius_enclose").show("slide", { direction: "right" }, 800);
+        $("#vis-bloom-threshold_enclose").show("slide", { direction: "right" }, 800);
+        $("#vis-bloom-strength_enclose").show("slide", { direction: "right" }, 800);
+      } else {
+        $("#vis-bloom-radius_enclose").hide("slide", { direction: "right" }, 800);
+        $("#vis-bloom-threshold_enclose").hide("slide", { direction: "right" }, 800);
+        $("#vis-bloom-strength_enclose").hide("slide", { direction: "right" }, 800);
+      }
+    });
+        
     $('#vis-bloom-radius')
       .bootstrapSlider({value: ffbomesh.bloomPass.radius})
       .on("change", function(e){
@@ -343,7 +384,7 @@ if (!Modernizr.inputtypes.color) {
 
     var postProcessing2Dom = {
       'backrenderSSAO': 'vis-ssao',
-      'effectFXAA': 'vis-fxaa'
+      'effectFXAA': 'vis-fxaa',
     }
 
     var settingCallback = function (key) {
@@ -365,18 +406,33 @@ if (!Modernizr.inputtypes.color) {
     }, ['intensity', 'posAngle1', 'posAngle2']);
 
     ffbomesh.settings.on('change', function (e) {
-      $('#vis-3d-rendering')[0].checked = e.value;
-      if (ffbomesh.settings.neuron3d)
-        $("#vis-3d-mode-option").show("slide", { direction: "right" }, 800);
-      else
-        $("#vis-3d-mode-option").hide("slide", { direction: "right" }, 800);
-    }, 'neuron3d');
-
+      ("#rd"+ffbomesh.settings.neuron3dMode)[0].checked = e.value;
+      if(ffbomesh.settings.neuron3dMode != 1) {
+        $("#vis-linewidth_enclose").hide("slide", { direction: "right" }, 800);
+      }else{
+        $("#vis-linewidth_enclose").show("slide", { direction: "right" }, 800);
+      }
+    }, 'neuron3dMode');
 
     ffbomesh.settings.bloomPass.on('change', function(e) {
       var dom = 'vis-bloom';
       $(`#${dom}-${e.prop}`).bootstrapSlider('setValue', e.value, true);
     }, ['threshold', 'radius', 'strength']);
+
+    ffbomesh.settings.bloomPass.on('change', function(e) {
+      var dom = 'vis-bloom';
+      $('#vis-bloom')[0].checked = e.value;
+      if (ffbomesh.settings.bloomPass.enabled){
+        $("#vis-bloom-radius_enclose").show("slide", { direction: "right" }, 800);
+        $("#vis-bloom-threshold_enclose").show("slide", { direction: "right" }, 800);
+        $("#vis-bloom-strength_enclose").show("slide", { direction: "right" }, 800);
+      } else {
+        $("#vis-bloom-radius_enclose").hide("slide", { direction: "right" }, 800);
+        $("#vis-bloom-threshold_enclose").hide("slide", { direction: "right" }, 800);
+        $("#vis-bloom-strength_enclose").hide("slide", { direction: "right" }, 800);
+      }
+    }, ['enabled']);
+
 
     ffbomesh.settings.on('change', function (e) {
       if (!postProcessing2Dom.hasOwnProperty(e.path[0]))
@@ -392,13 +448,17 @@ if (!Modernizr.inputtypes.color) {
       $(`#${dom}-${e.prop}`)[0].checked = e.value;
     }, 'track');
 
-    ffbomesh.settings.toneMappingPass.on('change', function(e) {
-      $('#vis-tonemappingbright').bootstrapSlider('setValue', e.value, true);
-    }, 'brightness');
+    // ffbomesh.settings.toneMappingPass.on('change', function(e) {
+    //   $('#vis-tonemappingbright').bootstrapSlider('setValue', e.value, true);
+    // }, 'brightness');
 
-    ffbomesh.settings.on('change', function(e) {
-      $('input[type=radio][name=mode3d]')[e.value].checked = true;
-    }, 'neuron3dMode');
+    // ffbomesh.settings.on('change', function(e) {
+    //   $('#vis-brightness').bootstrapSlider('setValue', e.value, true);
+    // }, 'brightness');
+
+    // ffbomesh.settings.on('change', function(e) {
+    //   $('input[type=radio][name=mode3d]')[e.value].checked = true;
+    // }, 'neuron3dMode');
 
     ffbomesh.settings.on('change', function(e) {
       _this.setColorPickerBackground(e.value);
