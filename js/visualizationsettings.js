@@ -32,18 +32,29 @@ moduleExporter(
     //       $("#vis-3d-mode-option").hide("slide", { direction: "right" }, 800);
     // });
 
-    if(ffbomesh.settings.neuron3dMode != 1) {
-      $("#vis-linewidth_enclose").hide();
+    if(ffbomesh.settings.neuron3dMode != 2) {
+      $("#vis-linewidth_enclose").hide("slide", { direction: "right" }, 800);
+    }
+
+    if(ffbomesh.settings.neuron3dMode >= 1 && ffbomesh.settings.neuron3dMode <= 2) {
+      $("#vis-default-nerite-radius_enclose").hide();
     }
 
     $("#rd"+ffbomesh.settings.neuron3dMode)[0].checked = true;
 
     $('input[type=radio][name=mode3d]').change(function(){
         ffbomesh.settings.neuron3dMode = parseInt($(this).val());
-        if(ffbomesh.settings.neuron3dMode != 1) {
-          $("#vis-linewidth_enclose").hide("slide", { direction: "right" }, 800);
+
+        if(ffbomesh.settings.neuron3dMode != 2) {
+            $("#vis-linewidth_enclose").hide("slide", { direction: "right" }, 800);
         }else{
-          $("#vis-linewidth_enclose").show("slide", { direction: "right" }, 800);
+            $("#vis-linewidth_enclose").show("slide", { direction: "right" }, 800);
+        }
+
+        if(ffbomesh.settings.neuron3dMode >= 1 && ffbomesh.settings.neuron3dMode <= 2) {
+            $("#vis-default-nerite-radius_enclose").hide("slide", { direction: "right" }, 800);
+        }else{
+            $("#vis-default-nerite-radius_enclose").show("slide", { direction: "right" }, 800);
         }
     });
 
@@ -407,10 +418,16 @@ if (!Modernizr.inputtypes.color) {
 
     ffbomesh.settings.on('change', function (e) {
       ("#rd"+ffbomesh.settings.neuron3dMode)[0].checked = e.value;
-      if(ffbomesh.settings.neuron3dMode != 1) {
+      if(ffbomesh.settings.neuron3dMode != 2) {
         $("#vis-linewidth_enclose").hide("slide", { direction: "right" }, 800);
       }else{
         $("#vis-linewidth_enclose").show("slide", { direction: "right" }, 800);
+      }
+
+      if(ffbomesh.settings.neuron3dMode >= 1 && ffbomesh.settings.neuron3dMode <= 2) {
+          $("#vis-default-nerite-radius_enclose").hide("slide", { direction: "right" }, 800);
+      }else{
+          $("#vis-default-nerite-radius_enclose").show("slide", { direction: "right" }, 800);
       }
     }, 'neuron3dMode');
 

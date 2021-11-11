@@ -177,18 +177,20 @@
                   <li id="vis-3d-mode-option" class="vis-settings-sub">
                     <a>
                       <div>Rendering Mode *</div>
-                      <input type="radio" name="mode3d" id="rd0" value="0"/>
-                      <label for="rd0">Lines</label><br/>
-                      <input checked="checked" type="radio" name="mode3d" id="rd1" value="1"/>
-		                  <label for="rd1">Lines with Width</label><br/>
+                      <input checked="checked" type="radio" name="mode3d" id="rd0" value="0"/>
+                      <label for="rd0">Default</label><br/>
+                      <input type="radio" name="mode3d" id="rd1" value="1"/>
+                      <label for="rd1">Lines (fastest)</label><br/>
                       <input type="radio" name="mode3d" id="rd2" value="2"/>
-                      <label for="rd2">Spheres</label><br/>
-		                  <input type="radio" name="mode3d" id="rd3" value="3"/>
-                      <label for="rd3">Cylinders</label><br/>
-                      <input type="radio" name="mode3d" id="rd4" value="4"/>
-                      <label for="rd4">Cylinders&Spheres(Intensive)</label><br/>
+		                  <label for="rd2">Lines with Width (fast)</label><br/>
+                      <input type="radio" name="mode3d" id="rd3" value="3"/>
+                      <label for="rd3">Spheres</label><br/>
+		                  <input type="radio" name="mode3d" id="rd4" value="4"/>
+                      <label for="rd4">Cylinders</label><br/>
                       <input type="radio" name="mode3d" id="rd5" value="5"/>
-                      <label for="rd5">Cylinders&Tubes(Intensive+)</label>
+                      <label for="rd5">Cylinders&Spheres(Intensive)</label><br/>
+                      <input type="radio" name="mode3d" id="rd6" value="6"/>
+                      <label for="rd6">Cylinders&Tubes(Intensive+)</label>
                     </a>
                   </li>
                   <li class="vis-settings-sub" id="vis-linewidth_enclose">
@@ -197,7 +199,7 @@
                       <input id="vis-linewidth" data-slider-id='def_width_slider' class="slider" type="text" data-slider-min="0.1" data-slider-max="10.0" data-slider-step="0.1" data-slider-value="2.5"/>
                     </a>
                   </li>
-                  <li class="vis-settings-sub">
+                  <li class="vis-settings-sub"  id="vis-default-nerite-radius_enclose">
                     <a>
                       <div>Default Neurite Radius *</div>
                       <input id="vis-default-nerite-radius" data-slider-id='def_rad_slider' class="slider" type="text" data-slider-min="0" data-slider-max="2.0" data-slider-step="0.01" data-slider-value="0.8"/>
@@ -259,19 +261,19 @@
                   <li class="vis-settings-sub">
                     <a>
                       <div>Horizontal Angle</div>
-                      <input id="vis-frontSpot-1-posAngle1" data-slider-id="frontSpot_1_posAngle1" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/>
+                      <input id="vis-frontSpot-1-posAngle1" data-slider-id="frontSpot_1_posAngle1" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="0"/>
                     </a>
                   </li>
                   <li class="vis-settings-sub">
                     <a>
                       <div>Vertical Angle</div>
-                      <input id="vis-frontSpot-1-posAngle2" data-slider-id="frontSpot_1_posAngle2" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/>
+                      <input id="vis-frontSpot-1-posAngle2" data-slider-id="frontSpot_1_posAngle2" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="0"/>
                     </a>
                   </li>
                   <li class="vis-settings-sub">
                     <a>
                       <div>Intensity</div>
-                      <input id="vis-frontSpot-1-intensity" data-slider-id="frontSpot_1_intensity" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="0.1" data-slider-value="4"/>
+                      <input id="vis-frontSpot-1-intensity" data-slider-id="frontSpot_1_intensity" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="0.1" data-slider-value="1"/>
                     </a>
                   </li>
                   <li class="vis-settings-sub">
@@ -288,19 +290,19 @@
                   <li class="vis-settings-sub">
                     <a>
                       <div>Horizontal Angle</div>
-                      <input id="vis-frontSpot-2-posAngle1" data-slider-id="frontSpot_2_posAngle1" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/>
+                      <input id="vis-frontSpot-2-posAngle1" data-slider-id="frontSpot_2_posAngle1" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="0"/>
                     </a>
                   </li>
                   <li class="vis-settings-sub">
                     <a>
                       <div>Vertical Angle</div>
-                      <input id="vis-frontSpot-2-posAngle2" data-slider-id="frontSpot_2_posAngle2" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/>
+                      <input id="vis-frontSpot-2-posAngle2" data-slider-id="frontSpot_2_posAngle2" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="0"/>
                     </a>
                   </li>
                   <li class="vis-settings-sub">
                     <a>
                       <div>Intensity</div>
-                      <input id="vis-frontSpot-2-intensity" data-slider-id="frontSpot_2_intensity" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="0.1" data-slider-value="4"/>
+                      <input id="vis-frontSpot-2-intensity" data-slider-id="frontSpot_2_intensity" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="0.1" data-slider-value="0"/>
                     </a>
                   </li>
                   <li class="vis-settings-sub">
@@ -413,8 +415,8 @@
                   </li>
                   <li class="vis-settings-sub">
                     <a>
-                      <div>Synapse Size * </div>
-                      <input id="vis-default-synapse-radius" data-slider-id='def_syn_slider' class="slider" type="radio" data-slider-min="0.1" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
+                      <div>Synapse Size</div>
+                      <input id="vis-default-synapse-radius" data-slider-id='def_syn_slider' class="slider" type="radio" data-slider-min="0.1" data-slider-max="2.0" data-slider-step="0.01" data-slider-value="1.0"/>
                     </a>
                   </li>
                   <li class="vis-settings-sub">
