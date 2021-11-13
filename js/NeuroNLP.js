@@ -5,6 +5,9 @@
 // except for 'app' ones, which are in a sibling
 // directory.
 
+var dataset = 'hemibrain';
+var loadcelltype = undefined;
+
 define('three', ['https://cdn.jsdelivr.net/gh/mrdoob/three.js@r134/build/three.min.js'], function (THREE) {
   window.THREE = THREE;
   return THREE;
@@ -154,6 +157,7 @@ require([
     var infoPanel = new InfoPanel("info-panel");
     var dynamicNeuronMenu = new FFBODynamicMenu({ singleObjSel: '#single-neu > .mm-listview', pinnedObjSel: '#single-pin > .mm-listview', removable: true, pinnable: true });
     var dynamicNeuropilMenu = new FFBODynamicMenu({ singleObjSel: '#toggle_neuropil > .mm-listview', compare: 'LeftRight' });
+    var dynamicCellTypeMenu = new FFBODynamicMenu({ singleObjSel: '#toggle_celltype > .mm-listview', compare: 'LeftRight' });
     var ffbomesh = new FFBOMesh3D('vis-3d', undefined, { "globalCenter": { 'x': 0, 'y': -250, 'z': 0 } });
     var tagsPanel = new Tags('tagsMenu');
     var client = new FFBOClient();
@@ -408,6 +412,10 @@ require([
     dynamicNeuropilMenu.dispatch.highlight = function (id) { ffbomesh.highlight(id, true) };
     dynamicNeuropilMenu.dispatch.resume = function (id) { ffbomesh.highlight(undefined) };
 
+    // var dynapmicCellTypeNeuropilMenu = {};
+    // dynapmicCellTypeNeuropilMenu['Test'] = dynamicCellTypeMenu.addNeuropil('Test');
+    // window.dynapmicCellTypeNeuropilMenu = dynapmicCellTypeNeuropilMenu;
+
     ffbomesh.on('add',
       function (e) {
         if (!e.value.background)
@@ -509,28 +517,7 @@ require([
     ffbomesh.on('takeScreenshot', (function () { ffbomesh._take_screenshot = true; }));
     ffbomesh.on('showInfo', function () { window.NeuroNLPUI.GUIinfoOverlay.show(); });
 
-    $.getJSON("/data/config.json", function (json) {
-      ffbomesh.addJson({
-        ffbo_json: json,
-        showAfterLoadAll: true
-      }).then(function () {
-
-        var c = json[Object.keys(json)[0]].color;
-        var rgb = parseInt(c.b * 255) | (parseInt(c.g * 255) << 8) | (parseInt(c.r * 255) << 16);
-        var hex = '#' + (0x1000000 + rgb).toString(16).slice(1);
-        visualizationSettings.setColorPickerBackground(hex);
-        if (!tagLoad) $('#ui-blocker').hide();
-        srchInput.focus();
-        if (client.loginStatus.connected) {
-          tagsPanel.retrieveTag(searchParams.get('tag'))
-        } else {
-          client.loginStatus.on("change", function () {
-            if (tagLoad) tagsPanel.retrieveTag(searchParams.get('tag'))
-            if (queryLoad) NLPsearch(searchParams.get('query'))
-          }, "connected");
-        }
-      });
-    });
+    
     demoLoad = false;
     ffbomesh.settings.defaultSynapseRadius = 0.4;
     $(document).ready(function () {
@@ -599,6 +586,42 @@ require([
       })
       $('#ui-blocker').show();
       client.getConnectivity(function () { $('#ui-blocker').hide(); });
+    });
+
+    window.NeuroNLPUI.loadAllCellTypes = function() {
+      var dynapmicCellTypeNeuropilMenu = {};
+      $.getJSON("/data/types_in_neuropils.json", function (json) {
+        for (var key in json) {
+          dynapmicCellTypeNeuropilMenu[key] = dynamicCellTypeMenu.addNeuropil(key);
+          dynapmicCellTypeNeuropilMenu[key].dispatch.addType = function (name) { client.addType(name, { success: dataCallback }) };
+          for (var neuronType of json[key] ) {
+            dynapmicCellTypeNeuropilMenu[key].addCellType(neuronType);
+          }
+        }
+      });
+    }
+
+    $.getJSON("/data/config.json", function (json) {
+      ffbomesh.addJson({
+        ffbo_json: json,
+        showAfterLoadAll: true
+      }).then(function () {
+
+        var c = json[Object.keys(json)[0]].color;
+        var rgb = parseInt(c.b * 255) | (parseInt(c.g * 255) << 8) | (parseInt(c.r * 255) << 16);
+        var hex = '#' + (0x1000000 + rgb).toString(16).slice(1);
+        visualizationSettings.setColorPickerBackground(hex);
+        if (!tagLoad) $('#ui-blocker').hide();
+        srchInput.focus();
+        if (client.loginStatus.connected) {
+          tagsPanel.retrieveTag(searchParams.get('tag'))
+        } else {
+          client.loginStatus.on("change", function () {
+            if (tagLoad) tagsPanel.retrieveTag(searchParams.get('tag'))
+            if (queryLoad) NLPsearch(searchParams.get('query'))
+          }, "connected");
+        }
+      });
     });
   });
 

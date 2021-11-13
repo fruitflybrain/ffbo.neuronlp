@@ -75,8 +75,14 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function (autobahn
         client.notifyError('NeuroArch server lost.');
       }
       if (naServerID == undefined && Object.keys(serverInfo.na).length) {
-        naServerID = Object.keys(serverInfo.na)[0];
-        client.notifySuccess('NeuroArch server detected.')
+        for(var key of Object.keys(serverInfo.na)) {
+            if(serverInfo.na[key]['dataset'] === dataset) {
+                naServerID = key;
+            }
+        }
+        if(naServerID !== undefined) {
+          client.notifySuccess('NeuroArch server detected.')
+        }
       }
 
     }
@@ -89,8 +95,14 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function (autobahn
         client.notifyError('NLP server lost');
       }
       if (nlpServerID == undefined && Object.keys(serverInfo.nlp).length) {
-        nlpServerID = Object.keys(serverInfo.nlp)[0];
-        client.notifySuccess('NLP server detected.');
+        for(var key of Object.keys(serverInfo.nlp)) {
+            if(serverInfo.nlp[key]['dataset'] === dataset) {
+                nlpServerID = key;
+            }
+        }
+        if(nlpServerID !== undefined) {
+          client.notifySuccess('NLP server detected.');
+        }
       }
 
     }
@@ -504,6 +516,21 @@ ${connectivity.map(conn => `${conn[0]},${conn[1]},${conn[2]},${conn[3]}\n`).join
     return this.executeNAquery({
       id: rid,
       uri: 'ffbo.na.get_data'
+    }, callbacks, format);
+  }
+
+  FFBOClient.prototype.addType = function (name, callbacks, format) {
+    /**
+     * Query to add a neuron by its name.
+     */
+    return this.executeNAquery({
+      verb: "add",
+      query: [
+        {
+          action: { method: { query: { name: name } } },
+          object: { class: ["Neuron"] }
+        }
+      ]
     }, callbacks, format);
   }
 

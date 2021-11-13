@@ -95,6 +95,7 @@
               <li id="btn-tags" ><a style="width:100%" onclick="NeuroNLPUI.onToggleTag()">Tags</a></li>
               <li id="btn-neuron"><a data-toggle="tooltip" title="Control Neuron and Synapses currently in the scene" style="width:100%" onclick="NeuroNLPUI.onToggleNeuClick()">Neurons/Synapses</a></li>
               <li id="btn-neuropils"><a data-toggle="tooltip" title="Control Neuropils currently in the scene" style="width:100%" onclick="NeuroNLPUI.onToggleLPUClick()">Neuropils</a></li>
+              <li id="btn-celltype"><a data-toggle="tooltip" title="List of cell types in each neuropil" style="width:100%" onclick="NeuroNLPUI.onToggleCellTypeClick()">Cell Types</a></li>
             </ul>
           </div>
           <nav id="ui_menu_nav">
@@ -139,6 +140,11 @@
                 <ul id="toggle_neuropil">
                   <li><a id='btn-lpu-all' role='button' class='' style="width:100%" onclick="NeuroNLPUI.onShowAllNeuropil()">Show All</a></li>
                   <li><a id='btn-lpu-none' role='button' class='' style="width:100%" onclick="NeuroNLPUI.onHideAllNeuropil()">Hide All</a></li>
+                </ul>
+              </li>
+              <li>
+                <span>Cell Types</span>
+                <ul id="toggle_celltype">
                 </ul>
               </li>
               <li>
@@ -825,7 +831,7 @@
           </div>
         </div>
 
-        <div id="announce-panel" class="overlay">
+        <!-- <div id="announce-panel" class="overlay">
           <div class="overlay_container">
             <ul class="list-inline">
               <li><h2>Latest News</h2></li>
@@ -834,13 +840,13 @@
               <a class="twitter-timeline" data-dnt="true" data-theme="dark" data-link-color="#2B7BB9" href="https://twitter.com/FlyBrainObs/timelines/895746744633483264?ref_src=twsrc%5Etfw">NeuroNLPUpdates</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
       <!-- /#page-content-wrapper -->
     </div>
 
 
 
-    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5848b7a00e85e58b"></script>
+    <!-- <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5848b7a00e85e58b"></script> -->
   </body>
 </html>
