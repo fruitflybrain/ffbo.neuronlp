@@ -112,6 +112,17 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "jquery.mmenu"], function($, 
       mm_menu_right.open();
       $("a[href='#toggle_neuropil']")[0].click()
     }
+    this.onToggleCellTypeClick = function() {
+      if (loadcelltype === undefined){
+        console.log('loading')
+        this.loadAllCellTypes();
+        loadcelltype = true;
+      }
+      mm_menu_right.closeAllPanels();
+      mm_menu_right.initPanels($('#cell-type'));
+      mm_menu_right.open();
+      $("a[href='#toggle_celltype']")[0].click()
+    }
     this.onClickVisualizationSettings = function() {
       mm_menu_right.closeAllPanels();
       mm_menu_right.open();

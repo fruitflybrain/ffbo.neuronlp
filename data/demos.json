@@ -1,4 +1,32 @@
 {
+    "cell_connectivity": {
+      "script": [
+        ["notify", {"message": "Hi there!"}],
+        ["notify", {"message": "Let's query for VA1v projection neurons!"}],
+        ["search", {"query": "show /rVA1v_(.*)PN_(.*)/r"}],
+        ["notify", {"message": "Now, let us click the 'Show Connectivity Graph' button on the top right."}],
+        ["click", {"uiBtn": {"type": "showGraph"}}],
+        ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
+      ],
+      "neuron3d": false,
+      "keyword": "Connectivity Graph Visualization",
+      "description": "Visualize the connectivity at single-cell scale.",
+      "category": "New Features"
+    },
+    "type_connectivity": {
+      "script": [
+        ["notify", {"message": "Hi there!"}],
+        ["notify", {"message": "Let's query for VA1v neurons!"}],
+        ["search", {"query": "show $VA1v$"}],
+        ["notify", {"message": "Now, let us click the 'Show Cell-Type Connectivity Graph' button on the top right."}],
+        ["click", {"uiBtn": {"type": "showCellGraph"}}],
+        ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
+      ],
+      "neuron3d": false,
+      "keyword": "Cell-Type Connectivity Graph Visualization",
+      "description": "Visualize the connectivity at cell-type scale.",
+      "category": "New Features"
+    },
     "basic_query1": {
       "keyword": "Name-based Queries",
       "script": [
@@ -43,8 +71,8 @@
         "keyword": "Synaptic Partners-based Queries",
         "script": [
           ["notify", {"message": "Hi there!"}],
-          ["notify", {"message": "Let's display a EPG (EB-PB-LAL) neuron that has axon in PB glomerulus R5."}],
-          ["search", {"query": "show EPG neurons that has axon in PB glomerulus R5"}],
+          ["notify", {"message": "Let's display a EPG (EB-PB-LAL) neuron that has outputs in PB glomerulus R5."}],
+          ["search", {"query": "show EPG neurons that has outputs in PB glomerulus R5"}],
           ["notify", {"message": "To add PEG (PB-EB-LAL) neurons that are postsyaptic to the neurons in the current workspace, and has at least 10 synapses from any one of these neurons, we use the following query.", "pause": 1000}],
           ["search", {"query": "add postsynaptic PEG neurons with at least 10 synapses"}],
           ["notify", {"message": "Try it yourself!", "pause": 0}]
@@ -121,10 +149,10 @@
       "script": [
         ["notify", {"message": "Hi there!"}],
         ["notify", {"message": "Let's query for VA1v projection neurons!"}],
-        ["search", {"query": "add /r(.*)_VA1v(.*)_R_1/r"}],
+        ["search", {"query": "add /rVA1v_(.*)PN_(.*)/r"}],
         ["notify", {"message": "Try it yourself!", "pause": 0}]
       ],
       "description": "Show VA1v projection neurons.",
       "category": "Early Olfactory System"
     }
-  }
+}
