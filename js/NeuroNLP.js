@@ -7,6 +7,7 @@
 
 var dataset = 'hemibrain';
 var loadcelltype = undefined;
+var lastOpenedCellType = undefined;
 
 define('three', ['https://cdn.jsdelivr.net/gh/mrdoob/three.js@r134/build/three.min.js'], function (THREE) {
   window.THREE = THREE;
