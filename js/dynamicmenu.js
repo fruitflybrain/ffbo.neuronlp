@@ -135,11 +135,13 @@ moduleExporter(
         var changed_label = name.replaceAll('<', '&lt').replaceAll('>', '&gt');
         var btnId = "btn-" + name_with_out_parenthesis+'-'+new_name;
         var btnToggleId = "btn-toggle-" + name_with_out_parenthesis+'-'+ new_name;
+        var btnRmId = "btn-rm-" + name_with_out_parenthesis+'-'+ new_name;
         var domStr = `<li id='li-${btnId}' class='mm-listitem'>` +
                       "<span>" +
                       `<div id='${btnId}' role='button' label="${name}" class='btn-single-ob'>${changed_label}</div>` +
                       "<div class='btn-single-obj-ctrl'>" +
                         `<a id='${btnToggleId}' role='button' label="${name}">${_this.config.addSymbol}</a>` +
+                        `<a id='${btnRmId}' role='button' label="${name}">${_this.config.removeSymbol}</a>`
                         "</div>" +
                       "</span>" +
                      `</li>`;
@@ -163,6 +165,12 @@ moduleExporter(
           .click( function() {
             var id = $(this).attr("label");
             _this.dispatch.addType(id);
+        });
+
+        $("#" + btnRmId)
+          .click( function() {
+            var id = $(this).attr("label");
+            _this.dispatch.removeType(id);
         });
 
       }
@@ -307,6 +315,7 @@ moduleExporter(
         showAll: function(){},
         remove: function(){},
         addType: function(){},
+        removeType: function(){},
       };
     };
 

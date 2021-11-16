@@ -534,6 +534,21 @@ ${connectivity.map(conn => `${conn[0]},${conn[1]},${conn[2]},${conn[3]}\n`).join
     }, callbacks, format);
   }
 
+  FFBOClient.prototype.removeType = function (name, callbacks, format) {
+    /**
+     * Query to add a neuron by its name.
+     */
+    return this.executeNAquery({
+      verb: "remove",
+      query: [
+        {
+          action: { method: { query: { name: name } } },
+          object: { class: ["Neuron"] }
+        }
+      ]
+    }, callbacks, format);
+  }
+
   FFBOClient.prototype.removeObjs = function (rids, callbacks, format) {
     /**
      * Query to remove a list of Objs based on their Rids. rids must be an array
