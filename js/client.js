@@ -170,11 +170,12 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function (autobahn
     this.session.call(uri, [query, this.language]).then(
       (function (res) {
         if (typeof (res) == "object" && Object.keys(res).length) {
-          this.notifySuccess("NLP module successfully interpreted the query");
+          this.notifySuccess("Rule-based NLP module successfully interpreted the query");
           this.executeNAquery(res, callbacks, format, queryID);
         }
         else {
-          this.notifyError("NLP module did not understand the query");
+          this.notifySuccess("Rule-based NLP module did not understand the query. Switching to Drosobot...");
+          window.plusplusSearch("!ask " + query);
           this.status[queryID] = -1;
         }
 
