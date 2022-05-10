@@ -108,7 +108,7 @@ moduleExporter(
         name = name.toString();
         name_with_out_parenthesis = name.replaceAll('(R)', '_R').replaceAll('(L)', '_L');
         var domStr = `<li class="mm-listitem">` +
-                      `<a class="mm-btn_next mm-btn_fullwidth" href="#`+name_with_out_parenthesis+`-cell-types"><span class="mm-sronly">Open submenu (`+name+`)</span></a>` + 
+                      `<a class="mm-btn_next mm-btn_fullwidth" href="#`+name_with_out_parenthesis+`-cell-types" onclick="lastOpenedCellType='`+name+`'"><span class="mm-sronly">Open submenu (`+name+`)</span></a>` + 
                       `<span>`+name+`<i class="icon-arrow-right"></i></span>` +
                       `<ul id="cell-type-`+name_with_out_parenthesis+`"></ul>` +
                      `</li>`;
@@ -123,7 +123,7 @@ moduleExporter(
 
         _this.btnLabelList.splice(idx, 0, name);
 
-        var domStr2 = `<div id="`+name_with_out_parenthesis+`-cell-types" class="mm-panel mm-panel_has-navbar mm-hidden" aria-hidden="true"> <div class="mm-navbar"><a class="mm-btn mm-btn_prev mm-navbar__btn" href="#toggle_celltype" aria-owns="toggle_celltype" aria-haspopup="true"><span class="mm-sronly">`+name+`</span></a><a class="mm-navbar__title" href="#toggle_celltype">`+name+` </a></div> <ul class="mm-listview"></ul></div>`
+        var domStr2 = `<div id="`+name_with_out_parenthesis+`-cell-types" class="mm-panel mm-panel_has-navbar mm-hidden" aria-hidden="true"> <div class="mm-navbar"><a class="mm-btn mm-btn_prev mm-navbar__btn" href="#toggle_celltype", onclick="lastOpenedCellType=undefined" aria-owns="toggle_celltype" aria-haspopup="true"><span class="mm-sronly">`+name+`</span></a><a class="mm-navbar__title" href="#toggle_celltype" onclick="lastOpenedCellType=undefined">`+name+` </a></div> <ul class="mm-listview"></ul></div>`
         $(".mm-panels").append(domStr2);
         var menu = new FFBODynamicMenu({ singleObjSel: '#'+name_with_out_parenthesis+ '-cell-types > .mm-listview', compare: 'LeftRight', name: name });
         return menu;
@@ -135,11 +135,13 @@ moduleExporter(
         var changed_label = name.replaceAll('<', '&lt').replaceAll('>', '&gt');
         var btnId = "btn-" + name_with_out_parenthesis+'-'+new_name;
         var btnToggleId = "btn-toggle-" + name_with_out_parenthesis+'-'+ new_name;
+        var btnRmId = "btn-rm-" + name_with_out_parenthesis+'-'+ new_name;
         var domStr = `<li id='li-${btnId}' class='mm-listitem'>` +
                       "<span>" +
                       `<div id='${btnId}' role='button' label="${name}" class='btn-single-ob'>${changed_label}</div>` +
                       "<div class='btn-single-obj-ctrl'>" +
                         `<a id='${btnToggleId}' role='button' label="${name}">${_this.config.addSymbol}</a>` +
+                        `<a id='${btnRmId}' role='button' label="${name}">${_this.config.removeSymbol}</a>`
                         "</div>" +
                       "</span>" +
                      `</li>`;
@@ -163,6 +165,12 @@ moduleExporter(
           .click( function() {
             var id = $(this).attr("label");
             _this.dispatch.addType(id);
+        });
+
+        $("#" + btnRmId)
+          .click( function() {
+            var id = $(this).attr("label");
+            _this.dispatch.removeType(id);
         });
 
       }
@@ -307,6 +315,7 @@ moduleExporter(
         showAll: function(){},
         remove: function(){},
         addType: function(){},
+        removeType: function(){},
       };
     };
 

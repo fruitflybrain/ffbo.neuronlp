@@ -417,7 +417,7 @@ if (!Modernizr.inputtypes.color) {
     }, ['intensity', 'posAngle1', 'posAngle2']);
 
     ffbomesh.settings.on('change', function (e) {
-      ("#rd"+ffbomesh.settings.neuron3dMode)[0].checked = e.value;
+      $("#rd"+ffbomesh.settings.neuron3dMode)[0].checked = true;//e.value;
       if(ffbomesh.settings.neuron3dMode != 2) {
         $("#vis-linewidth_enclose").hide("slide", { direction: "right" }, 800);
       }else{

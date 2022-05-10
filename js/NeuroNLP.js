@@ -7,6 +7,7 @@
 
 var dataset = 'hemibrain';
 var loadcelltype = undefined;
+var lastOpenedCellType = undefined;
 
 define('three', ['https://cdn.jsdelivr.net/gh/mrdoob/three.js@r134/build/three.min.js'], function (THREE) {
   window.THREE = THREE;
@@ -594,6 +595,7 @@ require([
         for (var key in json) {
           dynapmicCellTypeNeuropilMenu[key] = dynamicCellTypeMenu.addNeuropil(key);
           dynapmicCellTypeNeuropilMenu[key].dispatch.addType = function (name) { client.addType(name, { success: dataCallback }) };
+          dynapmicCellTypeNeuropilMenu[key].dispatch.removeType = function (name) { client.removeType(name, { success: dataCallback }) };
           for (var neuronType of json[key] ) {
             dynapmicCellTypeNeuropilMenu[key].addCellType(neuronType);
           }

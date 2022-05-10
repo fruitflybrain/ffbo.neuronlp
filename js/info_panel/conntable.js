@@ -350,20 +350,44 @@ moduleExporter("ConnTable",
   */
   ConnTable.prototype.filterByName = function(tableId, text){
     var filter, table, tr, td, i;
-    filter = text.toLowerCase();
-    table = document.getElementById(tableId).children[1];
-    tr = table.getElementsByTagName("tr");
+    if (text.startsWith('/r')) {
+      try {
+        filter = new RegExp(text.slice(2));
+      } catch (error) {
+        return;
+      }
+      table = document.getElementById(tableId).children[1];
+      tr = table.getElementsByTagName("tr");
 
-    for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[0];
-      if (td) {
-        if (td.innerHTML.toLowerCase().indexOf(filter) > -1) {
-          removeClass(tr[i],"filtered-name");
-          if(!hasClass(tr[i],"filtered-N"))
-            tr[i].style.display = "";
-        } else {
-          addClass(tr[i],"filtered-name");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if(td) {
+          if (filter.test(td.innerHTML)) {
+              removeClass(tr[i], "filtered-name");
+          if(!hasClass(tr[i], "filtered-N"))
+              tr[i].style.display = "";
+          } else{
+          addClass(tr[i], "filtered-name");
           tr[i].style.display = "none";
+          }
+        }
+      }
+    } else {
+      filter = text.toLowerCase();
+      table = document.getElementById(tableId).children[1];
+      tr = table.getElementsByTagName("tr");
+
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          if (td.innerHTML.toLowerCase().indexOf(filter) > -1) {
+            removeClass(tr[i],"filtered-name");
+            if(!hasClass(tr[i],"filtered-N"))
+              tr[i].style.display = "";
+          } else {
+            addClass(tr[i],"filtered-name");
+            tr[i].style.display = "none";
+          }
         }
       }
     }
