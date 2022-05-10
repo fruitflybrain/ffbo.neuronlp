@@ -60,7 +60,7 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function (autobahn
     this.notifyError(err.args[0]);
   }
 
-  updateServers = function (serverInfo) {
+  updateServers = function (serverInfo, dataset) {
     /** Update the Crossbar Session IDs of servers
      *  If current server drops, switched to a new server if available
      */
@@ -129,7 +129,7 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function (autobahn
   }
 
 
-  function FFBOClient() {
+  function FFBOClient(dataset) {
     /**
      * This is the FFBOClient object that holds client session
      */
@@ -138,6 +138,7 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function (autobahn
     this.session = undefined;
     this.graph = {};
     this.textFile = null;
+    this.dataset = dataset;
     this.loginStatus = new PropertyManager(
       {
         username: "",
@@ -655,7 +656,7 @@ ${connectivity.map(conn => `${conn[0]},${conn[1]},${conn[2]},${conn[3]}\n`).join
 
       session.call("ffbo.processor.server_information").then(
         (function (res) {
-          updateServers([res]);
+          updateServers([res], this.dataset);
         }).bind(this),
         function (err) {
           console.log("server retrieval error:", err);

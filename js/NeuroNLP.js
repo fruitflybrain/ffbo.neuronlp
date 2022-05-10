@@ -5,7 +5,6 @@
 // except for 'app' ones, which are in a sibling
 // directory.
 
-var dataset = 'hemibrain';
 var loadcelltype = undefined;
 var lastOpenedCellType = undefined;
 
@@ -63,7 +62,9 @@ requirejs.config({
     stats: "../lib/js/stats.min",
     linematerial: "//cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/lines/LineMaterial",
     linesegmentsgeometry: "//cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/lines/LineSegmentsGeometry",
-    linesegments2: "//cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/lines/LineSegments2"
+    linesegments2: "//cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/lines/LineSegments2",
+    json: '//cdn.jsdelivr.net/gh/millermedeiros/requirejs-plugins@master/src/json',
+    text: '//cdn.jsdelivr.net/gh/millermedeiros/requirejs-plugins@master/lib/text'
     /* Notify, bootbox, colormaps, demos, mouse, vis_set, ResizeSensor, read_vars, colorm[aps */
   },
   shim: {
@@ -101,12 +102,10 @@ requirejs.config({
   waitSeconds: 15
 });
 
-
-
-
 // Start loading the main app file. Put all of
 // your application logic in there.
 require([
+  'json!config.json',
   'jquery',
   'client',
   'three',
@@ -129,6 +128,7 @@ require([
   'linesegments2'
 ]
   , function (
+    config,
     $,
     FFBOClient,
     THREE,
@@ -161,7 +161,7 @@ require([
     var dynamicCellTypeMenu = new FFBODynamicMenu({ singleObjSel: '#toggle_celltype > .mm-listview', compare: 'LeftRight' });
     var ffbomesh = new FFBOMesh3D('vis-3d', undefined, { "globalCenter": { 'x': 0, 'y': -250, 'z': 0 } });
     var tagsPanel = new Tags('tagsMenu');
-    var client = new FFBOClient();
+    var client = new FFBOClient(config.dataset);
     var visualizationSettings = new FFBOVisualizationSettings(ffbomesh);
     window.NeuroNLPUI.onCreateTag = (tagsPanel.onCreateTag).bind(tagsPanel);
     window.NeuroNLPUI.onRetrieveTag = (tagsPanel.onRetrieveTag).bind(tagsPanel);
@@ -176,8 +176,7 @@ require([
       queryLoad = true;
     }
 
-
-    client.startConnection("guest", "guestpass", "ws://localhost:8081/ws");
+    client.startConnection(config.connection.user, config.connection.secret, config.connection.url);
 
     //ffbomesh.settings.neuron3d = 1;
     function dataCallback(data) {
