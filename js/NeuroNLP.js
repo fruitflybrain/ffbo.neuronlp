@@ -8,7 +8,7 @@
 var loadcelltype = undefined;
 var lastOpenedCellType = undefined;
 
-define('three', ['https://cdn.jsdelivr.net/gh/mrdoob/three.js@r134/build/three.min.js'], function (THREE) {
+define('three', ['https://cdn.jsdelivr.net/gh/mrdoob/three.js@r140/build/three.min.js'], function (THREE) {
   window.THREE = THREE;
   return THREE;
 });
@@ -22,28 +22,29 @@ requirejs.config({
     autobahn: '//cdn.jsdelivr.net/gh/crossbario/autobahn-js-browser@v20.9.2/autobahn/autobahn.min',
     d3: '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min',
     jquery: '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min',
-    webgl: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/WebGL',
-    simplifymodifier: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/utils/SceneUtils',
-    lut: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/math/Lut',
-    buffergeometryutils: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/utils/BufferGeometryUtils',
-    copyshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/shaders/CopyShader',
-    convolutionshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/shaders/ConvolutionShader',
-    fxaashader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/shaders/FXAAShader',
-    ssaoshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/shaders/SSAOShader',
-    luminosityhighpassshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/shaders/LuminosityHighPassShader',
-    luminosityshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/shaders/LuminosityShader',
-    tonemapshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/shaders/ToneMapShader',
-    gammacorrectionshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/shaders/GammaCorrectionShader',
-    effectcomposer: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/postprocessing/EffectComposer',
-    renderpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/postprocessing/RenderPass',
-    ssaarenderpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/postprocessing/SSAARenderPass',
-    shaderpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/postprocessing/ShaderPass',
-    ssaopass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/postprocessing/SSAOPass',
-    simplexnoise: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/math/SimplexNoise',
-    maskpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/postprocessing/MaskPass',
-    bloompass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/postprocessing/BloomPass',
-    unrealbloompass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/postprocessing/UnrealBloomPass',
-    adaptivetonemappingpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/postprocessing/AdaptiveToneMappingPass',
+    webgl: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r136/examples/js/WebGL',
+    simplifymodifier: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/utils/SceneUtils',
+    lut: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/math/Lut',
+    buffergeometryutils: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/utils/BufferGeometryUtils',
+    copyshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/shaders/CopyShader',
+    convolutionshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/shaders/ConvolutionShader',
+    fxaashader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/shaders/FXAAShader',
+    ssaoshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/shaders/SSAOShader',
+    luminosityhighpassshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/shaders/LuminosityHighPassShader',
+    luminosityshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/shaders/LuminosityShader',
+    tonemapshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/shaders/ToneMapShader',
+    gammacorrectionshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/shaders/GammaCorrectionShader',
+    effectcomposer: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/postprocessing/EffectComposer',
+    renderpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/postprocessing/RenderPass',
+    ssaarenderpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/postprocessing/SSAARenderPass',
+    shaderpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/postprocessing/ShaderPass',
+    ssaopass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/postprocessing/SSAOPass',
+    simplexnoise: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/math/SimplexNoise',
+    maskpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/postprocessing/MaskPass',
+    bloompass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/postprocessing/BloomPass',
+    unrealbloompass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/postprocessing/UnrealBloomPass',
+    gltfloader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/loaders/GLTFLoader',
+    adaptivetonemappingpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/postprocessing/AdaptiveToneMappingPass',
     trackballcontrols: '../lib/js/TrackballControls',
     lightshelper: '../lib/js/lightshelper',
     modernizr: "//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min",
@@ -60,9 +61,9 @@ requirejs.config({
     tageditor: "//cdnjs.cloudflare.com/ajax/libs/tag-editor/1.0.20/jquery.tag-editor.min",
     izitoast: "../lib/js/iziToast.min",
     stats: "../lib/js/stats.min",
-    linematerial: "//cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/lines/LineMaterial",
-    linesegmentsgeometry: "//cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/lines/LineSegmentsGeometry",
-    linesegments2: "//cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/lines/LineSegments2",
+    linematerial: "//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/lines/LineMaterial",
+    linesegmentsgeometry: "//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/lines/LineSegmentsGeometry",
+    linesegments2: "//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/lines/LineSegments2",
     json: '//cdn.jsdelivr.net/gh/millermedeiros/requirejs-plugins@master/src/json',
     text: '//cdn.jsdelivr.net/gh/millermedeiros/requirejs-plugins@master/lib/text'
     /* Notify, bootbox, colormaps, demos, mouse, vis_set, ResizeSensor, read_vars, colorm[aps */
@@ -97,7 +98,8 @@ requirejs.config({
     tageditor: { deps: ['jquery'] },
     linematerial: {deps: ['three']},
     linesegmentsgeometry: {deps: ['three']},
-    linesegments2: {deps: ['three', 'linesegmentsgeometry']}
+    linesegments2: {deps: ['three', 'linesegmentsgeometry']},
+    gltfloader: {deps: ['three']}
   },
   waitSeconds: 15
 });
