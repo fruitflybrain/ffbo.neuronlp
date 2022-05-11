@@ -161,7 +161,9 @@ require([
     var dynamicNeuronMenu = new FFBODynamicMenu({ singleObjSel: '#single-neu > .mm-listview', pinnedObjSel: '#single-pin > .mm-listview', removable: true, pinnable: true });
     var dynamicNeuropilMenu = new FFBODynamicMenu({ singleObjSel: '#toggle_neuropil > .mm-listview', compare: 'LeftRight' });
     var dynamicCellTypeMenu = new FFBODynamicMenu({ singleObjSel: '#toggle_celltype > .mm-listview', compare: 'LeftRight' });
-    var ffbomesh = new FFBOMesh3D('vis-3d', undefined, { "globalCenter": { 'x': 0, 'y': -250, 'z': 0 } });
+    var ffbomesh = new FFBOMesh3D('vis-3d', undefined,
+                                  config.metadata,
+                                  stats = true);
     var tagsPanel = new Tags('tagsMenu');
     var client = new FFBOClient(config.dataset);
     var visualizationSettings = new FFBOVisualizationSettings(ffbomesh);
@@ -180,14 +182,38 @@ require([
 
     client.startConnection(config.connection.user, config.connection.secret, config.connection.url);
 
-    //ffbomesh.settings.neuron3d = 1;
+    // function getreferenceid(value, data_raw) {
+    //   var _value = value;
+    //   var data_to_send = {};
+    //   data_to_send[_value] = data_raw;
+    //   ffbomesh.addJson({ ffbo_json: data_to_send, type: 'gltf' });
+    // }
+
+    // function dataCallback(data) {
+    //   // console.log(data);
+    //   synapse_data = {};
+    //   for (var i in data) {
+    //     // console.log('rid:', i);
+    //     console.log(data[i]);
+    //     if (data[i]['uname'].includes('--')) {
+    //       synapse_data[i] = data[i];
+    //     }
+    //     else {
+    //       getreferenceid(i, data[i]);
+    //     }
+    //   }
+    //   ffbomesh.addJson({ ffbo_json: synapse_data, type: 'morphology_json' });
+    // }
+
     function dataCallback(data) {
+      var gltf_data = {}
       var morph_data = {};
       var nodes = data['nodes'];
       var edges = data['edges'];
       var rid;
       for (var key in nodes) {
         var unit = nodes[key];
+        var foundMorphology = false;
         if (unit['class'] != 'MorphologyData') {
           for (var i = 0; i < edges.length; i++) {
 
@@ -195,19 +221,36 @@ require([
               rid = edges[i][1];
               var morphology = nodes[edges[i][1]];
               if (morphology['class'] == 'MorphologyData') {
+                foundMorphology = true;
                 for (var key1 in morphology) {
                   if (key1 != 'class') {
                     unit[key1] = morphology[key1];
                   }
                 }
-                morph_data[rid] = unit;
+                if (morphology['class'] == 'Neuron') {
+                  if (ffbomesh.settings.neuron3dMode == 7) {
+                    gltf_data[rid] = unit;
+                  } else {
+                    morph_data[rid] = unit;
+                  }
+                } else {
+                  morph_data[rid] = unit;
+                }
                 break;
+              }
+            } 
+          }
+          if (!foundMorphology) {
+            if (unit['class'] == 'Neuron') {
+              if (ffbomesh.settings.neuron3dMode == 7) {
+                gltf_data[rid] = unit;
               }
             }
           }
         }
       }
       ffbomesh.addJson({ ffbo_json: morph_data, type: 'morphology_json' });
+      ffbomesh.addJson({ ffbo_json: gltf_data, type: 'gltf' });
     }
 
     window.client = client;

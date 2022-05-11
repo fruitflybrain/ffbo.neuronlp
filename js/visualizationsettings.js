@@ -417,6 +417,11 @@ if (!Modernizr.inputtypes.color) {
     }, ['intensity', 'posAngle1', 'posAngle2']);
 
     ffbomesh.settings.on('change', function (e) {
+      if (ffbomesh.settings.neuron3dMode == 7 && ffbomesh._metadata.neuron_mesh.url === "") {
+        this.client.notifyError("Mesh mode is not available for this dataset.", 5000.0 );
+        ffbomesh.settings.neuron3dMode = 0;
+        return;
+      }
       $("#rd"+ffbomesh.settings.neuron3dMode)[0].checked = true;//e.value;
       if(ffbomesh.settings.neuron3dMode != 2) {
         $("#vis-linewidth_enclose").hide("slide", { direction: "right" }, 800);
