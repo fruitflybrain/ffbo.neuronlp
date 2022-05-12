@@ -1,4 +1,5 @@
 {
+  "branch": "",
   "connection": {
     "url": "ws://localhost:17081/ws",
     "user": "guest",

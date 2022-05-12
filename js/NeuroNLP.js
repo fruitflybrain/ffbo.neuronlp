@@ -580,7 +580,7 @@ require([
         window.NeuroNLPUI.closeAllOverlay();
       }).bind(FFBODemoPlayer);
       $.getJSON("/data/demos.json", function (json) {
-        FFBODemoPlayer.addDemos(json);
+        FFBODemoPlayer.addDemos(json[1]);
         FFBODemoPlayer.updateDemoTable('#demo-table-wrapper');
         if (searchParams.get('demo') && !searchParams.get('tag')) {
           demoLoad = true;
@@ -612,6 +612,7 @@ require([
     window.NeuroNLPUI.loadAllCellTypes = function() {
       var dynapmicCellTypeNeuropilMenu = {};
       $.getJSON("/data/types_in_neuropils.json", function (json) {
+        json = json[1];
         for (var key in json) {
           dynapmicCellTypeNeuropilMenu[key] = dynamicCellTypeMenu.addNeuropil(key);
           dynapmicCellTypeNeuropilMenu[key].dispatch.addType = function (name) { client.addType(name, { success: dataCallback }) };
@@ -624,6 +625,7 @@ require([
     }
 
     $.getJSON("/data/config.json", function (json) {
+      json = json[1];
       ffbomesh.addJson({
         ffbo_json: json,
         showAfterLoadAll: true

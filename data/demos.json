@@ -1,4 +1,6 @@
-{
+[
+  {"branch": ""},
+  {
     "cell_connectivity": {
       "script": [
         ["notify", {"message": "Hi there!"}],
@@ -155,4 +157,5 @@
       "description": "Show VA1v projection neurons.",
       "category": "Early Olfactory System"
     }
-}
+  }
+]
