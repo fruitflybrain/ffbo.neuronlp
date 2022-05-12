@@ -56,6 +56,8 @@ moduleExporter(
          tags: '#toggle_tag'
        }, menuSelectors)
        this.uiBtns = Object.assign({}, {
+         showGraph: 'showGraph',
+         showCellGraph: 'showCellGraph',
          showSettings: 'showSettings',
          takeScreenshot: 'takeScreenshot',
          showInfo: 'showInfo',
