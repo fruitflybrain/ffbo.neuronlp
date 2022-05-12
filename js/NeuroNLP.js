@@ -433,10 +433,6 @@ require([
     dynamicNeuropilMenu.dispatch.highlight = function (id) { ffbomesh.highlight(id, true) };
     dynamicNeuropilMenu.dispatch.resume = function (id) { ffbomesh.highlight(undefined) };
 
-    // var dynapmicCellTypeNeuropilMenu = {};
-    // dynapmicCellTypeNeuropilMenu['Test'] = dynamicCellTypeMenu.addNeuropil('Test');
-    // window.dynapmicCellTypeNeuropilMenu = dynapmicCellTypeNeuropilMenu;
-
     ffbomesh.on('add',
       function (e) {
         if (!e.value.background)
@@ -540,7 +536,6 @@ require([
 
     
     demoLoad = false;
-    ffbomesh.settings.defaultSynapseRadius = 0.4;
     $(document).ready(function () {
       GvisInitCallbacks();
       GvisInitGraphs();
