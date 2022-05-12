@@ -15,7 +15,7 @@
     },
     "resetUp": {
       "x": 0.0,
-      "y": 0.0,
+      "y": 1.0,
       "z": 0.0
     },
     "neu3dSettings": {
@@ -27,13 +27,13 @@
       "pinOpacity": 0.9,
       "pinLowOpacity": 0.1,
       "highlightedObjectOpacity": 1.0,
-      "defaultRadius": 1.0,
-      "defaultSomaRadius": 3.0,
+      "defaultRadius": 0.4,
+      "defaultSomaRadius": 7.0,
       "defaultSynapseRadius": 0.2,
       "RadiusRange": [0.01, 1.0],
       "SomaRadiusRange": [1.0, 5.0],
       "SynapseRadiusRange": [0.1, 1.0],
-      "linewidth": 0.8,
+      "linewidth": 0.4,
       "brightness": 1.0,
       "backgroundOpacity": 0.5,
       "backgroundWireframeOpacity": 0.07,
