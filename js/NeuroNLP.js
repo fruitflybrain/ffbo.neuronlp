@@ -182,29 +182,6 @@ require([
 
     client.startConnection(config.connection.user, config.connection.secret, config.connection.url);
 
-    // function getreferenceid(value, data_raw) {
-    //   var _value = value;
-    //   var data_to_send = {};
-    //   data_to_send[_value] = data_raw;
-    //   ffbomesh.addJson({ ffbo_json: data_to_send, type: 'gltf' });
-    // }
-
-    // function dataCallback(data) {
-    //   // console.log(data);
-    //   synapse_data = {};
-    //   for (var i in data) {
-    //     // console.log('rid:', i);
-    //     console.log(data[i]);
-    //     if (data[i]['uname'].includes('--')) {
-    //       synapse_data[i] = data[i];
-    //     }
-    //     else {
-    //       getreferenceid(i, data[i]);
-    //     }
-    //   }
-    //   ffbomesh.addJson({ ffbo_json: synapse_data, type: 'morphology_json' });
-    // }
-
     function dataCallback(data) {
       var gltf_data = {}
       var morph_data = {};
@@ -216,7 +193,6 @@ require([
         var foundMorphology = false;
         if (unit['class'] != 'MorphologyData') {
           for (var i = 0; i < edges.length; i++) {
-
             if (edges[i][0] == key && edges[i][2]['class'] == 'HasData') {
               rid = edges[i][1];
               var morphology = nodes[edges[i][1]];
@@ -227,7 +203,7 @@ require([
                     unit[key1] = morphology[key1];
                   }
                 }
-                if (morphology['class'] == 'Neuron') {
+                if (unit['class'] === 'Neuron') {
                   if (ffbomesh.settings.neuron3dMode == 7) {
                     gltf_data[rid] = unit;
                   } else {
@@ -241,7 +217,7 @@ require([
             } 
           }
           if (!foundMorphology) {
-            if (unit['class'] == 'Neuron') {
+            if (unit['class'] === 'Neuron') {
               if (ffbomesh.settings.neuron3dMode == 7) {
                 gltf_data[rid] = unit;
               }
