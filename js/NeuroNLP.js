@@ -5,7 +5,10 @@
 // except for 'app' ones, which are in a sibling
 // directory.
 
-define('three', ['https://cdn.jsdelivr.net/gh/mrdoob/three.js@r92/build/three.min.js'], function (THREE) {
+var loadcelltype = undefined;
+var lastOpenedCellType = undefined;
+
+define('three', ['https://cdn.jsdelivr.net/gh/mrdoob/three.js@r140/build/three.min.js'], function (THREE) {
   window.THREE = THREE;
   return THREE;
 });
@@ -19,26 +22,29 @@ requirejs.config({
     autobahn: '//cdn.jsdelivr.net/gh/crossbario/autobahn-js-browser@v20.9.2/autobahn/autobahn.min',
     d3: '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min',
     jquery: '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min',
-    detector: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/Detector',
-    simplifymodifier: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/utils/SceneUtils',
-    lut: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/math/Lut',
-    copyshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/shaders/CopyShader',
-    convolutionshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/shaders/ConvolutionShader',
-    fxaashader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/shaders/FXAAShader',
-    ssaoshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/shaders/SSAOShader',
-    luminosityhighpassshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/shaders/LuminosityHighPassShader',
-    luminosityshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/shaders/LuminosityShader',
-    tonemapshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/shaders/ToneMapShader',
-    gammacorrectionshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/shaders/GammaCorrectionShader',
-    effectcomposer: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/EffectComposer',
-    renderpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/RenderPass',
-    ssaarenderpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/SSAARenderPass',
-    shaderpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/ShaderPass',
-    ssaopass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/SSAOPass',
-    maskpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/MaskPass',
-    bloompass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/BloomPass',
-    unrealbloompass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/UnrealBloomPass',
-    adaptivetonemappingpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/postprocessing/AdaptiveToneMappingPass',
+    webgl: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r136/examples/js/WebGL',
+    simplifymodifier: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/utils/SceneUtils',
+    lut: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/math/Lut',
+    buffergeometryutils: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/utils/BufferGeometryUtils',
+    copyshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/shaders/CopyShader',
+    convolutionshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/shaders/ConvolutionShader',
+    fxaashader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/shaders/FXAAShader',
+    ssaoshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/shaders/SSAOShader',
+    luminosityhighpassshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/shaders/LuminosityHighPassShader',
+    luminosityshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/shaders/LuminosityShader',
+    tonemapshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/shaders/ToneMapShader',
+    gammacorrectionshader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/shaders/GammaCorrectionShader',
+    effectcomposer: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/postprocessing/EffectComposer',
+    renderpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/postprocessing/RenderPass',
+    ssaarenderpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/postprocessing/SSAARenderPass',
+    shaderpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/postprocessing/ShaderPass',
+    ssaopass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/postprocessing/SSAOPass',
+    simplexnoise: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/math/SimplexNoise',
+    maskpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/postprocessing/MaskPass',
+    bloompass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/postprocessing/BloomPass',
+    unrealbloompass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/postprocessing/UnrealBloomPass',
+    gltfloader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/loaders/GLTFLoader',
+    adaptivetonemappingpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/postprocessing/AdaptiveToneMappingPass',
     trackballcontrols: '../lib/js/TrackballControls',
     lightshelper: '../lib/js/lightshelper',
     modernizr: "//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min",
@@ -54,16 +60,23 @@ requirejs.config({
     blockui: "//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min",
     tageditor: "//cdnjs.cloudflare.com/ajax/libs/tag-editor/1.0.20/jquery.tag-editor.min",
     izitoast: "../lib/js/iziToast.min",
-    stats: "../lib/js/stats.min"
+    stats: "../lib/js/stats.min",
+    linematerial: "//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/lines/LineMaterial",
+    linesegmentsgeometry: "//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/lines/LineSegmentsGeometry",
+    linesegments2: "//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/lines/LineSegments2",
+    json: '//cdn.jsdelivr.net/gh/millermedeiros/requirejs-plugins@master/src/json',
+    text: '//cdn.jsdelivr.net/gh/millermedeiros/requirejs-plugins@master/lib/text'
     /* Notify, bootbox, colormaps, demos, mouse, vis_set, ResizeSensor, read_vars, colorm[aps */
   },
   shim: {
     bootstrap: { deps: ['jquery'] },
     modernizr: { exports: 'Modernizr' },
-    detector: { deps: ['three'], exports: 'Detector' },
+    webgl: { deps: ['three'], exports: 'WebGL' },
+    buffergeometryutils: { deps: ['three'] },
     trackballcontrols: { deps: ['three'] },
     simplifymodifier: { deps: ['three'] },
     lut: { deps: ['three'] },
+    buffergeometryutils: {deps: ['three']},
     copyshader: { deps: ['three'] },
     convolutionshader: { deps: ['three'] },
     fxaashader: { deps: ['three'] },
@@ -73,29 +86,33 @@ requirejs.config({
     tonemapshader: { deps: ['three'] },
     gammacorrectionshader: { deps: ['three'] },
     effectcomposer: { deps: ['three'] },
+    simplexnoise: { deps: ['three'] },
     renderpass: { deps: ['three', 'effectcomposer'] },
     ssaarenderpass: { deps: ['three', 'effectcomposer'] },
     shaderpass: { deps: ['three', 'effectcomposer'] },
-    ssaopass: { deps: ['three', 'effectcomposer', 'shaderpass'] },
+    ssaopass: { deps: ['three', 'effectcomposer', 'shaderpass', 'simplexnoise'] },
     maskpass: { deps: ['three', 'effectcomposer'] },
     bloompass: { deps: ['three', 'effectcomposer'] },
     unrealbloompass: { deps: ['three', 'effectcomposer'] },
     adaptivetonemappingpass: { deps: ['three', 'effectcomposer'] },
     tageditor: { deps: ['jquery'] },
+    linematerial: {deps: ['three']},
+    linesegmentsgeometry: {deps: ['three']},
+    linesegments2: {deps: ['three', 'linesegmentsgeometry']},
+    gltfloader: {deps: ['three']}
   },
   waitSeconds: 15
 });
 
-
-
-
 // Start loading the main app file. Put all of
 // your application logic in there.
 require([
+  'json!/config/config.json',
   'jquery',
   'client',
   'three',
-  'detector',
+  'webgl',
+  'buffergeometryutils',
   'mesh3d',
   'infopanel',
   'dynamicmenu',
@@ -107,13 +124,18 @@ require([
   'bootstrap',
   //'jquery.mobile',
   'jqueryui',
-  'blockui'
+  'blockui',
+  'linematerial',
+  'linesegmentsgeometry',
+  'linesegments2'
 ]
   , function (
+    config,
     $,
     FFBOClient,
     THREE,
-    Detector,
+    WebGL,
+    BGUtils,
     FFBOMesh3D,
     InfoPanel,
     FFBODynamicMenu,
@@ -138,9 +160,12 @@ require([
     var infoPanel = new InfoPanel("info-panel");
     var dynamicNeuronMenu = new FFBODynamicMenu({ singleObjSel: '#single-neu > .mm-listview', pinnedObjSel: '#single-pin > .mm-listview', removable: true, pinnable: true });
     var dynamicNeuropilMenu = new FFBODynamicMenu({ singleObjSel: '#toggle_neuropil > .mm-listview', compare: 'LeftRight' });
-    var ffbomesh = new FFBOMesh3D('vis-3d', undefined, { "globalCenter": { 'x': 0, 'y': 0, 'z': 0 } });
+    var dynamicCellTypeMenu = new FFBODynamicMenu({ singleObjSel: '#toggle_celltype > .mm-listview', compare: 'LeftRight' });
+    var ffbomesh = new FFBOMesh3D('vis-3d', undefined,
+                                  config.metadata,
+                                  stats = true);
     var tagsPanel = new Tags('tagsMenu');
-    var client = new FFBOClient();
+    var client = new FFBOClient(config.dataset);
     var visualizationSettings = new FFBOVisualizationSettings(ffbomesh);
     window.NeuroNLPUI.onCreateTag = (tagsPanel.onCreateTag).bind(tagsPanel);
     window.NeuroNLPUI.onRetrieveTag = (tagsPanel.onRetrieveTag).bind(tagsPanel);
@@ -155,37 +180,53 @@ require([
       queryLoad = true;
     }
 
+    client.startConnection(config.connection.user, config.connection.secret, config.connection.url);
 
-    client.startConnection("guest", "guestpass", "ws://localhost:8081/ws");
-
-    //ffbomesh.settings.neuron3d = 1;
     function dataCallback(data) {
+      var gltf_data = {}
       var morph_data = {};
       var nodes = data['nodes'];
       var edges = data['edges'];
       var rid;
       for (var key in nodes) {
         var unit = nodes[key];
+        var foundMorphology = false;
         if (unit['class'] != 'MorphologyData') {
           for (var i = 0; i < edges.length; i++) {
-
             if (edges[i][0] == key && edges[i][2]['class'] == 'HasData') {
               rid = edges[i][1];
               var morphology = nodes[edges[i][1]];
               if (morphology['class'] == 'MorphologyData') {
+                foundMorphology = true;
                 for (var key1 in morphology) {
                   if (key1 != 'class') {
                     unit[key1] = morphology[key1];
                   }
                 }
-                morph_data[rid] = unit;
+                if (unit['class'] === 'Neuron') {
+                  if (ffbomesh.settings.neuron3dMode == 7) {
+                    gltf_data[rid] = unit;
+                  } else {
+                    morph_data[rid] = unit;
+                  }
+                } else {
+                  morph_data[rid] = unit;
+                }
                 break;
+              }
+            } 
+          }
+          if (!foundMorphology) {
+            if (unit['class'] === 'Neuron') {
+              if (ffbomesh.settings.neuron3dMode == 7) {
+                gltf_data[rid] = unit;
               }
             }
           }
         }
       }
       ffbomesh.addJson({ ffbo_json: morph_data, type: 'morphology_json' });
+      ffbomesh.addJson({ ffbo_json: gltf_data, type: 'gltf' });
     }
 
     window.client = client;
@@ -392,6 +433,10 @@ require([
     dynamicNeuropilMenu.dispatch.highlight = function (id) { ffbomesh.highlight(id, true) };
     dynamicNeuropilMenu.dispatch.resume = function (id) { ffbomesh.highlight(undefined) };
 
+    // var dynapmicCellTypeNeuropilMenu = {};
+    // dynapmicCellTypeNeuropilMenu['Test'] = dynamicCellTypeMenu.addNeuropil('Test');
+    // window.dynapmicCellTypeNeuropilMenu = dynapmicCellTypeNeuropilMenu;
+
     ffbomesh.on('add',
       function (e) {
         if (!e.value.background)
@@ -493,28 +538,7 @@ require([
     ffbomesh.on('takeScreenshot', (function () { ffbomesh._take_screenshot = true; }));
     ffbomesh.on('showInfo', function () { window.NeuroNLPUI.GUIinfoOverlay.show(); });
 
-    $.getJSON("/data/config.json", function (json) {
-      ffbomesh.addJson({
-        ffbo_json: json,
-        showAfterLoadAll: false
-      }).then(function () {
-
-        //var c = json[Object.keys(json)[0]].color;
-        //var rgb = parseInt(c.b * 255) | (parseInt(c.g * 255) << 8) | (parseInt(c.r * 255) << 16);
-        //var hex = '#' + (0x1000000 + rgb).toString(16).slice(1);
-        //visualizationSettings.setColorPickerBackground(hex);
-        if (!tagLoad) $('#ui-blocker').hide();
-        srchInput.focus();
-        if (client.loginStatus.connected) {
-          tagsPanel.retrieveTag(searchParams.get('tag'))
-        } else {
-          client.loginStatus.on("change", function () {
-            if (tagLoad) tagsPanel.retrieveTag(searchParams.get('tag'))
-            if (queryLoad) NLPsearch(searchParams.get('query'))
-          }, "connected");
-        }
-      });
-    });
+    
     demoLoad = false;
     ffbomesh.settings.defaultSynapseRadius = 0.4;
     $(document).ready(function () {
@@ -556,7 +580,7 @@ require([
         window.NeuroNLPUI.closeAllOverlay();
       }).bind(FFBODemoPlayer);
       $.getJSON("/data/demos.json", function (json) {
-        FFBODemoPlayer.addDemos(json);
+        FFBODemoPlayer.addDemos(json[1]);
         FFBODemoPlayer.updateDemoTable('#demo-table-wrapper');
         if (searchParams.get('demo') && !searchParams.get('tag')) {
           demoLoad = true;
@@ -583,6 +607,45 @@ require([
       })
       $('#ui-blocker').show();
       client.getConnectivity(function () { $('#ui-blocker').hide(); });
+    });
+
+    window.NeuroNLPUI.loadAllCellTypes = function() {
+      var dynapmicCellTypeNeuropilMenu = {};
+      $.getJSON("/data/types_in_neuropils.json", function (json) {
+        json = json[1];
+        for (var key in json) {
+          dynapmicCellTypeNeuropilMenu[key] = dynamicCellTypeMenu.addNeuropil(key);
+          dynapmicCellTypeNeuropilMenu[key].dispatch.addType = function (name) { client.addType(name, { success: dataCallback }) };
+          dynapmicCellTypeNeuropilMenu[key].dispatch.removeType = function (name) { client.removeType(name, { success: dataCallback }) };
+          for (var neuronType of json[key] ) {
+            dynapmicCellTypeNeuropilMenu[key].addCellType(neuronType);
+          }
+        }
+      });
+    }
+
+    $.getJSON("/data/config.json", function (json) {
+      json = json[1];
+      ffbomesh.addJson({
+        ffbo_json: json,
+        showAfterLoadAll: true
+      }).then(function () {
+
+        var c = json[Object.keys(json)[0]].color;
+        var rgb = parseInt(c.b * 255) | (parseInt(c.g * 255) << 8) | (parseInt(c.r * 255) << 16);
+        var hex = '#' + (0x1000000 + rgb).toString(16).slice(1);
+        visualizationSettings.setColorPickerBackground(hex);
+        if (!tagLoad) $('#ui-blocker').hide();
+        srchInput.focus();
+        if (client.loginStatus.connected) {
+          tagsPanel.retrieveTag(searchParams.get('tag'))
+        } else {
+          client.loginStatus.on("change", function () {
+            if (tagLoad) tagsPanel.retrieveTag(searchParams.get('tag'))
+            if (queryLoad) NLPsearch(searchParams.get('query'))
+          }, "connected");
+        }
+      });
     });
   });
 

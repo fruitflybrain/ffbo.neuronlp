@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>NeuroNLP.Medulla</title>
-
+    <!-- branch = -->
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
     <meta http-equiv="Cache-Control" content="max-age=1800">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -19,7 +19,6 @@
          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap-theme.min.css"> -->
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/FrDH/jQuery.mmenu@v7.0.3/dist/jquery.mmenu.all.css"/>
-    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/FrDH/jQuery.mmenu/v7.0.3/dist/jquery.mmenu.all.css"/>
     <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.7.0/css/perfect-scrollbar.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css" />
@@ -42,7 +41,6 @@
 
     <script data-main="js/NeuroNLP" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/mkturkcan/neuronlp.graphutils@be2fc20a823f6f4f54824653104b3f207846f715/js/graphvis.js"></script>
-
     <link rel="stylesheet" type="text/css" href="/lib/css/ffbo.theme_settings.css">
     <link rel="stylesheet" id="current_theme" type="text/css" href="/lib/css/ffbo.default_theme.css">
     <link rel="stylesheet" id="main_css" type="text/css" href="/lib/css/ffbo.Client.css">
@@ -97,6 +95,7 @@
               <li id="btn-tags" ><a style="width:100%" onclick="NeuroNLPUI.onToggleTag()">Tags</a></li>
               <li id="btn-neuron"><a data-toggle="tooltip" title="Control Neuron and Synapses currently in the scene" style="width:100%" onclick="NeuroNLPUI.onToggleNeuClick()">Neurons/Synapses</a></li>
               <li id="btn-neuropils"><a data-toggle="tooltip" title="Control Neuropils currently in the scene" style="width:100%" onclick="NeuroNLPUI.onToggleLPUClick()">Neuropils</a></li>
+              <li id="btn-celltype"><a data-toggle="tooltip" title="List of cell types in each neuropil" style="width:100%" onclick="NeuroNLPUI.onToggleCellTypeClick()">Cell Types</a></li>
             </ul>
           </div>
           <nav id="ui_menu_nav">
@@ -144,6 +143,11 @@
                 </ul>
               </li>
               <li>
+                <span>Cell Types</span>
+                <ul id="toggle_celltype">
+                </ul>
+              </li>
+              <li>
                 <span>Visualization Settings</span>
                 <ul id="toggle_visset">
                   <li><p>* (Doesn't affect neurons already in workspace)</p></li>
@@ -170,24 +174,40 @@
                   <li>
                     <h4> Neuron Rendering </h4>
                   </li>
-                  <li class="vis-settings-sub">
+                  <!-- <li class="vis-settings-sub">
                     <a href="#">
                       <div class="wrap">3D Neuron Rendering *</div>
                       <input id="vis-3d-rendering" type="checkbox" class="Toggle" />
                     </a>
-                  </li>
+                  </li> -->
                   <li id="vis-3d-mode-option" class="vis-settings-sub">
                     <a>
-                      <div>3D Neuron Rendering Mode *</div>
-                      <input checked="checked" type="radio" name="mode3d" id="rd1" value="1"/>
-                      <label for="rd1">Cylinders</label><br/>
+                      <div>Rendering Mode *</div>
+                      <input checked="checked" type="radio" name="mode3d" id="rd0" value="0"/>
+                      <label for="rd0">Default</label><br/>
+                      <input type="radio" name="mode3d" id="rd1" value="1"/>
+                      <label for="rd1">Lines (fastest)</label><br/>
                       <input type="radio" name="mode3d" id="rd2" value="2"/>
-                      <label for="rd2">Cylinders&Spheres(Intensive)</label><br/>
+		                  <label for="rd2">Lines with Width (fast)</label><br/>
                       <input type="radio" name="mode3d" id="rd3" value="3"/>
-                      <label for="rd3">Cylinders&Tubes(Intensive+)</label>
+                      <label for="rd3">Spheres</label><br/>
+		                  <input type="radio" name="mode3d" id="rd4" value="4"/>
+                      <label for="rd4">Cylinders</label><br/>
+                      <input type="radio" name="mode3d" id="rd5" value="5"/>
+                      <label for="rd5">Cylinders&Spheres(Intensive)</label><br/>
+                      <input type="radio" name="mode3d" id="rd6" value="6"/>
+                      <label for="rd6">Cylinders&Tubes(Intensive+)</label><br/>
+                      <input type="radio" name="mode3d" id="rd7" value="7"/>
+                      <label for="rd7">Mesh(fast,more downloads)</label>
                     </a>
                   </li>
-                  <li class="vis-settings-sub">
+                  <li class="vis-settings-sub" id="vis-linewidth_enclose">
+                    <a>
+                      <div>Linewidth</div>
+                      <input id="vis-linewidth" data-slider-id='def_width_slider' class="slider" type="text" data-slider-min="0.1" data-slider-max="10.0" data-slider-step="0.1" data-slider-value="2.5"/>
+                    </a>
+                  </li>
+                  <li class="vis-settings-sub"  id="vis-default-nerite-radius_enclose">
                     <a>
                       <div>Default Neurite Radius *</div>
                       <input id="vis-default-nerite-radius" data-slider-id='def_rad_slider' class="slider" type="text" data-slider-min="0" data-slider-max="2.0" data-slider-step="0.01" data-slider-value="0.8"/>
@@ -195,8 +215,20 @@
                   </li>
                   <li class="vis-settings-sub">
                     <a>
-                      <div>Default Soma Radius *</div>
-                      <input id="vis-default-soma-radius" data-slider-id='def_soma_slider' class="slider" type="text" data-slider-min="0.4" data-slider-max="10.0" data-slider-step="0.01" data-slider-value="0.8"/>
+                      <div>Neurite Radius Range *</div>
+                      <input id="vis-neurite-radius-range" data-slider-id='rad_range_slider' class="slider" type="text" data-slider-min="0" data-slider-max="10.0" data-slider-step="0.01" data-slider-value="[0.01, 5.0]"/>
+                    </a>
+                  </li>
+                  <li class="vis-settings-sub">
+                    <a>
+                      <div>Default Soma Radius*</div>
+                      <input id="vis-default-soma-radius" data-slider-id='def_soma_slider' class="slider" type="text" data-slider-min="0.1" data-slider-max="10.0" data-slider-step="0.01" data-slider-value="0.8"/>
+                    </a>
+                  </li>
+                  <li class="vis-settings-sub">
+                    <a>
+                      <div>Soma Radius Range *</div>
+                      <input id="vis-soma-radius-range" data-slider-id='soma_range_slider' class="slider" type="text" data-slider-min="0.1" data-slider-max="10.0" data-slider-step="0.01" data-slider-value="[0.1, 5.0]"/>
                     </a>
                   </li>
                   <li class="vis-settings-sub">
@@ -249,19 +281,19 @@
                   <li class="vis-settings-sub">
                     <a>
                       <div>Horizontal Angle</div>
-                      <input id="vis-frontSpot-1-posAngle1" data-slider-id="frontSpot_1_posAngle1" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/>
+                      <input id="vis-frontSpot-1-posAngle1" data-slider-id="frontSpot_1_posAngle1" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="0"/>
                     </a>
                   </li>
                   <li class="vis-settings-sub">
                     <a>
                       <div>Vertical Angle</div>
-                      <input id="vis-frontSpot-1-posAngle2" data-slider-id="frontSpot_1_posAngle2" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/>
+                      <input id="vis-frontSpot-1-posAngle2" data-slider-id="frontSpot_1_posAngle2" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="0"/>
                     </a>
                   </li>
                   <li class="vis-settings-sub">
                     <a>
                       <div>Intensity</div>
-                      <input id="vis-frontSpot-1-intensity" data-slider-id="frontSpot_1_intensity" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="0.1" data-slider-value="4"/>
+                      <input id="vis-frontSpot-1-intensity" data-slider-id="frontSpot_1_intensity" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="0.1" data-slider-value="1"/>
                     </a>
                   </li>
                   <li class="vis-settings-sub">
@@ -278,19 +310,19 @@
                   <li class="vis-settings-sub">
                     <a>
                       <div>Horizontal Angle</div>
-                      <input id="vis-frontSpot-2-posAngle1" data-slider-id="frontSpot_2_posAngle1" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/>
+                      <input id="vis-frontSpot-2-posAngle1" data-slider-id="frontSpot_2_posAngle1" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="0"/>
                     </a>
                   </li>
                   <li class="vis-settings-sub">
                     <a>
                       <div>Vertical Angle</div>
-                      <input id="vis-frontSpot-2-posAngle2" data-slider-id="frontSpot_2_posAngle2" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/>
+                      <input id="vis-frontSpot-2-posAngle2" data-slider-id="frontSpot_2_posAngle2" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="0"/>
                     </a>
                   </li>
                   <li class="vis-settings-sub">
                     <a>
                       <div>Intensity</div>
-                      <input id="vis-frontSpot-2-intensity" data-slider-id="frontSpot_2_intensity" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="0.1" data-slider-value="4"/>
+                      <input id="vis-frontSpot-2-intensity" data-slider-id="frontSpot_2_intensity" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="0.1" data-slider-value="0"/>
                     </a>
                   </li>
                   <li class="vis-settings-sub">
@@ -403,8 +435,14 @@
                   </li>
                   <li class="vis-settings-sub">
                     <a>
-                      <div>Synapse Size * </div>
-                      <input id="vis-default-synapse-radius" data-slider-id='def_syn_slider' class="slider" type="radio" data-slider-min="0.1" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
+                      <div>Synapse Size</div>
+                      <input id="vis-default-synapse-radius" data-slider-id='def_syn_slider' class="slider" type="radio" data-slider-min="0.1" data-slider-max="2.0" data-slider-step="0.01" data-slider-value="1.0"/>
+                    </a>
+                  </li>
+                  <li class="vis-settings-sub">
+                    <a>
+                      <div>Synapse Size Range* </div>
+                      <input id="vis-synapse-radius-range" data-slider-id='syn_range_slider' class="slider" type="radio" data-slider-min="0.1" data-slider-max="2.0" data-slider-step="0.01" data-slider-value="[0.1, 1.0]"/>
                     </a>
                   </li>
                   <li class="vis-settings-sub">
@@ -422,30 +460,36 @@
                       <input type="checkbox" id="vis-fxaa" class="Toggle"/>
                     </a>
                   </li>
-                  <li class="vis-settings-sub">
+                  <!-- <li class="vis-settings-sub">
                     <a>
                       <div>Brightness</div>
-                      <input id="vis-tonemappingbright" data-slider-id='tm_brght_slider' type="text" data-slider-min="0.01" data-slider-max="0.99" data-slider-step="0.01" data-slider-value="0.95"/>
+                      <input id="vis-brightness" data-slider-id='tm_brght_slider' type="text" data-slider-min="0.01" data-slider-max="10" data-slider-step="0.01" data-slider-value="1.0"/>
                     </a>
-                  </li>
-                  <li>
+                  </li> -->
+                  <!-- <li>
                     <a>
                       <h5>Bloom Pass Settings</h5>
                     </a>
-                  </li>
+                  </li> -->
                   <li class="vis-settings-sub">
                     <a>
-                      <div>Radius</div>
+                      <div>Bloom Pass</div>
+                      <input type="checkbox" id="vis-bloom" class="Toggle"/>
+                    </a>
+                  </li>
+                  <li class="vis-settings-sub" id="vis-bloom-radius_enclose">
+                    <a>
+                      <div>Bloom Pass Radius</div>
                       <input id="vis-bloom-radius" data-slider-id='blm_rad_slider' type="text" data-slider-min="0.05" data-slider-max="10.0" data-slider-step="0.05" data-slider-value="0.8"/>
                     </a>
                   </li>
-                  <li class="vis-settings-sub">
+                  <li class="vis-settings-sub" id="vis-bloom-threshold_enclose">
                     <a>
                       <div>Threshold</div>
                       <input id="vis-bloom-threshold" data-slider-id='blm_th_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
                     </a>
                   </li>
-                  <li class="vis-settings-sub">
+                  <li class="vis-settings-sub" id="vis-bloom-strength_enclose">
                     <a>
                       <div>Strength</div>
                       <input id="vis-bloom-strength" data-slider-id='blm_st_slider' type="text" data-slider-min="0" data-slider-max="2.0" data-slider-step="0.01" data-slider-value="0.8"/>
@@ -517,8 +561,8 @@
               <br><br> -->
               <h4>Sharing Query Results</h4>
               <p>
-                Sharing query results is easy with the "Tags" feature.
-                Create your own tag!
+                Sharing query results is easy with the "Tags" feature. 
+                Create your own tags!
               </p>
               <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-tags')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-tags')"  onclick="NeuroNLPUI.onToggleTag()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Try Tags!</a>
             </div>
@@ -605,7 +649,7 @@
                 <article>
                   <p>
                     The Search Bar is the central querying interface. It supports natural language queries of neurons, synaptic partners, etc.
-                    By combining various attributes of query targets, you can create some very powerful queries. Click on the info button left to the query bar for more information.
+                    By combining various attributes of query targets, you can create some very powerful queries. Click on the info button to the left of the search bar.
                   </p>
                 </article>
                 <images></images>
@@ -794,7 +838,7 @@
           </div>
         </div>
 
-        <div id="announce-panel" class="overlay">
+        <!-- <div id="announce-panel" class="overlay">
           <div class="overlay_container">
             <ul class="list-inline">
               <li><h2>Latest News</h2></li>
@@ -803,7 +847,7 @@
               <a class="twitter-timeline" data-dnt="true" data-theme="dark" data-link-color="#2B7BB9" href="https://twitter.com/FlyBrainObs/timelines/895746744633483264?ref_src=twsrc%5Etfw">NeuroNLPUpdates</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
       <!-- /#page-content-wrapper -->
     </div>
