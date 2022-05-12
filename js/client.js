@@ -60,7 +60,7 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function (autobahn
     this.notifyError(err.args[0]);
   }
 
-  updateServers = function (serverInfo) {
+  updateServers = function (serverInfo, dataset) {
     /** Update the Crossbar Session IDs of servers
      *  If current server drops, switched to a new server if available
      */
@@ -75,8 +75,14 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function (autobahn
         client.notifyError('NeuroArch server lost.');
       }
       if (naServerID == undefined && Object.keys(serverInfo.na).length) {
-        naServerID = Object.keys(serverInfo.na)[0];
-        client.notifySuccess('NeuroArch server detected.')
+        for(var key of Object.keys(serverInfo.na)) {
+            if(serverInfo.na[key]['dataset'] === dataset) {
+                naServerID = key;
+            }
+        }
+        if(naServerID !== undefined) {
+          client.notifySuccess('NeuroArch server detected.')
+        }
       }
 
     }
@@ -89,8 +95,14 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function (autobahn
         client.notifyError('NLP server lost');
       }
       if (nlpServerID == undefined && Object.keys(serverInfo.nlp).length) {
-        nlpServerID = Object.keys(serverInfo.nlp)[0];
-        client.notifySuccess('NLP server detected.');
+        for(var key of Object.keys(serverInfo.nlp)) {
+            if(serverInfo.nlp[key]['dataset'] === dataset) {
+                nlpServerID = key;
+            }
+        }
+        if(nlpServerID !== undefined) {
+          client.notifySuccess('NLP server detected.');
+        }
       }
 
     }
@@ -117,7 +129,7 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function (autobahn
   }
 
 
-  function FFBOClient() {
+  function FFBOClient(dataset) {
     /**
      * This is the FFBOClient object that holds client session
      */
@@ -126,6 +138,7 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function (autobahn
     this.session = undefined;
     this.graph = {};
     this.textFile = null;
+    this.dataset = dataset;
     this.loginStatus = new PropertyManager(
       {
         username: "",
@@ -507,6 +520,36 @@ ${connectivity.map(conn => `${conn[0]},${conn[1]},${conn[2]},${conn[3]}\n`).join
     }, callbacks, format);
   }
 
+  FFBOClient.prototype.addType = function (name, callbacks, format) {
+    /**
+     * Query to add a neuron by its name.
+     */
+    return this.executeNAquery({
+      verb: "add",
+      query: [
+        {
+          action: { method: { query: { name: name } } },
+          object: { class: ["Neuron"] }
+        }
+      ]
+    }, callbacks, format);
+  }
+
+  FFBOClient.prototype.removeType = function (name, callbacks, format) {
+    /**
+     * Query to add a neuron by its name.
+     */
+    return this.executeNAquery({
+      verb: "remove",
+      query: [
+        {
+          action: { method: { query: { name: name } } },
+          object: { class: ["Neuron"] }
+        }
+      ]
+    }, callbacks, format);
+  }
+
   FFBOClient.prototype.removeObjs = function (rids, callbacks, format) {
     /**
      * Query to remove a list of Objs based on their Rids. rids must be an array
@@ -541,7 +584,7 @@ ${connectivity.map(conn => `${conn[0]},${conn[1]},${conn[2]},${conn[3]}\n`).join
     /**
      * Query to keep a list of Objs based on their Rids. rids must be an array
      */
-    if (verb == undefined) { verb = "show" }
+    if(verb == undefined) { verb = "show" }
     return this.executeNAquery({
       verb: verb,
       command: {
@@ -613,7 +656,7 @@ ${connectivity.map(conn => `${conn[0]},${conn[1]},${conn[2]},${conn[3]}\n`).join
 
       session.call("ffbo.processor.server_information").then(
         (function (res) {
-          updateServers([res]);
+          updateServers([res], this.dataset);
         }).bind(this),
         function (err) {
           console.log("server retrieval error:", err);

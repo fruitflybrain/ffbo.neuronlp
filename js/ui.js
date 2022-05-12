@@ -112,6 +112,26 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "jquery.mmenu"], function($, 
       mm_menu_right.open();
       $("a[href='#toggle_neuropil']")[0].click()
     }
+    this.onToggleCellTypeClick = function(neuropil) {
+      if (loadcelltype === undefined){
+        console.log('loading')
+        this.loadAllCellTypes();
+        loadcelltype = true;
+      }
+      mm_menu_right.closeAllPanels();
+      mm_menu_right.initPanels($('#cell-type'));
+      mm_menu_right.open();
+      if( neuropil === undefined && lastOpenedCellType === undefined) {
+        $("a[href='#toggle_celltype']")[0].click()
+      } else {
+        if (neuropil === undefined) {
+          neuropil = lastOpenedCellType;
+        }
+        var name_with_out_parenthesis = neuropil.replaceAll('(R)', '_R').replaceAll('(L)', '_L');
+        $("a[href='#"+name_with_out_parenthesis+"-cell-types']")[0].click();
+        lastOpenedCellType = neuropil;
+      }
+    }
     this.onClickVisualizationSettings = function() {
       mm_menu_right.closeAllPanels();
       mm_menu_right.open();
