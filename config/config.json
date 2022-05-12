@@ -1,17 +1,17 @@
 {
-  "branch": "",
+  "branch": "flycircuit",
   "connection": {
     "url": "ws://localhost:8081/ws",
     "user": "guest",
     "secret": "guestpass"
   },
-  "dataset": "hemibrain",
+  "dataset": "flycircuit",
   "metadata": {
     "enablePositionReset": true,
     "resetPosition": {
       "x": 0.0,
       "y": 0.0,
-      "z": 0.0
+      "z": 1800.0
     },
     "resetUp": {
       "x": 0.0,
