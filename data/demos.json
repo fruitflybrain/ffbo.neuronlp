@@ -1,4 +1,6 @@
-{
+[
+  {"branch": "medulla"},
+  {
   "center_view": {
     "script": [
       ["notify", {"message": "Let's hide everything first"}],
@@ -153,4 +155,5 @@
     "description": "Building circuits from T4a backwards.",
     "category": "Circuits"
   }
-}
+  }
+]

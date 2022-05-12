@@ -1,11 +1,11 @@
 {
-  "branch": "",
+  "branch": "medulla",
   "connection": {
     "url": "ws://localhost:8081/ws",
     "user": "guest",
     "secret": "guestpass"
   },
-  "dataset": "hemibrain",
+  "dataset": "medulla",
   "metadata": {
     "enablePositionReset": true,
     "resetPosition": {
