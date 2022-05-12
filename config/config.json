@@ -1,6 +1,7 @@
 {
+  "branch": "hemibrain",
   "connection": {
-    "url": "ws://localhost:17081/ws",
+    "url": "ws://localhost:8081/ws",
     "user": "guest",
     "secret": "guestpass"
   },
@@ -43,7 +44,7 @@
       "sceneBackgroundColor": "#030305"
     },
     "neuron_mesh": {
-      "url": "https://ffbodata.neuronlp.fruitflybrain.org/gltf_unsimplified_2/"
+      "url": ""
     }
   }
 }
