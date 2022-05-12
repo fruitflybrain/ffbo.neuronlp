@@ -9,14 +9,14 @@
   "metadata": {
     "enablePositionReset": true,
     "resetPosition": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 0.0
+      "x": 8.68,
+      "y": 1489.61,
+      "z": 111.19
     },
     "resetUp": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 0.0
+      "x": 0.1847,
+      "y": -0.2606,
+      "z": -0.8196
     },
     "neu3dSettings": {
       "defaultOpacity": 0.7,
