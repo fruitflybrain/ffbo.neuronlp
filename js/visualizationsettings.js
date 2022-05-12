@@ -76,6 +76,17 @@ moduleExporter(
         ffbomesh.settings.defaultSomaRadius = e.value.newValue;
       });
 
+    $('#vis-neurite-radius-range')
+      .bootstrapSlider({value: ffbomesh.settings.RadiusRange})
+      .on("change", function(e){
+        ffbomesh.settings.RadiusRange = e.value.newValue;
+      });
+    $('#vis-soma-radius-range')
+      .bootstrapSlider({value: ffbomesh.settings.SomaRadiusRange})
+      .on("change", function(e){
+        ffbomesh.settings.SomaRadiusRange = e.value.newValue;
+      });
+
     $('#vis-default-opacity')
       .bootstrapSlider({value: ffbomesh.settings.defaultOpacity})
       .on("change", function(e){
@@ -300,6 +311,11 @@ if (!Modernizr.inputtypes.color) {
       .bootstrapSlider({value: ffbomesh.settings.defaultSynapseRadius})
       .on("change", function(e){
         ffbomesh.settings.defaultSynapseRadius = e.value.newValue;
+      });
+    $('#vis-synapse-radius-range')
+      .bootstrapSlider({value: ffbomesh.settings.SynapseRadiusRange})
+      .on("change", function(e){
+        ffbomesh.settings.SynapseRadiusRange = e.value.newValue;
       });
 
     $('#vis-synapse-opacity')

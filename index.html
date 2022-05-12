@@ -215,8 +215,20 @@
                   </li>
                   <li class="vis-settings-sub">
                     <a>
-                      <div>Default Soma Radius *</div>
-                      <input id="vis-default-soma-radius" data-slider-id='def_soma_slider' class="slider" type="text" data-slider-min="0.4" data-slider-max="10.0" data-slider-step="0.01" data-slider-value="0.8"/>
+                      <div>Neurite Radius Range *</div>
+                      <input id="vis-neurite-radius-range" data-slider-id='rad_range_slider' class="slider" type="text" data-slider-min="0" data-slider-max="10.0" data-slider-step="0.01" data-slider-value="[0.01, 5.0]"/>
+                    </a>
+                  </li>
+                  <li class="vis-settings-sub">
+                    <a>
+                      <div>Default Soma Radius*</div>
+                      <input id="vis-default-soma-radius" data-slider-id='def_soma_slider' class="slider" type="text" data-slider-min="0.1" data-slider-max="10.0" data-slider-step="0.01" data-slider-value="0.8"/>
+                    </a>
+                  </li>
+                  <li class="vis-settings-sub">
+                    <a>
+                      <div>Soma Radius Range *</div>
+                      <input id="vis-soma-radius-range" data-slider-id='soma_range_slider' class="slider" type="text" data-slider-min="0.1" data-slider-max="10.0" data-slider-step="0.01" data-slider-value="[0.1, 5.0]"/>
                     </a>
                   </li>
                   <li class="vis-settings-sub">
@@ -425,6 +437,12 @@
                     <a>
                       <div>Synapse Size</div>
                       <input id="vis-default-synapse-radius" data-slider-id='def_syn_slider' class="slider" type="radio" data-slider-min="0.1" data-slider-max="2.0" data-slider-step="0.01" data-slider-value="1.0"/>
+                    </a>
+                  </li>
+                  <li class="vis-settings-sub">
+                    <a>
+                      <div>Synapse Size Range* </div>
+                      <input id="vis-synapse-radius-range" data-slider-id='syn_range_slider' class="slider" type="radio" data-slider-min="0.1" data-slider-max="2.0" data-slider-step="0.01" data-slider-value="[0.1, 1.0]"/>
                     </a>
                   </li>
                   <li class="vis-settings-sub">
