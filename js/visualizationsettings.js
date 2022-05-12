@@ -20,17 +20,6 @@ moduleExporter(
   var FFBOVisualizationSettings = function(ffbomesh) {
 
     var _this = this;
-    // $('#vis-3d-rendering')[0].checked = ffbomesh.settings.neuron3d;
-    // if(!ffbomesh.settings.neuron3d)
-    //     $("#vis-3d-mode-option").hide()
-
-    // $('#vis-3d-rendering').change(function(){
-    //     ffbomesh.settings.neuron3d = !ffbomesh.settings.neuron3d;
-    //     if (ffbomesh.settings.neuron3d)
-    //       $("#vis-3d-mode-option").show("slide", { direction: "right" }, 800);
-    //     else
-    //       $("#vis-3d-mode-option").hide("slide", { direction: "right" }, 800);
-    // });
 
     if(ffbomesh.settings.neuron3dMode != 2) {
       $("#vis-linewidth_enclose").hide("slide", { direction: "right" }, 800);
@@ -331,17 +320,6 @@ if (!Modernizr.inputtypes.color) {
         ffbomesh.settings.effectFXAA.enabled = !ffbomesh.settings.effectFXAA.enabled;
     });
 
-    // $('#vis-tonemappingbright')
-    //   .bootstrapSlider({value: ffbomesh.settings.toneMappingPass.brightness})
-    //   .on("change", function(e){
-    //     ffbomesh.settings.toneMappingPass.brightness = e.value.newValue;
-    //   });
-    // $('#vis-brightness')
-    //   .bootstrapSlider({value: ffbomesh.settings.brightness})
-    //   .on("change", function(e){
-    //     ffbomesh.settings.brightness = e.value.newValue;
-    //   });
-
     $('#vis-bloom')[0].checked = ffbomesh.settings.bloomPass.enabled;
     if(!ffbomesh.settings.bloomPass.enabled) {
       $("#vis-bloom-radius_enclose").hide();
@@ -485,18 +463,6 @@ if (!Modernizr.inputtypes.color) {
       var dom = lightObj2Dom[e.path[0]];
       $(`#${dom}-${e.prop}`)[0].checked = e.value;
     }, 'track');
-
-    // ffbomesh.settings.toneMappingPass.on('change', function(e) {
-    //   $('#vis-tonemappingbright').bootstrapSlider('setValue', e.value, true);
-    // }, 'brightness');
-
-    // ffbomesh.settings.on('change', function(e) {
-    //   $('#vis-brightness').bootstrapSlider('setValue', e.value, true);
-    // }, 'brightness');
-
-    // ffbomesh.settings.on('change', function(e) {
-    //   $('input[type=radio][name=mode3d]')[e.value].checked = true;
-    // }, 'neuron3dMode');
 
     ffbomesh.settings.on('change', function(e) {
       _this.setColorPickerBackground(e.value);

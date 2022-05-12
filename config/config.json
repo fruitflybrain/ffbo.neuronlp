@@ -1,7 +1,7 @@
 {
   "branch": "",
   "connection": {
-    "url": "ws://localhost:17081/ws",
+    "url": "ws://localhost:8081/ws",
     "user": "guest",
     "secret": "guestpass"
   },
@@ -9,14 +9,14 @@
   "metadata": {
     "enablePositionReset": true,
     "resetPosition": {
-      "x": 61.36,
-      "y": 1304.68,
-      "z": 205.3
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
     },
     "resetUp": {
-      "x": 0.0132266,
-      "y": -0.415534,
-      "z": -0.8719834
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
     },
     "neu3dSettings": {
       "defaultOpacity": 0.7,
@@ -44,7 +44,7 @@
       "sceneBackgroundColor": "#030305"
     },
     "neuron_mesh": {
-      "url": "https://ffbodata.neuronlp.fruitflybrain.org/gltf_unsimplified_2/"
+      "url": ""
     }
   }
 }
