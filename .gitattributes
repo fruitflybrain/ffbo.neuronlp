@@ -1,0 +1,5 @@
+index.html merge=ours
+config/config.json merge=ours
+data/demos.json merge=ours
+data/config.json merge=ours
+data/types_in_neuropils.json merge=ours
