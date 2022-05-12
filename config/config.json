@@ -1,21 +1,21 @@
 {
-  "branch": "",
+  "branch": "l1em",
   "connection": {
     "url": "ws://localhost:8081/ws",
     "user": "guest",
     "secret": "guestpass"
   },
-  "dataset": "hemibrain",
+  "dataset": "l1em",
   "metadata": {
     "enablePositionReset": true,
     "resetPosition": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 0.0
+      "x": 238.5652665362618,
+      "y": -57.231396545007044,
+      "z": -4015.343735317172
     },
     "resetUp": {
       "x": 0.0,
-      "y": 0.0,
+      "y": -1.0,
       "z": 0.0
     },
     "neu3dSettings": {
