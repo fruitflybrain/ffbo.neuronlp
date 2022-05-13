@@ -22,6 +22,9 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function (autobahn
   // nk server crossbar id
   nkServerID = undefined;
   notified_no_connnect = false;
+  naServerLost = false;
+  nlpServerLost = false;
+  dataset = undefined;
 
   autobahn = autobahn || window.autobahn;
   PropertyManager = PropertyManager || window.PropertyManager;
@@ -60,51 +63,71 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function (autobahn
     this.notifyError(err.args[0]);
   }
 
-  updateServers = function (serverInfo, dataset) {
+  updateServers = function (serverInfo) {
     /** Update the Crossbar Session IDs of servers
      *  If current server drops, switched to a new server if available
      */
     if (serverInfo.hasOwnProperty(0))
       serverInfo = serverInfo[0];
-    if (typeof (serverInfo) == "object" && 'na' in serverInfo) {
-      if (naServerID == undefined && !(Object.keys(serverInfo.na).length)) {
-        client.notifyError('NeuroArch server not detected.');
-      }
-      if (naServerID != undefined && !(naServerID in serverInfo.na)) {
-        naServerID = undefined;
-        client.notifyError('NeuroArch server lost.');
-      }
-      if (naServerID == undefined && Object.keys(serverInfo.na).length) {
-        for(var key of Object.keys(serverInfo.na)) {
-            if(serverInfo.na[key]['dataset'] === dataset) {
-                naServerID = key;
+      if (typeof (serverInfo) == "object" && 'na' in serverInfo) {
+        if (naServerID === undefined) { // not connected
+          if (!(Object.keys(serverInfo.na).length)) {
+            if (!naServerLost) {
+              client.notifyError('NeuroArch server not detected.');
+              naServerLost = true;
             }
-        }
-        if(naServerID !== undefined) {
-          client.notifySuccess('NeuroArch server detected.')
+          } else {
+            for(var key of Object.keys(serverInfo.na)) {
+              if(serverInfo.na[key]['dataset'] == dataset) {
+                  naServerID = key;
+              }
+            }
+            if(naServerID !== undefined) {
+              client.notifySuccess('NeuroArch server detected.')
+            } else {
+              if (!naServerLost) {
+                client.notifyError('NeuroArch server not detected.');
+                naServerLost = true;
+              }
+            }
+          }
+        } else { // naServerID !== undefined, connected
+          if (!(naServerID in serverInfo.na)) {
+            naServerID = undefined;
+            client.notifyError('NeuroArch server lost.');
+            naServerLost = true;
+          }
         }
       }
-
-    }
     if (typeof (serverInfo) == "object" && 'nlp' in serverInfo) {
-      if (nlpServerID == undefined && !(Object.keys(serverInfo.nlp).length)) {
-        client.notifyError('NLP server not detected.');
-      }
-      if (nlpServerID != undefined && !(nlpServerID in serverInfo.nlp)) {
-        nlpServerID = undefined;
-        client.notifyError('NLP server lost');
-      }
-      if (nlpServerID == undefined && Object.keys(serverInfo.nlp).length) {
-        for(var key of Object.keys(serverInfo.nlp)) {
-            if(serverInfo.nlp[key]['dataset'] === dataset) {
+      if (nlpServerID === undefined) { // not connected
+        if (!(Object.keys(serverInfo.nlp).length)) {
+          if (!nlpServerLost) {
+            client.notifyError('NLP server not detected.');
+            nlpServerLost = true;
+          }
+        } else {
+          for(var key of Object.keys(serverInfo.nlp)) {
+            if(serverInfo.nlp[key]['dataset'] == dataset) {
                 nlpServerID = key;
             }
+          }
+          if(nlpServerID !== undefined) {
+            client.notifySuccess('NLP server detected.')
+          } else {
+            if (!nlpServerLost) {
+              client.notifyError('NLP server not detected.');
+              nlpServerLost = true;
+            }
+          }
         }
-        if(nlpServerID !== undefined) {
-          client.notifySuccess('NLP server detected.');
+      } else { // nlpServerID !== undefined, connected
+        if (!(nlpServerID in serverInfo.nlp)) {
+          nlpServerID = undefined;
+          client.notifyError('NLP server lost.');
+          nlpServerLost = true;
         }
       }
-
     }
     if (typeof (serverInfo) == "object" && 'nk' in serverInfo) {
       if (nkServerID != undefined && !(nkServerID in serverInfo.nk))
@@ -129,7 +152,7 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function (autobahn
   }
 
 
-  function FFBOClient(dataset) {
+  function FFBOClient(ds) {
     /**
      * This is the FFBOClient object that holds client session
      */
@@ -138,7 +161,7 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function (autobahn
     this.session = undefined;
     this.graph = {};
     this.textFile = null;
-    this.dataset = dataset;
+
     this.loginStatus = new PropertyManager(
       {
         username: "",
@@ -154,6 +177,7 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function (autobahn
     this.status = new PropertyManager();
     this._callbacks = {};
     this.dataThroughRPCcall = true;
+    dataset = ds;
   }
 
   // Should be overloaded by application
@@ -656,7 +680,7 @@ ${connectivity.map(conn => `${conn[0]},${conn[1]},${conn[2]},${conn[3]}\n`).join
 
       session.call("ffbo.processor.server_information").then(
         (function (res) {
-          updateServers([res], this.dataset);
+          updateServers([res]);
         }).bind(this),
         function (err) {
           console.log("server retrieval error:", err);
