@@ -623,13 +623,14 @@ require([
       json = json[1];
       ffbomesh.addJson({
         ffbo_json: json,
-        showAfterLoadAll: true
+        showAfterLoadAll: false // true does not do anything
       }).then(function () {
-
-        var c = json[Object.keys(json)[0]].color;
-        var rgb = parseInt(c.b * 255) | (parseInt(c.g * 255) << 8) | (parseInt(c.r * 255) << 16);
-        var hex = '#' + (0x1000000 + rgb).toString(16).slice(1);
-        visualizationSettings.setColorPickerBackground(hex);
+        if (Object.keys(json).length) {
+          var c = json[Object.keys(json)[0]].color;
+          var rgb = parseInt(c.b * 255) | (parseInt(c.g * 255) << 8) | (parseInt(c.r * 255) << 16);
+          var hex = '#' + (0x1000000 + rgb).toString(16).slice(1);
+          visualizationSettings.setColorPickerBackground(hex);
+        }
         if (!tagLoad) $('#ui-blocker').hide();
         srchInput.focus();
         if (client.loginStatus.connected) {
