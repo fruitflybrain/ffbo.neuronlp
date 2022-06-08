@@ -13,7 +13,7 @@ define('three', ['https://cdn.jsdelivr.net/gh/mrdoob/three.js@r140/build/three.m
   return THREE;
 });
 requirejs.config({
-  baseUrl: '/js',
+  baseUrl: './js',
   paths: {
     // app: 'app',
     mesh3d: '../lib/js/mesh3d',
@@ -108,7 +108,7 @@ requirejs.config({
 // Start loading the main app file. Put all of
 // your application logic in there.
 require([
-  'json!/config/config.json',
+  'json!../config/config.json',
   'jquery',
   'client',
   'three',
@@ -246,6 +246,7 @@ require([
       client.status.on("change", function () {
         ffbomesh.import_state(metadata);
         $('#ui-blocker').hide();
+        ffbomesh.resetVisibleView();
       }, queryID);
     }
 
@@ -305,22 +306,20 @@ require([
       client.status.on("change", function (e) { if (e.value == -1) $('#ui-blocker').hide(); }, queryID);
     }
 
-    var ex_tag = { 'name': 'nikul_7', 'desc': 'This tag shows the alpha lobe of the mushroom body.', 'keywords': ['mushroom body', 'alpha lobe'], 'FFBOdata': { extra: 'This tag has been created by the FFBO team.' } };
-    tagsPanel.populateTags([ex_tag]);
+    $.getJSON("./data/tag_displays.json", tags => {
+      tagsPanel.populateTags(tags[1]);
+    });
     /*
    * Add tag retrieval functionality.
    */
     tagsPanel.activateTagLinks = (function (tagName) {
-      $('.tag-el').click(() => {
-        this.retrieveTag($(this).attr('tag_name'));
+      $('.tag-el').click( (e) => {
+        let tag_name = $(e.currentTarget).attr('tag_name');
+        this.retrieveTag(tag_name);
         this.overlay.closeAll();
       });
     }).bind(tagsPanel)
     tagsPanel.activateTagLinks();
-    /*
-   * Hide the tag search menu for now.
-   */
-    $('#tagSearchMenuWrapper').hide();
 
     var oldHeight = ffbomesh.container.clientHeight;
     var oldWidth = ffbomesh.container.clientWidth;
@@ -582,7 +581,7 @@ require([
         });
         window.NeuroNLPUI.closeAllOverlay();
       }).bind(FFBODemoPlayer);
-      $.getJSON("/data/demos.json", function (json) {
+      $.getJSON("./data/demos.json", function (json) {
         FFBODemoPlayer.addDemos(json[1]);
         FFBODemoPlayer.updateDemoTable('#demo-table-wrapper');
         if (searchParams.get('demo') && !searchParams.get('tag')) {
@@ -614,7 +613,7 @@ require([
 
     window.NeuroNLPUI.loadAllCellTypes = function() {
       var dynapmicCellTypeNeuropilMenu = {};
-      $.getJSON("/data/types_in_neuropils.json", function (json) {
+      $.getJSON("./data/types_in_neuropils.json", function (json) {
         json = json[1];
         for (var key in json) {
           dynapmicCellTypeNeuropilMenu[key] = dynamicCellTypeMenu.addNeuropil(key);
@@ -627,7 +626,7 @@ require([
       });
     }
 
-    $.getJSON("/data/config.json", function (json) {
+    $.getJSON("./data/config.json", function (json) {
       json = json[1];
       ffbomesh.addJson({
         ffbo_json: json,

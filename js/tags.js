@@ -30,44 +30,32 @@ moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], f
     var a = `
         <div class="createtag">
           <h4 class="tagLabel">Create Tag</h4>
-          <h5 type="text" id="tag_name" style="width:30%; float:left">Tag Name</h5>
-          <input type="text" name="tag" class="tag-text tag-name" id="tag_name_input" style="display: block;margin: 10px; right: 0px; width: 60%; position: absolute">
+          <h5 type="text" id="tag_name">Tag Name</h5>
+          <input type="text" name="tag" class="tag-text tag-name" id="tag_name_input"/>
           <!-- <h5 type="text" id="tag_desc" style="float: left; width:60%">Tag Description</h5>
-          <textarea type="text" name="tag" class="tag-text" rows="3" id="tag_desc_input" style="display: block; width:100%; resize: none;"></textarea>
+          <textarea type="text" name="tag" class="tag-text" rows="3" id="tag_desc_input"></textarea>
           <h5 type="text" id="tag_keys" style="float: left; width:100%">Tag Keywords</h5>
-          <div id="tagTagEditor" style="float: left; width:100%"></div> -->
+          <div id="tagTagEditor"></div> -->
         </div>
         <div class="loadtag">
-          <h4 class="tagLabel">Retrieve Tag</h4>
-          <h5 type="text" id="tag_name" style="width:30%; float:left">Retrieve a Tag by Name</h5>
-          <input type="text" name="tag" class="tag-text tag-name"  id="retrieve_tag_name_input" style="display: block;margin: 10px; right: 0px; width: 60%; position: absolute">
-          <div id="tagSearchMenuWrapper">
-          <h5 type="text" id="tag_desc" style="display: block; width:60%">Browse Tags</h5>
-          <br />
-          <div id="tagSearchMenu" class="list-group" style="overflow:scroll; height:400px; overflow-x: hidden; max-width: 100%;">
-            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start tag-el active" tag_name="nikul_7">
-            <div class="d-flex w-100 justify-content-between">
-              <h5 class="mb-1">Mushroom Body Alpha Lobe</h5>
-              <div class="tags-aggregate">
-                <span class="badge badge-primary">alpha-lobe</span>
-                <span class="badge badge-primary">mushroom-body</span>
-              </div>
-            </div>
-            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-            &nbsp;&nbsp;
-            <small>This Tag is currently featured.</small>
-            </a>
+          <div class="retrieveTagWrapper">
+            <h4 class="tagLabel">Retrieve Tag</h4>
+            <h5 type="text" id="tag_name">Retrieve a Tag by Name</h5>
+            <input type="text" name="tag" class="tag-text tag-name"  id="retrieve_tag_name_input"/>
           </div>
+          <div id="tagSearchMenuWrapper">
+          <h5 type="text" id="tag_desc">Browse Tags</h5>
+          <div id="tagSearchMenu" class="list-group"></div>
         </div>
         </div>
-        <div class="tag-footer" style="padding-top: 50px">
-          <button type="button" class="btn btn-primary" style = "margin: 10px; float: right" id="tagSubmit"></button>
-          <button type="button" class="btn btn-default" style = "margin: 10px;float: right" id="tagClose">Close</button>
+        <div class="tag-footer">
+          <button type="button" class="btn btn-primary" id="tagSubmit"></button>
+          <button type="button" class="btn btn-default" id="tagClose">Close</button>
         </div>`;
     this.overlay = new Overlay(div_id, a)
+    this.overlay.dom.classList.add('ps')
     //this.inDiv.append(a);
-    //this.overlay.dom.style['height'] = '30%';
-    this.overlay.dom.style['max-height'] = '200px';
+    //this.overlay.dom.style['height'] = '30%';      
 
     $(this.tagsConfig['tagClose']).click( () => {this.overlay.closeAll();} );
     $(this.tagsConfig['tagSubmit']).click( () => {
@@ -199,16 +187,3 @@ moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], f
   }
   return Tags;
 });
-/*
-
-  currentTag = new Tags($('#wrapper'));
-  currentTag.initialize();
-
-  current_tags = $('#tagTagEditor').tagEditor('getTags')[0].tags;
-
-  var ex_tag = {'name': 'Alpha Lobe', 'desc': 'This tag shows the alpha lobe of the mushroom body.', 'keywords': ['mushroom body', 'alpha lobe'], 'FFBOdata': {extra: 'This tag has been created by the FFBO team.'}};
-
-  var tag_data = [];
-
-  addTagBrowser(ex_tag, tag_data);
-*/
