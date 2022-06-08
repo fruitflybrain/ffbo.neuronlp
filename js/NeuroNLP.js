@@ -240,6 +240,7 @@ require([
       client.status.on("change", function () {
         ffbomesh.import_state(metadata);
         $('#ui-blocker').hide();
+        ffbomesh.resetVisibleView();
       }, queryID);
     }
 
@@ -299,22 +300,20 @@ require([
       client.status.on("change", function (e) { if (e.value == -1) $('#ui-blocker').hide(); }, queryID);
     }
 
-    var ex_tag = { 'name': 'nikul_7', 'desc': 'This tag shows the alpha lobe of the mushroom body.', 'keywords': ['mushroom body', 'alpha lobe'], 'FFBOdata': { extra: 'This tag has been created by the FFBO team.' } };
-    tagsPanel.populateTags([ex_tag]);
+    $.getJSON("./data/tag_displays.json", tags => {
+      tagsPanel.populateTags(tags[1]);
+    });
     /*
    * Add tag retrieval functionality.
    */
     tagsPanel.activateTagLinks = (function (tagName) {
-      $('.tag-el').click(() => {
-        this.retrieveTag($(this).attr('tag_name'));
+      $('.tag-el').click( (e) => {
+        let tag_name = $(e.currentTarget).attr('tag_name');
+        this.retrieveTag(tag_name);
         this.overlay.closeAll();
       });
     }).bind(tagsPanel)
     tagsPanel.activateTagLinks();
-    /*
-   * Hide the tag search menu for now.
-   */
-    $('#tagSearchMenuWrapper').hide();
 
     var oldHeight = ffbomesh.container.clientHeight;
     var oldWidth = ffbomesh.container.clientWidth;
