@@ -187,16 +187,3 @@ moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], f
   }
   return Tags;
 });
-/*
-
-  currentTag = new Tags($('#wrapper'));
-  currentTag.initialize();
-
-  current_tags = $('#tagTagEditor').tagEditor('getTags')[0].tags;
-
-  var ex_tag = {'name': 'Alpha Lobe', 'desc': 'This tag shows the alpha lobe of the mushroom body.', 'keywords': ['mushroom body', 'alpha lobe'], 'FFBOdata': {extra: 'This tag has been created by the FFBO team.'}};
-
-  var tag_data = [];
-
-  addTagBrowser(ex_tag, tag_data);
-*/
