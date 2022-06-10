@@ -218,23 +218,37 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager", "showdown"], functi
     this.status[queryID] = 0;
     this.session.call(uri, [query, this.language]).then(
       (function (res) {
-        if (typeof (res) == "object" && Object.keys(res).length && res['engine'] === 'nlp') {
-          this.notifySuccess("NLP module successfully interpreted the query");
-          this.executeNAquery(res, callbacks, format, queryID);
-        }
-        else if (res['engine'] === 'drosobot') {
-          if (res['message'].length>0) {
-            this.notifySuccess('Drosobot successfully interpreted the query.');
-            var html = drosobotResponse(query, res['message']);
-            $('#info-intro').html(html); $('#info-intro').show();
+        if (typeof (res) == "object" && Object.keys(res).length) {
+          if ('engine' in res){
+            if (res['engine'] === 'nlp') {
+              if (Object.keys(res).length > 1) {
+                this.notifySuccess("NLP module successfully interpreted the query");
+                this.executeNAquery(res, callbacks, format, queryID);
+              } else {
+                this.status[queryID] = -1;
+              this.notifyError('NLP module did not understand the query');
+              }
+            } else if (res['engine'] === 'drosobot') {
+              if (res['message'].length>0) {
+                  this.notifySuccess('Drosobot successfully interpreted the query.');
+                  var html = drosobotResponse(query, res['message']);
+                  $('#info-intro').html(html); $('#info-intro').show();
+              }
+              if (res['query']) {
+                  this.executeNAquery(res['query'], callbacks, format, queryID);
+              }
+              if (res['warning'].length>0) {
+                  this.notifySuccess(res['warning']);
+              }
+              this.status[queryID] = -1;
+            } else {
+              this.status[queryID] = -1;
+              this.notifyError('NLP module did not understand the query');
+            }
+          } else {
+              this.status[queryID] = -1;
+              this.notifyError('NLP module did not understand the query');
           }
-          if (res['query']) {
-            this.executeNAquery(res['query'], callbacks, format, queryID);
-          }
-          if (res['warning'].length>0) {
-            this.notifySuccess(res['warning']);
-          }
-          this.status[queryID] = -1;
         } else {
           this.status[queryID] = -1;
           this.notifyError('NLP module did not understand the query');
