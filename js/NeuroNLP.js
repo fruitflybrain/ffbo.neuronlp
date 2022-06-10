@@ -203,7 +203,7 @@ require([
                     unit[key1] = morphology[key1];
                   }
                 }
-                if (unit['class'] === 'Neuron') {
+                if (unit['class'] === 'Neuron' || unit['class'] === 'NeuronFragment') {
                   if (ffbomesh.settings.neuron3dMode == 7) {
                     gltf_data[rid] = unit;
                   } else {
@@ -217,7 +217,7 @@ require([
             } 
           }
           if (!foundMorphology) {
-            if (unit['class'] === 'Neuron') {
+            if (unit['class'] === 'Neuron' || unit['class'] === 'NeuronFragment') {
               if (ffbomesh.settings.neuron3dMode == 7) {
                 gltf_data[rid] = unit;
               }
