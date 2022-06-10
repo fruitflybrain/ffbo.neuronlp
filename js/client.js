@@ -318,7 +318,7 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager"], function (autobahn
     _this.status.on("change", function (e) {
       nodes = _this.graph['nodes'];
       edges = _this.graph['edges'];
-      let outgoing_edges = edges.filter(edge => nodes[edge[0]].class == 'Neuron');
+      let outgoing_edges = edges.filter(edge => nodes[edge[0]].class == 'Neuron' || nodes[edge[0]].class == 'NeuronFragment');
       let incoming_edges = edges.filter(edge => !outgoing_edges.includes(edge));
       let connectivity = [];
       for (let edge of incoming_edges) {
