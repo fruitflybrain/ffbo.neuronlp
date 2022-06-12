@@ -1,5 +1,5 @@
 {
-  "branch": "develop",
+  "branch": "master",
   "connection": {
     "url": "ws://localhost:8081/ws",
     "user": "guest",
