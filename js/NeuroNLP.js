@@ -65,7 +65,8 @@ requirejs.config({
     linesegmentsgeometry: "//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/lines/LineSegmentsGeometry",
     linesegments2: "//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/lines/LineSegments2",
     json: '//cdn.jsdelivr.net/gh/millermedeiros/requirejs-plugins@master/src/json',
-    text: '//cdn.jsdelivr.net/gh/millermedeiros/requirejs-plugins@master/lib/text'
+    text: '//cdn.jsdelivr.net/gh/millermedeiros/requirejs-plugins@master/lib/text',
+    showdown: '//cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min'
     /* Notify, bootbox, colormaps, demos, mouse, vis_set, ResizeSensor, read_vars, colorm[aps */
   },
   shim: {
@@ -121,13 +122,14 @@ require([
   'izitoast',
   'ffbodemoplayer',
   'visualizationsettings',
+  'showdown',
   'bootstrap',
   //'jquery.mobile',
   'jqueryui',
   'blockui',
   'linematerial',
   'linesegmentsgeometry',
-  'linesegments2'
+  'linesegments2',
 ]
   , function (
     config,
@@ -143,7 +145,8 @@ require([
     Tags,
     iziToast,
     FFBODemoPlayer,
-    FFBOVisualizationSettings
+    FFBOVisualizationSettings,
+    showdown
   ) {
 
     iziToast.settings({
@@ -169,6 +172,9 @@ require([
     var visualizationSettings = new FFBOVisualizationSettings(ffbomesh);
     window.NeuroNLPUI.onCreateTag = (tagsPanel.onCreateTag).bind(tagsPanel);
     window.NeuroNLPUI.onRetrieveTag = (tagsPanel.onRetrieveTag).bind(tagsPanel);
+
+    var elmnt = document.getElementById("info-intro");
+    window.info_intro = elmnt.cloneNode(true);
 
     var tagLoad = false;
     var queryLoad = false;
@@ -203,7 +209,7 @@ require([
                     unit[key1] = morphology[key1];
                   }
                 }
-                if (unit['class'] === 'Neuron') {
+                if (unit['class'] === 'Neuron' || unit['class'] === 'NeuronFragment') {
                   if (ffbomesh.settings.neuron3dMode == 7) {
                     gltf_data[rid] = unit;
                   } else {
@@ -217,7 +223,7 @@ require([
             } 
           }
           if (!foundMorphology) {
-            if (unit['class'] === 'Neuron') {
+            if (unit['class'] === 'Neuron' || unit['class'] === 'NeuronFragment') {
               if (ffbomesh.settings.neuron3dMode == 7) {
                 gltf_data[rid] = unit;
               }
@@ -469,8 +475,9 @@ require([
 
     var srchInput = document.getElementById('srch_box');
     var srchBtn = document.getElementById('srch_box_btn');
-
+    window.latestQuery = "";
     window.NLPsearch = function (query) {
+      window.latestQuery = query;
       window.NeuroNLPUI.closeAllOverlay();
       return new Promise(function (resolve, reject) {
         if (query == undefined) {
@@ -478,7 +485,7 @@ require([
         }
         $("#search-wrapper").block({ message: null });
         srchInput.blur();
-
+        
         queryID = client.executeNLPquery(query, { success: dataCallback });
         client.status.on("change", function (e) {
           $("#search-wrapper").unblock();
@@ -486,10 +493,11 @@ require([
             srchInput.focus();
           srchInput.value = "";
           if (e.value == -1)
-            reject();
+            resolve();
           else
             resolve();
         }, queryID);
+        
       });
     }
 
