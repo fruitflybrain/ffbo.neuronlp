@@ -1,47 +1,59 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>NeuroNLP.Adult Beta</title>
-
+    <title>NeuroNLP</title>
+    <!-- branch = develop -->
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta http-equiv="Cache-Control" content="max-age=1800">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <meta name="author" content="FFBO Team">
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-    <link rel="shortcut icon" href="/lib/ico/favicon.ico">
+    <link rel="shortcut icon" href="./lib/ico/favicon.ico">
 
     <link href="https://fonts.googleapis.com/css?family=Saira|Saira+Condensed|Rajdhani|Open+Sans|Quicksand" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap-theme.min.css"> -->
 
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/hamburgers/0.5.0/hamburgers.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/FrDH/jQuery.mmenu/v7.0.3/dist/jquery.mmenu.all.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/FrDH/jQuery.mmenu@v7.0.3/dist/jquery.mmenu.all.css"/>
     <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.7.0/css/perfect-scrollbar.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.2/css/swiper.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/css/bootstrap-slider.min.css">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dolce/iziToast/v1.3.0/dist/css/iziToast.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/dolce/iziToast@v1.3.0/dist/css/iziToast.min.css">
+
+    <script src="https://cdn.jsdelivr.net/gh/mkturkcan/neuronlp.graphutils@1186d9766c01678e7e6877d4f79c60046e43959f/sigma.js/sigma.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.exporters.svg.min.js" integrity="sha512-IbAQlrGEnp55edX0a9RwxGGS1F5qfmPlukd1zjrxbPEuIWwgTMrryaDTdL7zugFsWczRAd2Hq1C5L17jJGr27A==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.layout.forceAtlas2.min.js" integrity="sha512-RuRd3WCUb6GCaiaEJ2UDkaVblIVAHJNLaDG6Df2OWpzg4kQurQqh/GC/a3eFSopnRiNrwePMFvI13pbYZ1WnAw==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.layout.noverlap.min.js" integrity="sha512-U0UOV2CPSrFlOxjSnHr6GMKsRjQIYmarSCgVp9R6FAcby2gLNPgQtGLXylELTBDLbS/R5g1vj5CFS4mLDdDfxQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.neo4j.cypher.min.js" integrity="sha512-Q4D8cp7VIwcmC6PXYqq0yuQ+FNbBntA8KYZhiHTtoHK2v+aWQd9f49BjAhPnUAX4Bkdsx+3jqn34/FjNWh5ONg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.parsers.gexf.min.js" integrity="sha512-QykM8rxzSQPSxpsSrwQbDTuPugl6kCCJieuns5cplLHgWV1lDRLCy0nmcvBDLaI3yl8OQw0yHe64VaeE///8LQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.parsers.json.min.js" integrity="sha512-uhhcXJvqfQpnVqJRyCs49Ddt16zZ35qFokRiVOZei14sbMdMS9vtubrb1QQvGJ/zQhQbCttBvVJqqiZHrsHo1g==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.pathfinding.astar.min.js" integrity="sha512-YBGCyOU0ylHHhNaMgyPNC6L06nOMFCAqV4KSCo55giOy0P0IFVU8nH1Up4QaDwPY5hlZ3lER2X1KJEnlvW5ftw==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.plugins.animate.min.js" integrity="sha512-WxjvX/yh2SfCPUnVmZkn4MYkF/jw8GKtEjFu2+P28bcqdYYsT6feJuaaQyBw7+KWfs87Ol4jb7jB+8qep+cocg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.plugins.dragNodes.min.js" integrity="sha512-w9i2zoWU7Te0i+TJoKMyBjHYAptYykPieNa0iT6/ofVbUHvqIhh6f4YVkXV84kAuGbIS+CqvSV/6AHTVt8bUrA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.plugins.filter.min.js" integrity="sha512-mu+dW4fJz+3b5WxfWUdwgHOvmDp5v7+8wa6zMGeQ40kVQt45l5NYRVuFIgdPtlS6IBThjKyCcEWz1TXMtUcnuQ==" crossorigin="anonymous"></script>
 
     <script data-main="js/NeuroNLP" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="/lib/css/ffbo.theme_settings.css">
-    <link rel="stylesheet" id="current_theme" type="text/css" href="/lib/css/ffbo.default_theme.css">
-    <link rel="stylesheet" id="main_css" type="text/css" href="/lib/css/ffbo.Client.css">
-    <link rel="stylesheet" id="main_css" type="text/css" href="/lib/css/ffbo.Mesh3D.css">
-    <link rel="stylesheet" id="main_css" type="text/css" href="/lib/css/ffbo.InfoPanel.css">
-    <link rel="stylesheet" id="main_css" type="text/css" href="/lib/css/ffbo.IziToast.css">
-    <link rel="stylesheet" id="main_css" type="text/css" href="/lib/css/ffbo.Tags.css">
-    <link rel="stylesheet" id="main_css" type="text/css" href="/lib/css/ffbo.Overlay.css">
-    <link rel="stylesheet" id="main_css" type="text/css" href="/lib/css/ffbo.VisualizationSettings.css">
-    <link rel="stylesheet" id="main_css" type="text/css" href="/lib/css/ffbo.Physiology.css">
-    <link rel="stylesheet" id="main_css" type="text/css" href="/lib/css/ffbo.NeuroGFX.css">
-    <link rel="stylesheet" id="main_css" type="text/css" href="/lib/css/ffbo.NeuroNLP.css">
-    <link rel="stylesheet" id="main_css" type="text/css" href="/lib/css/ffbo.Menu.css">
+    <script src="https://cdn.jsdelivr.net/gh/mkturkcan/neuronlp.graphutils@1186d9766c01678e7e6877d4f79c60046e43959f/js/graphvis.js"></script>
+    <link rel="stylesheet" type="text/css" href="./lib/css/ffbo.theme_settings.css">
+    <link rel="stylesheet" id="current_theme" type="text/css" href="./lib/css/ffbo.default_theme.css">
+    <link rel="stylesheet" id="main_css" type="text/css" href="./lib/css/ffbo.Client.css">
+    <link rel="stylesheet" id="main_css" type="text/css" href="./lib/css/ffbo.Mesh3D.css">
+    <link rel="stylesheet" id="main_css" type="text/css" href="./lib/css/ffbo.InfoPanel.css">
+    <link rel="stylesheet" id="main_css" type="text/css" href="./lib/css/ffbo.IziToast.css">
+    <link rel="stylesheet" id="main_css" type="text/css" href="./lib/css/ffbo.Tags.css">
+    <link rel="stylesheet" id="main_css" type="text/css" href="./lib/css/ffbo.Overlay.css">
+    <link rel="stylesheet" id="main_css" type="text/css" href="./lib/css/ffbo.VisualizationSettings.css">
+    <link rel="stylesheet" id="main_css" type="text/css" href="./lib/css/ffbo.Physiology.css">
+    <link rel="stylesheet" id="main_css" type="text/css" href="./lib/css/ffbo.NeuroGFX.css">
+    <link rel="stylesheet" id="main_css" type="text/css" href="./lib/css/ffbo.NeuroNLP.css">
+    <link rel="stylesheet" id="main_css" type="text/css" href="./lib/css/ffbo.Menu.css">
   </head>
   <body>
     <div id="ui-blocker" style=""></div>
@@ -50,10 +62,10 @@
         <div class="container-fluid">
           <div class="navbar-header">
             <div class="navbar-brand">
-              <a href="http://fruitflybrain.org" target="_blank"><img src="/img/ffbo_logo.png" role="button"></a>
+              <a href="http://fruitflybrain.org" target="_blank"><img src="./img/ffbo_logo.png" role="button"></a>
               <span style="font-family:var(--title-font-family); font-size: 20px; color:var(--navbar-text-color);">NeuroNLP</span>
               <a onclick="NeuroNLPUI.onShowNeuroNLP()">
-                <span>.Adult</span>
+                <span>.develop</span>
               </a>
             </div>
             <button id="ui_menu_btn" type="button" class="navbar-toggle collapsed" onclick="NeuroNLPUI.openRightMenu()" style="z-index:1">
@@ -65,9 +77,10 @@
           </div>
           <div class="navbar-fixed-bottom">
             <ul class="nav navbar-nav">
-              <li >Copyright &copy; 2018 FFBO</li>
+              <li >Copyright &copy; 2018-2021 FFBO</li>
               <li>
                 <div id="search-wrapper" class="search-bottom input-group input-group-mid">
+                  <span class="input-group-btn"><button id = "info_btn" onclick="NeuroNLPUI.onShowReference()" class="btn btn-link" type="button" style="height:30px; bottom:2px;"><span class="glyphicon glyphicon-info-sign"></span></button></span>
                   <input id = "srch_box" type="text" class="form-control" title="please type in query string..."  placeholder="enter query here, ex. show gabaergic local neurons in ellipsoid body">
                   <span class="input-group-btn">
                     <button id = "srch_box_btn" class="btn btn-mid btn-primary" type="button"><span class="glyphicon glyphicon-search"></span></button>
@@ -82,6 +95,7 @@
               <li id="btn-tags" ><a style="width:100%" onclick="NeuroNLPUI.onToggleTag()">Tags</a></li>
               <li id="btn-neuron"><a data-toggle="tooltip" title="Control Neuron and Synapses currently in the scene" style="width:100%" onclick="NeuroNLPUI.onToggleNeuClick()">Neurons/Synapses</a></li>
               <li id="btn-neuropils"><a data-toggle="tooltip" title="Control Neuropils currently in the scene" style="width:100%" onclick="NeuroNLPUI.onToggleLPUClick()">Neuropils</a></li>
+              <li id="btn-celltype"><a data-toggle="tooltip" title="List of cell types in each neuropil" style="width:100%" onclick="NeuroNLPUI.onToggleCellTypeClick()">Cell Types</a></li>
             </ul>
           </div>
           <nav id="ui_menu_nav">
@@ -129,6 +143,11 @@
                 </ul>
               </li>
               <li>
+                <span>Cell Types</span>
+                <ul id="toggle_celltype">
+                </ul>
+              </li>
+              <li>
                 <span>Visualization Settings</span>
                 <ul id="toggle_visset">
                   <li><p>* (Doesn't affect neurons already in workspace)</p></li>
@@ -140,26 +159,55 @@
                   </span>
                   </li>
                   <li>
+                    <h4> Background </h4>
+                  </li>
+                  <li>
+                    <li class="vis-settings-sub">
+                      <a>
+                        <div>Color</div>
+                        <div id="vis-background-color-wrapper">
+                          <input id="vis-background-color" value="#030305"/>
+                        </div>
+                      </a>
+                    </li>
+                  </li>
+                  <li>
                     <h4> Neuron Rendering </h4>
                   </li>
-                  <li class="vis-settings-sub">
+                  <!-- <li class="vis-settings-sub">
                     <a href="#">
                       <div class="wrap">3D Neuron Rendering *</div>
                       <input id="vis-3d-rendering" type="checkbox" class="Toggle" />
                     </a>
-                  </li>
+                  </li> -->
                   <li id="vis-3d-mode-option" class="vis-settings-sub">
                     <a>
-                      <div>3D Neuron Rendering Mode *</div>
-                      <input checked="checked" type="radio" name="mode3d" id="rd1" value="1"/>
-                      <label for="rd1">Cylinders</label><br/>
+                      <div>Rendering Mode *</div>
+                      <input checked="checked" type="radio" name="mode3d" id="rd0" value="0"/>
+                      <label for="rd0">Default</label><br/>
+                      <input type="radio" name="mode3d" id="rd1" value="1"/>
+                      <label for="rd1">Lines (fastest)</label><br/>
                       <input type="radio" name="mode3d" id="rd2" value="2"/>
-                      <label for="rd2">Cylinders + Spheres (Intensive)</label><br/>
+		                  <label for="rd2">Lines with Width (fast)</label><br/>
                       <input type="radio" name="mode3d" id="rd3" value="3"/>
-                      <label for="rd3">Cylinder + Tubes (Very Intensive)</label>
+                      <label for="rd3">Spheres</label><br/>
+		                  <input type="radio" name="mode3d" id="rd4" value="4"/>
+                      <label for="rd4">Cylinders</label><br/>
+                      <input type="radio" name="mode3d" id="rd5" value="5"/>
+                      <label for="rd5">Cylinders&Spheres(Intensive)</label><br/>
+                      <input type="radio" name="mode3d" id="rd6" value="6"/>
+                      <label for="rd6">Cylinders&Tubes(Intensive+)</label><br/>
+                      <input type="radio" name="mode3d" id="rd7" value="7"/>
+                      <label for="rd7">Mesh(fast,more downloads)</label>
                     </a>
                   </li>
-                  <li class="vis-settings-sub">
+                  <li class="vis-settings-sub" id="vis-linewidth_enclose">
+                    <a>
+                      <div>Linewidth</div>
+                      <input id="vis-linewidth" data-slider-id='def_width_slider' class="slider" type="text" data-slider-min="0.1" data-slider-max="10.0" data-slider-step="0.1" data-slider-value="2.5"/>
+                    </a>
+                  </li>
+                  <li class="vis-settings-sub"  id="vis-default-nerite-radius_enclose">
                     <a>
                       <div>Default Neurite Radius *</div>
                       <input id="vis-default-nerite-radius" data-slider-id='def_rad_slider' class="slider" type="text" data-slider-min="0" data-slider-max="2.0" data-slider-step="0.01" data-slider-value="0.8"/>
@@ -167,8 +215,20 @@
                   </li>
                   <li class="vis-settings-sub">
                     <a>
-                      <div>Default Soma Radius *</div>
-                      <input id="vis-default-soma-radius" data-slider-id='def_soma_slider' class="slider" type="text" data-slider-min="0.4" data-slider-max="10.0" data-slider-step="0.01" data-slider-value="0.8"/>
+                      <div>Neurite Radius Range *</div>
+                      <input id="vis-neurite-radius-range" data-slider-id='rad_range_slider' class="slider" type="text" data-slider-min="0" data-slider-max="10.0" data-slider-step="0.01" data-slider-value="[0.01, 5.0]"/>
+                    </a>
+                  </li>
+                  <li class="vis-settings-sub">
+                    <a>
+                      <div>Default Soma Radius*</div>
+                      <input id="vis-default-soma-radius" data-slider-id='def_soma_slider' class="slider" type="text" data-slider-min="0.1" data-slider-max="10.0" data-slider-step="0.01" data-slider-value="0.8"/>
+                    </a>
+                  </li>
+                  <li class="vis-settings-sub">
+                    <a>
+                      <div>Soma Radius Range *</div>
+                      <input id="vis-soma-radius-range" data-slider-id='soma_range_slider' class="slider" type="text" data-slider-min="0.1" data-slider-max="10.0" data-slider-step="0.01" data-slider-value="[0.1, 5.0]"/>
                     </a>
                   </li>
                   <li class="vis-settings-sub">
@@ -221,19 +281,19 @@
                   <li class="vis-settings-sub">
                     <a>
                       <div>Horizontal Angle</div>
-                      <input id="vis-frontSpot-1-posAngle1" data-slider-id="frontSpot_1_posAngle1" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/>
+                      <input id="vis-frontSpot-1-posAngle1" data-slider-id="frontSpot_1_posAngle1" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="0"/>
                     </a>
                   </li>
                   <li class="vis-settings-sub">
                     <a>
                       <div>Vertical Angle</div>
-                      <input id="vis-frontSpot-1-posAngle2" data-slider-id="frontSpot_1_posAngle2" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/>
+                      <input id="vis-frontSpot-1-posAngle2" data-slider-id="frontSpot_1_posAngle2" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="0"/>
                     </a>
                   </li>
                   <li class="vis-settings-sub">
                     <a>
                       <div>Intensity</div>
-                      <input id="vis-frontSpot-1-intensity" data-slider-id="frontSpot_1_intensity" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="0.1" data-slider-value="4"/>
+                      <input id="vis-frontSpot-1-intensity" data-slider-id="frontSpot_1_intensity" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="0.1" data-slider-value="1"/>
                     </a>
                   </li>
                   <li class="vis-settings-sub">
@@ -250,19 +310,19 @@
                   <li class="vis-settings-sub">
                     <a>
                       <div>Horizontal Angle</div>
-                      <input id="vis-frontSpot-2-posAngle1" data-slider-id="frontSpot_2_posAngle1" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/>
+                      <input id="vis-frontSpot-2-posAngle1" data-slider-id="frontSpot_2_posAngle1" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="0"/>
                     </a>
                   </li>
                   <li class="vis-settings-sub">
                     <a>
                       <div>Vertical Angle</div>
-                      <input id="vis-frontSpot-2-posAngle2" data-slider-id="frontSpot_2_posAngle2" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="80"/>
+                      <input id="vis-frontSpot-2-posAngle2" data-slider-id="frontSpot_2_posAngle2" type="text" data-slider-min="-90" data-slider-max="90" data-slider-step="1.0" data-slider-value="0"/>
                     </a>
                   </li>
                   <li class="vis-settings-sub">
                     <a>
                       <div>Intensity</div>
-                      <input id="vis-frontSpot-2-intensity" data-slider-id="frontSpot_2_intensity" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="0.1" data-slider-value="4"/>
+                      <input id="vis-frontSpot-2-intensity" data-slider-id="frontSpot_2_intensity" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="0.1" data-slider-value="0"/>
                     </a>
                   </li>
                   <li class="vis-settings-sub">
@@ -278,7 +338,7 @@
                     <a>
                       <div>Color</div>
                       <div id="vis-neuropil-color-wrapper">
-                        <input id="vis-neuropil-color" value="#ffffff"/>
+                        <input id="vis-neuropil-color" value="#260226"/>
                       </div>
                     </a>
                   </li>
@@ -375,8 +435,14 @@
                   </li>
                   <li class="vis-settings-sub">
                     <a>
-                      <div>Synapse Size * </div>
-                      <input id="vis-default-synapse-radius" data-slider-id='def_syn_slider' class="slider" type="radio" data-slider-min="0.1" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
+                      <div>Synapse Size</div>
+                      <input id="vis-default-synapse-radius" data-slider-id='def_syn_slider' class="slider" type="radio" data-slider-min="0.1" data-slider-max="2.0" data-slider-step="0.01" data-slider-value="1.0"/>
+                    </a>
+                  </li>
+                  <li class="vis-settings-sub">
+                    <a>
+                      <div>Synapse Size Range* </div>
+                      <input id="vis-synapse-radius-range" data-slider-id='syn_range_slider' class="slider" type="radio" data-slider-min="0.1" data-slider-max="2.0" data-slider-step="0.01" data-slider-value="[0.1, 1.0]"/>
                     </a>
                   </li>
                   <li class="vis-settings-sub">
@@ -396,28 +462,23 @@
                   </li>
                   <li class="vis-settings-sub">
                     <a>
-                      <div>Brightness</div>
-                      <input id="vis-tonemappingbright" data-slider-id='tm_brght_slider' type="text" data-slider-min="0.01" data-slider-max="0.99" data-slider-step="0.01" data-slider-value="0.95"/>
+                      <div>Bloom Pass</div>
+                      <input type="checkbox" id="vis-bloom" class="Toggle"/>
                     </a>
                   </li>
-                  <li>
+                  <li class="vis-settings-sub" id="vis-bloom-radius_enclose">
                     <a>
-                      <h5>Bloom Pass Settings</h5>
-                    </a>
-                  </li>
-                  <li class="vis-settings-sub">
-                    <a>
-                      <div>Radius</div>
+                      <div>Bloom Pass Radius</div>
                       <input id="vis-bloom-radius" data-slider-id='blm_rad_slider' type="text" data-slider-min="0.05" data-slider-max="10.0" data-slider-step="0.05" data-slider-value="0.8"/>
                     </a>
                   </li>
-                  <li class="vis-settings-sub">
+                  <li class="vis-settings-sub" id="vis-bloom-threshold_enclose">
                     <a>
                       <div>Threshold</div>
                       <input id="vis-bloom-threshold" data-slider-id='blm_th_slider' type="text" data-slider-min="0" data-slider-max="1.0" data-slider-step="0.01" data-slider-value="0.8"/>
                     </a>
                   </li>
-                  <li class="vis-settings-sub">
+                  <li class="vis-settings-sub" id="vis-bloom-strength_enclose">
                     <a>
                       <div>Strength</div>
                       <input id="vis-bloom-strength" data-slider-id='blm_st_slider' type="text" data-slider-min="0" data-slider-max="2.0" data-slider-step="0.01" data-slider-value="0.8"/>
@@ -452,20 +513,25 @@
                 NeuroNLP provides a modern web-based portal for navigating fruit fly
                 brain circuit data. It enables in-depth exploration and investigation
                 of brain structure, using intuitive plain English queries, such as
-                <br><br><u style="font-style:italic">"show glutamatergic local neurons in the left antennal lobe".</u></br></br>
+                <a onclick="window.NLPsearch('show EPG neurons that have outputs in PB glomerulus L8 or PB glomerulus R2')"><br><br><u style="font-style:italic">"show EPG neurons that have outputs in PB glomerulus L8 or PB glomerulus R2".</u></br></br></a>
                 NeuroNLP can be accessed from any browser supporting WebGL. Remember
                 to check it out on your smartphone!
               </p>
-              <br><br>
               <h4>Overview</h4>
               <p>
                 Check out the Overview for a brief description of the layout and menus.
               </p>
               <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-getting-started')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-getting-started')" onclick="NeuroNLPUI.onShowOverview()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Open Overview!</a>
               <br><br>
+              <h4>Quick Query Reference</h4>
+              <p>
+                  Check out the Quick Query Reference to be able to query data easily!
+              </p>
+              <a onmouseover="NeuroNLPUI.mimicMouseOver('#info_btn')" onmouseout="NeuroNLPUI.mimicMouseOut('#info_btn')" onclick="NeuroNLPUI.onShowReference()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Open Query Reference!</a>
+              <br><br>
               <h4>News</h4>
               <p>
-                Updates and announcements for <u style="text-decoration:none; font-family:'Rajdhani',sans-serif; color:grey;">NeuroNLP.Adult</u>.
+                Updates and announcements for <u style="text-decoration:none; font-family:'Rajdhani',sans-serif; color:grey;">NeuroNLP.Hemibrain</u>.
               </p>
               <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-getting-started')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-getting-started')" onclick="NeuroNLPUI.onShowAnnounce()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> See What's New!</a>
               <br><br>
@@ -484,8 +550,8 @@
               <br><br> -->
               <h4>Sharing Query Results</h4>
               <p>
-                Sharing query results is easy with the "Tags" feature. Try retrieving the tag "ffbo" or
-                create your own tag!
+                Sharing query results is easy with the "Tags" feature. 
+                Create your own tags!
               </p>
               <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-tags')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-tags')"  onclick="NeuroNLPUI.onToggleTag()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Try Tags!</a>
             </div>
@@ -502,7 +568,7 @@
 
         <div id="demo-panel" class='overlay'>
           <ul class="list-inline">
-            <li><h2>Demos </h2></li>
+            <li><h2>Demos</h2></li>
           </ul>
           <div id="demo-table-wrapper"></div>
         </div>
@@ -560,7 +626,7 @@
                   </ul>
                 </article>
                 <images>
-                  <img src="/img/overview-panel/layout_release_overview.png"> </img>
+                  <img src="./img/overview-panel/layout_release_overview.png"> </img>
                 </images>
               </band>
 
@@ -572,15 +638,8 @@
                 <article>
                   <p>
                     The Search Bar is the central querying interface. It supports natural language queries of neurons, synaptic partners, etc.
-                    By combining various attributes of query targets, you can create some very powerful queries.
+                    By combining various attributes of query targets, you can create some very powerful queries. Click on the info button to the left of the search bar.
                   </p>
-                  <ul>Here are a list of example queries you can try:
-                    <li>show glutamatergic local neurons in the left antennal lobe</li>
-                    <li> add dopaminergic neurons in the right MB </li>
-                    <li> add postsynaptic MBONs with at least 50 synapses</li>
-                  </ul>
-                  <blockquote><p> Note: <i> show </i> neurons will reset workspace (clear existing neurons, reset viewing angle). While <i>add</i> will preserve the current workspace. </p></blockquote>
-
                 </article>
                 <images></images>
               </band>
@@ -616,7 +675,116 @@
                 </article>
               </band>
             </div>
+
+            <div class="overview-text">
+              <h4>Graph View</h4>
+              <band>
+                <article>
+                  <ul>The graph view panel can be generated by clicking one of the graph view generation buttons in the visualization panel.
+                    <li><strong>Graph View Generation Buttons</strong>: The buttons provide the capability to generate graphs from the currently queried data. These neurons can be at single-cell scale, or cell-type scale if supported by the dataset. </li>
+                    <li><strong>Graph View</strong>: The graph view provides a 2D graph visualizing all neurons and their connections in the current workspace. Nodes can be reordered by dragging them and hovering over nodes will highlight the corresponding neurons.</li>
+                  </ul>
+                </article>
+                <images>
+                  <img src="./img/overview-panel/graphviewpanel.png"> </img>
+                </images>
+              </band>
+            </div>
+
+
+
+
           </div>
+        </div>
+
+
+        <div id="quick-reference-panel" class="overlay">
+            <ul id="overview-header" class="overview-header list-inline">
+              <li><h2>Quick Query Reference</h2></li>
+            </ul>
+            <div class="overview-text">
+                <h4>Search Bar</h4>
+                <band>
+                  <article>
+                    <p>
+                      The Search Bar is the central querying interface. It supports natural language queries of neurons, synaptic partners, etc.
+                      By combining various attributes of query targets, you can create some very powerful queries.
+                    </p>
+                    <ul>Your queries should start with a verb; the verbs supported right now are:
+                        <li><span style="color: #88CDF5">show</span>: clear workspace and then show the queried neurons,
+                        <li><span style="color: #88CDF5">add</span>: add to the workspace the neurons queried,
+                        <li><span style="color: #88CDF5">remove</span>/span>: remove from the workspace the queried neuron,
+                        <li><span style="color: #88CDF5">keep</span>: keep in the workspace only the neurons that meet the criterion of the query,
+                        <li><span style="color: #88CDF5">hide</span>: hide the neurons that meet the criterion of the query (this does not remove them from workspace, but reduce their visibility),
+                        <li><span style="color: #88CDF5">pin</span>: pin the neurons that meet the criterion of the query. Pinned neurons are automatically highlighted, and cannot be removed by the "trash can" button on top of the NeuroNLP window.
+                        <li><span style="color: #88CDF5">unpin</span>: unpin the neurons that meet the criterion of the query,
+                        <li><span style="color: #88CDF5">color</span>: color the neurons that meet the criterion of the query with a user defined color (can be hex color code, e.g., FF0000 for red), or these predefined colors.
+                        <li><span style="color: #88CDF5">clear</span>: clear up the workspace, removing all neurons and synapses.
+                    </ul>
+                    <ul>Next, we explain the rules for defining the criterion of the query, using the verb show as an example.
+                        <li><span style="color: #88CDF5">show cell-type neurons</span>: Shows the neurons of the cell type. Example:
+                            <ul>
+                                <li><a onclick="window.NLPsearch('show PEG neurons')"><span style="color: #97ba67">show PEG neurons</span></a>, or simply <a onclick="window.NLPsearch('show PEG neurons')"><span style="color: #97ba67">show peg</span></a>.</li>
+                            </ul>
+                        </li>
+                        <li><span style="color: #88CDF5">show $string$ neurons</span>: Shows neurons with a name that contains the string. Example:
+                            <ul>
+                                <li><a onclick="window.NLPsearch('show $PEG$ neurons')"><span style="color: #97ba67">show $PEG$ neurons</span></a>, or simply <a onclick="window.NLPsearch('show $PEG$')"><span style="color: #97ba67">show $PEG$</span></a>, will query any neuron whose name contain the string *PEG*.</li>
+                            </ul>
+                        </li>
+                        <li><span style="color: #88CDF5"></span>show /rstring/r neurons</span>: Show neurons whose name matches the regular expressing string (This requires some knowledge of how the neurons are named in each dataset). Example:
+                            <ul>
+                                <li><a onclick="window.NLPsearch('show /r(.*)PEG(.*)R1(.*)/r neurons')"><span style="color: #97ba67">show /r(.*)PEG(.*)R1(.*)/r neurons</span></a>, or simply <a onclick="window.NLPsearch('show /r(.*)PEG(.*)R1(.*)/r')"><span style="color: #97ba67">show /r(.*)PEG(.*)R1(.*)/r</span></a> will show the PEG neurons that innervate PB glomerulus R1.</li>
+                            </ul>
+                        </li>
+                        <li><span style="color: #88CDF5">show neurons in|that innervate|that arborize in neuropil/subregion</span>: Shows neurons that has output or input in a neuropil or a subregion of a neuropil. Examples:
+                            <ul>
+                                <li><a onclick="window.NLPsearch('show neurons in ellipsoid body')"><span style="color: #97ba67">show neurons in ellipsoid body</span></a>, or using abbreviations <a onclick="window.NLPsearch('show neurons in EB')"><span style="color: #97ba67">show neurons in EB</span></a>,</li>
+                                <li><a onclick="window.NLPsearch('show PEG neurons that arborize in PB glomerulus r9')"><span style="color: #97ba67">show PEG neurons that arborize in PB glomerulus r9</span></a>.</li>
+                                <li><a onclick="window.NLPsearch('show neurons that innervate right al and right mb')"><span style="color: #97ba67">show neurons that innervate right al and right mb</span></a>. Note that this is different from <a onclick="window.NLPsearch('show neurons that innervate right al or right mb')"><span style="color: #97ba67">show neurons that innervate right al or right mb</span></a>.</li>
+                            </ul>
+                        </li>
+                        <li><span style="color: #88CDF5">show local neurons in neuropil</span>: Shows the neurons that has only inputs and outputs within the neuropil (note that due to lack of data in some datasets, some neurons are only traced in one neuropil and thus are classified local neuron by default). Examples:
+                            <ul>
+                                <li><a onclick="window.NLPsearch('show local neurons in ellipsoid body')"><span style="color: #97ba67">show local neurons in ellipsoid body</span></a></li>
+                            </ul>
+                        </li>
+                        <li><span style="color: #88CDF5">show neurons with|that have inputs|outputs in neuropil/subregion</span>: More specific then the previous query on the inputs or outputs. Examples:
+                            <ul>
+                                <li><a onclick="window.NLPsearch('show neurons with inputs in AME')"><span style="color: #97ba67">show neurons with inputs in AME</span></a>,</li>
+                                <li><a onclick="window.NLPsearch('show $R3w$ neurons that have outputs in EB')"><span style="color: #97ba67">show $R3w$ neurons that have outputs in EB</span></a>,</li>
+                                <li><a onclick="window.NLPsearch('show neurons with inputs in right antennal lobe and outputs in right lateral horn')"><span style="color: #97ba67">show neurons with inputs in right antennal lobe and outputs in right lateral horn</span></a>, or equivalently <a onclick="window.NLPsearch('show neurons projecting from right antennal lobe to right lateral horn')"><span style="color: #97ba67">show neurons projecting from right antennal lobe to right lateral horn</span></a>,</li>
+                                <li><a onclick="window.NLPsearch('show neurons that connect right AL and right MB')"><span style="color: #97ba67">show neurons that connect right AL and right MB</span></a>. Includes both the neurons that has inputs in AL and outputs in MB, and those has inputs in MB and outputs in AL.</li>
+                            </ul>
+                        </li>
+                        <li><span style="color: #88CDF5">show neurons presynaptic|postsynaptic to</span>: Shows the neurons that are presynaptic or postsynaptic to the neurons defined after the word to. Exmples:
+                            <ul>
+                                <li><a onclick="window.NLPsearch('show neurons presynaptic to TuBu05')"><span style="color: #97ba67">show neurons presynaptic to TuBu05</span></a>,</li>
+                                <li><a onclick="window.NLPsearch(`show $aMe$ presynaptic to KCs that innervate alpha'1 compartment`)"><span style="color: #97ba67">show $aMe$ presynaptic to KCs that innervate alpha'1 compartment</span></a>,</li>
+                                <li><a onclick="window.NLPsearch('show DAN postsynaptic to MBONs with at least 30 synapses')"><span style="color: #97ba67">show DAN postsynaptic to MBONs with at least 30 synapses</span></a>.</li>
+                            </ul>
+                        </li>
+                        <li><span style="color: #88CDF5">show presynaptic|postsynaptic neurons</span>: Shows the neurons that are presynaptic or postsynaptic to the neurons already in workspace. Examples:
+                            <ul>
+                                <li><span style="color: #97ba67">show presynaptic neurons</span>,</li>
+                                <li><span style="color: #97ba67">show postsynaptic neurons with at least 10 synapses</span>,</li>
+                                <li><span style="color: #97ba67">show postynaptic MBON that innervate gamma lobe with at least 5 synapses</span></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul>Other short-hands:
+                        <li><span style="color: #88CDF5">show /:referenceId:[5813014882, 912147912, 880875861]</span>: Shows the neurons whose referenceId in the original dataset is in the list. It can be used similar to \$ \\$ and regular expression and combined with other types of criteria. Examples:
+                            <ul>
+                                <li><a onclick="window.NLPsearch('show /:referenceId:[5813014882, 912147912, 880875861]')"><span style="color: #97ba67">show /:referenceId:[5813014882, 912147912, 880875861]</span></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                
+                    <p><span style="color: #88CDF5">Coloring</span>: if no criteria are specified, the color will be applied to the neurons added in the most recent query. For example, if you query: <span style="color: #97ba67">show A neurons</span>, then <span style="color: #97ba67">add B neurons</span>, <span style="color: #97ba67">color red</span> will color B neurons red. <span style="color: #97ba67">color A neurons 0000FF</span> will then <span style="color: #97ba67">color A neurons blue</span>.</p>
+                  </article>
+                  <images></images>
+                </band>
+              </div>
         </div>
 
         <div id="arch-wrapper"></div>
@@ -666,13 +834,13 @@
         </div>
         <div id="neuronlp-switch" class="overlay">
           <div class="neuronlp-switch-wrapper">
-            <a class="info-try btn btn-xs" onclick="NeuroNLPUI.closeAllOverlay()">Stay at <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #999;">NeuroNLP .Adult</span></a>
+            <a class="info-try btn btn-xs" onclick="NeuroNLPUI.closeAllOverlay()">Stay at <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #999;">NeuroNLP.Hemibrain</span></a>
             <h5>Or</h5>
-            <a class="info-try btn btn-xs" href="https://neuronlp.larva.fruitflybrain.org">Switch to <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #999;">NeuroNLP .Larva</span></a>
+            <a class="info-try btn btn-xs" href="https://neuronlp.fruitflybrain.org">Switch to <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #999;">NeuroNLP.FlyCircuit</span></a>
           </div>
         </div>
 
-        <div id="announce-panel" class="overlay">
+        <!-- <div id="announce-panel" class="overlay">
           <div class="overlay_container">
             <ul class="list-inline">
               <li><h2>Latest News</h2></li>
@@ -681,13 +849,13 @@
               <a class="twitter-timeline" data-dnt="true" data-theme="dark" data-link-color="#2B7BB9" href="https://twitter.com/FlyBrainObs/timelines/895746744633483264?ref_src=twsrc%5Etfw">NeuroNLPUpdates</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
       <!-- /#page-content-wrapper -->
     </div>
 
 
 
-    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5848b7a00e85e58b"></script>
+    <!-- <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5848b7a00e85e58b"></script> -->
   </body>
 </html>

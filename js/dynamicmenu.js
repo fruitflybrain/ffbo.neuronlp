@@ -79,11 +79,16 @@ moduleExporter(
         hideSymbol: '<i class="fa fa-eye-slash"></i>',
         removeSymbol: '<i class="fa fa-trash"></i>',
         pinSymbol: '<i class="fa fa-thumb-tack"></i>',
+        addSymbol: '<i class="fa fa-plus"></i>',
         singleObjSel: undefined,
         pinnedObjSel: undefined,
         compare: undefined,
         removable: false,
         pinnable: false
+      }
+
+      if (config['name'] !== undefined){
+        this.name = config['name'];
       }
 
       for (var key of Object.keys(config)) {
@@ -99,14 +104,86 @@ moduleExporter(
       else if (typeof this.config.compare === 'string' || this.config.compare instanceof String)
         this.config.compare = compareFunc[this.config.compare];
 
+      this.addNeuropil = function( name ) {
+        name = name.toString();
+        name_with_out_parenthesis = name.replaceAll('(R)', '_R').replaceAll('(L)', '_L');
+        var domStr = `<li class="mm-listitem">` +
+                      `<a class="mm-btn_next mm-btn_fullwidth" href="#`+name_with_out_parenthesis+`-cell-types" onclick="lastOpenedCellType='`+name+`'"><span class="mm-sronly">Open submenu (`+name+`)</span></a>` + 
+                      `<span>`+name+`<i class="icon-arrow-right"></i></span>` +
+                      `<ul id="cell-type-`+name_with_out_parenthesis+`"></ul>` +
+                     `</li>`;
+        
+        var idx = findIndex(name, _this.btnLabelList, _this.config.compare);
+        if (idx === _this.btnLabelList.length){
+          $(_this.config.singleObjSel).append(domStr);
+        }else {
+          var offset = $(_this.config.singleObjSel).children().length - _this.btnLabelList.length;
+          $(_this.config.singleObjSel + " > li:nth-child(" + (idx+offset+1) + ")").before(domStr);
+        }
+
+        _this.btnLabelList.splice(idx, 0, name);
+
+        var domStr2 = `<div id="`+name_with_out_parenthesis+`-cell-types" class="mm-panel mm-panel_has-navbar mm-hidden" aria-hidden="true"> <div class="mm-navbar"><a class="mm-btn mm-btn_prev mm-navbar__btn" href="#toggle_celltype", onclick="lastOpenedCellType=undefined" aria-owns="toggle_celltype" aria-haspopup="true"><span class="mm-sronly">`+name+`</span></a><a class="mm-navbar__title" href="#toggle_celltype" onclick="lastOpenedCellType=undefined">`+name+` </a></div> <ul class="mm-listview"></ul></div>`
+        $(".mm-panels").append(domStr2);
+        var menu = new FFBODynamicMenu({ singleObjSel: '#'+name_with_out_parenthesis+ '-cell-types > .mm-listview', compare: 'LeftRight', name: name });
+        return menu;
+      }
+
+      this.addCellType = function( name ) {
+        var name_with_out_parenthesis = this.name.replaceAll('(R)', '_R').replaceAll('(L)', '_L');
+        var new_name = name.replaceAll(`'`, 'prime').replaceAll('<', 'less').replaceAll('>', 'greater').replaceAll('+','plus').replaceAll('/', 'slash')
+        var changed_label = name.replaceAll('<', '&lt').replaceAll('>', '&gt');
+        var btnId = "btn-" + name_with_out_parenthesis+'-'+new_name;
+        var btnToggleId = "btn-toggle-" + name_with_out_parenthesis+'-'+ new_name;
+        var btnRmId = "btn-rm-" + name_with_out_parenthesis+'-'+ new_name;
+        var domStr = `<li id='li-${btnId}' class='mm-listitem'>` +
+                      "<span>" +
+                      `<div id='${btnId}' role='button' label="${name}" class='btn-single-ob'>${changed_label}</div>` +
+                      "<div class='btn-single-obj-ctrl'>" +
+                        `<a id='${btnToggleId}' role='button' label="${name}">${_this.config.addSymbol}</a>` +
+                        `<a id='${btnRmId}' role='button' label="${name}">${_this.config.removeSymbol}</a>`
+                        "</div>" +
+                      "</span>" +
+                     `</li>`;
+
+        var idx = findIndex(name, _this.btnLabelList, _this.config.compare);
+        if (idx === _this.btnLabelList.length){
+          $(_this.config.singleObjSel).append(domStr);
+        }else {
+          var offset = $(_this.config.singleObjSel).children().length - _this.btnLabelList.length;
+          $(_this.config.singleObjSel + " > li:nth-child(" + (idx+offset+1) + ")").before(domStr);
+        }
+
+        _this.btnLabelList.splice(idx, 0, name);
+        $("#" + btnId)
+          .click( function() {
+            var id = $(this).attr("label");
+            _this.dispatch.addType(id);
+        });
+
+        $("#" + btnToggleId)
+          .click( function() {
+            var id = $(this).attr("label");
+            _this.dispatch.addType(id);
+        });
+
+        $("#" + btnRmId)
+          .click( function() {
+            var id = $(this).attr("label");
+            _this.dispatch.removeType(id);
+        });
+
+      }
+
       this.addNeuron = function(id, label) {
+        var changed_label = label.replace('<', '&lt').replace('>', '&gt');
         var btnId = "btn-" + uidDecode(id);
         var btnToggleId = "btn-toggle-" + uidDecode(id);
         var btnRmId = (_this.config.removable) ? "btn-rm-" + uidDecode(id): false;
         var btnPinSymId = (_this.config.pinnable) ? "btn-pin-symbol-" + uidDecode(id): false;
         var domStr = `<li id='li-${btnId}' class='mm-listitem'>` +
                       "<span>" +
-                      `<div id='${btnId}' role='button' label='${label}' class='btn-single-ob'>${label}</div>` +
+                      `<div id='${btnId}' role='button' label="${label}" class='btn-single-ob'>${changed_label}</div>` +
                       "<div class='btn-single-obj-ctrl'>" +
                         ((btnRmId) ? `<a id='${btnRmId}' role='button'>${_this.config.removeSymbol}</a>` : '') +
                         ((btnPinSymId) ? `<a id='${btnPinSymId}' class='btn-unpinned' role='button'>${_this.config.pinSymbol}</a>` : '') +
@@ -128,6 +205,7 @@ moduleExporter(
         $("#" + btnId)
           .click( function() {
             var id = $(this).attr("id").substring(4);
+            id = uidEncode(id);
             _this.dispatch.getInfo(id);
         });
         $("#" + btnToggleId)
@@ -180,12 +258,13 @@ moduleExporter(
 
       this.updatePinnedNeuron = function(id, label, pinned) {
         id = uidDecode(id);
+        var changed_label = label.replace('<', '&lt').replace('>', '&gt');
         var pinBtnId = "btn-pin-" + id;
         var pinnedSymbolId = "btn-pinned-" + id;
         if (pinned) {
           var domStr = `<li id='li-${pinBtnId}' class='mm-listitem'>` +
                          "<span>" +
-                           `<div id='${pinBtnId}' role='button'  class='btn-single-ob btn-pinned'>${label}</div>` +
+                           `<div id='${pinBtnId}' role='button'  class='btn-single-ob btn-pinned'>${changed_label}</div>` +
                            `<div class='btn-single-obj-ctrl'><a id='${pinnedSymbolId}' class='btn-pinned' role='button'>${_this.config.pinSymbol}</a></div>` +
                          "</span>" +
                        "</li>";
@@ -234,7 +313,9 @@ moduleExporter(
         unpin: function(){},
         hideAll: function(){},
         showAll: function(){},
-        remove: function(){}
+        remove: function(){},
+        addType: function(){},
+        removeType: function(){},
       };
     };
 
