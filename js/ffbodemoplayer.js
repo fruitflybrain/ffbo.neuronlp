@@ -532,13 +532,13 @@ moduleExporter(
              this._categories[demo.category] = 1;
              $(sel).append(
                 "<h4>" + demo.category + "</h4>" +
-                 "<table id='table-demo-" + demo.category.replace(/ /g,"_")).replaceAll('+','_') + "' class='table-demo table table-inverse table-hover'>" +
+                 "<table id='table-demo-" + demo.category.replace(/ /g,"_").replaceAll('+','_') + "' class='table-demo table table-inverse table-hover'>" +
                  "<thead class='thead-inverse'><tr><th>#</th><th>Keyword</th><th>Description</th><th></th></tr></thead>" +
                  "<tbody id='basic-table-demo-body' class='table-demo-body'></tbody>" +
                  "</table>"
              );
            }
-           $("#table-demo-" + demo.category.replace(/ /g,"_")).replaceAll('+','_').append(
+           $("#table-demo-" + demo.category.replace(/ /g,"_").replaceAll('+','_')).append(
               "<tr><th>" + this._categories[demo.category] + "</th><td>" + demo.keyword + "</td><td>" + demo.description + "</td><td><button id='btn-demo-" + demoId + "' class='btn btn-danger btn-xs'>Launch</button></td></tr>"
            )
            $("#btn-demo-" + demoId).attr("demoid", demoId);
