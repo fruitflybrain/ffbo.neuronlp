@@ -233,14 +233,15 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager", "showdown"], functi
                   this.notifySuccess('Drosobot successfully interpreted the query.');
                   var html = drosobotResponse(query, res['message']);
                   $('#info-intro').html(html); $('#info-intro').show();
+                  this.status[queryID] = -1;
               }
               if (res['query']) {
                   this.executeNAquery(res['query'], callbacks, format, queryID);
               }
               if (res['warning'].length>0) {
                   this.notifySuccess(res['warning']);
+                  this.status[queryID] = -1;
               }
-              this.status[queryID] = -1;
             } else {
               this.status[queryID] = -1;
               this.notifyError('NLP module did not understand the query');
