@@ -1,126 +1,35 @@
 [
 {"branch": "flycircuit"},
 {
-  "3dmode": {
-    "script": [
-      ["notify", {"message": "The settings menu can be accessed by clicking on <i class='fa fa-cog'></i> icon on the topright"}],
-      ["click", {"uiBtn": {"type": "showSettings"}}],
-      ["click", {"selector": "label[for=vis-3d-rendering]"}],
-      ["notify", {"message": "Neurons will now be loaded in 3d. Let's query for local neurons in EB."}],
-      ["search", {"query": "show local neurons in EB"}],
-      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
-    ],
-    "neuron3d": false,
-    "keyword": "3d Mode",
-    "description": "Turn on 3d mode and show local neurons in EB",
-    "category": "New Features"
-  },
-  "centre_view": {
-    "script": [
-      ["notify", {"message": "Let's hide everything first"}],
-      ["click", {"uiBtn": {"type": "hideAll"}}],
-      ["notify", {"message": "And then pull up dopaminergic neurons that innervate the medulla"}],
-      ["search", {"query": "show dopaminergic neurons in right medulla"}],
-      ["notify", {"message": "We can center the view into visible neurons by clicking on the <i class='fa fa-align-justify'></i> icon on the topright"}],
-      ["click", {"uiBtn": {"type": "resetVisibleView"}}],
-      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
-    ],
-    "neuron3d": false,
-    "keyword": "Center/Zoom View",
-    "description": "Center and zoom  to visible neurons",
-    "category": "New Features"
-  },
-  "screenshot": {
-    "script": [
-      ["minInfoPanel", {"cursorMoveDuration": 500}],
-      ["notify", {"message": "Let's load a tag first", "pause": 1000}],
-      ["click", {"menu": {"type": "loadTag", "tag": "ffbo_1"}}],
-      ["notify", {"message": "Now let's download a screenshot of the visualization using the <i class='fa fa-camera'></i> button", "pause": 1000}],
-      ["click", {"uiBtn": {"type": "takeScreenshot"}}],
-      ["notify", {"message": "The quality of the screenshot depends on the resolution of the display and the browser window size", "pause": 0, "settings":{"timeout":false}}]
-    ],
-    "keyword": "Screenshot",
-    "description": "Load a tag and take a screenshot<br><small>*This demo will override your visualization settings</small>",
-    "category": "New Features"
-  },
-  "connectivity_1": {
-    "script": [
-      ["notify", {"message": "Let's explore some inferred connectivity (using the SPIN algorithm ) in the central complex", "pause": 1000}],
-      ["notify", {"message": "Let's add some neurons from the central complex to the scene", "pause": 2000}],
-      ["notify", {"message": "We first add some tentative EB ring neurons", "pause": 2000}],
-      ["search", {"query": "show neurons connecting lat to eb"}],
-      ["notify", {"message": "We then add some tentative EPG, PEG and PEN neurons", "pause": 2000}],
-      ["search", {"query": "add neurons with inputs in the ellipsoid body and outputs in both pb and idfp"}],
-      ["search", {"query": "add neurons with inputs in pb and outputs in both eb and idfp"}],
-      ["search", {"query": "add neurons with inputs in pb and outputs in eb and noduli"}],
-      ["notify", {"message": "Now let's download the inferred connectivity between these neurons by using the <i class='fa fa-download'></i> button", "pause": 1000}],
-      ["click", {"uiBtn": {"type": "downData"}, "waitForUI": true}],
-      ["notify", {"message": "Done! Try it yourself!", "pause": 5000}]
-    ],
-    "neuron3d": true,
-    "keyword": "Connectivity",
-    "description": "Explore inferred connectivity from the FlyCircuit Data",
-    "category": "New Features"
-  },
   "show_1": {
     "keyword": "Show",
     "script": [
       ["notify", {"message": "Hi there!"}],
-      ["notify", {"message": "Let's query for neurons that innervate the Ellipsoid Body!"}],
-      ["search", {"query": "Show neurons in the Ellipsoid Body"}],
-      ["notify", {"message": "Try it yourself!", "pause": 0}]
-    ],
-    "description": "Show neurons that innervate the Ellipsoid Body.",
-    "category": "Basic Usage"
-  },
-  "show_2": {
-    "keyword": "Show",
-    "script": [
-      ["notify", {"message": "Hi there!"}],
-      ["notify", {"message": "Let's query for local neurons in the Ellipsoid Body!"}],
+      ["notify", {"message": "Let's query for local neurons in the left antennal lobe that express glutamate neurotransmitter!"}],
+      ["search", {"query": "show glutamatergic local neurons in the left antennal lobe"}],
+      ["notify", {"message": "'Show' always clears the visualization panel before visualizing the neurons in the query!"}],
+      ["notify", {"message": "Let's try using 'Show' again."}],
       ["search", {"query": "Show local neurons in the Ellipsoid Body"}],
+      ["notify", {"message": "Done. Compare this to the 'Add' demo!", "pause": 1000}],
       ["notify", {"message": "Try it yourself!", "pause": 0}]
     ],
-    "description": "Show local neurons in the Ellipsoid Body.",
-    "category": "Basic Usage"
-  },
-  "show_3": {
-    "keyword": "Show",
-    "script": [
-      ["notify", {"message": "Hi!"}],
-      ["notify", {"message": "Let's query for local neurons in the PB (Protocerebral Bridge)!"}],
-      ["search", {"query": "Show local neurons in the PB"}],
-      ["notify", {"message": "Done!", "pause": 1000}],
-      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
-    ],
-    "description": "Visualize local neurons in the protocerebral bridge.",
-    "category": "Basic Usage"
-  },
-  "show_4": {
-    "keyword": "Show",
-    "script": [
-      ["notify", {"message": "Hi!"}],
-      ["notify", {"message": "Let's query for local neurons in the left lateral horn!"}],
-      ["search", {"query": "Show local neurons in left lateral horn"}],
-      ["notify", {"message": "Done!" , "pause": 1000}],
-      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
-    ],
-    "description": "Visualize local neurons in the left lateral horn.",
-    "category": "Basic Usage"
+    "description": "Clear the work space and visualize neurons according to a specific query.",
+    "category": "Basic English Queries (Supported Verbs)"
   },
   "add_1": {
     "keyword": "Add",
     "script": [
       ["notify", {"message": "Hi!"}],
-      ["notify", {"message": "Let's query for local neurons in the ellipsoid body!"}],
-      ["search", {"query": "Show local neurons in eb"}],
-      ["notify", {"message": "Now let's bring in neurons from protocerebral bridge."}],
-      ["search", {"query": "Add local neurons in protocerebral bridge"}],
+      ["notify", {"message": "Let's query for local neurons in the left antennal lobe that express glutamate neurotransmitter!"}],
+      ["search", {"query": "show glutamatergic local neurons in the left antennal lobe"}],
+      ["notify", {"message": "'Add' visualizes the neurons in the query on top of what's in the visualization panel!"}],
+      ["notify", {"message": "Let's try using adding some neurons."}],
+      ["search", {"query": "Add local neurons in the Ellipsoid Body"}],
       ["notify", {"message": "Done", "pause": 1000}],
       ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
-    "description": "Visualize local neurons in Ellipsoid Body and then add local neurons in the Protocerebral Bridge.",
-    "category": "Basic Usage"
+    "description": "In addition to what is currently displayed, visualize the neurons according to a specific query",
+    "category": "Basic English Queries (Supported Verbs)"
   },
   "undo_1": {
     "keyword": "Undo",
@@ -129,7 +38,7 @@
       ["notify", {"message": "Let's query for neurons in the ellipsoid body!"}],
       ["search", {"query": "Show local neurons in eb"}],
       ["notify", {"message": "Now let's add neurons in the optic glomeruli."}],
-      ["search", {"query": "Add local neurons in og"}],
+      ["search", {"query": "Add neurons in og"}],
       ["notify", {"message": "Now let's undo what we just did."}],
       ["search", {"query": "Undo"}],
       ["notify", {"message": "Now let's add neurons from the PB."}],
@@ -138,7 +47,7 @@
       ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
     "description": "Go back to a previous step (UNDO).",
-    "category": "Basic Usage"
+    "category": "Basic English Queries (Supported Verbs)"
   },
   "keep_1": {
     "keyword": "Keep",
@@ -151,22 +60,8 @@
       ["notify", {"message": "Done", "pause": 1000}],
       ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
-    "description": "Filter neurons in the current workspace based on a specific query.",
-    "category": "Basic Usage"
-  },
-  "keep_2": {
-    "keyword": "Keep",
-    "script": [
-      ["notify", {"message": "Hi!"}],
-      ["notify", {"message": "Let's query for local neurons from the left antenna lobe"}],
-      ["search", {"query": "Show local neurons in the left al"}],
-      ["notify", {"message": "Now let's only keep known gabaergic neurons and remove the rest."}],
-      ["search", {"query": "Keep gabaergic neurons in the left al"}],
-      ["notify", {"message": "Done", "pause": 1000}],
-      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
-    ],
-    "description": "Filter neurons in the current workspace based on a specific query.",
-    "category": "Basic Usage"
+    "description": "Filter neurons in the current visualization panel based on a specific query.",
+    "category": "Basic English Queries (Supported Verbs)"
   },
   "remove_1": {
     "keyword": "Remove",
@@ -179,61 +74,235 @@
       ["notify", {"message": "Done", "pause": 1000}],
       ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
-    "description": "Remove neurons from the current workspace based on a specific query.",
-    "category": "Basic Usage"
+    "description": "Remove neurons from the current visualization panel based on a specific query.",
+    "category": "Basic English Queries (Supported Verbs)"
   },
-  "highlight_1": {
-    "keyword": "Highlight",
+  "pinunpin_1": {
+    "keyword": "Pin/Unpin",
     "script": [
       ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for neurons innervating the right antennal lobe!"}],
+      ["search", {"query": "Show neurons in right al"}],
+      ["notify", {"message": "Now let's pin the local neurons."}],
+      ["search", {"query": "Pin local neurons in the right al"}],
+      ["notify", {"message": "Now let's unpin glutamatergic neurons."}],
+      ["search", {"query": "Unpin glutamatergic neurons"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Pin (Persistently highlight) or Unpin neurons in the current visualization panel based on a specific query.",
+    "category": "Basic English Queries (Supported Verbs)"
+  },
+  "hide_1": {
+    "keyword": "Hide/unhide",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for dopaminergic local neurons in the right medulla."}],
+      ["search", {"query": "Show dopaminergic local neurons in the right medulla"}],
+      ["notify", {"message": "Let's add GABAergic local neurons in the left medulla."}],
+      ["search", {"query": "add gabaergic local neurons in the left medulla"}],
+      ["notify", {"message": "Now let's hide the dopaminergic neurons."}],
+      ["search", {"query": "hide dopaminergic neurons"}],
+      ["notify", {"message": "Now let's reveal all the local neurons in medulla that is in the visualization panel."}],
+      ["search", {"query": "unhide local neurons in medulla"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Hide or reveal neurons in the current visualization panel based on a specific query.",
+    "category": "Basic English Queries (Supported Verbs)"
+  },
+  "color_1": {
+    "keyword": "Color",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for local neurons from the right antennal lobe!"}],
+      ["search", {"query": "Show local neurons in right al"}],
+      ["notify", {"message": "Now let's color them red."}],
+      ["search", {"query": "Color red"}],
+      ["notify", {"message": "If only a color is specified, the last queried neurons will be colored."}],
+      ["notify", {"message": "Neurons to be colored can also be specified. For example, we can color GABAergic neurons blue, using the hex code for blue."}],
+      ["search", {"query": "Color gabaergic neurons 0000FF"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Color neurons in the current visualization panelvisualization panel based on a specific query",
+    "category": "Basic English Queries (Supported Verbs)"
+  },
+  "clear_1": {
+    "keyword": "Clear",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for local neurons from the right antennal lobe!"}],
+      ["search", {"query": "Show local neurons in right al"}],
+      ["notify", {"message": "Now we clear the visualization panel."}],
+      ["search", {"query": "Clear"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Clear out the visualization panel.",
+    "category": "Basic English Queries (Supported Verbs)"
+  },
+  "neuropil_menu": {
+    "script": [
+      ["notify", {"message": "The Neuropil menu accessible from the Header Bar lists all neuropils."}],
+      ["notify", {"message": "This menu can be used to control the neuropils displayed in the visualization panel."}],
+      ["notify", {"message": "First we hide all neuropils"}],
+      ["click", {"menu": {"type": "lpuHideAll"}}],
+      ["notify", {"message": "Next we toggle a few neuropils"}],
+      ["click", {"menu": {"type": "lpuToggle", "label": "Right AMMC"}}],
+      ["click", {"menu": {"type": "lpuToggle", "label": "PB"}}],
+      ["click", {"menu": {"type": "lpuToggle", "label": "Left MB"}}],
+      ["notify", {"message": "Finally we show all neuropils"}],
+      ["click", {"menu": {"type": "lpuShowAll"}}],
+      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
+    ],
+    "keyword": "Neuropil Menu",
+    "description": "Access the list of neuropils.",
+    "category": "GUI Usage"
+  },
+  "neuron_menu": {
+    "script": [
+      ["notify", {"message": "The Neurons/Synapses menu accessible from the Header Bar lists all neurons and synapses visualized in the visualization panel."}],
+      ["notify", {"message": "It is useful to highlight, hide, pin neurons of interest when the view in the visualization panel becomes cluttered."}],
+      ["notify", {"message": "First we visualize some neurons."}],
+      ["search", {"query": "show neurons connecting right optu to left optu"}],
+      ["notify", {"message": "Now we open the Neurons/Synapses Menu and click on one of the neurons"}],
+      ["click", {"menu": {"type": "neuClick", "label": "Gad1-F-900362"}}],
+      ["notify", {"message": "This has the same effect of clicking on the neuron in the 3D visualization."}],
+      ["notify", {"message": "and brings up the info panel for this neuron."}],
+      ["notify", {"message": "We can hide the neuron"}],
+      ["click", {"menu": {"type": "visToggle", "label": "Gad1-F-900362"}}],
+      ["notify", {"message": "reveal the neuron"}],
+      ["click", {"menu": {"type": "visToggle", "label": "Gad1-F-900362"}}],
+      ["notify", {"message": "pin the neuron"}],
+      ["click", {"menu": {"type": "pinToggle", "label": "Gad1-F-900362"}}],
+      ["notify", {"message": "unpin the neuron"}],
+      ["click", {"menu": {"type": "pinToggle", "label": "Gad1-F-900362"}}],
+      ["notify", {"message": "and delete the neuron"}],
+      ["click", {"menu": {"type": "remove", "label": "Gad1-F-900362"}}],
+      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
+    ],
+    "keyword": "Neurons/Synapses Menu",
+    "description": "Access the list of neurons and synapses in the visualization panel to highlight, retrieve info of, pin, hide and delete individual neurons.",
+    "category": "GUI Usage"
+  },
+  "pin_select_highlight": {
+    "script": [
+      ["notify", {"message": "You can use your mouse to navigate through neurons in the visualization panel."}],
       ["notify", {"message": "Let's first bring up neurons in the Ellipsoid Body!"}],
       ["search", {"query": "Show local neurons in the Ellipsoid Body"}],
-      ["notify", {"message": "Let's move the cursor over the neurons to highlight them!"}],
+      ["notify", {"message": "To highlight a neuron, move mouse cursor onto the displayed neuron."}],
       ["highlight", {"label": "VGlut-F-200478"}],
-      ["notify", {"message": "Try it yourself!", "pause": 0}]
+      ["notify", {"message": "Let's try another neuron."}],
+      ["highlight", {"label": "Gad1-F-700047"}],
+      ["notify", {"message": "To obtain the detailed info about this neuron, single click on the neuron."}],
+      ["click", {"label": "Gad1-F-700047"}],
+      ["notify", {"message": "Info Panel on the left will display basic info of the neuron, and the synaptic partners of the neuron. Check out the 'Info Panel' demo for more information on how to use the Info Panel", "pause": 10000}],
+      ["notify", {"message": "Double-clicking a neuron pins the neuron."}],
+      ["pin", {"label": "Gad1-F-700047"}],
+      ["highlight", {"label": "VGlut-F-200478"}],
+      ["notify", {"message": "Double-clicking it again to unpin."}],
+      ["pin", {"label": "Gad1-F-700047"}],
+      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
     ],
-    "description": "Remove neurons from the current workspace based on a specific query.",
+    "keyword": "Pin/Select/Highlight",
+    "description": "Mouse operations in the visualization panel to highlight, retrieve info of, pin and delete individual neurons.",
     "category": "GUI Usage"
   },
-  "select_1": {
-    "keyword": "Select",
+  "gui_buttons": {
     "script": [
-      ["notify", {"message": "Hi!"}],
-      ["notify", {"message": "Let's first bring up neurons in the Ellipsoid Body!"}],
-      ["search", {"query": "Show local neurons in the Ellipsoid Body"}],
-      ["notify", {"message": "Let's move the cursor over a neuron, and click on it!"}],
-      ["click", {"label": "VGlut-F-200478"}],
-      ["notify", {"message": "The information of the selected neuron has been loaded from the FlyCircuit Database!"}],
-      ["notify", {"message": "Try it yourself!", "pause": 0}]
+      ["notify", {"message": "Here we show the function of the buttons on the top right."}],
+      ["notify", {"message": "Clicking on the <i class=\"fa fa-info-circle\"><\/i> button, the GUI Usage Info will pop out."}],
+      ["click", {"uiBtn": {"type": "showInfo"}}],
+      ["notify", {"message": "Now let's make a simple query"}],
+      ["search", {"query": "show neurons connecting right antennal lobe to right lateral horn"}],
+      ["search", {"query": "add local neurons in right lateral horn"}],
+      ["notify", {"message": "We can use the <i class=\"fa fa-align-justify\"><\/i> button zoom into the neurons visualized."}],
+      ["click", {"uiBtn": {"type": "resetVisibleView"}}],
+      ["notify", {"message": "Let's take a screenshot of the visualization using the <i class=\"fa fa-camera\"><\/i> button ."}],
+      ["click", {"uiBtn": {"type": "takeScreenshot"}}],
+      ["notify", {"message": "We can reset the view to the original by clicking on <i class=\"fa fa-refresh\"><\/i> button."}],
+      ["click", {"uiBtn": {"type": "resetView"}}],
+      ["notify", {"message": "Now we will pin some of the neurons"}],
+      ["search", {"query": "pin local neurons in right lateral horn"}],
+      ["notify", {"message": "We can hide everything but the pinned neurons using the <i class=\"fa fa-eye-slash\"><\/i> button"}],
+      ["click", {"uiBtn": {"type": "hideAll"}}],
+      ["notify", {"message": "and reveal everything in the visualization panel using the <i class=\"fa fa-eye\"><\/i> button"}],
+      ["click", {"uiBtn": {"type": "showAll"}}],
+      ["notify", {"message": "We can remove all neurons except the pinned neurons by the <i class=\"fa fa-trash\"><\/i> button"}],
+      ["click", {"uiBtn": {"type": "removeUnpin"}}],
+      ["notify", {"message": "To remove pinned neurons but keep unpinned neurons, you will need to use the Neurons/Synapses Menu."}],
+      ["click", {"menu": {"type": "pinRemove"}}],
+      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
     ],
-    "description": "Click on a neuron to show its information from FlyCircuit Database.",
+    "keyword": "Visualization Panel Buttons",
+    "description": "Function of the GUI button <i class=\"fa fa-trash\"><\/i> <i class=\"fa fa-eye-slash\"><\/i> <i class=\"fa fa-eye\"><\/i> <i class=\"fa fa-align-justify\"><\/i> <i class=\"fa fa-refresh\"><\/i> <i class=\"fa fa-info-circle\"><\/i> <i class=\"fa fa-camera\"><\/i> on the top right.",
     "category": "GUI Usage"
   },
-  "pin_1": {
-    "keyword": "Pin",
+  "connectivity_1": {
     "script": [
-      ["notify", {"message": "Hi!"}],
-      ["notify", {"message": "Let's first bring up gabaergic neurons in the Ellipsoid Body!"}],
-      ["search", {"query": "Show gabaergic local neurons in eb"}],
-      ["notify", {"message": "Let's move the cursor over some neurons, and use 'double click' to pin them!"}],
-      ["pin", {"label": "Gad1-F-400135"}],
-      ["pin", {"label": "Gad1-F-200171"}],
-      ["pin", {"label": "Gad1-F-500712"}],
-      ["select", {"label": "Gad1-F-200171"}],
-      ["notify", {"message": "The pinned neurons always remain highlighted."}],
-      ["notify", {"message": "Let's remove all unpinned neurons."}],
-      ["click", {"menu":{"type": "pinKeep"}}],
-      ["notify", {"message": "Now we only have pinned neurons in the scene."}],
-      ["notify", {"message": "Want to unpin a neuron? Use 'Double click' on a pinned neuron to unpin it."}],
-      ["pin", {"label": "Gad1-F-400135"}],
-      ["select", {"label": "Gad1-F-400135"}],
-      ["notify", {"message": "Try it yourself!", "pause": 0}]
+      ["notify", {"message": "Let's explore some inferred connectivity (using the SPIN algorithm ) in the central complex", "pause": 1000}],
+      ["notify", {"message": "Let's add some neurons from the central complex to the scene", "pause": 2000}],
+      ["notify", {"message": "We first add some tentative EB ring neurons", "pause": 2000}],
+      ["search", {"query": "show neurons connecting lat to eb"}],
+      ["search", {"query": "color red"}],
+      ["notify", {"message": "We then add some tentative EPG, PEG and PEN neurons", "pause": 2000}],
+      ["search", {"query": "add neurons with inputs in the ellipsoid body and outputs in both pb and idfp"}],
+      ["search", {"query": "color blue"}],
+      ["search", {"query": "add neurons with inputs in pb and outputs in both eb and idfp"}],
+      ["search", {"query": "color lime"}],
+      ["search", {"query": "add neurons with inputs in pb and outputs in eb and noduli"}],
+      ["search", {"query": "color yellow"}],
+      ["notify", {"message": "Now let's open Graph View to see the neuronal graph with the <i class=\"fa fa-bar-chart\"><\/i> button.", "pause": 6000}],
+      ["click", {"uiBtn": {"type": "showGraph"}}],
+      ["notify", {"message": "Now let's download the inferred connectivity between these neurons by using the <i class='fa fa-download'></i> button", "pause": 1000}],
+      ["click", {"uiBtn": {"type": "downData"}, "waitForUI": true}],
+      ["notify", {"message": "Done! Try it yourself!", "pause": 5000}]
     ],
-    "description": "Pin a neuron via 'Double Click' to make it stick in the scene.",
+    "keyword": "Graph View / Connectivity Buttons",
+    "description": "Explore the connectivity of visualized neurons with <i class=\"fa fa-cubes\"><\/i> <i class=\"fa fa-bar-chart\"><\/i> <i class=\"fa fa-download\"><\/i> buttons",
+    "category": "GUI Usage"
+  },
+  "visualization_settings": {
+    "script": [
+      ["notify", {"message": "The settings menu can be accessed by clicking on <i class='fa fa-cog'></i> icon on the top right"}],
+      ["click", {"uiBtn": {"type": "showSettings"}}],
+      ["notify", {"message": "Browse through the setting to see what settings can be customized."}],
+      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
+    ],
+    "keyword": "Visualization Settings",
+    "description": "Open Visualization Settings <i class=\"fa fa-cog\"><\/i> to change background color, neuropil color, how neurons are rendered, etc.",
+    "category": "GUI Usage"
+  },
+  "query_reference": {
+    "script": [
+      ["notify", {"message": "A reference of supported English queries can be found by clicking on the <i class=\"glyphicon glyphicon-info-sign\"><\/i> button left to the search bar."}],
+      ["click", {"selector": "#info_btn"}],
+      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
+    ],
+    "keyword": "Query Reference",
+    "description": "Open query reference <i class=\"glyphicon glyphicon-info-sign\"><\/i>.",
+    "category": "GUI Usage"
+  },
+  "infopanel": {
+    "script": [
+      ["notify", {"message": "Info Panel provides all information available of a neuron."}],
+      ["search", {"query": "show local neurons in EB"}],
+      ["notify", {"message": "Simply click on the neuron in the visualization panel or from the Neurons/Synapses menu to bring up its information."}],
+      ["click", {"label": "Gad1-F-700047"}],
+      ["notify", {"message": "You can bring up one of pre- and post-synaptic partner by clicking on the + button in the list of partners."}],
+      ["click", {"selector": "#btn-pre-add-TH-F-100029"}],
+      ["notify", {"message": "You can bring up all of its pre- and post-synaptic partner according to the filtered value."}],
+      ["click", {"selector": "#presyn-N"}],
+      ["click", {"selector": "#btn-pre-add-all-neuron"}],
+      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
+    ],
+    "keyword": "Info Panel",
+    "description": "Bring up Info Panel for the neuron to access detail information abou the neuron and its synaptic partners.",
     "category": "GUI Usage"
   },
   "neurotransmitter_1": {
-    "keyword": "Serotonergic/Glutamatergic/Cholinergic/Dopaminergic/Gabaergic Neurons",
+    "keyword": "Query by Neurotransmitter Type.",
     "script": [
       ["notify", {"message": "Hi!"}],
       ["notify", {"message": "Let's query for serotonergic neurons in the Ellipsoid Body!"}],
@@ -250,10 +319,10 @@
       ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
     "description": "Show serotonegic local neurons in the Ellipsoid Body, and sequentially add glutamatergic, cholinergic, dopaminergic and gabaergic neurons.",
-    "category": "Basic Usage"
+    "category": "Basic Queries"
   },
   "connecting_1": {
-    "keyword": "Tract based queries",
+    "keyword": "Tract-based Queries",
     "script": [
       ["notify", {"message": "Hi!"}],
       ["notify", {"message": "Let's query for neurons projecting from right Lobula to left optic glomerulus!"}],
@@ -262,10 +331,10 @@
       ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
     "description": "Show neurons projecting from right Lobula to left optic glomerulus.",
-    "category": "Advanced Demonstrations"
+    "category": "Basic Queries"
   },
   "innervating_1": {
-    "keyword": "Innervations/Arborizations",
+    "keyword": "Queries based on Innervations/Arborizations",
     "script": [
       ["notify", {"message": "Hi!"}],
       ["notify", {"message": "Let's query for neurons innervating optic glomerulus!"}],
@@ -274,22 +343,22 @@
       ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
     "description": "Visualize neurons innervating the optic glomerulus.",
-    "category": "Advanced Demonstrations"
+    "category": "Basic Queries"
   },
   "dendrite_axon_1": {
-    "keyword": "Dendritic Innervations/Arborizations",
+    "keyword": "Queries based on Dendritic Innervations/Arborizations",
     "script": [
       ["notify", {"message": "Hi!"}],
-      ["notify", {"message": "Let's query for neurons that have dendrites in the right lateral horn!"}],
-      ["search", {"query": "Show neurons having dendritic innervations in right lateral horn"}],
+      ["notify", {"message": "Let's query for neurons that have inputs in the right lateral horn!"}],
+      ["search", {"query": "Show neurons having inputs in right lateral horn"}],
       ["notify", {"message": "Done", "pause": 1000}],
       ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
     "description": "Visualize neurons with dendrites in the right lateral horn.",
-    "category": "Advanced Demonstrations"
+    "category": "Basic Queries"
   },
   "dendrite_axon_2": {
-    "keyword": "Axon/Dendrite Arborizations",
+    "keyword": "Queries based on Axon/Dendrite Arborizations",
     "script": [
       ["notify", {"message": "Hi!"}],
       ["notify", {"message": "Let's query for neurons that have dendrites in al and axons in both right lh and left lh!"}],
@@ -298,7 +367,7 @@
       ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
     "description": "Visualize neurons connecting antennal lobe to both left and right lateral horn.",
-    "category": "Advanced Demonstrations"
+    "category": "Basic Queries"
   },
   "lptc": {
     "keyword": "Lobula Plate Tangential Cells",
@@ -309,7 +378,7 @@
       ["search", {"query": "show neurons connecting the left lop to the left cvlp"}],
       ["notify", {"message": "Now let's add neurons from the other side of the brain."}],
       ["search", {"query": "add neurons connecting the right lop to the right cvlp"}],
-      ["notify", {"message": "Now let's select from the workspace some tangential cells and pin them."}],
+      ["notify", {"message": "Now let's select from the visualization panel some tangential cells and pin them."}],
       ["pin", {"label": "VGlut-F-400392"}],
       ["select", {"label": "VGlut-F-400392"}],
       ["pin", {"label": "VGlut-F-700175"}],
@@ -451,7 +520,7 @@
     "neuron3d": true,
     "keyword": "Fig 2b. Lobula Plate Tangential Cells",
     "description": "Defining subclasses of the Lobula Plate Tangential Cells.",
-    "category": "FFBO Paper"
+    "category": "Exploring the structure of 2 figures in 'The Fruit Fly Brain Observatory: From Structure to Function'. DOI: 10.1101/580290"
   },
   "fig2c": {
     "script": [
@@ -494,7 +563,7 @@
     "neuron3d": true,
     "keyword": "Fig 2c. LPi neurons",
     "description": "Discovering a new type of LPi local neuron in the Lobula Plate.",
-    "category": "FFBO Paper"
+    "category": "Exploring the structure of 2 figures in 'The Fruit Fly Brain Observatory: From Structure to Function'. DOI: 10.1101/580290"
   },
   "fig3b": {
     "script": [
@@ -547,15 +616,12 @@
       ["notify", {"message": "We remove the second population of neurons that innervate the upper part of OPTU. Many of them are <i>fru</i> expressing neurons.",
                   "pause": 8000, "timeout": 9000}],
       ["search", {"query": "remove fru expressing neurons"}],
-      ["click", {"label": "Gad1-F-900198", "pause": 3000}],
-      ["click", {"selector": "#btn-add-Gad1-F-900198", "pause": 3000}],
-      ["click", {"label": "Gad1-F-900119", "pause": 3000}],
-      ["click", {"selector": "#btn-add-Gad1-F-900119", "pause": 3000}],
-      ["click", {"label": "npf-F-500000", "pause": 3000}],
-      ["click", {"selector": "#btn-add-npf-F-500000", "pause": 3000}],
-      ["click", {"label": "Gad1-F-000140", "pause": 3000}],
+      ["click", {"menu": {"type": "remove", "label": "Gad1-F-900198" }, "pause": 3000}],
+      ["click", {"menu": {"type": "remove", "label": "Gad1-F-900119"}, "pause": 3000}],
+      ["click", {"menu": {"type": "remove", "label": "npf-F-500000"}, "pause": 3000}],
       ["notify", {"message": "We add a few putative presynaptic neurons that receive contralateral inputs.",
                   "pause": 5000, "timeout": 10000}],
+      ["click", {"menu": {"type": "neuClick", "label": "Gad1-F-000140"}, "pause": 3000}],
       ["click", {"selector": "#btn-pre-add-VGlut-F-500489", "pause": 1000}],
       ["click", {"selector": "#btn-pre-add-VGlut-F-000145", "pause": 1000}],
       ["click", {"selector": "#btn-pre-add-VGlut-F-000019", "pause": 1000}],
@@ -564,18 +630,18 @@
       ["click", {"selector": "#btn-pre-add-Gad1-F-700269", "pause": 1000}],
       ["notify", {"message": "For another neuron.",
                   "pause": 5000, "timeout": 6000}],
-      ["click", {"label": "Gad1-F-000099", "pause": 3000}],
+      ["click", {"menu": {"type": "neuClick", "label": "Gad1-F-000099"}, "pause": 3000}],
       ["click", {"selector": "#btn-pre-add-VGlut-F-500688", "pause": 3000}],
       ["notify", {"message": "And yet another.",
                   "pause": 5000, "timeout": 6000}],
-      ["click", {"label": "Cha-F-100383", "pause": 3000}],
+      ["click", {"menu": {"type": "neuClick", "label": "Cha-F-100383"}, "pause": 3000}],
       ["click", {"selector": "#btn-pre-add-VGlut-F-000270", "pause": 3000}],
       ["notify", {"message": "Done! Explore it yourself!", "pause": 5000}]
     ],
     "neuron3d": true,
     "keyword": "Fig 3b. A Visual Pathway to EB",
     "description": "Constructing a visual pathway to EB from connectome data based on Sun et al. (2017).",
-    "category": "FFBO Paper"
+    "category": "Exploring the structure of 2 figures in 'The Fruit Fly Brain Observatory: From Structure to Function'. DOI: 10.1101/580290"
   }
 }
 ]
