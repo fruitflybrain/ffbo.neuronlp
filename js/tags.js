@@ -44,7 +44,7 @@ moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], f
             <input type="text" name="tag" class="tag-text tag-name"  id="retrieve_tag_name_input"/>
           </div>
           <div id="tagSearchMenuWrapper">
-          <h5 type="text" id="tag_desc">Browse Tags</h5>
+          <h5 type="text" id="tag_desc">Browse a Curated List of Tags (does not include the tags you have created)</h5>
           <div id="tagSearchMenu" class="list-group"></div>
         </div>
         </div>
