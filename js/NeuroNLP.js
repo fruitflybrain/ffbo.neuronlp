@@ -539,7 +539,7 @@ require([
     ffbomesh.on('hideAll', (function () { ffbomesh.hideAll() }));
     ffbomesh.on('showAll', (function () { ffbomesh.showAll() }));
     ffbomesh.on('takeScreenshot', (function () { ffbomesh._take_screenshot = true; }));
-    ffbomesh.on('showInfo', function () { window.NeuroNLPUI.GUIinfoOverlay.show(); });
+    ffbomesh.on('showInfo', function () { window.NeuroNLPUI.onShowGUIinfo(); });
 
     
     demoLoad = false;
