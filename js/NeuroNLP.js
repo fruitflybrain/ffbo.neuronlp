@@ -22,7 +22,7 @@ requirejs.config({
     autobahn: '//cdn.jsdelivr.net/gh/crossbario/autobahn-js-browser@v20.9.2/autobahn/autobahn.min',
     d3: '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min',
     jquery: '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min',
-    webgl: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r136/examples/js/WebGL',
+    webgl: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r136/examples/js/WebGL', // WebGL is only available before r136
     simplifymodifier: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/utils/SceneUtils',
     lut: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/math/Lut',
     buffergeometryutils: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/utils/BufferGeometryUtils',
@@ -363,6 +363,13 @@ require([
         ffbomesh.execCommand({ "commands": [cmd], "neurons": message["commands"][cmd][0], "args": message['commands'][cmd][1] });
     }
 
+    infoPanel.highlight = (rid) => {
+      ffbomesh.highlight(rid, true)
+    };
+
+    infoPanel.resume = (rid) => {
+      ffbomesh.highlight(undefined) 
+    };
 
     infoPanel.isInWorkspace = (rid) => {
       return (rid in ffbomesh.meshDict);

@@ -205,6 +205,7 @@ moduleExporter("ConnTable",
         btn.id = (connDir==='pre') ? 'btn-pre-add-' + d['uname'] : 'btn-post-add-' + d['uname'];
         btn.name = d['uname'];
         btn.rid = d['n_rid']
+        btn.orid = d['rid'];
 
         if (this.parentObj.isInWorkspace(d['rid'])){
           btn.innerText = '-';
@@ -224,6 +225,7 @@ moduleExporter("ConnTable",
         btn.id = (connDir==='pre') ? 'btn-pre-syn-add-' + d['syn_uname'] : 'btn-post-syn-add-' + d['syn_uname'];
         btn.name = d['syn_uname'];
         btn.rid = d['s_rid']
+        btn.orid = d['syn_rid']
 
         if (this.parentObj.isInWorkspace(d['syn_rid'])){
           btn.innerText = '-';
@@ -602,7 +604,17 @@ moduleExporter("ConnTable",
           that.parentObj.addByRid(this.rid);
         }else if(this.className.includes('remove')){
           that.parentObj.removeByRid(this.rid);
-      }else{}
+        }else{}
+    })
+    .mouseenter( function() {
+      if (this.className.includes('remove')) {
+        that.parentObj.highlight(this.orid);
+      }
+    })
+    .mouseleave( function() {
+      if (this.className.includes('remove')) {
+        that.parentObj.resume();
+      }
     });
   };
 
