@@ -39,7 +39,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.plugins.dragNodes.min.js" integrity="sha512-w9i2zoWU7Te0i+TJoKMyBjHYAptYykPieNa0iT6/ofVbUHvqIhh6f4YVkXV84kAuGbIS+CqvSV/6AHTVt8bUrA==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.plugins.filter.min.js" integrity="sha512-mu+dW4fJz+3b5WxfWUdwgHOvmDp5v7+8wa6zMGeQ40kVQt45l5NYRVuFIgdPtlS6IBThjKyCcEWz1TXMtUcnuQ==" crossorigin="anonymous"></script>
 
-    <script data-main="js/NeuroNLP" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script data-main="js/NeuroNLP" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/mkturkcan/neuronlp.graphutils@1186d9766c01678e7e6877d4f79c60046e43959f/js/graphvis.js"></script>
     <link rel="stylesheet" type="text/css" href="./lib/css/ffbo.theme_settings.css">
     <link rel="stylesheet" id="current_theme" type="text/css" href="./lib/css/ffbo.default_theme.css">
@@ -508,26 +508,17 @@
                    panel.
             </div> -->
             <div id="info-intro" class="ffbo-intro">
-              <h4>What is NeuroNLP?</h4>
-              <p>
-                NeuroNLP provides a modern web-based portal for navigating fruit fly
-                brain circuit data. It enables in-depth exploration and investigation
-                of brain structure, using intuitive plain English queries, such as
-                <a onclick="window.NLPsearch('show EPG neurons that have outputs in PB glomerulus L8 or PB glomerulus R2')"><br><br><u style="font-style:italic">"show EPG neurons that have outputs in PB glomerulus L8 or PB glomerulus R2".</u></br></br></a>
-                NeuroNLP can be accessed from any browser supporting WebGL. Remember
-                to check it out on your smartphone!
-              </p>
               <h4>Overview</h4>
-              <p>
-                Check out the Overview for a brief description of the layout and menus.
-              </p>
-              <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-getting-started')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-getting-started')" onclick="NeuroNLPUI.onShowOverview()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Open Overview!</a>
-              <br><br>
-              <h4>Quick Query Reference</h4>
-              <p>
-                  Check out the Quick Query Reference to be able to query data easily!
-              </p>
-              <a onmouseover="NeuroNLPUI.mimicMouseOver('#info_btn')" onmouseout="NeuroNLPUI.mimicMouseOut('#info_btn')" onclick="NeuroNLPUI.onShowReference()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Open Query Reference!</a>
+                <p>NeuroNLP is a query interface for navigating fruit fly brain datasets.
+                  It enables in-depth explorations and investigations of the connectomic/synaptomic structure of the brain, using intuitive rule-based English queries, such as
+                  <a onclick="window.NLPsearch('show glutamatergic local neurons in the left antennal lobe')"><br><u style="font-style:italic">"show glutamatergic local neurons in the left antennal lobe".</u></br></a>
+                </p>
+                <p>
+                  For more information about the NeuroNLP user interface
+                </p>
+                <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-getting-started')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-getting-started')"
+                onclick="NeuroNLPUI.onShowOverview()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right"
+                  aria-hidden="true"></i> Open Overview!</a>
               <br><br>
               <h4>News</h4>
               <p>
