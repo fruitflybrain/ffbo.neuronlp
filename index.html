@@ -523,17 +523,12 @@
             </div> -->
           <div id="info-intro" class="ffbo-intro">
               <h4>Overview</h4>
-	      <p>This NeuroNLP application contains data from <a href="http://flycircuit.tw">FlyCircuit 1.2</a> datasets.</p>
-              <p></p>
-	      <p>
-                NeuroNLP provides a modern web-based portal for navigating fruit fly brain circuit data. It enables in-depth exploration
-                and investigation of brain structure, using intuitive plain English queries, such as
-                <a onclick="window.NLPsearch('show glutamatergic local neurons in the left antennal lobe')"><br><br><u style="font-style:italic">"show glutamatergic local neurons in the left antennal lobe".</u></br></br></a>
-                <!-- A set of rules of NLP query can be found by clicking the <span class="glyphicon glyphicon-info-sign"></span> button left to the query bar.
-                NeuroNLP can be accessed from any browser supporting WebGL. Remember to check it out on your smartphone!-->
+              <p>NeuroNLP is a query interface for navigating fruit fly brain datasets.
+                It enables in-depth explorations and investigations of the connectomic/synaptomic structure of the brain, using intuitive rule-based English queries, such as
+              <a onclick="window.NLPsearch('show glutamatergic local neurons in the left antennal lobe')"><br><u style="font-style:italic">"show glutamatergic local neurons in the left antennal lobe".</u></br></a>
               </p>
               <p>
-                Checkout out the Overview for more information about NeuroNLP and the user interface.
+                For more information about the NeuroNLP user interface
               </p>
               <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-getting-started')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-getting-started')"
                 onclick="NeuroNLPUI.onShowOverview()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right"
@@ -620,14 +615,12 @@
             <band>
               <article>
                 <p>
-                  NeuroNLP is a modern web-based portal for navigating fruit fly brain data. NLP stands for Natural Language Processing, which
-                  means the website allows user to use intuitive plain English queries for in-depth exploration and investigation
-                  of brain structure.
-                  NeuroNLP provides a modern web-based portal for navigating fruit fly brain circuit data.
+                  NeuroNLP is a query interface for fruit fly brain datasets.
+                  It enables in-depth explorations and investigations of the connectomic/synaptomic structure
+                  of fruit fly brain, using intuitive rule-based English queries.
                 </p>
                 <p>
-                  The NLP module allows for querying neurons and synaptic partners by a variety of attributes of the query targets (refer to
-                  <i>Search Bar</i> section below).
+                  The NLP query interface enables searching and locating neurons and synaptic partners with a variety of attributes of query targets (refer to <i>Search Bar</i> section below).
                 </p>
                 <blockquote>
                   <p> NeuroNLP can be accessed from any browser supporting WebGL. Try it on your smartphone/tablet!</p>
@@ -638,9 +631,11 @@
             <h4>What Data is Accessible in NeuroNLP.FlyCircuit</h4>
             <band>
               <article>
-                <ul>The data is provided by the <a target="_blank" href="https://flycircuit.tw">FlyCircuit Database</a>, based on its version 1.2. See <a target="_blank" href="https://doi.org/10.1016/j.cub.2010.11.056">Ann-Shyn Chiang et al., Three-dimensional reconstruction of brain-wide wiring networks in Drosophila at single-cell resolution, Current Biology 2011, 21(1), pp.1-11</a> for more information about the dataset. The following objects are available:
+                <ul>Version 1.2 of the FlyCircuit dataset is currently available.
+                  For more information, see <a target="_blank" href="https://doi.org/10.1016/j.cub.2010.11.056">Ann-Shyn Chiang et al., Three-dimensional reconstruction of brain-wide wiring networks in Drosophila at single-cell resolution, Current Biology 2011, 21(1), pp.1-11</a>.
+                  The dataset contains:
                   <li><strong>Neurons</strong>: 3D morphology, neuron name, type, data source, putative neurotransmitter, transgenic lines, etc.</li>
-                  <li><strong>Synapses</strong>: Inferred presynaptic and postsynaptic partners of a neuron, number of synapses (no synapse locations), according <a target="_blank" href="https://doi.org/10.3389/fninf.2018.00099">Yu-Chi Huang et al., A Single-Cell Level and Connectome-Derived Computational Model of the Drosophila Brain. Front. Neuroinform. 2019, 12:99</a>. They are accessible in the Information Panel (see below).</li>
+                  <li><strong>Synapses</strong>: Inferred presynaptic and postsynaptic partners of a neuron, number of synapses (no synapse locations), see <a target="_blank" href="https://doi.org/10.3389/fninf.2018.00099">Yu-Chi Huang et al., A Single-Cell Level and Connectome-Derived Computational Model of the Drosophila Brain. Front. Neuroinform. 2019, 12:99</a>.</li>
                 </ul>
                 
               </article>
@@ -652,12 +647,12 @@
             <h4>Layout Overview</h4>
             <band>
               <article>
-                <ul>NeuroNLP site consists of mainly 4 sections
-                  <li><strong>Header Bar</strong>: main menu of NeuroNLP including the Get Started guide, Create/Load Tags, access to the list of visualized neurons/synapses and a list neuropils.</li>
+                <ul>NeuroNLP user interface (UI) consists of mainly 4 sections
+                  <li><strong>Header Bar</strong>: main menu including the Get Started guide, Create/Load Tags, access to the list of visualized neurons/synapses and a list neuropils.</li>
                   <li><strong>Visualization Panel</strong>: 3D visualization of queried neurons/synapses and the underlying neuropils.</li>
                   <li><strong>Information Panel</strong>: detailed information including synaptic partners of neuron displayed
                     in the visualizer.</li>
-                  <li><strong>Search bar</strong>: natural language interface for query neurons.</li>
+                  <li><strong>Search bar</strong>: command line for natural language queries.</li>
                 </ul>
               </article>
               <images>
@@ -674,7 +669,7 @@
                 <p>
                   The Search Bar is the central querying interface. It supports natural language queries of neurons, synaptic partners, etc.
                   By combining various attributes of query targets, you can create some very powerful queries. Click on the
-                  info button <a onclick="NeuroNLPUI.onShowReference()"><i class="glyphicon glyphicon-info-sign"></i></a> to the left of the search bar for more information. Also check the <a onclick="NeuroNLPUI.onShowDemo()">Demos</a>!
+                  info button <a onclick="NeuroNLPUI.onShowReference()"><i class="glyphicon glyphicon-info-sign"></i></a> to the left of the search bar for more information. Also checkout the <a onclick="NeuroNLPUI.onShowDemo()">Demos</a>!
                 </p>
               </article>
               <images></images>
@@ -689,7 +684,7 @@
                   The Header Bar provides access to the main menu that includes:
                   <ul>
                     <li>Get Started: a menu for helping users get started with NeuroNLP.</li>
-                    <li>Tags: a menu for creating and loading tags. Tags are 3d snapshots of what were visualized in the visualization panel.</li>
+                    <li>Tags: a menu for creating and loading tags. Tags are 3d snapshots of stored visualization panels.</li>
                     <li>Neurons/Synapses: a menu displaying the visualized neurons and synapses, as well as a list of pinned neurons/synapses. Checkout the <a onclick="window.FFBODemoPlayer.startDemo('neuron_menu')">"Neurons/Synapses Menu" Demo</a> (GUI Usage #2 in the <a onclick="NeuroNLPUI.onShowDemo()">Demos</a>)</li>
                     <li>Neuropils: a menu of neuropils. Checkout the <a onclick="window.FFBODemoPlayer.startDemo('neuropil_menu')">"Neuropil Menu" Demo</a> (GUI Usage #1 in the <a onclick="NeuroNLPUI.onShowDemo()">Demos</a>)</li>
                   </ul>
@@ -727,7 +722,7 @@
             <band>
               <article>
                 <p>
-                  Information panel is your major source of information regarding the individual neurons. You can view/add the pre- and post-synaptic partners of a selected neuron here. Check out the <a onclick="window.FFBODemoPlayer.startDemo('infopanel')">"Info Panel" Demo</a> (GUI Usage #8 in the <a onclick="NeuroNLPUI.onShowDemo()">Demos</a>).
+                  Information panel is your major source of information regarding the individual neurons. You can view/add the pre- and post-synaptic partners of selected neuron. Check out the <a onclick="window.FFBODemoPlayer.startDemo('infopanel')">"Info Panel" Demo</a> (GUI Usage #8 in the <a onclick="NeuroNLPUI.onShowDemo()">Demos</a>).
                 </p>
 
               </article>

@@ -298,7 +298,7 @@
       ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
     ],
     "keyword": "Info Panel",
-    "description": "Bring up Info Panel for the neuron to access detail information abou the neuron and its synaptic partners.",
+    "description": "Bring up Info Panel for the neuron to access detail information about neurons and their synaptic partners.",
     "category": "GUI Usage"
   },
   "neurotransmitter_1": {
@@ -319,7 +319,7 @@
       ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
     "description": "Show serotonegic local neurons in the Ellipsoid Body, and sequentially add glutamatergic, cholinergic, dopaminergic and gabaergic neurons.",
-    "category": "Basic Queries"
+    "category": "Basic Queries (Neurotransmitters/Innervations/Arborization)"
   },
   "connecting_1": {
     "keyword": "Tract-based Queries",
@@ -331,7 +331,7 @@
       ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
     "description": "Show neurons projecting from right Lobula to left optic glomerulus.",
-    "category": "Basic Queries"
+    "category": "Basic Queries (Neurotransmitters/Innervations/Arborization)"
   },
   "innervating_1": {
     "keyword": "Queries based on Innervations/Arborizations",
@@ -343,7 +343,7 @@
       ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
     "description": "Visualize neurons innervating the optic glomerulus.",
-    "category": "Basic Queries"
+    "category": "Basic Queries (Neurotransmitters/Innervations/Arborization)"
   },
   "dendrite_axon_1": {
     "keyword": "Queries based on Dendritic Innervations/Arborizations",
@@ -355,7 +355,7 @@
       ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
     "description": "Visualize neurons with dendrites in the right lateral horn.",
-    "category": "Basic Queries"
+    "category": "Basic Queries (Neurotransmitters/Innervations/Arborization)"
   },
   "dendrite_axon_2": {
     "keyword": "Queries based on Axon/Dendrite Arborizations",
@@ -367,7 +367,7 @@
       ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
     "description": "Visualize neurons connecting antennal lobe to both left and right lateral horn.",
-    "category": "Basic Queries"
+    "category": "Basic Queries (Neurotransmitters/Innervations/Arborization)"
   },
   "lptc": {
     "keyword": "Lobula Plate Tangential Cells",
