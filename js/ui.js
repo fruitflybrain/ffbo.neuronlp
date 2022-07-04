@@ -71,6 +71,10 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "jquery.mmenu"], function($, 
       mm_menu_right.close();
       this.announcePanel.show();
     }
+    this.onShowGUIinfo = () => {
+      mm_menu_right.close();
+      this.GUIinfoOverlay.show();
+    }
 
     this.mimicMouseOver = (selector, flag) => {
       if (flag) {

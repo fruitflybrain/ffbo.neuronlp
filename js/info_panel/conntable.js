@@ -52,8 +52,7 @@ moduleExporter("ConnTable",
 
     this.parentObj = parentObj;
 
-    let overlayText = '<h2>Inferred Synaptic Partners</h2><p>Inferred synaptic partners are marked by &dagger; </p><h3>SPIN</h3><p>Inferred synaptic connections using axonic/dendritic polarity predicted by SPIN:Skeleton-based Polarity Identification for Neurons. Please refer to <br><a href="http://link.springer.com/article/10.1007/s12021-014-9225-6" target="_blank">SPIN: A Method of Skeleton-based Polarity Identification for Neurons. Neurinformatics 12:487-507. Yi-Hsuan Lee, Yen-Nan Lin, Chao-Chun Chuang and Chung-Chuan Lo (2014)</a> <br>for more details on the SPIN algorithm.</p>';
-    overlayText += '<p>The polarity determined by spin was used to predict synaptic connections based on when an axonic segment of a neuron is within a specified distance to a dendritic segment of another neuron after registering to a standard brain template.</p>';
+    let overlayText = `<h3>Inferred Synaptic Partners</h3><p>Inferred synaptic partners are marked by &dagger; </p><p>The synaptic partners are inferred according to <a target="_blank" href="https://doi.org/10.3389/fninf.2018.00099">Yu-Chi Huang et al., A Single-Cell Level and Connectome-Derived Computational Model of the Drosophila Brain. Front. Neuroinform. 2019, 12:99</a>.</p>`
 
     // remove existing overlay if exists
     $("#"+this.overlayId).remove();
@@ -206,6 +205,7 @@ moduleExporter("ConnTable",
         btn.id = (connDir==='pre') ? 'btn-pre-add-' + d['uname'] : 'btn-post-add-' + d['uname'];
         btn.name = d['uname'];
         btn.rid = d['n_rid']
+        btn.orid = d['rid'];
 
         if (this.parentObj.isInWorkspace(d['rid'])){
           btn.innerText = '-';
@@ -225,6 +225,7 @@ moduleExporter("ConnTable",
         btn.id = (connDir==='pre') ? 'btn-pre-syn-add-' + d['syn_uname'] : 'btn-post-syn-add-' + d['syn_uname'];
         btn.name = d['syn_uname'];
         btn.rid = d['s_rid']
+        btn.orid = d['syn_rid']
 
         if (this.parentObj.isInWorkspace(d['syn_rid'])){
           btn.innerText = '-';
@@ -433,13 +434,28 @@ moduleExporter("ConnTable",
             text = document.getElementById("presyn-srch").value;
             N =  Number(document.getElementById("presyn-N").value);
             table = document.getElementById(tableId).children[1];
-            filter = text.toLowerCase();
             tr = table.getElementsByTagName("tr");
+            if (text.startsWith('/r')) {
+              try {
+                filter = new RegExp(text.slice(2));
+                use_regex = true;
+              } catch (error) {
+                return;
+              }
+            } else {
+              filter = text.toLowerCase();
+              use_regex = false;
+            }
             var rid_list = [];
             for (i = 0; i < tr.length; i++) {
               td = tr[i].getElementsByTagName("td");
               if (td[0]) {
-                if (td[0].innerHTML.toLowerCase().indexOf(filter) > -1 && td[1].innerHTML > N) {
+                if (use_regex) {
+                  test = filter.test(td[0].innerHTML);
+                } else {
+                  test = td[0].innerHTML.toLowerCase().indexOf(filter) > -1
+                }
+                if (test && td[1].innerHTML > N) {
                     if(this.name.includes('neuron')){
                         //cc = document.getElementById("btn-pre-add-"+td[0].innerHTML);
                         cc = td[2].getElementsByTagName("button")[0];
@@ -461,13 +477,28 @@ moduleExporter("ConnTable",
             text = document.getElementById("presyn-srch").value;
             N =  Number(document.getElementById("presyn-N").value);
             table = document.getElementById(tableId).children[1];
-            filter = text.toLowerCase();
             tr = table.getElementsByTagName("tr");
+            if (text.startsWith('/r')) {
+              try {
+                filter = new RegExp(text.slice(2));
+                use_regex = true;
+              } catch (error) {
+                return;
+              }
+            } else {
+              filter = text.toLowerCase();
+              use_regex = false;
+            }
             var rid_list = [];
             for (i = 0; i < tr.length; i++) {
               td = tr[i].getElementsByTagName("td");
               if (td[0]) {
-                if (td[0].innerHTML.toLowerCase().indexOf(filter) > -1 && td[1].innerHTML > N) {
+                if (use_regex) {
+                  test = filter.test(td[0].innerHTML);
+                } else {
+                  test = td[0].innerHTML.toLowerCase().indexOf(filter) > -1
+                }
+                if (test && td[1].innerHTML > N) {
                     if(this.name.includes('neuron')){
                         cc = td[2].getElementsByTagName("button")[0];
                     }else {
@@ -488,13 +519,30 @@ moduleExporter("ConnTable",
             text = document.getElementById("postsyn-srch").value;
             N =  Number(document.getElementById("postsyn-N").value);
             table = document.getElementById(tableId).children[1];
-            filter = text.toLowerCase();
             tr = table.getElementsByTagName("tr");
+
+            if (text.startsWith('/r')) {
+              try {
+                filter = new RegExp(text.slice(2));
+                use_regex = true;
+              } catch (error) {
+                return;
+              }
+            } else {
+              filter = text.toLowerCase();
+              use_regex = false;
+            }
+
             var rid_list = [];
             for (i = 0; i < tr.length; i++) {
               td = tr[i].getElementsByTagName("td");
               if (td[0]) {
-                if (td[0].innerHTML.toLowerCase().indexOf(filter) > -1 && td[1].innerHTML > N) {
+                if (use_regex) {
+                  test = filter.test(td[0].innerHTML);
+                } else {
+                  test = td[0].innerHTML.toLowerCase().indexOf(filter) > -1
+                }
+                if (test && td[1].innerHTML > N) {
                     if(this.name.includes('neuron')){
                         cc = td[2].getElementsByTagName("button")[0];
                     }else {
@@ -515,13 +563,29 @@ moduleExporter("ConnTable",
             text = document.getElementById("postsyn-srch").value;
             N =  Number(document.getElementById("postsyn-N").value);
             table = document.getElementById(tableId).children[1];
-            filter = text.toLowerCase();
             tr = table.getElementsByTagName("tr");
+            if (text.startsWith('/r')) {
+              try {
+                filter = new RegExp(text.slice(2));
+                use_regex = true;
+              } catch (error) {
+                return;
+              }
+            } else {
+              filter = text.toLowerCase();
+              use_regex = false;
+            }
+
             var rid_list = [];
             for (i = 0; i < tr.length; i++) {
               td = tr[i].getElementsByTagName("td");
               if (td[0]) {
-                if (td[0].innerHTML.toLowerCase().indexOf(filter) > -1 && td[1].innerHTML > N) {
+                if (use_regex) {
+                  test = filter.test(td[0].innerHTML);
+                } else {
+                  test = td[0].innerHTML.toLowerCase().indexOf(filter) > -1
+                }
+                if (test && td[1].innerHTML > N) {
                     if(this.name.includes('neuron')){
                         cc = td[2].getElementsByTagName("button")[0];
                     }else {
@@ -540,7 +604,17 @@ moduleExporter("ConnTable",
           that.parentObj.addByRid(this.rid);
         }else if(this.className.includes('remove')){
           that.parentObj.removeByRid(this.rid);
-      }else{}
+        }else{}
+    })
+    .mouseenter( function() {
+      if (this.className.includes('remove')) {
+        that.parentObj.highlight(this.orid);
+      }
+    })
+    .mouseleave( function() {
+      if (this.className.includes('remove')) {
+        that.parentObj.resume();
+      }
     });
   };
 
