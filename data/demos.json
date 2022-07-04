@@ -1,6 +1,304 @@
 [
 {"branch": "l1em"},
 {
+  "show_1": {
+    "keyword": "Show",
+    "script": [
+      ["notify", {"message": "Hi there!"}],
+      ["notify", {"message": "Let's query for local neurons in the left antennal lobe that express glutamate neurotransmitter!"}],
+      ["search", {"query": "show glutamatergic local neurons in the left antennal lobe"}],
+      ["notify", {"message": "'Show' always clears the visualization panel before visualizing the neurons in the query!"}],
+      ["notify", {"message": "Let's try using 'Show' again."}],
+      ["search", {"query": "Show Mushroom Body Output Neurons in the right MB"}],
+      ["notify", {"message": "Done. Compare this to the 'Add' demo!", "pause": 1000}],
+      ["notify", {"message": "Try it yourself!", "pause": 0}]
+    ],
+    "description": "Clear the work space and visualize neurons according to a specific query.",
+    "category": "Basic English Queries (Supported Verbs)"
+  },
+  "add_1": {
+    "keyword": "Add",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for local neurons in the left antennal lobe that express glutamate neurotransmitter!"}],
+      ["search", {"query": "show glutamatergic local neurons in the left antennal lobe"}],
+      ["notify", {"message": "'Add' visualizes the neurons in the query on top of what's in the visualization panel!"}],
+      ["notify", {"message": "Let's try using adding some neurons."}],
+      ["search", {"query": "Add Mushroom Body Output Neurons in the right MB"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "In addition to what is currently displayed, visualize the neurons according to a specific query",
+    "category": "Basic English Queries (Supported Verbs)"
+  },
+  "undo_1": {
+    "keyword": "Undo",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for dopaminergic neurons in the Mushroom Body!"}],
+      ["search", {"query": "Show dopaminergic neurons in mb"}],
+      ["notify", {"message": "Now let's add Kenyon Cells."}],
+      ["search", {"query": "Add kenyon cells"}],
+      ["notify", {"message": "Now let's undo what we just did."}],
+      ["search", {"query": "Undo"}],
+      ["notify", {"message": "Now let's add Mushroom Body Output Neurons."}],
+      ["search", {"query": "Add MBON"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Go back to a previous step (UNDO).",
+    "category": "Basic English Queries (Supported Verbs)"
+  },
+  "keep_1": {
+    "keyword": "Keep",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for neurons from the Antennal Lobe!"}],
+      ["search", {"query": "Show neurons in AL"}],
+      ["notify", {"message": "Now let's only keep those expressing glutamate that innervate the left AL and remove the rest."}],
+      ["search", {"query": "Keep glutamatergic neurons in left AL"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Filter neurons in the current visualization panel based on a specific query.",
+    "category": "Basic English Queries (Supported Verbs)"
+  },
+  "remove_1": {
+    "keyword": "Remove",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for local neurons from the right antennal lobe!"}],
+      ["search", {"query": "Show LN in right al"}],
+      ["notify", {"message": "Now let's only remove the glutamatergic neurons in the right AL."}],
+      ["search", {"query": "Remove glutamatergic neurons from the right al"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Remove neurons from the current visualization panel based on a specific query.",
+    "category": "Basic English Queries (Supported Verbs)"
+  },
+  "pinunpin_1": {
+    "keyword": "Pin/Unpin",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for neurons innervating the right antennal lobe!"}],
+      ["search", {"query": "Show neurons in right al"}],
+      ["notify", {"message": "Now let's pin the local neurons."}],
+      ["search", {"query": "Pin LNs in the right AL"}],
+      ["notify", {"message": "Now let's unpin glutamatergic neurons."}],
+      ["search", {"query": "Unpin glutamatergic neurons"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Pin (Persistently highlight) or Unpin neurons in the current visualization panel based on a specific query.",
+    "category": "Basic English Queries (Supported Verbs)"
+  },
+  "hide_1": {
+    "keyword": "Hide/unhide",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for dopaminergic  neurons in the right MB."}],
+      ["search", {"query": "Show dopaminergic neurons in the right MB"}],
+      ["notify", {"message": "Let's add Mushroom Body Output Neuron in the left MB."}],
+      ["search", {"query": "add MBON in the left MB"}],
+      ["notify", {"message": "Now let's hide the dopaminergic neurons."}],
+      ["search", {"query": "hide dopaminergic neurons"}],
+      ["notify", {"message": "Now let's reveal all the DANs that is in the visualization panel."}],
+      ["search", {"query": "unhide DAN"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Hide or reveal neurons in the current visualization panel based on a specific query.",
+    "category": "Basic English Queries (Supported Verbs)"
+  },
+  "color_1": {
+    "keyword": "Color",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for local neurons from the right antennal lobe!"}],
+      ["search", {"query": "Show LN in right al"}],
+      ["notify", {"message": "Now let's color them red."}],
+      ["search", {"query": "Color red"}],
+      ["notify", {"message": "If only a color is specified, the last queried neurons will be colored."}],
+      ["notify", {"message": "Neurons to be colored can also be specified. For example, we can color GABAergic neurons blue, using the hex code for blue."}],
+      ["search", {"query": "Color gabaergic neurons 0000FF"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Color neurons in the current visualization panelvisualization panel based on a specific query",
+    "category": "Basic English Queries (Supported Verbs)"
+  },
+  "clear_1": {
+    "keyword": "Clear",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for local neurons from the right antennal lobe!"}],
+      ["search", {"query": "Show local neurons in right al"}],
+      ["notify", {"message": "Now we clear the visualization panel."}],
+      ["search", {"query": "Clear"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Clear out the visualization panel.",
+    "category": "Basic English Queries (Supported Verbs)"
+  },
+  "neuropil_menu": {
+    "script": [
+      ["notify", {"message": "The Neuropil menu accessible from the Header Bar lists all neuropils."}],
+      ["notify", {"message": "This menu can be used to control the neuropils displayed in the visualization panel."}],
+      ["notify", {"message": "First we hide all neuropils"}],
+      ["click", {"menu": {"type": "lpuHideAll"}}],
+      ["notify", {"message": "Next we toggle a few neuropils"}],
+      ["click", {"menu": {"type": "lpuToggle", "label": "AL"}}],
+      ["click", {"menu": {"type": "lpuToggle", "label": "MB"}}],
+      ["notify", {"message": "Finally we show all neuropils"}],
+      ["click", {"menu": {"type": "lpuShowAll"}}],
+      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
+    ],
+    "keyword": "Neuropil Menu",
+    "description": "Access the list of neuropils.",
+    "category": "GUI Usage"
+  },
+  "neuron_menu": {
+    "script": [
+      ["notify", {"message": "The Neurons/Synapses menu accessible from the Header Bar lists all neurons and synapses visualized in the visualization panel."}],
+      ["notify", {"message": "It is useful to highlight, hide, pin neurons of interest when the view in the visualization panel becomes cluttered."}],
+      ["notify", {"message": "First we visualize some neurons."}],
+      ["search", {"query": "show PN in right antennal lobe"}],
+      ["notify", {"message": "Now we open the Neurons/Synapses Menu and click on one of the neurons"}],
+      ["click", {"menu": {"type": "neuClick", "label": "PN-24a_8245869"}}],
+      ["notify", {"message": "This has the same effect of clicking on the neuron in the 3D visualization."}],
+      ["notify", {"message": "and brings up the info panel for this neuron."}],
+      ["notify", {"message": "We can hide the neuron"}],
+      ["click", {"menu": {"type": "visToggle", "label": "PN-24a_8245869"}}],
+      ["notify", {"message": "reveal the neuron"}],
+      ["click", {"menu": {"type": "visToggle", "label": "PN-24a_8245869"}}],
+      ["notify", {"message": "pin the neuron"}],
+      ["click", {"menu": {"type": "pinToggle", "label": "PN-24a_8245869"}}],
+      ["notify", {"message": "unpin the neuron"}],
+      ["click", {"menu": {"type": "pinToggle", "label": "PN-24a_8245869"}}],
+      ["notify", {"message": "and delete the neuron"}],
+      ["click", {"menu": {"type": "remove", "label": "PN-24a_8245869"}}],
+      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
+    ],
+    "keyword": "Neurons/Synapses Menu",
+    "description": "Access the list of neurons and synapses in the visualization panel to highlight, retrieve info of, pin, hide and delete individual neurons.",
+    "category": "GUI Usage"
+  },
+  "pin_select_highlight": {
+    "script": [
+      ["notify", {"message": "You can use your mouse to navigate through neurons in the visualization panel."}],
+      ["notify", {"message": "Let's first bring up neurons in the MB!"}],
+      ["search", {"query": "Show neurons in the right MB"}],
+      ["notify", {"message": "To highlight a neuron, move mouse cursor onto the displayed neuron."}],
+      ["highlight", {"label": "DAN-j1_4414184"}],
+      ["notify", {"message": "Let's try another neuron."}],
+      ["highlight", {"label": "MBIN-e1_4235139"}],
+      ["notify", {"message": "To obtain the detailed info about this neuron, single click on the neuron."}],
+      ["click", {"label": "DAN-j1_4414184"}],
+      ["notify", {"message": "Info Panel on the left will display basic info of the neuron, and the synaptic partners of the neuron. Check out the 'Info Panel' demo for more information on how to use the Info Panel", "pause": 10000}],
+      ["notify", {"message": "Double-clicking a neuron pins the neuron."}],
+      ["pin", {"label": "DAN-j1_4414184"}],
+      ["highlight", {"label": "MBIN-e1_4235139"}],
+      ["notify", {"message": "Double-clicking it again to unpin."}],
+      ["pin", {"label": "DAN-j1_4414184"}],
+      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
+    ],
+    "keyword": "Pin/Select/Highlight",
+    "description": "Mouse operations in the visualization panel to highlight, retrieve info of, pin and delete individual neurons.",
+    "category": "GUI Usage"
+  },
+  "gui_buttons": {
+    "script": [
+      ["notify", {"message": "Here we show the function of the buttons on the top right."}],
+      ["notify", {"message": "Clicking on the <i class=\"fa fa-info-circle\"><\/i> button, the GUI Usage Info will pop out."}],
+      ["click", {"uiBtn": {"type": "showInfo"}}],
+      ["notify", {"message": "Now let's make a simple query"}],
+      ["search", {"query": "show olfactory sensory neurons in right al"}],
+      ["search", {"query": "add LNs in the right al"}],
+      ["notify", {"message": "We can use the <i class=\"fa fa-align-justify\"><\/i> button zoom into the neurons visualized."}],
+      ["click", {"uiBtn": {"type": "resetVisibleView"}}],
+      ["notify", {"message": "Let's take a screenshot of the visualization using the <i class=\"fa fa-camera\"><\/i> button ."}],
+      ["click", {"uiBtn": {"type": "takeScreenshot"}}],
+      ["notify", {"message": "We can reset the view to the original by clicking on <i class=\"fa fa-refresh\"><\/i> button."}],
+      ["click", {"uiBtn": {"type": "resetView"}}],
+      ["notify", {"message": "Now we will pin some of the neurons"}],
+      ["search", {"query": "pin LN in right AL"}],
+      ["notify", {"message": "We can hide everything but the pinned neurons using the <i class=\"fa fa-eye-slash\"><\/i> button"}],
+      ["click", {"uiBtn": {"type": "hideAll"}}],
+      ["notify", {"message": "and reveal everything in the visualization panel using the <i class=\"fa fa-eye\"><\/i> button"}],
+      ["click", {"uiBtn": {"type": "showAll"}}],
+      ["notify", {"message": "We can remove all neurons except the pinned neurons by the <i class=\"fa fa-trash\"><\/i> button"}],
+      ["click", {"uiBtn": {"type": "removeUnpin"}}],
+      ["notify", {"message": "To remove pinned neurons but keep unpinned neurons, you will need to use the Neurons/Synapses Menu."}],
+      ["click", {"menu": {"type": "pinRemove"}}],
+      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
+    ],
+    "keyword": "Visualization Panel Buttons",
+    "description": "Function of the GUI button <i class=\"fa fa-trash\"><\/i> <i class=\"fa fa-eye-slash\"><\/i> <i class=\"fa fa-eye\"><\/i> <i class=\"fa fa-align-justify\"><\/i> <i class=\"fa fa-refresh\"><\/i> <i class=\"fa fa-info-circle\"><\/i> <i class=\"fa fa-camera\"><\/i> on the top right.",
+    "category": "GUI Usage"
+  },
+  "connectivity_1": {
+    "script": [
+      ["notify", {"message": "Let's explore some connectivity in the antennal lobe", "pause": 1000}],
+      ["notify", {"message": "Let's add some Olfactory Sensory Neurons to the scene", "pause": 2000}],
+      ["search", {"query": "show OSN in the right AL"}],
+      ["search", {"query": "color red"}],
+      ["notify", {"message": "We then add some uniglomerular projection neurons", "pause": 2000}],
+      ["search", {"query": "add uPN in the right AL"}],
+      ["search", {"query": "color blue"}],
+      ["search", {"query": "add picky LN in right AL"}],
+      ["search", {"query": "color lime"}],
+      ["search", {"query": "add broad LN in right AL"}],
+      ["search", {"query": "color yellow"}],
+      ["notify", {"message": "Now let's open Graph View to see the neuronal graph with the <i class=\"fa fa-bar-chart\"><\/i> button.", "pause": 6000}],
+      ["click", {"uiBtn": {"type": "showGraph"}}],
+      ["notify", {"message": "Now let's download the connectivity between these neurons by using the <i class='fa fa-download'></i> button", "pause": 1000}],
+      ["click", {"uiBtn": {"type": "downData"}, "waitForUI": true}],
+      ["notify", {"message": "Done! Try it yourself!", "pause": 5000}]
+    ],
+    "keyword": "Graph View / Connectivity Buttons",
+    "description": "Explore the connectivity of visualized neurons with <i class=\"fa fa-cubes\"><\/i> <i class=\"fa fa-bar-chart\"><\/i> <i class=\"fa fa-download\"><\/i> buttons",
+    "category": "GUI Usage"
+  },
+  "visualization_settings": {
+    "script": [
+      ["notify", {"message": "The settings menu can be accessed by clicking on <i class='fa fa-cog'></i> icon on the top right"}],
+      ["click", {"uiBtn": {"type": "showSettings"}}],
+      ["notify", {"message": "Browse through the setting to see what settings can be customized."}],
+      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
+    ],
+    "keyword": "Visualization Settings",
+    "description": "Open Visualization Settings <i class=\"fa fa-cog\"><\/i> to change background color, neuropil color, how neurons are rendered, etc.",
+    "category": "GUI Usage"
+  },
+  "query_reference": {
+    "script": [
+      ["notify", {"message": "A reference of supported English queries can be found by clicking on the <i class=\"glyphicon glyphicon-info-sign\"><\/i> button left to the search bar."}],
+      ["click", {"selector": "#info_btn"}],
+      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
+    ],
+    "keyword": "Query Reference",
+    "description": "Open query reference <i class=\"glyphicon glyphicon-info-sign\"><\/i>.",
+    "category": "GUI Usage"
+  },
+  "infopanel": {
+    "script": [
+      ["notify", {"message": "Info Panel provides all information available of a neuron."}],
+      ["search", {"query": "show LN in AL"}],
+      ["notify", {"message": "Simply click on the neuron in the visualization panel or from the Neurons/Synapses menu to bring up its information."}],
+      ["click", {"label": "picky-3_11051276"}],
+      ["notify", {"message": "You can bring up one of pre- and post-synaptic partner by clicking on the + button in the list of partners."}],
+      ["click", {"selector": "#btn-pre-add-OSN-1a_2582391"}],
+      ["notify", {"message": "You can bring up all of its pre- and post-synaptic partner according to the filtered value."}],
+      ["click", {"selector": "#presyn-N"}],
+      ["click", {"selector": "#btn-pre-add-all-neuron"}],
+      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
+    ],
+    "keyword": "Info Panel",
+    "description": "Bring up Info Panel for the neuron to access detail information about neurons and their synaptic partners.",
+    "category": "GUI Usage"
+  },
   "basic_query1": {
     "keyword": "Name-based Queries",
     "script": [
@@ -68,7 +366,7 @@
     "script": [
       ["notify", {"message": "Hi there!"}],
       ["notify", {"message": "Let's query for antennal lobe uniglomerular projection neurons!"}],
-      ["search", {"query": "show uPN"}],
+      ["search", {"query": "show uniglomerular projection neurons"}],
       ["notify", {"message": "Try it yourself!", "pause": 0}]
     ],
     "description": "Show antennal lobe projection neurons.",
@@ -101,7 +399,7 @@
     "script": [
       ["notify", {"message": "Hi there!"}],
       ["notify", {"message": "Let's query for Visual Projection Neurons!"}],
-      ["search", {"query": "add VPNs"}],
+      ["search", {"query": "Show Visual Projection Neurons in Larval Optic Neuropil "}],
       ["notify", {"message": "Try it yourself!", "pause": 0}]
     ],
     "description": "Show Visual Projection Neurons in Larval Optic Neuropil (LON).",

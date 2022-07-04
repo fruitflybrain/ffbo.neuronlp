@@ -38,7 +38,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.plugins.dragNodes.min.js" integrity="sha512-w9i2zoWU7Te0i+TJoKMyBjHYAptYykPieNa0iT6/ofVbUHvqIhh6f4YVkXV84kAuGbIS+CqvSV/6AHTVt8bUrA==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.plugins.filter.min.js" integrity="sha512-mu+dW4fJz+3b5WxfWUdwgHOvmDp5v7+8wa6zMGeQ40kVQt45l5NYRVuFIgdPtlS6IBThjKyCcEWz1TXMtUcnuQ==" crossorigin="anonymous"></script>
 
-    <script data-main="js/NeuroNLP" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+    <script data-main="js/NeuroNLP" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/mkturkcan/neuronlp.graphutils@1186d9766c01678e7e6877d4f79c60046e43959f/js/graphvis.js"></script>
     <link rel="stylesheet" type="text/css" href="./lib/css/ffbo.theme_settings.css">
     <link rel="stylesheet" id="current_theme" type="text/css" href="./lib/css/ffbo.default_theme.css">
@@ -124,7 +124,7 @@
                     <span>Pinned Neurons/Synapses <i class="icon-arrow-right"></i></span>
                     <ul id="single-pin">
                       <li><a id="btn-pin-keep" role="button" class='' style="width:100%" onclick="NeuroNLPUI.onRemoveUnpinned()">Delete unpinned neurons/synapses</a></li>
-                      <li><a id="btn-pin-keep" role="button" class='' style="width:100%" onclick="NeuroNLPUI.onRemovePinned()">Delete pinned neurons/synapses</a></li>
+                      <li><a id="btn-pin-remove" role="button" class='' style="width:100%" onclick="NeuroNLPUI.onRemovePinned()">Delete pinned neurons/synapses</a></li>
                       <li><a id="btn-pin-unpinall" role="button" class='' style="width:100%" onclick="NeuroNLPUI.onUnpinAll()">Unpin All</a></li>
                     </ul>
                   </li>
@@ -173,12 +173,6 @@
                   <li>
                     <h4> Neuron Rendering </h4>
                   </li>
-                  <!-- <li class="vis-settings-sub">
-                    <a href="#">
-                      <div class="wrap">3D Neuron Rendering *</div>
-                      <input id="vis-3d-rendering" type="checkbox" class="Toggle" />
-                    </a>
-                  </li> -->
                   <li id="vis-3d-mode-option" class="vis-settings-sub">
                     <a>
                       <div>Rendering Mode *</div>
@@ -512,32 +506,18 @@
             </ul>
           </div>
           <div>
-            <!-- <div id="info-reset" class="ffbo-intro" style="display: none">
-                 <h4>
-                   Click on a neuron to display its detailed information in this
-                   panel.
-            </div> -->
             <div id="info-intro" class="ffbo-intro">
-              <h4>What is NeuroNLP?</h4>
-              <p>
-                NeuroNLP provides a modern web-based portal for navigating fruit fly
-                brain circuit data. It enables in-depth exploration and investigation
-                of brain structure, using intuitive plain English queries, such as
-                <a onclick="window.NLPsearch('show glutamatergic local neurons in the left antennal lobe')"><br><br><u style="font-style:italic">"show glutamatergic local neurons in the left antennal lobe".</u></br></br></a>
-                NeuroNLP can be accessed from any browser supporting WebGL. Remember
-                to check it out on your smartphone!
-              </p>
               <h4>Overview</h4>
-              <p>
-                Check out the Overview for a brief description of the layout and menus.
+              <p>NeuroNLP is a query interface for navigating fruit fly brain datasets.
+                It enables in-depth explorations and investigations of the connectomic/synaptomic structure of the brain, using intuitive rule-based English queries, such as
+                <a onclick="window.NLPsearch('show glutamatergic local neurons in the left antennal lobe')"><br><u style="font-style:italic">"show glutamatergic local neurons in the left antennal lobe".</u></br></a>
               </p>
-              <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-getting-started')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-getting-started')" onclick="NeuroNLPUI.onShowOverview()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Open Overview!</a>
-              <br><br>
-              <h4>Quick Query Reference</h4>
               <p>
-                  Check out the Quick Query Reference to be able to query data easily!
+                For more information about the NeuroNLP user interface
               </p>
-              <a onmouseover="NeuroNLPUI.mimicMouseOver('#info_btn')" onmouseout="NeuroNLPUI.mimicMouseOut('#info_btn')" onclick="NeuroNLPUI.onShowReference()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Open Query Reference!</a>
+              <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-getting-started')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-getting-started')"
+                onclick="NeuroNLPUI.onShowOverview()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right"
+                  aria-hidden="true"></i> Open Overview!</a>
               <br><br>
               <h4>News</h4>
               <p>
@@ -561,7 +541,7 @@
               <h4>Sharing Query Results</h4>
               <p>
                 Sharing query results is easy with the "Tags" feature. 
-                Create your own tags!
+                Here is a curated list of available tags.
               </p>
               <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-tags')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-tags')"  onclick="NeuroNLPUI.onToggleTag()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Try Tags!</a>
             </div>
@@ -603,106 +583,118 @@
           <div class="overview-content-wrapper">
             <div class="overview-text">
               <h4>What is NeuroNLP</h4>
-              <band>
-                <article>
-                  <p>
-                    NeuroNLP is a modern web-based portal for navigating fruit fly brain data.
-                    NLP stands for Natural Language Processing, which means the website allows user to use intuitive plain English queries for
-                    in-depth exploration and investigation of brain structure.
-                  </p>
-                  <ul>The data currently provided are of the following kinds:
-                    <li><strong>Neurons</strong>: 3D skeleton, neuron name, type, data source, neurotransmitter, transgenic lines, etc.</li>
-                    <li><strong>Synapses</strong>:presynaptic and postsynaptic neurons, number of synapses.</li>
-                  </ul>
-                  <p>
-                    The NLP module allows for querying neurons and synaptic partners by a variety of
-                    attributes of the query targets (refer to <i>Search Bar</i> section below for examples).
-                  </p>
-                  <blockquote><p> NeuroNLP can be accessed from any browser supporting WebGL. Try it on your smartphone!</p></blockquote>
-                </article>
-                <images></images>
-              </band>
-            </div>
+            <band>
+              <article>
+                <p>
+                  NeuroNLP is a query interface for fruit fly brain datasets.
+                  It enables in-depth explorations and investigations of the connectomic/synaptomic structure
+                  of fruit fly brain, using intuitive rule-based English queries.
+                </p>
+                <p>
+                  The NLP query interface enables searching and locating neurons and synaptic partners with a variety of attributes of query targets (refer to <i>Search Bar</i> section below).
+                </p>
+                <blockquote>
+                  <p> NeuroNLP can be accessed from any browser supporting WebGL. Try it on your smartphone/tablet!</p>
+                </blockquote>
+              </article>
+              <images></images>
+            </band>
+            <h4>What Data is Accessible in NeuroNLP.FlyCircuit</h4>
+            <band>
+              <article>
+                <ul>The L1EM dataset is currently available.
+                  For more information, see <a target="_blank" href="https://doi.org/10.1016/j.cub.2010.11.056">Tomoko Ohyama et al., TA multilevel multimodal circuit enhances action selection in <i>Drosophila</i>, Nature 520, 633-639 (2015)</a>.
+                  The dataset contains:
+                  <li><strong>Neurons</strong>: 3D morphology, neuron name, type, data source, etc.</li>
+                  <li><strong>Synapses</strong>:  presynaptic and postsynaptic partners of a neuron, number of synapses and locations of synapses.</li>
+                </ul>
+                
+              </article>
+              <images></images>
+            </band>
+          </div>
 
-            <div class="overview-text">
-              <h4>Layout Overview</h4>
-              <band>
-                <article>
-                  <ul>NeuroNLP site consists of mainly 4 sections
-                    <li><strong>Header bar</strong>: provides operations such as hide neurons, create tags,etc. </li>
-                    <li><strong>3D visualizer</strong>: 3D skeleton visualization of queried neurons and the underlying neuropils.</li>
-                    <li><strong>Information Panel</strong>: detailed information including synaptic partners of neuron pinned in the visualizer.</li>
-                    <li><strong>Search bar</strong>: natural language interface for query neurons.</li>
-                  </ul>
-                </article>
-                <images>
-                  <img src="/img/overview-panel/layout_release_overview.png"> </img>
-                </images>
-              </band>
-
-            </div>
-
-            <div class="overview-text">
-              <h4>Search Bar</h4>
-              <band>
-                <article>
-                  <p>
-                    The Search Bar is the central querying interface. It supports natural language queries of neurons, synaptic partners, etc.
-                    By combining various attributes of query targets, you can create some very powerful queries. Click on the info button to the left of the search bar.
-                  </p>
-                </article>
-                <images></images>
-              </band>
-            </div>
-
-            <div id="overview-info-wrapper" class="overview-text">
-              <h4>Information Panel</h4>
-              <band>
-                <article>
-                  <p>
-                    Information panel is your major source of information regarding the individual neurons.
-                  </p>
-
-                </article>
-              </band>
-            </div>
-
-
-            <div class="overview-text">
-              <h4>Visualization Panel</h4>
-              <band>
-                <article>
-                  <p>
-                    The visualization panel provides a interactive workspace of neuron skeletons in the context of relevant neuropils.
-                    It allows you to change view, select neurons, pin neurons, etc.
-                    <br>
-                    In addition the the neuron and neuropil mesh files, the visualization panel provides a list of useful buttons for
-                    ease of interaction. For more details regarding the visualization panel, click on the &nbsp;<i class='fa fa-info-circle' aria-hidden='true'></i>&nbsp; button on the top right corner of the panel.
-                  </p>
-
-                  <blockquote><p> Pinning neuron of interest and removing all unpinned neuron by clicking the &nbsp;<i class='fa fa-trash' aria-hidden='true'></i>&nbsp; button is a good way to clean up the workspace and keep only the neurons of your interest. </p></blockquote>
-
-                </article>
-              </band>
-            </div>
-
-            <div class="overview-text">
-              <h4>Graph View</h4>
-              <band>
-                <article>
-                  <ul>The graph view panel can be generated by clicking one of the graph view generation buttons in the visualization panel.
-                    <li><strong>Graph View Generation Buttons</strong>: The buttons provide the capability to generate graphs from the currently queried data. These neurons can be at single-cell scale, or cell-type scale if supported by the dataset. </li>
-                    <li><strong>Graph View</strong>: The graph view provides a 2D graph visualizing all neurons and their connections in the current workspace. Nodes can be reordered by dragging them and hovering over nodes will highlight the corresponding neurons.</li>
-                  </ul>
-                </article>
-                <images>
-                  <img src="/img/overview-panel/graphviewpanel.png"> </img>
-                </images>
-              </band>
-            </div>
+          <div class="overview-text">
+            <h4>Layout Overview</h4>
+            <band>
+              <article>
+                <ul>NeuroNLP user interface (UI) consists of mainly 4 sections
+                  <li><strong>Header Bar</strong>: main menu including the Get Started guide, Create/Load Tags, access to the list of visualized neurons/synapses and a list neuropils.</li>
+                  <li><strong>Visualization Panel</strong>: 3D visualization of queried neurons/synapses and the underlying neuropils.</li>
+                  <li><strong>Information Panel</strong>: detailed information including synaptic partners of neuron displayed
+                    in the visualizer.</li>
+                  <li><strong>Search bar</strong>: command line for natural language queries.</li>
+                </ul>
+              </article>
+              <images>
+                <img src="./img/overview-panel/layout_release_overview.png"> </img>
+              </images>
+            </band>
 
           </div>
+
+          <div class="overview-text">
+            <h4>Search Bar</h4>
+            <band>
+              <article>
+                <p>
+                  The Search Bar is the central querying interface. It supports natural language queries of neurons, synaptic partners, etc.
+                  By combining various attributes of query targets, you can create some very powerful queries. Click on the
+                  info button <a onclick="NeuroNLPUI.onShowReference()"><i class="glyphicon glyphicon-info-sign"></i></a> to the left of the search bar for more information. Also checkout the <a onclick="NeuroNLPUI.onShowDemo()">Demos</a>!
+                </p>
+              </article>
+              <images></images>
+            </band>
+          </div>
+
+          <div class="overview-text">
+            <h4>Header Bar</h4>
+            <band>
+              <article>
+                <p>
+                  The Header Bar provides access to the main menu that includes:
+                  <ul>
+                    <li>Get Started: a menu for helping users get started with NeuroNLP.</li>
+                    <li>Tags: a menu for creating and loading tags. Tags are 3d snapshots of stored visualization panels.</li>
+                    <li>Neurons/Synapses: a menu displaying the visualized neurons and synapses, as well as a list of pinned neurons/synapses. Checkout the <a onclick="window.FFBODemoPlayer.startDemo('neuron_menu')">"Neurons/Synapses Menu" Demo</a> (GUI Usage #2 in the <a onclick="NeuroNLPUI.onShowDemo()">Demos</a>)</li>
+                    <li>Neuropils: a menu of neuropils. Checkout the <a onclick="window.FFBODemoPlayer.startDemo('neuropil_menu')">"Neuropil Menu" Demo</a> (GUI Usage #1 in the <a onclick="NeuroNLPUI.onShowDemo()">Demos</a>)</li>
+                  </ul>
+                </p>
+              </article>
+              <images></images>
+            </band>
+          </div>
+
+          <div class="overview-text">
+            <h4>Visualization Panel</h4>
+            <band>
+              <article>
+                <p>
+                  The visualization panel provides a interactive workspace of neuron skeletons in the context of relevant neuropils. It allows
+                  you to change view, select neurons, pin neurons, etc.
+                  <br> To help navigating the visualized neuropils, neurons and synapses, the visualization panel provides a list of useful
+                  buttons for ease of interaction. For more details regarding the visualization panel, click on the
+                  <a onclick="NeuroNLPUI.onShowGUIinfo()">&nbsp;<i
+                    class='fa fa-info-circle' aria-hidden='true'></i>&nbsp;</a> button on the top right corner of the panel. Also checkout the GUI Usage section of the <a onclick="NeuroNLPUI.onShowDemo()">Demos</a>. 
+                </p>
+              </article>
+            </band>
+          </div>
+          
+          <div id="overview-info-wrapper" class="overview-text">
+            <h4>Information Panel</h4>
+            <band>
+              <article>
+                <p>
+                  Information panel is your major source of information regarding the individual neurons. You can view/add the pre- and post-synaptic partners of selected neuron. Check out the <a onclick="window.FFBODemoPlayer.startDemo('infopanel')">"Info Panel" Demo</a> (GUI Usage #8 in the <a onclick="NeuroNLPUI.onShowDemo()">Demos</a>).
+                </p>
+
+              </article>
+            </band>
+          </div>
+          
         </div>
+      </div>
 
 
         <div id="quick-reference-panel" class="overlay">
@@ -718,15 +710,26 @@
                       By combining various attributes of query targets, you can create some very powerful queries.
                     </p>
                     <ul>Your queries should start with a verb; the verbs supported right now are:
-                        <li><span style="color: #88CDF5">show</span>: clear workspace and then show the queried neurons,
-                        <li><span style="color: #88CDF5">add</span>: add to the workspace the neurons queried,
-                        <li><span style="color: #88CDF5">remove</span>/span>: remove from the workspace the queried neuron,
-                        <li><span style="color: #88CDF5">keep</span>: keep in the workspace only the neurons that meet the criterion of the query,
-                        <li><span style="color: #88CDF5">hide</span>: hide the neurons that meet the criterion of the query (this does not remove them from workspace, but reduce their visibility),
-                        <li><span style="color: #88CDF5">pin</span>: pin the neurons that meet the criterion of the query. Pinned neurons are automatically highlighted, and cannot be removed by the "trash can" button on top of the NeuroNLP window.
-                        <li><span style="color: #88CDF5">unpin</span>: unpin the neurons that meet the criterion of the query,
-                        <li><span style="color: #88CDF5">color</span>: color the neurons that meet the criterion of the query with a user defined color (can be hex color code, e.g., FF0000 for red), or these predefined colors.
-                        <li><span style="color: #88CDF5">clear</span>: clear up the workspace, removing all neurons and synapses.
+                      <li><span style="color: #88CDF5">show</span>: clear workspace and then show the queried neurons,</li>
+                      <li><span style="color: #88CDF5">add</span>: add to the workspace the neurons queried,</li>
+                      <li><span style="color: #88CDF5">remove</span>: remove from the workspace the queried neuron,</li>
+                      <li><span style="color: #88CDF5">keep</span>: keep in the workspace only the neurons that meet the
+                              criterion of the query,</li>
+                      <li><span style="color: #88CDF5">hide</span>: hide the neurons that meet the criterion of the query
+                              (this does not remove them from workspace, but reduce their visibility),</li>
+                      <li><span style="color: #88CDF5">pin</span>: pin the neurons that meet the criterion of the query.
+                              Pinned neurons are automatically highlighted, and cannot be removed by the "trash can" button
+                              on top of the NeuroNLP window.</li>
+                      <li><span style="color: #88CDF5">unpin</span>: unpin the neurons that meet the criterion of the
+                              query,</li>
+                      <li><span style="color: #88CDF5">color</span>: color the neurons that meet the criterion of
+                              the query with a user defined color (can be hex color code, e.g., FF0000 for red), or these
+                              predefined colors.</li>
+                    </ul>
+                    <ul>Additionally, the following single word commands are supported:
+                      <li><span style="color: #88CDF5">clear</span>: clear up the workspace, removing all neurons
+                              and synapses,</li>
+                      <li><span style="color: #88CDF5">undo</span>: undo your last query.</li>
                     </ul>
                     <ul>Next, we explain the rules for defining the criterion of the query, using the verb show as an example.
                         <li><span style="color: #88CDF5">show cell-type neurons</span>: Shows the neurons of the cell type. Example:
@@ -873,50 +876,164 @@
 
                     <p><span style="color: #88CDF5">Coloring</span>: if no criteria are specified, the color will be applied to the neurons added in the most recent query. For example, if you query: <span style="color: #97ba67">show A neurons</span>, then <span style="color: #97ba67">add B neurons</span>, <span style="color: #97ba67">color red</span> will color B neurons red. <span style="color: #97ba67">color A neurons 0000FF</span> will then <span style="color: #97ba67">color A neurons blue</span>.</p>
 
-g-diagram"></p></div>
-        <div id="notifications"></div>
-        <div id="gui-3d" class='overlay'>
-          <ul class="list-inline">
-            <li><h2>3D GUI</h2></li>
-          </ul>
-          <div class="demo-table-wrapper">
-            <h4>Translation</h4>
-            <p>Right-click and then drag the cursor to translate the entire 3D scene. On mobile and tablets, the scene can be translated by dragging with three fingers.</p>
-            <h4>Rotation</h4>
-            <p>Left-click and then drag the cursor  to rotate the entire 3D scene. On mobile and tablets, touch and drag with one finger to rotate the scene.</p>
-            <h4>Zoom</h4>
-            <p>Scroll up or down to zoom in or out the entire 3D scene. On mobile and tablets, pinch out or in to zoom out or in respectively.</p>
-            <h4>Select</h4>
-            <p>Hover over a neuron and Left-Click to retrieve the detail information. On mobile and tablets, touch on the neuron with a single finger to select it.</p>
-            <h4>Pin</h4>
-            <p>Hover over a neuron and Double-Click to pin it in the scene. Pinned neurons will always be highlighted. After pinning neurons of interest, you can use the remove unpinned neurons icon (&nbsp;<i class="fa fa-trash" aria-hidden="true"></i>&nbsp;) to restrict the workspace to neurons you are interested in.</p>
-            <p> On mobile and tablets, select a neuron and then touch and hold on it for atleast 750ms to pin it.</p>
-          </div>
-          <div id="desktop-gui" class="demo-table-wrapper" style="display: none">
-            <h4>Translation</h4>
-            <p>Right-click and then drag the cursor to translate the entire 3D scene.</p>
-            <h4>Rotation</h4>
-            <p>Left-click and then drag the cursor  to rotate the entire 3D scene.</p>
-            <h4>Zoom</h4>
-            <p>Scroll up or down to zoom in or out the entire 3D scene.</p>
-            <h4>Select</h4>
-            <p>Hover over a neuron and Left-Click to retrieve its detailed information in the Info Panel.</p>
-            <h4>Pin</h4>
-            <p>Hover over a neuron and Double-Click to pin it in the scene. Pinned neurons will always be highlighted. After pinning neurons of interest, you can use the remove unpinned neurons icon (&nbsp;<i class="fa fa-trash" aria-hidden="true"></i>&nbsp;) to restrict the workspace to neurons you are interested in.</p>
-          </div>
-          <div id="mobile-gui" class="demo-table-wrapper" style="display: none">
-            <h4>Translation</h4>
-            <p>Touch anywhere on the scene with three fingers and then drag to translate the entire 3D scene.</p>
-            <h4>Rotation</h4>
-            <p>Touch anywhere on the scene with one finger and then drag to rotate the entire 3D scene.</p>
-            <h4>Zoom</h4>
-            <p>Pinch out or in to zoom in or out the entire 3D scene repectively.</p>
-            <h4>Select</h4>
-            <p>Touch on a neuron with a single finger to select it and retrieve its detailed information in the Info Panel.</p>
-            <h4>Pin</h4>
-            <p>Select a neuron and then touch and hold on it with a single finger for atleast 750ms to pin it.Pinned neurons will always be highlighted. After pinning neurons of interest, you can use the remove unpinned neurons icon (&nbsp;<i class="fa fa-trash" aria-hidden="true"></i>&nbsp;) to restrict the workspace to neurons you are interested in.</p>
-          </div>
-        </div>
+                  </article>
+                  <images></images>
+                </band>
+              </div>
+            </div>
+      
+            <div id="arch-wrapper"></div>
+            <div id="msg-wrapper">
+              <p id="msg-diagram"></p>
+            </div>
+            <div id="notifications"></div>
+      
+            <div id="gui-3d" class='overlay'>
+              <ul id="overview-header" class="overview-header list-inline">
+                <li>
+                  <h2>Visualization Panel Guide</h2>
+                </li>
+              </ul>
+              <div class="overview-text">
+                <band>
+                  <article>
+                    <h4>To use your mouse to navigate in the 3D visualization:</h4>
+                    <p>Try out the <a onclick="window.FFBODemoPlayer.startDemo('pin_select_highlight')">"Pin/Select/Highlight" Demo</a> (GUI Usage #3 in the <a onclick="NeuroNLPUI.onShowDemo()">Demos</a>).</p>
+                    <h5>Translation</h5>
+                    <p>Right-click and then drag the cursor to translate the entire 3D scene.</p>
+                    <p>On mobile and tablets, the scene can
+                    be translated by dragging with three fingers.</p>
+                    <h5>Rotation</h5>
+                    <p>Left-click and then drag the cursor to rotate the entire 3D scene.</p>
+                    <p>On mobile and tablets, touch and drag with
+                      one finger to rotate the scene.</p>
+                    <h5>Zoom</h5>
+                    <p>Scroll up or down to zoom in or out the entire 3D scene.</p>
+                    <p>On mobile and tablets, pinch out or in to zoom out
+                      or in respectively.</p>
+                    <h5>Highlight a Neuron/Synapse</h5>
+                    <p>Hover over a neuron/synapse will highlight that neuron, with all other objects dimmed (except for those pinned). 
+                      Brightness of highlighted objects and dimmed objects can be respectively adjusted in the 
+                      <a onclick="NeuroNLPUI.onClickVisualizationSettings()">Visualization Settings</a> 
+                      (see also Visualization Settings below).</p>
+                    <h5>Select a Neuron/Synapse</h5>
+                    <p>Hover over a neuron/synapse and Left-Click to retrieve the detail information in the Info Panel.</p>
+                    <p>On mobile and tablets, touch on the neuron
+                      with a single finger to select it.</p>
+                    <h5>Pin a Neuron/Synapse</h5>
+                    <p>Hover over a neuron/synapse and Double-Click to pin it in the scene. Pinned neurons will always be highlighted. Brightness of pinned objects and 
+                      unpinned objects can be respectively adjusted in the <a onclick="NeuroNLPUI.onClickVisualizationSettings()">Visualization Settings</a>
+                      (see also Visualization Settings below).</p>
+                    <p>After pinning neurons of interest, you can use the remove unpinned neurons icon (&nbsp;<i class="fa fa-trash" aria-hidden="true"></i>&nbsp;)
+                      to restrict the workspace to neurons you are interested in.</p>
+                    <p> On mobile and tablets, select a neuron and then touch and hold on it for at least 750ms to pin it.</p>
+                  </article>
+                </band>
+              </div>
+              <div class="overview-text">
+                <h4>Visualization Panel Buttons</h4>
+                <band>
+                  <article>
+                    <p>Try out the <a onclick="window.FFBODemoPlayer.startDemo('gui_buttons')">"Visualization Panel Buttons" Demo</a> (GUI Usage #4 in the <a onclick="NeuroNLPUI.onShowDemo()">Demos</a>).</p>
+                    <p>Here we list the function of each button:</p>
+                    <ul>
+                      <li>
+                        <strong><i class="fa fa-trash"></i></strong>: Remove all unpinned neurons/synapses.
+                      </li>
+                      <li>
+                        <i class="fa fa-eye-slash"></i>: Hide all unpinned neurons/synapses.
+                      </li>
+                      <li>
+                        <i class="fa fa-eye"></i>: Show all neurons, synapses and neuropils.
+                      </li>
+                      <li>
+                        <i class="fa fa-align-justify"></i>: Zoom in onto the visualized (not hidden) neurons.
+                      </li>
+                      <li>
+                        <i class="fa fa-refresh"></i>: Reset view to original setting.
+                      </li>
+                      <li>
+                        <i class="fa fa-info-circle"></i>: Open this menu.
+                      </li>
+                      <li>
+                        <i class="fa fa-camera"></i>: Take a screenshot of the current 3D visualization. The quality of the screenshot depends on the resolution of the display and the browser window size.
+                      </li>
+                    </ul>
+                  </article>
+                </band>
+              </div>
+      
+              <div class="overview-text">
+                <h4>Graph View and Connectivity Buttons</h4>
+                <band>
+                  <article>
+                    <p>Try out the <a onclick="window.FFBODemoPlayer.startDemo('connectivity_1')">"Graph View / Connectivity Buttons" Demo</a> (GUI Usage #5 in the <a onclick="NeuroNLPUI.onShowDemo()">Demos</a>).</p>
+                    <p>Three additional buttons in the Visualization Panel provide information about the graph of the visualized neural circuit:</p>
+                    <ul>
+                      <li>
+                        <i class="fa fa-bar-chart"></i>: Open the Graph View to generate a neuronal level graph of the neurons in the current workspace. The graph is visualized in 2D. Nodes representing each neuron has the same color as in the 3D visualization. Nodes can be reordered by dragging them. Hovering over a node will highlight the corresponding neuron in the 3D visualization. Clicking on the node hide/unhide morphology of the corresponding neuron. You can adjust the synapse threshold to remove connections that has less number of synapses than the value. 
+                      </li>
+                      <li>
+                        <i class="fa fa-cubes"></i>: Open the Graph View to generate a cell type level graph of the neurons in the current workspace. Connections from all neurons of one cell type to all neurons of another cell type will be aggregated. Nodes can be reordered by dragging them. Hovering over a node will highlight the neurons of the corresponding cell type in the 3D visualization. Clicking on a node hide/unhide morphology of the neurons of the corresponding cell type.
+                      </li>
+                      <li>
+                       <i class="fa fa-download"></i>:  Download the graph in CSV format, that includes the pre-synaptic neuron name, post-synaptic neuron name and the number of synapses on each row.
+                      </li>
+                    </ul>
+                  </article>
+                  <images>
+                    <img src="./img/overview-panel/graphviewpanel.png"> </img>
+                  </images>
+                </band>
+              </div>
+              <div class="overview-text">
+                <h4>Visualization Settings <a onclick="NeuroNLPUI.onClickVisualizationSettings()"><i class="fa fa-cog"></i></a></h4>
+                <band>
+                  <article>
+                    <p>You can customize the visual effects in the Visualization Panel by using the Visualization Settings menu. Here is a break down of the options.</p>
+                    <h5>Backgound</h5>
+                    <ul>
+                      <li>Color: change the color of the background of the Visualization Panel.</li>
+                    </ul>
+                    <h5>Neuron Rendering</h5>
+                    <ul>
+                      <li><strong>Rendering Mode</strong>: change the way neuron morphology is rendered.</li>
+                      <li><strong>Default Neurite Radius</strong>: If the neuron skeleton does not contain radius information, this is the default value that will be used.</li>
+                      <li><strong>Neurite Radius Range</strong>: The range of acceptable radius. Any radius outside of this range will be clipped to the nearest acceptable range.</li>
+                      <li><strong>Default Soma Radius</strong>: If the soma of the neuron skeleton does not contain radius information, this is the default value that will be used.</li>
+                      <li><strong>Soma Radius Range</strong>: The range of acceptable radius of soma. Any radius outside of this range will be clipped to the nearest acceptable range.</li>
+                      <li><strong>Default Opacity</strong>: The opacity of visualized neurons/synapses when none of them are highlighted or pinned.</li>
+                      <li><strong>Higlighted Neuron Opacity</strong>: The opacity of the neuron/synapse being highlighted.</li>
+                      <li><strong>Low Opacity in Highlight Mode</strong>: When a neuron/synapse is highlighted, the opacity of the rest of the neurons/synapses.</li>
+                      <li><strong>Pinned Neuron Opacity</strong>: The opacity of pinned neurons/synapses.</li>
+                      <li><strong>Low Opacity in Pinned Mode</strong>: When some neurons/synapses are pinned, the opacity of the unpinned neurons/synapses.</li>
+                      <li><strong>Ambient Light</strong>: Brightness of ambient light onto neurons/synapses.</li>
+                      <li><strong>Directional Light</strong>: Brightness of directional light onto neurons/synapses.</li>
+                    </ul>
+                    <h5>Neuropil Rendering</h5>
+                    <ul>
+                      <li><strong>Color</strong>: Color of the Neuropil meshes.</li>
+                      <li><strong>Opacity</strong>: Opacity of the Neuropil meshes.</li>
+                      <li><strong>Wireframe Opacity</strong>: Opacity of the wireframe on the Neuropil meshes.</li>
+                      <li><strong>Screen-space ambient occlusion pass (SSAO)</strong>: Whether to enable SSAO effect.</li>
+                      <li><strong>Ambient Light</strong>: Brightness of ambient light onto neuropils.</li>
+                      <li><strong>Directional Light</strong>: Brightness of directional light onto neuropils.</li>
+                    </ul>
+                    <h5>Synapse Rendering</h5>
+                    <ul>
+                      <li><strong>Synapse Size</strong>: Synapses are renders as a sphere with a radius specific by the value of Synapse Size.</li>
+                      <li><strong>Synapse Size Range</strong>: Range of valid synapse size if they are specified in the data. If the synapse size is outside of this range, it will be clipped.</li>
+                      <li><strong>Synapse Opacity</strong>: The opacity of the synapses when no neuron/synapse is highlighted or pinned.</li>
+                    </ul>
+                    <h5>PostProcessing Settings</h5>
+                    <ul>
+                      <li><strong>Fast approXimate Anti-Aliasing (FXAA)</strong>: Better anti-aliasing.</li>
+                      <li><strong>Bloom Pass</strong>: Create a glowing effect.</li>
+                    </ul>
+                  </article>
+                </band>
+              </div>
+            </div>
         <div id="neuronlp-switch" class="overlay">
           <div class="neuronlp-switch-wrapper">
             <a class="info-try btn btn-xs" onclick="NeuroNLPUI.closeAllOverlay()">Stay at <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #999;">NeuroNLP.Larva</span></a>
@@ -925,16 +1042,16 @@ g-diagram"></p></div>
           </div>
         </div>
 
-        <!-- <div id="announce-panel" class="overlay">
+        <div id="announce-panel" class="overlay">
           <div class="overlay_container">
-            <ul class="list-inline">
+            <!-- <ul class="list-inline">
               <li><h2>Latest News</h2></li>
-            </ul>
-            <div>
-              <a class="twitter-timeline" data-dnt="true" data-theme="dark" data-link-color="#2B7BB9" href="https://twitter.com/FlyBrainObs/timelines/895746744633483264?ref_src=twsrc%5Etfw">NeuroNLPUpdates</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-            </div>
+            </ul> -->
+            <!-- <div> -->
+	          <a class="twitter-timeline" data-width="600" data-height="550" data-dnt="true" data-theme="dark" href="https://twitter.com/FlyBrainObs?ref_src=twsrc%5Etfw">Tweets by FlyBrainObs</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+	      
+            <!-- </div> -->
           </div>
-        </div> -->
       </div>
       <!-- /#page-content-wrapper -->
     </div>
