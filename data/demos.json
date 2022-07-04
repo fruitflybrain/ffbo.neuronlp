@@ -69,7 +69,7 @@
       ["notify", {"message": "Hi!"}],
       ["notify", {"message": "Let's query for local neurons from the right antennal lobe!"}],
       ["search", {"query": "Show local neurons in right al"}],
-      ["notify", {"message": "Now let's only remove the projection neurons."}],
+      ["notify", {"message": "Now let's only remove the glutamatergic neurons in the right AL."}],
       ["search", {"query": "Remove glutamatergic neurons from the right al"}],
       ["notify", {"message": "Done", "pause": 1000}],
       ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
@@ -241,7 +241,7 @@
   },
   "connectivity_1": {
     "script": [
-      ["notify", {"message": "Let's explore some inferred connectivity (using the SPIN algorithm ) in the central complex", "pause": 1000}],
+      ["notify", {"message": "Let's explore some inferred connectivity in the central complex", "pause": 1000}],
       ["notify", {"message": "Let's add some neurons from the central complex to the scene", "pause": 2000}],
       ["notify", {"message": "We first add some tentative EB ring neurons", "pause": 2000}],
       ["search", {"query": "show neurons connecting lat to eb"}],
