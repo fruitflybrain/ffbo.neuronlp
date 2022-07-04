@@ -315,6 +315,16 @@ moduleExporter("SummaryTable",
         }else{
           that.parentObj.removeByRid(this.id.replace('btn-add-', ''))
         }
+      })
+      .mouseenter( function() {
+        if (this.className.includes('remove')) {
+          that.parentObj.highlight(this.name);
+        }
+      })
+      .mouseleave( function() {
+        if (this.className.includes('remove')) {
+          that.parentObj.resume();
+        }
       });
     };
 
