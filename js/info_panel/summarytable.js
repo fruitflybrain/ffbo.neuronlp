@@ -188,6 +188,7 @@ moduleExporter("SummaryTable",
       }
 
       let fieldName = snakeToSentence(key);
+      let fieldValue = undefined;
       if (key == 'data_source'){
           fieldValue = [];
           for (k in data[key]){
@@ -200,7 +201,6 @@ moduleExporter("SummaryTable",
       }else{
           fieldValue = data[key];
       }
-
 
       if (key === 'vfb_id'){
         let vfbBtn = "<a target='_blank' href='http://virtualflybrain.org/reports/" + data[key] + "'>VFB link</a>";
@@ -314,6 +314,16 @@ moduleExporter("SummaryTable",
             that.parentObj.addByRid(this.id.replace('btn-add-', ''))
         }else{
           that.parentObj.removeByRid(this.id.replace('btn-add-', ''))
+        }
+      })
+      .mouseenter( function() {
+        if (this.className.includes('remove')) {
+          that.parentObj.highlight(this.name);
+        }
+      })
+      .mouseleave( function() {
+        if (this.className.includes('remove')) {
+          that.parentObj.resume();
         }
       });
     };
