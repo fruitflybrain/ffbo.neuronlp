@@ -280,6 +280,12 @@ moduleExporter(
                    this._clickMenu(sel, object.cursorMove, object.cursorMoveDuration).then(() => {resolve()});
                  }).catch(reject);
                  break;
+               case "neuClick":
+                 this._openPanel(this.menuSels.singleNeu, object.cursorMove, object.cursorMoveDuration).then(()=>{
+                   sel = '#btn-' + ('label' in object.menu ? uidDecode(this.ffbomesh._labelToRid[object.menu.label]) : uidDecode(object.menu.rid));
+                   this._clickMenu(sel, object.cursorMove, object.cursorMoveDuration).then(() => {resolve()});
+                 }).catch(reject);
+                 break;
                case "visToggle":
                  this._openPanel(this.menuSels.singleNeu, object.cursorMove, object.cursorMoveDuration).then(()=>{
                    sel = '#btn-toggle-' + ('label' in object.menu ? uidDecode(this.ffbomesh._labelToRid[object.menu.label]) : uidDecode(object.menu.rid));
@@ -304,6 +310,12 @@ moduleExporter(
                    this._clickMenu(sel, object.cursorMove, object.cursorMoveDuration).then(() => {resolve()});
                  }).catch(reject)
                  break;
+               case "lpuToggle":
+                this._openPanel(this.menuSels.lpu, object.cursorMove, object.cursorMoveDuration).then(()=>{
+                  sel = '#btn-toggle-' + ('label' in object.menu ? uidDecode(this.ffbomesh._labelToRid[object.menu.label]) : uidDecode(object.menu.rid));
+                  this._clickMenu(sel, object.cursorMove, object.cursorMoveDuration).then(() => {resolve()});
+                }).catch(reject)
+                break;
                case "lpuShowAll":
                  this._openPanel(this.menuSels.lpu, object.cursorMove, object.cursorMoveDuration).then(()=>{
                    sel = this.menuSels.lpuShowAll;
