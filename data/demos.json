@@ -1,143 +1,358 @@
 [
-  {"branch": "medulla"},
-  {
-  "center_view": {
-    "script": [
-      ["notify", {"message": "Let's hide everything first"}],
-      ["click", {"uiBtn": {"type": "hideAll"}}],
-      ["notify", {"message": "And then pull up Mi1 neurons from the medulla connectome"}],
-      ["search", {"query": "show Mi1 neurons in medulla"}],
-      ["notify", {"message": "We can center the view into visible neurons by clicking on the <i class='fa fa-align-justify'></i> icon on the topright"}],
-      ["click", {"uiBtn": {"type": "resetVisibleView"}}],
-      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
-    ],
-    "neuron3d": false,
-    "keyword": "Center/Zoom View",
-    "description": "Center and zoom  to visible neurons",
-    "category": "New Features"
-  },
-  "synapse_vis": {
-    "script": [
-      ["notify", {"message": "Let's hide everything first", "pause": 1000}],
-      ["click", {"uiBtn": {"type": "hideAll"}}],
-      ["notify", {"message": "And then pull up Mi1 neuron from the home column", "pause": 1000}],
-      ["search", {"query": "show Mi1 in home column"}],
-      ["click", {"uiBtn": {"type": "resetVisibleView"}}],
-      ["maxInfoPanel", {} ],
-      ["click", {"label": "Mi1-home"}],
-      ["notify", {"message": "Let's add T4a-fb-home from the info panel"}],
-      ["click", {"selector": "#btn-post-add-T4a-fb-home"}],
-      ["notify", {"message": "Now let's add the synapse locations between these neurons to the scene"}],
-      ["click", {"selector": "#btn-post-syn-add-Mi1-home--T4a-fb-home"}],
-      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
-    ],
-    "neuron3d": true,
-    "keyword": "Synapse Visualization",
-    "description": "Visualize synapses between Mi1 and T4a in the home column",
-    "category": "New Features"
-  },
-  "connectivity_2": {
-    "script": [
-      ["notify", {"message": "Let's explore some connectivity in the motion detection pathway", "pause": 4000}],
-      ["search", {"query": "Show Mi1, Tm3 and T4a neurons"}],
-      ["click", {"uiBtn": {"type": "resetVisibleView"}}],
-      ["notify", {"message": "Now let's download the connectivity between these neurons by using the <i class='fa fa-download'></i> button", "pause": 1000}],
-      ["click", {"uiBtn": {"type": "downData"}, "waitForUI": true}],
-      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
-    ],
-    "neuron3d": "desktop",
-    "keyword": "Connectivity",
-    "description": "Explore connectivity between Mi1, Tm3 and T4a neurons",
-    "category": "New Features"
-  },
-  "show_2": {
+{"branch": "medulla"},
+{
+  "show_1": {
     "keyword": "Show",
     "script": [
-      ["notify", {"message": "Hi!"}],
-      ["notify", {"message": "Let's query T4 neurons!"}],
-      ["search", {"query": "Show T4 Neurons"}],
-      ["notify", {"message": "Done!", "pause": 0}],
-      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+      ["notify", {"message": "Hi there!"}],
+      ["notify", {"message": "Let's query for Mi1 neurons!"}],
+      ["search", {"query": "show Mi1"}],
+      ["notify", {"message": "'Show' always clears the visualization panel before visualizing the neurons in the query!"}],
+      ["notify", {"message": "Let's try using 'Show' again."}],
+      ["search", {"query": "Show L1"}],
+      ["notify", {"message": "Done. Compare this with the 'Add' demo!", "pause": 1000}],
+      ["notify", {"message": "Try it yourself!", "pause": 0}]
     ],
-    "description": "Visualize T4 neurons in the Medulla.",
-    "category": "Basic Usage"
+    "description": "Clear the work space and visualize neurons according to a specific query.",
+    "category": "Basic English Queries (Supported Verbs)"
   },
-  "add_2": {
+  "add_1": {
     "keyword": "Add",
     "script": [
       ["notify", {"message": "Hi!"}],
-      ["notify", {"message": "Let's query for L1 neurons!"}],
-      ["search", {"query": "Show L1 neurons"}],
-      ["notify", {"message": "Now let's add Mi1 neurons:"}],
-      ["search", {"query": "Add Mi1 neurons"}],
+      ["notify", {"message": "Let's query for Mi1 neurons!"}],
+      ["search", {"query": "show Mi1"}],
+      ["notify", {"message": "'Add' visualizes the neurons in the query on top of what's in the visualization panel!"}],
+      ["notify", {"message": "Let's try using adding some neurons."}],
+      ["search", {"query": "Add L1"}],
       ["notify", {"message": "Done", "pause": 1000}],
       ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
     ],
-    "description": "Visualize L1 neurons and then add Mi1 neurons.",
-    "category": "Basic Usage"
+    "description": "In addition to what is currently displayed, visualize the neurons according to a specific query",
+    "category": "Basic English Queries (Supported Verbs)"
+  },
+  "undo_1": {
+    "keyword": "Undo",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for Mi1!"}],
+      ["search", {"query": "Show Mi1"}],
+      ["notify", {"message": "Now let's add L2 neurons."}],
+      ["search", {"query": "Add L2"}],
+      ["notify", {"message": "Now let's undo what we just did."}],
+      ["search", {"query": "Undo"}],
+      ["notify", {"message": "Now let's add L1 neurons."}],
+      ["search", {"query": "Add L1 neurons"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Go back to a previous step (UNDO).",
+    "category": "Basic English Queries (Supported Verbs)"
+  },
+  "keep_1": {
+    "keyword": "Keep",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for neurons that arborize M2 stratum of Column A!"}],
+      ["search", {"query": "Show neurons that innervate M2 in column A"}],
+      ["notify", {"message": "Now let's only keep cholinergic neurons"}],
+      ["search", {"query": "Keep cholinergic neurons"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Filter neurons in the current visualization panel based on a specific query.",
+    "category": "Basic English Queries (Supported Verbs)"
+  },
+  "remove_1": {
+    "keyword": "Remove",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for neurons that arborize M2 stratum of Column A!"}],
+      ["search", {"query": "Show neurons that innervate M2 in column A"}],
+      ["notify", {"message": "Now let's only remove the cholinergic neurons."}],
+      ["search", {"query": "Remove cholinergic neurons"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Remove neurons from the current visualization panel based on a specific query.",
+    "category": "Basic English Queries (Supported Verbs)"
+  },
+  "pinunpin_1": {
+    "keyword": "Pin/Unpin",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for neurons arborize M2 stratum of Column A!"}],
+      ["search", {"query": "Show neurons that innervate M2 in column A"}],
+      ["notify", {"message": "Now let's pin the cholinergic neurons."}],
+      ["search", {"query": "Pin cholinergic neurons"}],
+      ["notify", {"message": "Now let's unpin these neurons."}],
+      ["search", {"query": "Unpin cholinergic neurons"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Pin (Persistently highlight) or Unpin neurons in the current visualization panel based on a specific query.",
+    "category": "Basic English Queries (Supported Verbs)"
+  },
+  "hide_1": {
+    "keyword": "Hide/unhide",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for Distall Medulla local neurons."}],
+      ["search", {"query": "Show DM neurons"}],
+      ["notify", {"message": "Let's add Proximal Medulla local neurons."}],
+      ["search", {"query": "add PM neurons"}],
+      ["notify", {"message": "Now let's hide the DM neurons."}],
+      ["search", {"query": "hide DM"}],
+      ["notify", {"message": "Now let's reveal only the glutamatergic neurons that is in the visualization panel."}],
+      ["search", {"query": "unhide glutamatergic neurons"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Hide or reveal neurons in the current visualization panel based on a specific query.",
+    "category": "Basic English Queries (Supported Verbs)"
+  },
+  "color_1": {
+    "keyword": "Color",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for Mi1!"}],
+      ["search", {"query": "Show Mi1"}],
+      ["notify", {"message": "Now let's color them red."}],
+      ["search", {"query": "Color red"}],
+      ["notify", {"message": "If only a color is specified, the last queried neurons will be colored."}],
+      ["notify", {"message": "Neurons to be colored can also be specified. For example, we can color GABAergic neurons blue, using the hex code for blue."}],
+      ["search", {"query": "Color neurons in column home 0000FF"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Color neurons in the current visualization panelvisualization panel based on a specific query",
+    "category": "Basic English Queries (Supported Verbs)"
+  },
+  "clear_1": {
+    "keyword": "Clear",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for Mi1!"}],
+      ["search", {"query": "Show Mi1"}],
+      ["notify", {"message": "Now we clear the visualization panel."}],
+      ["search", {"query": "Clear"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Clear out the visualization panel.",
+    "category": "Basic English Queries (Supported Verbs)"
+  },
+  "neuron_menu": {
+    "script": [
+      ["notify", {"message": "The Neurons/Synapses menu accessible from the Header Bar lists all neurons and synapses visualized in the visualization panel."}],
+      ["notify", {"message": "It is useful to highlight, hide, pin neurons of interest when the view in the visualization panel becomes cluttered."}],
+      ["notify", {"message": "First we visualize some neurons."}],
+      ["search", {"query": "show Mi1"}],
+      ["notify", {"message": "Now we open the Neurons/Synapses Menu and click on one of the neurons"}],
+      ["click", {"menu": {"type": "neuClick", "label": "Mi1-D"}}],
+      ["notify", {"message": "This has the same effect of clicking on the neuron in the 3D visualization."}],
+      ["notify", {"message": "and brings up the info panel for this neuron."}],
+      ["notify", {"message": "We can hide the neuron"}],
+      ["click", {"menu": {"type": "visToggle", "label": "Mi1-home"}}],
+      ["notify", {"message": "reveal the neuron"}],
+      ["click", {"menu": {"type": "visToggle", "label": "Mi1-home"}}],
+      ["notify", {"message": "pin the neuron"}],
+      ["click", {"menu": {"type": "pinToggle", "label": "Mi1-home"}}],
+      ["notify", {"message": "unpin the neuron"}],
+      ["click", {"menu": {"type": "pinToggle", "label": "Mi1-home"}}],
+      ["notify", {"message": "and delete the neuron"}],
+      ["click", {"menu": {"type": "remove", "label": "Mi1-home"}}],
+      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
+    ],
+    "keyword": "Neurons/Synapses Menu",
+    "description": "Access the list of neurons and synapses in the visualization panel to highlight, retrieve info of, pin, hide and delete individual neurons.",
+    "category": "GUI Usage"
+  },
+  "pin_select_highlight": {
+    "script": [
+      ["notify", {"message": "You can use your mouse to navigate through neurons in the visualization panel."}],
+      ["notify", {"message": "Let's first bring up Mi1 neurons!"}],
+      ["search", {"query": "Show Mi1"}],
+      ["notify", {"message": "To highlight a neuron, move mouse cursor onto the displayed neuron."}],
+      ["highlight", {"label": "Mi1-home"}],
+      ["notify", {"message": "Let's try another neuron."}],
+      ["highlight", {"label": "Mi1-D"}],
+      ["notify", {"message": "To obtain the detailed info about this neuron, single click on the neuron."}],
+      ["click", {"label": "Mi1-home"}],
+      ["notify", {"message": "Info Panel on the left will display basic info of the neuron, and the synaptic partners of the neuron. Check out the 'Info Panel' demo for more information on how to use the Info Panel", "pause": 10000}],
+      ["notify", {"message": "Double-clicking a neuron pins the neuron."}],
+      ["pin", {"label": "Mi1-D"}],
+      ["highlight", {"label": "Mi1-home"}],
+      ["notify", {"message": "Double-clicking it again to unpin."}],
+      ["pin", {"label": "Mi1-D"}],
+      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
+    ],
+    "keyword": "Pin/Select/Highlight",
+    "description": "Mouse operations in the visualization panel to highlight, retrieve info of, pin and delete individual neurons.",
+    "category": "GUI Usage"
+  },
+  "gui_buttons": {
+    "script": [
+      ["notify", {"message": "Here we show the function of the buttons on the top right."}],
+      ["notify", {"message": "Clicking on the <i class=\"fa fa-info-circle\"><\/i> button, the GUI Usage Info will pop out."}],
+      ["click", {"uiBtn": {"type": "showInfo"}}],
+      ["notify", {"message": "Now let's make a simple query"}],
+      ["search", {"query": "show Mi1"}],
+      ["search", {"query": "add Dm9"}],
+      ["notify", {"message": "We can use the <i class=\"fa fa-align-justify\"><\/i> button zoom into the neurons visualized."}],
+      ["click", {"uiBtn": {"type": "resetVisibleView"}}],
+      ["notify", {"message": "Let's take a screenshot of the visualization using the <i class=\"fa fa-camera\"><\/i> button ."}],
+      ["click", {"uiBtn": {"type": "takeScreenshot"}}],
+      ["notify", {"message": "We can reset the view to the original by clicking on <i class=\"fa fa-refresh\"><\/i> button."}],
+      ["click", {"uiBtn": {"type": "resetView"}}],
+      ["notify", {"message": "Now we will pin some of the neurons"}],
+      ["search", {"query": "pin Dm9"}],
+      ["notify", {"message": "We can hide everything but the pinned neurons using the <i class=\"fa fa-eye-slash\"><\/i> button"}],
+      ["click", {"uiBtn": {"type": "hideAll"}}],
+      ["notify", {"message": "and reveal everything in the visualization panel using the <i class=\"fa fa-eye\"><\/i> button"}],
+      ["click", {"uiBtn": {"type": "showAll"}}],
+      ["notify", {"message": "We can remove all neurons except the pinned neurons by the <i class=\"fa fa-trash\"><\/i> button"}],
+      ["click", {"uiBtn": {"type": "removeUnpin"}}],
+      ["notify", {"message": "To remove pinned neurons but keep unpinned neurons, you will need to use the Neurons/Synapses Menu."}],
+      ["click", {"menu": {"type": "pinRemove"}}],
+      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
+    ],
+    "keyword": "Visualization Panel Buttons",
+    "description": "Function of the GUI button <i class=\"fa fa-trash\"><\/i> <i class=\"fa fa-eye-slash\"><\/i> <i class=\"fa fa-eye\"><\/i> <i class=\"fa fa-align-justify\"><\/i> <i class=\"fa fa-refresh\"><\/i> <i class=\"fa fa-info-circle\"><\/i> <i class=\"fa fa-camera\"><\/i> on the top right.",
+    "category": "GUI Usage"
+  },
+  "connectivity_1": {
+    "script": [
+      ["notify", {"message": "Let's explore some connectivity in the antennal lobe", "pause": 1000}],
+      ["notify", {"message": "Let's add L1 to the scene", "pause": 2000}],
+      ["search", {"query": "show L1 in column home"}],
+      ["search", {"query": "color red"}],
+      ["notify", {"message": "We then add some neuron that are postsynaptic to L1", "pause": 2000}],
+      ["search", {"query": "add L5 in column home"}],
+      ["search", {"query": "color blue"}],
+      ["search", {"query": "add Mi1 in column home"}],
+      ["search", {"query": "color lime"}],
+      ["search", {"query": "add Mi4 in column home"}],
+      ["search", {"query": "color yellow"}],
+      ["notify", {"message": "Now let's open Graph View to see the neuronal graph with the <i class=\"fa fa-bar-chart\"><\/i> button.", "pause": 6000}],
+      ["click", {"uiBtn": {"type": "showGraph"}}],
+      ["notify", {"message": "Now let's download the connectivity between these neurons by using the <i class='fa fa-download'></i> button", "pause": 1000}],
+      ["click", {"uiBtn": {"type": "downData"}, "waitForUI": true}],
+      ["notify", {"message": "Done! Try it yourself!", "pause": 5000}]
+    ],
+    "keyword": "Graph View / Connectivity Buttons",
+    "description": "Explore the connectivity of visualized neurons with <i class=\"fa fa-cubes\"><\/i> <i class=\"fa fa-bar-chart\"><\/i> <i class=\"fa fa-download\"><\/i> buttons",
+    "category": "GUI Usage"
+  },
+  "visualization_settings": {
+    "script": [
+      ["notify", {"message": "The settings menu can be accessed by clicking on <i class='fa fa-cog'></i> icon on the top right"}],
+      ["click", {"uiBtn": {"type": "showSettings"}}],
+      ["notify", {"message": "Browse through the setting to see what settings can be customized."}],
+      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
+    ],
+    "keyword": "Visualization Settings",
+    "description": "Open Visualization Settings <i class=\"fa fa-cog\"><\/i> to change background color, neuropil color, how neurons are rendered, etc.",
+    "category": "GUI Usage"
+  },
+  "query_reference": {
+    "script": [
+      ["notify", {"message": "A reference of supported English queries can be found by clicking on the <i class=\"glyphicon glyphicon-info-sign\"><\/i> button left to the search bar."}],
+      ["click", {"selector": "#info_btn"}],
+      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
+    ],
+    "keyword": "Query Reference",
+    "description": "Open query reference <i class=\"glyphicon glyphicon-info-sign\"><\/i>.",
+    "category": "GUI Usage"
+  },
+  "infopanel": {
+    "script": [
+      ["notify", {"message": "Info Panel provides all information available of a neuron."}],
+      ["search", {"query": "show Mi1 in home column"}],
+      ["notify", {"message": "Simply click on the neuron in the visualization panel or from the Neurons/Synapses menu to bring up its information."}],
+      ["click", {"label": "Mi1-home"}],
+      ["notify", {"message": "You can bring up one of pre- and post-synaptic partner by clicking on the + button in the list of partners."}],
+      ["click", {"selector": "#btn-pre-add-L1-home"}],
+      ["notify", {"message": "You can bring up all of its pre- and post-synaptic partner according to the filtered value."}],
+      ["click", {"selector": "#presyn-N"}],
+      ["click", {"selector": "#btn-pre-add-all-neuron"}],
+      ["notify", {"message": "And remove them."}],
+      ["click", {"selector": "#btn-pre-remove-all-neuron"}],
+      ["notify", {"message": "Since Mi1 has auto-synapses, it was removed as well. Let's add it back."}],
+      ["search", {"query": "add Mi1 in home column"}],
+      ["search", {"query": "color red"}],
+      ["notify", {"message": "We can also add synapses. For example, let's add all postsynaptic sites of this neuron and color them white."}],
+      ["click", {"selector": "#btn-pre-add-all-synapse"}],
+      ["search", {"query": "color white"}],
+      ["notify", {"message": "We then add all presynaptic sites of this neuron and color them yellow."}],
+      ["click", {"selector": "#btn-post-add-all-synapse"}],
+      ["search", {"query": "color yellow"}],
+      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
+    ],
+    "keyword": "Info Panel",
+    "description": "Bring up Info Panel for the neuron to access detail information about neurons and their synaptic partners.",
+    "category": "GUI Usage"
   },
   "fig2a": {
     "script": [
       ["notify", {"message": "In NeuroNLP, neurons of existing cell types can be directly queried by their name",
                    "pause": 5000, "timeout": 6000}],
-      ["search", {"query": "add $Mi1-home$ in medulla"}],
+      ["search", {"query": "add Mi1 in home column"}],
       ["search", {"query": "color orange"}],
-      ["search", {"query": "add $Mi4-A$ in medulla"}],
+      ["search", {"query": "add Mi4 in column A"}],
       ["search", {"query": "color f000f6"}],
-      ["search", {"query": "add $Mi9-B$ in medulla"}],
+      ["search", {"query": "add Mi9 in column B"}],
       ["search", {"query": "color white"}],
-      ["search", {"query": "add $Dm8-C$ in medulla"}],
+      ["search", {"query": "add Dm8 in column C"}],
       ["search", {"query": "color yellow"}],
-      ["search", {"query": "add $Dm2-E$ in medulla"}],
+      ["search", {"query": "add Dm2 in column E"}],
       ["search", {"query": "color cyan"}],
       ["notify", {"message": "Done! Explore it yourself!", "pause": 5000}]
     ],
-    "neuron3d": true,
     "keyword": "Fig 2a. Selected neuron types in the Medulla",
     "description": "Neurons of existing cell types can be directly queried by their name.",
-    "category": "FFBO Paper"
+    "category": "Exploring the structure of figures in 'The Fruit Fly Brain Observatory: From Structure to Function'. DOI: 10.1101/580290"
   },
   "columns": {
     "script": [
       ["notify", {"message": "In this demo, we build the columns in the Medulla.", "pause": 5000, "timeout": 6000}],
-      ["search", {"query": "show $L1-home$"}],
+      ["search", {"query": "show L1 in home column"}],
       ["search", {"query": "color blue"}],
-      ["search", {"query": "add $L2-home$"}],
+      ["search", {"query": "add L2 in home column"}],
       ["search", {"query": "color green"}],
-      ["search", {"query": "add $L3-home$"}],
+      ["search", {"query": "add L3 in home column"}],
       ["search", {"query": "color cyan"}],
-      ["search", {"query": "add $L5-home$"}],
+      ["search", {"query": "add L5 in home column"}],
       ["search", {"query": "color magenta"}],
-      ["search", {"query": "add $Mi1-home$"}],
+      ["search", {"query": "add Mi1 in home column"}],
       ["search", {"query": "color red"}],
-      ["search", {"query": "add $Tm3-home$"}],
+      ["search", {"query": "add Tm3 in home column"}],
       ["search", {"query": "color white"}],
-      ["search", {"query": "add $T4a-fb-home$"}],
+      ["search", {"query": "add T4a in home column"}],
       ["search", {"query": "color yellow"}],
       ["nofify", {"message": "Now we color this home column circuit orange and add other columns.", "pause": 5000, "timeout": 6000}],
-      ["search", {"query": "color $-home$ orange"}],
-      ["search", {"query": "add /r(L1|L2|L3|L5|Mi1|Tm3|T4a-fb)-A/r"}],
+      ["search", {"query": "color neuorns in home column orange"}],
+      ["search", {"query": "aadd L1 and L2 and L3 and L5 and Mi1 and T4a neurons in column A"}],
       ["search", {"query": "color blue"}],
-      ["search", {"query": "add /r(L1|L2|L3|L5|Mi1|Tm3|T4a-fb)-B/r"}],
+      ["search", {"query": "add L1 and L2 and L3 and L5 and Mi1 and T4a neurons in column B"}],
       ["search", {"query": "color cyan"}],
-      ["search", {"query": "add /r(L1|L2|L3|L5|Mi1|Tm3|T4a-fb)-C/r"}],
+      ["search", {"query": "add L1 and L2 and L3 and L5 and Mi1 and T4a neurons in column C"}],
       ["search", {"query": "color magenta"}],
-      ["search", {"query": "add /r(L1|L2|L3|L5|Mi1|Tm3|T4a-fb)-D/r"}],
+      ["search", {"query": "add L1 and L2 and L3 and L5 and Mi1 and T4a neurons in column D"}],
       ["search", {"query": "color green"}],
-      ["search", {"query": "add /r(L1|L2|L3|L5|Mi1|Tm3|T4a-fb)-E/r"}],
+      ["search", {"query": "add L1 and L2 and L3 and L5 and Mi1 and T4a neurons in column E"}],
       ["search", {"query": "color yellow"}],
-      ["search", {"query": "add /r(L1|L2|L3|L5|Mi1|Tm3|T4a-fb)-F/r"}],
+      ["search", {"query": "add L1 and L2 and L3 and L5 and Mi1 and T4a neurons in column F"}],
       ["search", {"query": "color red"}]
     ],
-    "neuron3d": true,
-    "keyword": "Builidng Column Circuits",
+    "keyword": "Building Column Circuits",
     "description": "Building circuits based on neurons in a column.",
     "category": "Circuits"
   },
   "motion": {
     "script": [
       ["notify", {"message": "In this demo, we build circuits related to T4a neurons that sense front-to-back motion.", "pause": 5000, "timeout": 6000}],
-      ["search", {"query": "show T4a"}],
+      ["search", {"query": "show T4a "}],
       ["search", {"query": "color white"}],
       ["search", {"query": "add Mi1, Tm3, Mi4 and Mi9 neurons presynaptic to T4a"}],
       ["click", {"uiBtn": {"type": "resetVisibleView"}}],
@@ -150,7 +365,6 @@
       ["search", {"query": "add presynaptic L5 neurons"}],
       ["search", {"query": "color blue"}]
     ],
-    "neuron3d": true,
     "keyword": "Builidng Motion Detection Circuit for T4a",
     "description": "Building circuits from T4a backwards.",
     "category": "Circuits"
