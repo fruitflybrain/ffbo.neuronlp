@@ -313,7 +313,7 @@
       ["notify", {"message": "Try it yourself!", "pause": 0}]
     ],
     "description": "Query with string match, Regular Expression, and commonly known names of neuron types",
-    "category": "Basic Queries"
+    "category": "Basic English Queries (Specifying what you want to search for)"
   },
   "basic_query2": {
     "keyword": "Larva L1EM Skeleton ID-based Queries",
@@ -324,7 +324,7 @@
       ["notify", {"message": "Try it yourself!", "pause": 0}]
     ],
     "description": "Load a list of neurons using their Larva L1EM Skeleton IDs using: show /:referenceId:[bodyId1, bodyId2, ...]",
-    "category": "Basic Queries"
+    "category": "Basic English Queries (Specifying what you want to search for)"
   },
   "basic_query3": {
     "keyword": "Arborization-based Queries",
@@ -335,7 +335,7 @@
       ["notify", {"message": "Try it yourself!", "pause": 0}]
     ],
     "description": "Querying neurons based on arborization patterns.",
-    "category": "Basic Queries"
+    "category": "Basic English Queries (Specifying what you want to search for)"
   },
   "basic_query4": {
     "keyword": "Synaptic Partners-based Queries",
@@ -348,7 +348,7 @@
       ["notify", {"message": "Try it yourself!", "pause": 0}]
     ],
     "description": "Querying neurons based on synaptic partners",
-    "category": "Basic Queries"
+    "category": "Basic English Queries (Specifying what you want to search for)"
   },
   "l1em_1": {
     "keyword": "OSN",
