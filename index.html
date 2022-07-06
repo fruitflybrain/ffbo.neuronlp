@@ -511,7 +511,7 @@
               <h4>Overview</h4>
               <p>NeuroNLP is a query interface for navigating fruit fly brain datasets.
                 It enables in-depth explorations and investigations of the connectomic/synaptomic structure of the brain, using intuitive rule-based English queries, such as
-                <a onclick="window.NLPsearch('show cholinergic neurons presynaptic to T4a in column C with at least 5 synapses')"><br><u style="font-style:italic">"show cholinergic neurons presynaptic to T4a in column C with at least 5 synapses".</u></br></a>
+                <a onclick="window.NLPsearch('show cholinergic neurons presynaptic to T4a neuron in column C with at least 5 synapses')"><br><u style="font-style:italic">"show cholinergic neurons presynaptic to T4a in column C with at least 5 synapses".</u></br></a>
               </p>
               <p>
                 For more information about the NeuroNLP user interface
@@ -756,7 +756,7 @@
                         </li>
                         <li><span style="color: #88CDF5">show neurons presynaptic|postsynaptic to</span>: Shows the neurons that are presynaptic or postsynaptic to the neurons defined after the word to. Exmples:
                             <ul>
-                                <li><a onclick="window.NLPsearch('show neurons presynaptic to $T4a-fb-home$')"><span style="color: #97ba67">show neurons presynaptic to $T4a-fb-home$</span></a>,</li>
+                                <li><a onclick="window.NLPsearch('show neurons presynaptic to T4a in the home column')"><span style="color: #97ba67">show neurons presynaptic to $T4a-fb-home$</span></a>,</li>
                                 <li><a onclick="window.NLPsearch('show Pm2 postsynaptic to Mi1 with at least 5 synapses')"><span style="color: #97ba67">show Pm2 postsynaptic to Mi1 with at least 5 synapses</span></a>,</li>
                             </ul>
                         </li>
@@ -775,9 +775,9 @@
                         </li>
                     </ul>
                     <ul>Other short-hands:
-                        <li><span style="color: #88CDF5">show /:referenceId:[Mi1-A, Tm2-home]</span>: Shows the neurons whose referenceId in the original dataset is in the list. It can be used similar to \$ \\$ and regular expression and combined with other types of criteria. Examples:
+                        <li><span style="color: #88CDF5">show /:referenceId:[30465, 7892]</span>: Shows the neurons whose referenceId in the original dataset is in the list. It can be used similar to \$ \\$ and regular expression and combined with other types of criteria. Examples:
                             <ul>
-                                <li><a onclick="window.NLPsearch('show /:referenceId:[Mi1-A, Tm2-home]')"><span style="color: #97ba67">show /:referenceId:[Mi1-A, Tm2-home]</span></a></li>
+                                <li><a onclick="window.NLPsearch('show /:referenceId:[30465, 7892]')"><span style="color: #97ba67">show /:referenceId:[30465, 7892]</span></a></li>
                             </ul>
                         </li>
                     </ul>
@@ -839,7 +839,7 @@
               <h4>Visualization Panel Buttons</h4>
               <band>
                 <article>
-                  <p>Try out the <a onclick="window.FFBODemoPlayer.startDemo('gui_buttons')">"Visualization Panel Buttons" Demo</a> (GUI Usage #4 in the <a onclick="NeuroNLPUI.onShowDemo()">Demos</a>).</p>
+                  <p>Try out the <a onclick="window.FFBODemoPlayer.startDemo('gui_buttons')">"Visualization Panel Buttons" Demo</a> (GUI Usage #3 in the <a onclick="NeuroNLPUI.onShowDemo()">Demos</a>).</p>
                   <p>Here we list the function of each button:</p>
                   <ul>
                     <li>
@@ -872,7 +872,7 @@
               <h4>Graph View and Connectivity Buttons</h4>
               <band>
                 <article>
-                  <p>Try out the <a onclick="window.FFBODemoPlayer.startDemo('connectivity_1')">"Graph View / Connectivity Buttons" Demo</a> (GUI Usage #5 in the <a onclick="NeuroNLPUI.onShowDemo()">Demos</a>).</p>
+                  <p>Try out the <a onclick="window.FFBODemoPlayer.startDemo('connectivity_1')">"Graph View / Connectivity Buttons" Demo</a> (GUI Usage #4 in the <a onclick="NeuroNLPUI.onShowDemo()">Demos</a>).</p>
                   <p>Three additional buttons in the Visualization Panel provide information about the graph of the visualized neural circuit:</p>
                   <ul>
                     <li>
