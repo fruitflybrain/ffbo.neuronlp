@@ -536,7 +536,8 @@
               <p>
                 Updates and announcements for <u style="text-decoration:none; font-family:'Rajdhani',sans-serif; color:grey;">NeuroNLP.Hemibrain</u>.
               </p>
-              <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-getting-started')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-getting-started')" onclick="NeuroNLPUI.onShowAnnounce()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> See What's New!</a>
+              <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-getting-started')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-getting-started')" onclick="NeuroNLPUI.onShowAnnounce()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> FFBO News</a>
+              <a onclick="NeuroNLPUI.onShowFeature()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> See What's New!</a>
               <br><br>
               <h4>Quick Demos</h4>
               <p>
@@ -729,6 +730,37 @@
               </band>
             </div>
             
+          </div>
+        </div>
+
+        <div id="feature-panel" class="overlay">
+          <ul id="overview-header" class="overview-header list-inline">
+            <li><h2>New Features</h2></li>
+          </ul>
+          <div class="overview-text">
+            <h5>Free-form English Queries</h5>
+            <p>Launched NeuroNLP++ for Hemibrain dataset, enabling free-form English queries for cell types.</p>
+            <h5>New visualization settings</h5>
+              <ul>Check out the Settings menu <i class="fa fa-cog"></i>
+                <li>Background color can be changed.</li>
+                <li>More neuron rendering modes available.</li>
+                <li>Better balance of performance and visualization in default rendering mode.</li>
+                <li>Change of synapse size is reflected immediately.</li>
+              </ul>
+            <h5>Added Hemibrain "Segments"</h5>
+             <p>
+              "Segments" are fragments of neurons that have not been fully traced. Synapses to/from segments are listed in the pre/post-synaptic partners. If the morphology of a segment is available, it will appear in its own entry. All synapses from and to segments that have no morphology are grouped and listed in the entry, respectively, as segments_presynaptic_to_neuron_name and segments_postsynaptic_to_neuron_name.
+              Segments and only segments have the word "segment" in their names. This can be used to filter them in the list.
+            </p>
+            <h5>Pre/Post-synaptic partners can be filtered by their name using regular expression</h5>
+              <p>To use regular expression, start the search by /r. For example, to show only traced neurons, use /r^((?!segment).)*$ to remove all names that include "segment".</p>
+            <h5>New Cell Types Menu</h5>
+              <p>
+              Cell type menu lists the names of cell types in each of the neuropil that can be added to the 3D visualization workspace.
+              These names can be used directly in the English query without $$ any more (case insenstive). For example, "show mbon06" works, no need to use "show $MBON06$.
+              </p>
+            <h5>Improved Graph View Tool <i class="fa fa-bar-chart"></i> and <i class="fa fa-cubes"></i></h5>
+              <p>Now you can filter the edges in the graph by the number of synapses.</p>  
           </div>
         </div>
 
