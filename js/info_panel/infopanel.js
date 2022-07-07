@@ -68,7 +68,7 @@ moduleExporter("InfoPanel",[
    */
   function createTemplate(obj){
     var template = "";
-    template += "<a onclick=\"$('#info-panel').hide(); $('#info-intro').show();\">Back to Introduction</a>";
+    template += "<a onclick=\"$('#info-panel').hide(); $('#info-intro').show();\">Back to Overview</a>";
     template += '<div id="'+ obj.summaryTableId+ '"></div>';  // summary
     // innerhtml += '<div id="info-panel-summary-extra"></div>';  // summary
     template += '<div id="' + obj.connSVGId + '"></div>';  // SVG
