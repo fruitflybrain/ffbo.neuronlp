@@ -234,7 +234,7 @@
   },
   "connectivity_1": {
     "script": [
-      ["notify", {"message": "Let's explore some connectivity in the antennal lobe", "pause": 1000}],
+      ["notify", {"message": "Let's explore some connectivity in the medulla", "pause": 1000}],
       ["notify", {"message": "Let's add L1 to the scene", "pause": 2000}],
       ["search", {"query": "show L1 in column home"}],
       ["search", {"query": "color red"}],
