@@ -12,7 +12,7 @@ if( moduleExporter === undefined){
   };
 }
 
-moduleExporter("NeuroNLPUI", ["jquery", "overlay", "jquery.mmenu"], function($, Overlay){
+moduleExporter("NeuroNLPUI", ["jquery", "overlay", "mmenu"], function($, Overlay){
   function NeuroNLPUI(){
     var _this = this;
     var mm_menu_right = undefined;
@@ -32,6 +32,7 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "jquery.mmenu"], function($, 
     this.overviewPanel = new Overlay("overview-panel", "");
     this.referencePanel = new Overlay("quick-reference-panel", "");
     this.announcePanel = new Overlay("announce-panel", "");
+    this.featurePanel = new Overlay("feature-panel", "");
     this.neuronlpSwitch = new Overlay("neuronlp-switch", "");
     this.demoTable = new Overlay("demo-panel", `
 <ul class="list-inline">
@@ -71,6 +72,10 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "jquery.mmenu"], function($, 
       mm_menu_right.close();
       this.announcePanel.show();
     }
+    this.onShowFeature = () => {
+      mm_menu_right.close();
+      this.featurePanel.show();
+    }
     this.onShowGUIinfo = () => {
       mm_menu_right.close();
       this.GUIinfoOverlay.show();
@@ -78,9 +83,8 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "jquery.mmenu"], function($, 
 
     this.mimicMouseOver = (selector, flag) => {
       if (flag) {
-        mm_menu_right.closeAllPanels();
+        mm_menu_right.openPanel(document.querySelector('#toggle_get_started'));
         mm_menu_right.open();
-        $("a[href='#toggle_get_started']")[0].click()
       }
       $(selector).addClass("hover");
     };
@@ -94,52 +98,47 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "jquery.mmenu"], function($, 
     this.onRetrieveTag = function() {}
 
     this.onGettingStarted = function() {
-      mm_menu_right.closeAllPanels();
+      mm_menu_right.openPanel(document.querySelector('#toggle_get_started'));
       mm_menu_right.open();
-      $("a[href='#toggle_get_started']")[0].click()
     }
     this.onToggleTag = function() {
-      mm_menu_right.closeAllPanels();
+      mm_menu_right.openPanel(document.querySelector('#toggle_tag'));
       mm_menu_right.open();
-      $("a[href='#toggle_tag']")[0].click()
     }
     this.onToggleNeuClick = function() {
-      mm_menu_right.closeAllPanels();
-      mm_menu_right.initPanels($('#single-neu'));
-      mm_menu_right.initPanels($('#single-pin'));
+      mm_menu_right.openPanel(document.querySelector('#toggle_neuron'));
       mm_menu_right.open();
-      $("a[href='#toggle_neuron']")[0].click()
     }
     this.onToggleLPUClick = function() {
-      mm_menu_right.closeAllPanels();
-      mm_menu_right.initPanels($('#single-neuropil'));
+      mm_menu_right.openPanel(document.querySelector("#toggle_neuropil"));
       mm_menu_right.open();
-      $("a[href='#toggle_neuropil']")[0].click()
     }
     this.onToggleCellTypeClick = function(neuropil) {
-      if (loadcelltype === undefined){
-        console.log('loading')
-        this.loadAllCellTypes();
-        loadcelltype = true;
-      }
-      mm_menu_right.closeAllPanels();
-      mm_menu_right.initPanels($('#cell-type'));
-      mm_menu_right.open();
       if( neuropil === undefined && lastOpenedCellType === undefined) {
-        $("a[href='#toggle_celltype']")[0].click()
+        mm_menu_right.openPanel(document.querySelector('#toggle_celltype'))
       } else {
         if (neuropil === undefined) {
           neuropil = lastOpenedCellType;
         }
         var name_with_out_parenthesis = neuropil.replaceAll('(R)', '_R').replaceAll('(L)', '_L');
-        $("a[href='#"+name_with_out_parenthesis+"-cell-types']")[0].click();
+        mm_menu_right.openPanel(document.querySelector('#'+name_with_out_parenthesis+"-cell-types"));
         lastOpenedCellType = neuropil;
       }
-    }
-    this.onClickVisualizationSettings = function() {
-      mm_menu_right.closeAllPanels();
       mm_menu_right.open();
-      $("a[href='#toggle_visset']")[0].click()
+    }
+
+    this.loadCellTypes = function(name) {
+      name = name.toString();
+      name_with_out_parenthesis = name.replaceAll('(R)', '_R').replaceAll('(L)', '_L');
+      for (var neuronType of window.CellType[name]) {
+          window.dynamicCellTypeNeuropilMenu[name].addCellType(neuronType);
+      }
+    }
+
+    this.onClickVisualizationSettings = function() {
+      mm_menu_right.openPanel(document.querySelector('#toggle_visset'));
+      mm_menu_right.open();
+
     }
     this.openRightMenu = function() {
       mm_menu_right.open();
@@ -212,14 +211,11 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "jquery.mmenu"], function($, 
     });
 
     $(document).ready(() => {
-      $("#ui_menu_nav").mmenu({
-        //counters: true,
-        onClick: {
-          close: false,
-        },
-        "extensions": ["effect-menu-zoom", "position-right", "position-front"],
+      const menu = new Mmenu( "#ui_menu_nav", {
+        "theme": "dark",
+        "slidingSubmenus": true,
         navbar: {
-          title: "FFBO UI Menu"
+          title: "NeuroNLP UI Menu"
         },// We can add tabs here as well
         navbars: [
           {
@@ -230,21 +226,55 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "jquery.mmenu"], function($, 
           }
         ],
         searchfield:{
-          panel: true,
-          showSubPanels: true
+          // panel: true,
+          // showSubPanels: true
+          // add: true,
+          // addTo: "[id^=toggle_]"
         },
         hooks: {
-        }
+        },
+        offCanvas: {
+          "position": "right-front"
+        },
+        scrollBugFix: {
+          fix: true
+        },
+        "setSelected": {
+          "hover": true
+       }
       },{
         offCanvas: {
-          pageSelector: "#page-content-wrapper",
+          page: {
+              selector: "#page-content-wrapper"
+          }
         },
         searchfield: {
           clear: true
         }
       });
-      mm_menu_right = $("#ui_menu_nav").data( "mmenu" );
+      mm_menu_right = menu.API;
       $('[data-toggle="tooltip"]').tooltip();
+
+      mm_menu_right.bind( "openPanel:after",
+        ( panel ) => {
+            if ( panel.id === 'toggle_celltype' ) {
+              if (loadcelltype === undefined){
+                this.loadAllCellTypesNeuropil();
+                loadcelltype = true;
+              }
+              if (window.lastOpenedCellType !== undefined)
+              {
+                window.dynamicCellTypeNeuropilMenu[window.lastOpenedCellType].reset()
+                window.lastOpenedCellType = undefined;
+              }
+            } else if (panel.id.includes('-cell-types')) {
+                var neuropil = panel.id.split('-')[0].replaceAll('_R', '(R)').replaceAll('_L', '(L)');
+                if (neuropil !== window.lastOpenedCellType) {
+                  this.loadCellTypes(neuropil);
+                }
+            }
+        }
+      );
     });
   }
 
