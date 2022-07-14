@@ -246,7 +246,6 @@ require([
       client.status.on("change", function () {
         ffbomesh.import_state(metadata);
         $('#ui-blocker').hide();
-        ffbomesh.resetVisibleView();
       }, queryID);
     }
 
