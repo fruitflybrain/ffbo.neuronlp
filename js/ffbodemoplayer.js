@@ -96,7 +96,7 @@ moduleExporter(
              //mouseOver = this.ffbomesh.states.mouseOver;
              //this.ffbomesh.states.mouseOver = true;
              if(typeof t === 'string'){
-               $(t)[0].scrollIntoView({behavior: 'smooth'});
+               $(t)[0].scrollIntoView({behavior: 'smooth', block: 'center'});
                setTimeout(() => { this.cursor.moveTo(t, dur); }, 2000);
                setTimeout(() => { resolve(); /*this.ffbomesh.states.mouseOver = mouseOver;*/ }, dur + 2000 + this._timeOutPause);
              }
@@ -116,7 +116,7 @@ moduleExporter(
                resolve();
                return;
              }
-             if($(panel).hasClass('mm-panel_opened') && $('#ui_menu_nav').hasClass('mm-menu_opened')){
+             if($(panel).hasClass('mm-panel--opened') && $('#ui_menu_nav').hasClass('mm-menu--opened')){
                resolve();
                return;
              }
@@ -127,12 +127,12 @@ moduleExporter(
                      sel = this.menuSels.neu + (panel == this.menuSels.singleNeu ? ' > ul > li:nth-child(4)' : ' > ul > li:nth-child(3)')
                      this._moveTo(sel, moveToDur).then(() =>{
                        this.cursor.click();
-                       this.menu.openPanel($(panel));
+                       this.menu.openPanel(document.querySelector(panel));
                        setTimeout(function(){resolve()}, panelOpenPause + this._timeOutPause);
                      });
                    }
                    else{
-                     this.menu.openPanel($(panel));
+                     this.menu.openPanel(document.querySelector(panel));
                      setTimeout(function(){resolve()}, panelOpenPause + this._timeOutPause);
                    }
                  });
@@ -143,12 +143,12 @@ moduleExporter(
                  sel = this.menuSels.top + ' > ul > li:nth-child(3)'
                  this._moveTo(sel, moveToDur).then(() =>{
                    this.cursor.click();
-                   this.menu.openPanel($(panel));
+                   this.menu.openPanel(document.querySelector(panel));
                    setTimeout(function(){resolve()}, panelOpenPause + this._timeOutPause);
                  }).catch(reject);
                }
                else{
-                 this.menu.openPanel($(panel));
+                 this.menu.openPanel(document.querySelector(panel));
                  setTimeout(function(){resolve()}, panelOpenPause + this._timeOutPause);
                }
              }
@@ -158,12 +158,12 @@ moduleExporter(
                    sel = this.menuSels.top + ' > ul > li:nth-child(4)'
                    this._moveTo(sel, moveToDur).then(() =>{
                      this.cursor.click();
-                     this.menu.openPanel($(panel));
+                     this.menu.openPanel(document.querySelector(panel));
                      setTimeout(function(){resolve()}, panelOpenPause + this._timeOutPause);
                    }).catch(reject);
                  }
                  else{
-                   this.menu.openPanel($(panel));
+                   this.menu.openPanel(document.querySelector(panel));
                    setTimeout(function(){resolve()}, panelOpenPause + this._timeOutPause);
                  }
                });
@@ -174,12 +174,12 @@ moduleExporter(
                    sel = this.menuSels.top + ' > ul > li:nth-child(2)'
                    this._moveTo(sel, moveToDur).then(() =>{
                      this.cursor.click();
-                     this.menu.openPanel($(panel));
+                     this.menu.openPanel(document.querySelector(panel));
                      setTimeout(function(){resolve()}, panelOpenPause + this._timeOutPause);
                    }).catch(reject);
                  }
                  else{
-                   this.menu.openPanel($(panel));
+                   this.menu.openPanel(document.querySelector(panel));
                    setTimeout(function(){resolve()}, panelOpenPause + this._timeOutPause);
                  }
                });
@@ -187,12 +187,12 @@ moduleExporter(
                if($('#ui_menu_btn').is(':visible') && moveTo){
                  this._moveTo('#ui_menu_btn', moveToDur).then(() =>{
                    this.cursor.click();
-                   this.menu.openPanel($(panel));
+                   this.menu.openPanel(document.querySelector(panel));
                    setTimeout(function(){resolve()}, panelOpenPause + this._timeOutPause);
                  }).catch(reject);
                }else{
+                 this.menu.openPanel(document.querySelector(panel));
                  this.menu.open();
-                 this.menu.openPanel($(panel));
                  setTimeout(function(){resolve()}, panelOpenPause + this._timeOutPause);
                }
              }
@@ -485,7 +485,6 @@ moduleExporter(
                resolve();
                return;
              }
-             this.menu.closeAllPanels();
              this.menu.close();
              $(this.srchWrap).toggleClass("search-middle");
              setTimeout((function(){
@@ -701,7 +700,6 @@ moduleExporter(
          this.cursor = undefined;
          $('#demo-blocker').hide();
          this.ffbomesh.highlight(undefined);
-         this.menu.closeAllPanels();
          this.menu.close();
        }
      });
