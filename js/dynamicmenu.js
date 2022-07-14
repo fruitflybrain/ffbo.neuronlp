@@ -107,11 +107,11 @@ moduleExporter(
       this.addNeuropil = function( name ) {
         name = name.toString();
         name_with_out_parenthesis = name.replaceAll('(R)', '_R').replaceAll('(L)', '_L');
-        var domStr = `<li class="mm-listitem">` +
-                      `<a class="mm-btn_next mm-btn_fullwidth" href="#`+name_with_out_parenthesis+`-cell-types" onclick="lastOpenedCellType='`+name+`'"><span class="mm-sronly">Open submenu (`+name+`)</span></a>` + 
-                      `<span>`+name+`<i class="icon-arrow-right"></i></span>` +
-                      `<ul id="cell-type-`+name_with_out_parenthesis+`"></ul>` +
+
+        var domStr = `<li class="mm-listitem" data-mm-child="` + name_with_out_parenthesis+`-cell-types">` + 
+                     `<a class="mm-btn mm-btn--next mm-listitem__btn mm-listitem__text" title="Open submenu" href="#`+ name_with_out_parenthesis+`-cell-types" onclick="lastOpenedCellType='`+name+`'">`+name+`<i class="icon-arrow-right"></i></a>` + 
                      `</li>`;
+
         
         var idx = findIndex(name, _this.btnLabelList, _this.config.compare);
         if (idx === _this.btnLabelList.length){
@@ -123,7 +123,7 @@ moduleExporter(
 
         _this.btnLabelList.splice(idx, 0, name);
 
-        var domStr2 = `<div id="`+name_with_out_parenthesis+`-cell-types" class="mm-panel mm-panel_has-navbar mm-hidden" aria-hidden="true"> <div class="mm-navbar"><a class="mm-btn mm-btn_prev mm-navbar__btn" href="#toggle_celltype", onclick="lastOpenedCellType=undefined" aria-owns="toggle_celltype" aria-haspopup="true"><span class="mm-sronly">`+name+`</span></a><a class="mm-navbar__title" href="#toggle_celltype" onclick="lastOpenedCellType=undefined">`+name+` </a></div> <ul class="mm-listview"></ul></div>`
+        var domStr2 = `<div id="`+name_with_out_parenthesis+`-cell-types" class="mm-panel"> <div class="mm-navbar"><a class="mm-btn mm-btn--prev mm-navbar__btn" href="#toggle_celltype", onclick="" title="Close submenu"></a><a class="mm-navbar__title" href="#toggle_celltype" aria-hidden="true" onclick=""><span class="">`+name+`</span></a></div> <ul class="mm-listview"></ul></div>`
         $(".mm-panels").append(domStr2);
         var menu = new FFBODynamicMenu({ singleObjSel: '#'+name_with_out_parenthesis+ '-cell-types > .mm-listview', compare: 'LeftRight', name: name });
         return menu;
@@ -304,6 +304,11 @@ moduleExporter(
         }
 
       };
+
+      this.reset = function () {
+        _this.btnLabelList = [];
+        $(_this.config.singleObjSel).empty();
+      }
 
       this.dispatch = {
         getInfo: function(){},
