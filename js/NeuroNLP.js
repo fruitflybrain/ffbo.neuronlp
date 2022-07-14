@@ -53,7 +53,7 @@ requirejs.config({
     perfectscrollbar: "//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.7.0/js/perfect-scrollbar.jquery.min",
     "jquery.mobile": "//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min",
     spectrum: "//cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min",
-    "jquery.mmenu": "../lib/js/jquery.mmenu.all",
+    mmenu: "//cdn.jsdelivr.net/gh/FrDH/mmenu-js@v9.1.6/dist/mmenu",
     bootsrapslider: "//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min",
     swiper: "//cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.2/js/swiper.min",
     bootstrap: "//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min",
@@ -618,21 +618,20 @@ require([
       client.getConnectivity(function () { $('#ui-blocker').hide(); });
     });
 
-    window.NeuroNLPUI.loadAllCellTypes = function() {
-      var dynapmicCellTypeNeuropilMenu = {};
+    var dynamicCellTypeNeuropilMenu = {};
+    window.NeuroNLPUI.loadAllCellTypesNeuropil = function() {
       $.getJSON("./data/types_in_neuropils.json", function (json) {
         json = json[1];
+        window.CellType = json;
         for (var key in json) {
-          dynapmicCellTypeNeuropilMenu[key] = dynamicCellTypeMenu.addNeuropil(key);
-          dynapmicCellTypeNeuropilMenu[key].dispatch.addType = function (name) { client.addType(name, { success: dataCallback }) };
-          dynapmicCellTypeNeuropilMenu[key].dispatch.removeType = function (name) { client.removeType(name, { success: dataCallback }) };
-          for (var neuronType of json[key] ) {
-            dynapmicCellTypeNeuropilMenu[key].addCellType(neuronType);
-          }
+          dynamicCellTypeNeuropilMenu[key] = dynamicCellTypeMenu.addNeuropil(key);
+          dynamicCellTypeNeuropilMenu[key].dispatch.addType = function (name) { client.addType(name, { success: dataCallback }) };
+          dynamicCellTypeNeuropilMenu[key].dispatch.removeType = function (name) { client.removeType(name, { success: dataCallback }) };
         }
       });
     }
-
+    window.dynamicCellTypeNeuropilMenu = dynamicCellTypeNeuropilMenu;
+    
     $.getJSON("./data/config.json", function (json) {
       json = json[1];
       ffbomesh.addJson({
