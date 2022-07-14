@@ -59,14 +59,26 @@ requirejs.config({
     bootstrap: "//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min",
     blockui: "//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min",
     tageditor: "//cdnjs.cloudflare.com/ajax/libs/tag-editor/1.0.20/jquery.tag-editor.min",
-    izitoast: "../lib/js/iziToast.min",
+    izitoast: "//cdn.jsdelivr.net/gh/marcelodolza/iziToast@1.4.0/dist/js/iziToast.min",
     stats: "../lib/js/stats.min",
     linematerial: "//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/lines/LineMaterial",
     linesegmentsgeometry: "//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/lines/LineSegmentsGeometry",
     linesegments2: "//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/lines/LineSegments2",
     json: '//cdn.jsdelivr.net/gh/millermedeiros/requirejs-plugins@master/src/json',
     text: '//cdn.jsdelivr.net/gh/millermedeiros/requirejs-plugins@master/lib/text',
-    showdown: '//cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min'
+    showdown: '//cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min',
+    graphvis: '//cdn.jsdelivr.net/gh/mkturkcan/neuronlp.graphutils@1186d9766c01678e7e6877d4f79c60046e43959f/js/graphvis',
+    sigma: '//cdn.jsdelivr.net/gh/mkturkcan/neuronlp.graphutils@1186d9766c01678e7e6877d4f79c60046e43959f/sigma.js/sigma.min',
+    sigma_exporters: '//cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.exporters.svg.min',
+    sigma_forceAtlas2: '//cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.layout.forceAtlas2.min',
+    sigma_noverlap: '//cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.layout.noverlap.min',
+    sigma_cypher: '//cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.neo4j.cypher.min',
+    sigma_gexf: '//cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.parsers.gexf.min',
+    sigma_json: '//cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.parsers.json.min',
+    sigma_astar: '//cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.pathfinding.astar.min',
+    sigma_animate: '//cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.plugins.animate.min',
+    sigma_dragNodes: '//cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.plugins.dragNodes.min',
+    sigma_filter: '//cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.plugins.filter.min',
     /* Notify, bootbox, colormaps, demos, mouse, vis_set, ResizeSensor, read_vars, colorm[aps */
   },
   shim: {
@@ -100,7 +112,20 @@ requirejs.config({
     linematerial: {deps: ['three']},
     linesegmentsgeometry: {deps: ['three']},
     linesegments2: {deps: ['three', 'linesegmentsgeometry']},
-    gltfloader: {deps: ['three']}
+    gltfloader: {deps: ['three']},
+    sigma_forceAtlas2: {deps: ['sigma']},
+    sigma_exporters: {deps: ['sigma']},
+    sigma_forceAtlas2: {deps: ['sigma']},
+    sigma_noverlap: {deps: ['sigma']},
+    sigma_cypher: {deps: ['sigma']},
+    sigma_gexf: {deps: ['sigma']},
+    sigma_json: {deps: ['sigma']},
+    sigma_astar: {deps: ['sigma']},
+    sigma_animate: {deps: ['sigma']},
+    sigma_dragNodes: {deps: ['sigma']},
+    sigma_filter: {deps: ['sigma']},
+    graphvis: {deps: ['sigma', 'sigma_forceAtlas2', 'sigma_dragNodes', 'sigma_exporters', 'sigma_noverlap', 'sigma_cypher', 'sigma_gexf', 'sigma_json', 'sigma_astar', 'si\
+gma_animate', 'sigma_filter']}
   },
   waitSeconds: 15
 });
