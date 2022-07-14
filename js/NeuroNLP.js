@@ -18,6 +18,7 @@ requirejs.config({
     // app: 'app',
     mesh3d: '../lib/js/mesh3d',
     propertymanager: '../lib/js/propertymanager',
+    lightshelper: '../lib/js/lightshelper',
     infopanel: "info_panel/infopanel",
     autobahn: '//cdn.jsdelivr.net/gh/crossbario/autobahn-js-browser@v20.9.2/autobahn/autobahn.min',
     d3: '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min',
@@ -45,8 +46,10 @@ requirejs.config({
     unrealbloompass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/postprocessing/UnrealBloomPass',
     gltfloader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/loaders/GLTFLoader',
     adaptivetonemappingpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/postprocessing/AdaptiveToneMappingPass',
-    trackballcontrols: '../lib/js/TrackballControls',
-    lightshelper: '../lib/js/lightshelper',
+    trackballcontrols: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/controls/TrackballControls',
+    linematerial: "//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/lines/LineMaterial",
+    linesegmentsgeometry: "//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/lines/LineSegmentsGeometry",
+    linesegments2: "//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/lines/LineSegments2",
     modernizr: "//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min",
     d3: "//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3",
     jqueryui: "//code.jquery.com/ui/1.12.1/jquery-ui",
@@ -60,10 +63,7 @@ requirejs.config({
     blockui: "//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min",
     tageditor: "//cdnjs.cloudflare.com/ajax/libs/tag-editor/1.0.20/jquery.tag-editor.min",
     izitoast: "//cdn.jsdelivr.net/gh/marcelodolza/iziToast@1.4.0/dist/js/iziToast.min",
-    stats: "../lib/js/stats.min",
-    linematerial: "//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/lines/LineMaterial",
-    linesegmentsgeometry: "//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/lines/LineSegmentsGeometry",
-    linesegments2: "//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/lines/LineSegments2",
+    stats: "//cdn.jsdelivr.net/gh/mrdoob/stats.js@r17/build/stats.min",
     json: '//cdn.jsdelivr.net/gh/millermedeiros/requirejs-plugins@master/src/json',
     text: '//cdn.jsdelivr.net/gh/millermedeiros/requirejs-plugins@master/lib/text',
     showdown: '//cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min',
@@ -124,8 +124,7 @@ requirejs.config({
     sigma_animate: {deps: ['sigma']},
     sigma_dragNodes: {deps: ['sigma']},
     sigma_filter: {deps: ['sigma']},
-    graphvis: {deps: ['sigma', 'sigma_forceAtlas2', 'sigma_dragNodes', 'sigma_exporters', 'sigma_noverlap', 'sigma_cypher', 'sigma_gexf', 'sigma_json', 'sigma_astar', 'si\
-gma_animate', 'sigma_filter']}
+    graphvis: {deps: ['sigma', 'sigma_forceAtlas2', 'sigma_dragNodes', 'sigma_exporters', 'sigma_noverlap', 'sigma_cypher', 'sigma_gexf', 'sigma_json', 'sigma_astar', 'sigma_animate', 'sigma_filter']}
   },
   waitSeconds: 15
 });
