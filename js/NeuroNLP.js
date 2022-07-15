@@ -579,7 +579,7 @@ require([
       GvisInitGraphs();
       if (isOnMobile)
         ffbomesh.backrenderSSAO.enabled = false;
-      FFBODemoPlayer = new FFBODemoPlayer(ffbomesh, $('#ui_menu_nav').data('mmenu'));
+      FFBODemoPlayer = new FFBODemoPlayer(ffbomesh, $('#ui_menu_nav')[0].mmApi);
       window.FFBODemoPlayer = FFBODemoPlayer;
       FFBODemoPlayer.onLoadingTag = () => {
         tagLoad = true;
