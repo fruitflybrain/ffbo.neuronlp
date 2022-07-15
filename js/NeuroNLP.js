@@ -154,6 +154,7 @@ require([
   'linematerial',
   'linesegmentsgeometry',
   'linesegments2',
+  'graphvis'
 ]
   , function (
     config,
