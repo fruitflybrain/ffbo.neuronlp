@@ -20,6 +20,17 @@ requirejs.config({
     propertymanager: '../lib/js/propertymanager',
     lightshelper: '../lib/js/lightshelper',
     infopanel: "info_panel/infopanel",
+    client: 'client',
+    overlay: 'overlay',
+    visualizationsettings: 'visualizationsettings',
+    ffbodemoplayer: 'ffbodemoplayer',
+    dynamicmenu: 'dynamicmenu',
+    tags: 'tags',
+    ui: 'ui',
+    connsvg: "info_panel/connsvg",
+    conntable: "info_panel/conntable",
+    preprocess: "info_panel/preprocess",
+    summarytable: "info_panel/summarytable",
     autobahn: '//cdn.jsdelivr.net/gh/crossbario/autobahn-js-browser@v20.9.2/autobahn/autobahn.min',
     d3: '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min',
     jquery: '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min',
@@ -265,6 +276,9 @@ require([
     window.ffbomesh = ffbomesh;
     window.infoPanel = infoPanel;
     window.dynamicNeuronMenu = dynamicNeuronMenu;
+    window.dynamicNeuropilMenu = dynamicNeuropilMenu;
+    window.Neuropils = undefined;
+    window.CellTypes = undefined;
 
     function retrieveTagData(metadata) {
       queryID = client.retrieveState({ success: dataCallback }, "add");
@@ -646,7 +660,7 @@ require([
     window.NeuroNLPUI.loadAllCellTypesNeuropil = function() {
       $.getJSON("./data/types_in_neuropils.json", function (json) {
         json = json[1];
-        window.CellType = json;
+        window.CellTypes = json;
         for (var key in json) {
           dynamicCellTypeNeuropilMenu[key] = dynamicCellTypeMenu.addNeuropil(key);
           dynamicCellTypeNeuropilMenu[key].dispatch.addType = function (name) { client.addType(name, { success: dataCallback }) };
@@ -658,6 +672,7 @@ require([
     
     $.getJSON("./data/config.json", function (json) {
       json = json[1];
+      window.Neuropils = json;
       ffbomesh.addJson({
         ffbo_json: json,
         showAfterLoadAll: false // true does not do anything
