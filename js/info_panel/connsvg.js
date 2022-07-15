@@ -47,7 +47,7 @@ function hsvToRgb(h, s, v) {
 moduleExporter("ConnSVG",
  ['jquery',
   'd3',
-  'info_panel/preprocess'],
+  'preprocess'],
   function(
     $,
     d3,

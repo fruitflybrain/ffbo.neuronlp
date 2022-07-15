@@ -306,8 +306,19 @@ moduleExporter(
       };
 
       this.reset = function () {
+        b = $(_this.config.singleObjSel)[0];
+        for (let index = b.childNodes.length -1; index >=0; index--) {
+          let a = b.childNodes[index];
+          if(a.childNodes.length > 0) {
+            if(_this.btnLabelList.indexOf(a.childNodes[0].textContent) > -1) {
+              a.remove();
+            } else {
+              console.log(a.childNodes[0].textContent)
+            }
+          }
+          
+        }
         _this.btnLabelList = [];
-        $(_this.config.singleObjSel).empty();
       }
 
       this.dispatch = {
