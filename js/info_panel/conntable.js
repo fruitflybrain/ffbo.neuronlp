@@ -15,7 +15,7 @@ if( moduleExporter === undefined){
 moduleExporter("ConnTable",
   ['jquery',
   'd3',
-  'info_panel/preprocess',
+  'preprocess',
   'overlay'],
   function(
     $,

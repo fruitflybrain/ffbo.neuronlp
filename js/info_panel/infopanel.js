@@ -14,9 +14,9 @@ if( moduleExporter === undefined){
 
 moduleExporter("InfoPanel",[
   'jquery',
-  'info_panel/summarytable',
-  'info_panel/connsvg',
-  'info_panel/conntable',
+  'summarytable',
+  'connsvg',
+  'conntable',
   ],
   function(
     $,
