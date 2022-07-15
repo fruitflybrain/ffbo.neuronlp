@@ -130,7 +130,7 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "mmenu"], function($, Overlay
     this.loadCellTypes = function(name) {
       name = name.toString();
       name_with_out_parenthesis = name.replaceAll('(R)', '_R').replaceAll('(L)', '_L');
-      for (var neuronType of window.CellType[name]) {
+      for (var neuronType of window.CellTypes[name]) {
           window.dynamicCellTypeNeuropilMenu[name].addCellType(neuronType);
       }
     }
@@ -272,6 +272,13 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "mmenu"], function($, Overlay
                 if (neuropil !== window.lastOpenedCellType) {
                   this.loadCellTypes(neuropil);
                 }
+            } else if (panel.id === 'toggle_neuropil') {
+              if (window.dynamicNeuropilMenu.btnLabelList.length > $(window.dynamicNeuropilMenu.config.singleObjSel)[0].children.length) {
+                window.dynamicNeuropilMenu.reset();
+                for (var key in window.Neuropils) {
+                  dynamicNeuropilMenu.addNeuron(key, window.Neuropils[key]['label']);
+                }
+              }
             }
         }
       );

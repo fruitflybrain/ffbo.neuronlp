@@ -276,6 +276,9 @@ require([
     window.ffbomesh = ffbomesh;
     window.infoPanel = infoPanel;
     window.dynamicNeuronMenu = dynamicNeuronMenu;
+    window.dynamicNeuropilMenu = dynamicNeuropilMenu;
+    window.Neuropils = undefined;
+    window.CellTypes = undefined;
 
     function retrieveTagData(metadata) {
       queryID = client.retrieveState({ success: dataCallback }, "add");
@@ -657,7 +660,7 @@ require([
     window.NeuroNLPUI.loadAllCellTypesNeuropil = function() {
       $.getJSON("./data/types_in_neuropils.json", function (json) {
         json = json[1];
-        window.CellType = json;
+        window.CellTypes = json;
         for (var key in json) {
           dynamicCellTypeNeuropilMenu[key] = dynamicCellTypeMenu.addNeuropil(key);
           dynamicCellTypeNeuropilMenu[key].dispatch.addType = function (name) { client.addType(name, { success: dataCallback }) };
@@ -669,6 +672,7 @@ require([
     
     $.getJSON("./data/config.json", function (json) {
       json = json[1];
+      window.Neuropils = json;
       ffbomesh.addJson({
         ffbo_json: json,
         showAfterLoadAll: false // true does not do anything
