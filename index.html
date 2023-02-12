@@ -18,7 +18,7 @@
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap-theme.min.css"> -->
 
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/FrDH/mmenu-js@v9.1.6/dist/mmenu.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/FrDH/mmenu-js@v9.3.0/dist/mmenu.css"/>
     <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.7.0/css/perfect-scrollbar.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css" />
@@ -43,7 +43,7 @@
     <link rel="stylesheet" id="main_css" type="text/css" href="./lib/css/ffbo.Menu.css">
   </head>
   <body>
-    <div id="ui-blocker" style=""></div>
+    <div id="ui-blocker"></div>
     <div id="wrapper" style="z-index:1">
       <nav class="navbar navbar-ffbo navbar-inverse">
         <div class="container-fluid">
@@ -117,8 +117,12 @@
                     </ul>
                   </li>
                   <li>
-                    <span>All Neurons/Synapses <i class="icon-arrow-right"></i></span>
+                    <span>All Neurons <i class="icon-arrow-right"></i></span>
                     <ul id="single-neu"></ul>
+                  </li>
+                  <li>
+                    <span>All Synapses <i class="icon-arrow-right"></i></span>
+                    <ul id="single-syn"></ul>
                   </li>
                 </ul>
               </li>
@@ -490,7 +494,7 @@
       </nav>
 
       <!-- Page Content -->
-      <div id="page-content-wrapper">
+      <div id="page-content-wrapper"></div>
 
         <div id="info-panel-wrapper" class="vis-info vis-info-pin">
           <div id="info-pin-div" >
@@ -726,7 +730,7 @@
               Cell type menu lists the names of cell types in each of the neuropil that can be added to the 3D visualization workspace.
               These names can be used directly in the English query without $$ any more (case insenstive). For example, "show mbon06" works, no need to use "show $MBON06$.
               </p>
-            <h5>Improved Graph View Tool <i class="fa fa-bar-chart"></i> and <i class="fa fa-cubes"></i></h5>
+            <h5>Improved Graph View Tool <i class="fa fa-connectdevelop"></i> and <i class="fa fa-cubes"></i></h5>
               <p>Now you can filter the edges in the graph by the number of synapses.</p>  
           </div>
         </div>
@@ -886,25 +890,31 @@
                 <p>Here we list the function of each button:</p>
                 <ul>
                   <li>
-                    <strong><i class="fa fa-trash"></i></strong>: Remove all unpinned neurons/synapses.
-                  </li>
-                  <li>
-                    <i class="fa fa-eye-slash"></i>: Hide all unpinned neurons/synapses.
-                  </li>
-                  <li>
-                    <i class="fa fa-eye"></i>: Show all neurons, synapses and neuropils.
-                  </li>
-                  <li>
-                    <i class="fa fa-align-justify"></i>: Zoom in onto the visualized (not hidden) neurons.
-                  </li>
-                  <li>
-                    <i class="fa fa-refresh"></i>: Reset view to original setting.
+                    <strong><i class="fa fa-cog"></i></strong>: Open visualization settings.
                   </li>
                   <li>
                     <i class="fa fa-info-circle"></i>: Open this menu.
                   </li>
                   <li>
+                    <i class="fa fa-tachometer"></i>: Turn on/off stats performance monitor.
+                  </li>
+                  <li>
                     <i class="fa fa-camera"></i>: Take a screenshot of the current 3D visualization. The quality of the screenshot depends on the resolution of the display and the browser window size.
+                  </li>
+                  <li>
+                    <i class="fa fa-refresh"></i>: Reset view to original setting.
+                  </li>
+                  <li>
+                    <i class="fa fa-binoculars"></i>: Zoom in onto the visualized (not hidden) neurons.
+                  </li>
+                  <li>
+                    <i class="fa fa-eye"></i>: Show all neurons, synapses and neuropils.
+                  </li>
+                  <li>
+                    <i class="fa fa-eye-slash"></i>: Hide all unpinned neurons/synapses.
+                  </li>
+                  <li>
+                    <strong><i class="fa fa-trash"></i></strong>: Remove all unpinned neurons/synapses.
                   </li>
                 </ul>
               </article>
@@ -919,7 +929,7 @@
                 <p>Three additional buttons in the Visualization Panel provide information about the graph of the visualized neural circuit:</p>
                 <ul>
                   <li>
-                    <i class="fa fa-bar-chart"></i>: Open the Graph View to generate a neuronal level graph of the neurons in the current workspace. The graph is visualized in 2D. Nodes representing each neuron has the same color as in the 3D visualization. Nodes can be reordered by dragging them. Hovering over a node will highlight the corresponding neuron in the 3D visualization. Clicking on the node hide/unhide morphology of the corresponding neuron. You can adjust the synapse threshold to remove connections that has less number of synapses than the value. 
+                    <i class="fa fa-connectdevelop"></i>: Open the Graph View to generate a neuronal level graph of the neurons in the current workspace. The graph is visualized in 2D. Nodes representing each neuron has the same color as in the 3D visualization. Nodes can be reordered by dragging them. Hovering over a node will highlight the corresponding neuron in the 3D visualization. Clicking on the node hide/unhide morphology of the corresponding neuron. You can adjust the synapse threshold to remove connections that has less number of synapses than the value. 
                   </li>
                   <li>
                     <i class="fa fa-cubes"></i>: Open the Graph View to generate a cell type level graph of the neurons in the current workspace. Connections from all neurons of one cell type to all neurons of another cell type will be aggregated. Nodes can be reordered by dragging them. Hovering over a node will highlight the neurons of the corresponding cell type in the 3D visualization. Clicking on a node hide/unhide morphology of the neurons of the corresponding cell type.
@@ -984,9 +994,9 @@
         </div>
         <div id="neuronlp-switch" class="overlay">
           <div class="neuronlp-switch-wrapper">
-            <a class="info-try btn btn-xs" onclick="NeuroNLPUI.closeAllOverlay()">Stay at <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #999;">NeuroNLP.Hemibrain</span></a>
+            <a class="info-try btn btn-xs" onclick="NeuroNLPUI.closeAllOverlay()">Stay at <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #FFEF35;">NeuroNLP.Hemibrain</span></a>
             <h5>Or</h5>
-            <a class="info-try btn btn-xs" href="https://neuronlp.fruitflybrain.org">Switch to <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #999;">NeuroNLP.FlyCircuit</span></a>
+            <a class="info-try btn btn-xs" href="https://neuronlp.fruitflybrain.org">Switch to <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #FFEF35;">NeuroNLP.FlyCircuit</span></a>
           </div>
         </div>
 
@@ -1002,7 +1012,7 @@
           </div>
       </div>
       <!-- /#page-content-wrapper -->
-    </div>
+    
 
 
 
