@@ -216,7 +216,7 @@
       ["notify", {"message": "Now let's make a simple query"}],
       ["search", {"query": "show olfactory sensory neurons in right al"}],
       ["search", {"query": "add LNs in the right al"}],
-      ["notify", {"message": "We can use the <i class=\"fa fa-align-justify\"><\/i> button zoom into the neurons visualized."}],
+      ["notify", {"message": "We can use the <i class=\"fa fa-binoculars\"><\/i> button zoom into the neurons visualized."}],
       ["click", {"uiBtn": {"type": "resetVisibleView"}}],
       ["notify", {"message": "Let's take a screenshot of the visualization using the <i class=\"fa fa-camera\"><\/i> button ."}],
       ["click", {"uiBtn": {"type": "takeScreenshot"}}],
@@ -235,7 +235,7 @@
       ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
     ],
     "keyword": "Visualization Panel Buttons",
-    "description": "Function of the GUI button <i class=\"fa fa-trash\"><\/i> <i class=\"fa fa-eye-slash\"><\/i> <i class=\"fa fa-eye\"><\/i> <i class=\"fa fa-align-justify\"><\/i> <i class=\"fa fa-refresh\"><\/i> <i class=\"fa fa-info-circle\"><\/i> <i class=\"fa fa-camera\"><\/i> on the top right.",
+    "description": "Function of the GUI button <i class=\"fa fa-trash\"><\/i> <i class=\"fa fa-eye-slash\"><\/i> <i class=\"fa fa-eye\"><\/i> <i class=\"fa fa-binoculars\"><\/i> <i class=\"fa fa-refresh\"><\/i> <i class=\"fa fa-info-circle\"><\/i> <i class=\"fa fa-camera\"><\/i> on the top right.",
     "category": "GUI Usage"
   },
   "connectivity_1": {
@@ -251,14 +251,14 @@
       ["search", {"query": "color lime"}],
       ["search", {"query": "add broad LN in right AL"}],
       ["search", {"query": "color yellow"}],
-      ["notify", {"message": "Now let's open Graph View to see the neuronal graph with the <i class=\"fa fa-bar-chart\"><\/i> button.", "pause": 6000}],
+      ["notify", {"message": "Now let's open Graph View to see the neuronal graph with the <i class=\"fa fa-connectdevelop\"><\/i> button.", "pause": 6000}],
       ["click", {"uiBtn": {"type": "showGraph"}}],
       ["notify", {"message": "Now let's download the connectivity between these neurons by using the <i class='fa fa-download'></i> button", "pause": 1000}],
       ["click", {"uiBtn": {"type": "downData"}, "waitForUI": true}],
       ["notify", {"message": "Done! Try it yourself!", "pause": 5000}]
     ],
     "keyword": "Graph View / Connectivity Buttons",
-    "description": "Explore the connectivity of visualized neurons with <i class=\"fa fa-cubes\"><\/i> <i class=\"fa fa-bar-chart\"><\/i> <i class=\"fa fa-download\"><\/i> buttons",
+    "description": "Explore the connectivity of visualized neurons with <i class=\"fa fa-cubes\"><\/i> <i class=\"fa fa-connectdevelop\"><\/i> <i class=\"fa fa-download\"><\/i> buttons",
     "category": "GUI Usage"
   },
   "visualization_settings": {
