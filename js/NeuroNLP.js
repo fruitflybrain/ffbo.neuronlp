@@ -67,7 +67,7 @@ requirejs.config({
     perfectscrollbar: "//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.7.0/js/perfect-scrollbar.jquery.min",
     "jquery.mobile": "//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min",
     spectrum: "//cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min",
-    mmenu: "//cdn.jsdelivr.net/gh/FrDH/mmenu-js@v9.1.6/dist/mmenu",
+    mmenu: "//cdn.jsdelivr.net/gh/FrDH/mmenu-js@v9.3.0/dist/mmenu",
     bootsrapslider: "//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min",
     swiper: "//cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.2/js/swiper.min",
     bootstrap: "//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min",
@@ -198,11 +198,12 @@ require([
     window.NeuroNLPUI = new NeuroNLPUI();
     var infoPanel = new InfoPanel("info-panel");
     var dynamicNeuronMenu = new FFBODynamicMenu({ singleObjSel: '#single-neu > .mm-listview', pinnedObjSel: '#single-pin > .mm-listview', removable: true, pinnable: true });
+    var dynamicSynapseMenu = new FFBODynamicMenu({ singleObjSel: '#single-syn > .mm-listview', pinnedObjSel: '#single-pin > .mm-listview', removable: true, pinnable: true });
     var dynamicNeuropilMenu = new FFBODynamicMenu({ singleObjSel: '#toggle_neuropil > .mm-listview', compare: 'LeftRight' });
     var dynamicCellTypeMenu = new FFBODynamicMenu({ singleObjSel: '#toggle_celltype > .mm-listview', compare: 'LeftRight' });
     var ffbomesh = new FFBOMesh3D('vis-3d', undefined,
                                   config.metadata,
-                                  stats = true);
+                                  stats = false);
     var tagsPanel = new Tags('tagsMenu');
     var client = new FFBOClient(config.dataset);
     var visualizationSettings = new FFBOVisualizationSettings(ffbomesh);
@@ -276,6 +277,7 @@ require([
     window.ffbomesh = ffbomesh;
     window.infoPanel = infoPanel;
     window.dynamicNeuronMenu = dynamicNeuronMenu;
+    window.dynamicSynapseMenu = dynamicSynapseMenu;
     window.dynamicNeuropilMenu = dynamicNeuropilMenu;
     window.Neuropils = undefined;
     window.CellTypes = undefined;
@@ -478,6 +480,13 @@ require([
     dynamicNeuronMenu.dispatch.unpin = function (id) { ffbomesh.unpin(id) };
     dynamicNeuronMenu.dispatch.remove = function (id) { client.removeObjs(id) };
     dynamicNeuronMenu.dispatch.getInfo = function (id) { ffbomesh.select(id) };
+    dynamicSynapseMenu.dispatch.highlight = function (id) { ffbomesh.highlight(id, true) };
+    dynamicSynapseMenu.dispatch.resume = function (id) { ffbomesh.highlight(undefined) };
+    dynamicSynapseMenu.dispatch.toggle = function (id) { ffbomesh.toggleVis(id) };
+    dynamicSynapseMenu.dispatch.togglePin = function (id) { ffbomesh.togglePin(id) };
+    dynamicSynapseMenu.dispatch.unpin = function (id) { ffbomesh.unpin(id) };
+    dynamicSynapseMenu.dispatch.remove = function (id) { client.removeObjs(id) };
+    dynamicSynapseMenu.dispatch.getInfo = function (id) { ffbomesh.select(id) };
     dynamicNeuropilMenu.dispatch.toggle = function (id) { ffbomesh.toggleVis(id) };
     dynamicNeuropilMenu.dispatch.getInfo = function (id) { ffbomesh.toggleVis(id) };
     dynamicNeuropilMenu.dispatch.highlight = function (id) { ffbomesh.highlight(id, true) };
@@ -485,15 +494,25 @@ require([
 
     ffbomesh.on('add',
       function (e) {
-        if (!e.value.background)
-          dynamicNeuronMenu.addNeuron(e.prop, e.value.label);
+        if (!e.value.background) {
+          if(e.value['class'] === 'Neuron' || e.value['class'] === 'NeuronFragment') {
+            dynamicNeuronMenu.addNeuron(e.prop, e.value.label);
+          } else if (e.value['class'] === 'Synapse') {
+            dynamicSynapseMenu.addNeuron(e.prop, e.value.label);
+          }
+        }
         else
           dynamicNeuropilMenu.addNeuron(e.prop, e.value.label)
         infoPanel.renderAddRemoveBtn(e.value.label, true)
       });
     ffbomesh.on('remove', function (e) {
-      if (!e.value.background)
-        dynamicNeuronMenu.removeNeuron(e.prop)
+      if (!e.value.background) {
+        if(e.value['class'] === 'Neuron' || e.value['class'] === 'NeuronFragment') {
+          dynamicNeuronMenu.removeNeuron(e.prop);
+        } else if (e.value['class'] === 'Synapse') {
+          dynamicSynapseMenu.removeNeuron(e.prop);
+        }
+      }
       infoPanel.renderAddRemoveBtn(e.value.label, false)
     });
     ffbomesh.on('visibility', (function (e) {
@@ -566,15 +585,16 @@ require([
     window.NeuroNLPUI.dispatch.onUnpinAll = (function () { ffbomesh.unpinAll() });
 
     ffbomesh.createUIBtn("showSettings", "fa-cog", "Settings")
-    ffbomesh.createUIBtn("takeScreenshot", "fa-camera", "Download Screenshot")
     ffbomesh.createUIBtn("showInfo", "fa-info-circle", "GUI guideline")
+    ffbomesh.createUIBtn("showStats", "fa-tachometer", "Show/Hide Stats")
+    ffbomesh.createUIBtn("takeScreenshot", "fa-camera", "Download Screenshot")
     ffbomesh.createUIBtn("resetView", "fa-refresh", "Reset View")
-    ffbomesh.createUIBtn("resetVisibleView", "fa-align-justify", "Center and zoom into visible Neurons/Synapses")
+    ffbomesh.createUIBtn("resetVisibleView", "fa-binoculars", "Center and zoom into visible Neurons/Synapses")
     ffbomesh.createUIBtn("showAll", "fa-eye", "Show All")
     ffbomesh.createUIBtn("hideAll", "fa-eye-slash", "Hide All")
     ffbomesh.createUIBtn("removeUnpin", "fa-trash", "Remove Unpinned Neurons")
     ffbomesh.createUIBtn("downData", "fa-download", "Download Connectivity")
-    ffbomesh.createUIBtn("showGraph", "fa-bar-chart", "Show Connectivity Graph");
+    ffbomesh.createUIBtn("showGraph", "fa-connectdevelop", "Show Connectivity Graph");
     ffbomesh.createUIBtn("showCellGraph", "fa-cubes", "Show Cell-Type Connectivity Graph");
 
     ffbomesh.on('showSettings', (function () { window.NeuroNLPUI.onClickVisualizationSettings() }));
@@ -585,6 +605,7 @@ require([
     ffbomesh.on('showAll', (function () { ffbomesh.showAll() }));
     ffbomesh.on('takeScreenshot', (function () { ffbomesh._take_screenshot = true; }));
     ffbomesh.on('showInfo', function () { window.NeuroNLPUI.onShowGUIinfo(); });
+    ffbomesh.on('showStats', function () { ffbomesh.toggleStats(); });
 
     
     demoLoad = false;

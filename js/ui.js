@@ -41,11 +41,11 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "mmenu"], function($, Overlay
 <div id="demo-table-wrapper" class="demo-table-wrapper"></div>`);
 
     this.onShowDemo = function(){
-      mm_menu_right.close();
+      // mm_menu_right.close();
       this.demoTable.show()
     }
     this.onShowNeuroNLP = () => {
-      mm_menu_right.close();
+      // mm_menu_right.close();
       this.neuronlpSwitch.show();
     }
 
@@ -61,23 +61,23 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "mmenu"], function($, Overlay
     }*/
 
     this.onShowOverview = () => {
-      mm_menu_right.close();
+      // mm_menu_right.close();
       this.overviewPanel.show();
     }
     this.onShowReference = () => {
-      mm_menu_right.close();
+      // mm_menu_right.close();
       this.referencePanel.show();
     }
     this.onShowAnnounce = () => {
-      mm_menu_right.close();
+      // mm_menu_right.close();
       this.announcePanel.show();
     }
     this.onShowFeature = () => {
-      mm_menu_right.close();
+      // mm_menu_right.close();
       this.featurePanel.show();
     }
     this.onShowGUIinfo = () => {
-      mm_menu_right.close();
+      // mm_menu_right.close();
       this.GUIinfoOverlay.show();
     }
 
@@ -107,6 +107,18 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "mmenu"], function($, Overlay
     }
     this.onToggleNeuClick = function() {
       mm_menu_right.openPanel(document.querySelector('#toggle_neuron'));
+      mm_menu_right.open();
+    }
+    this.onToggleNeuListClick = function() {
+      mm_menu_right.openPanel(document.querySelector('#single-neu'));
+      mm_menu_right.open();
+    }
+    this.onToggleSynListClick = function() {
+      mm_menu_right.openPanel(document.querySelector('#single-syn'));
+      mm_menu_right.open();
+    }
+    this.onTogglePinClick = function() {
+      mm_menu_right.openPanel(document.querySelector('#single-pin'));
       mm_menu_right.open();
     }
     this.onToggleLPUClick = function() {
@@ -234,6 +246,7 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "mmenu"], function($, Overlay
         hooks: {
         },
         offCanvas: {
+          "use": true,
           "position": "right-front"
         },
         scrollBugFix: {
@@ -241,7 +254,26 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "mmenu"], function($, Overlay
         },
         "setSelected": {
           "hover": true
-       }
+        },
+        scrollBugFix: {
+           "fix": true  
+        },
+        iconbar: {
+         "use": true,
+         "position": "left",
+         "top": [
+           `<a onclick="NeuroNLPUI.closeRightMenu();"><span title="Close Menu"><i class='fa fa-times fa-fw'></i></span></a>`,
+           `<a onclick="NeuroNLPUI.onGettingStarted();"><span title="Get Started"><i class='fa fa-play fa-fw'></i></span></a>`,
+           `<a onclick="NeuroNLPUI.onToggleTag();"><span title="Tags"><i class='fa fa-tag fa-fw'></i></span></a>`,
+           `<a onclick="NeuroNLPUI.onToggleNeuListClick();"><span title="Neuron List"><i class='fa fa-list fa-fw'></i></span></a>`,
+           `<a onclick="NeuroNLPUI.onToggleSynListClick();"><span title="Synapse List"><i class='fa fa-circle-o fa-fw'></i></span></a>`,
+           `<a onclick="NeuroNLPUI.onTogglePinClick();"><span title="Pinned List"><i class='fa fa-thumb-tack fa-fw'></i></span></a>`,
+           `<a onclick="NeuroNLPUI.onToggleLPUClick();"><span title="Neuropils"><i class='fa fa-map-o fa-fw'></i></span></a>`,
+         ],
+         "bottom": [
+           //`<a onclick="NeuroNLPUI.closeRightMenu();"><i class='fa fa-times'></i></a>`
+         ]
+        }
       },{
         offCanvas: {
           page: {
