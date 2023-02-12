@@ -242,9 +242,9 @@ moduleExporter(
       this.removeNeuron = function(id) {
         var liBtnId = "li-btn-" + uidDecode(id);
         var label = $("#" + liBtnId + " > span > .btn-single-ob").attr('label');
-        $(`[id=${liBtnId}]`).hide("slide", { direction: "right" }, 800, function() {
+        // $(`[id=${liBtnId}]`).hide("slide", { direction: "right" }, 800, function() {
           $(`#${liBtnId}`).remove();
-        });
+        // });
         var idx = _this.btnLabelList.indexOf(label);
         if (idx > -1)
           _this.btnLabelList.splice(idx, 1);
@@ -291,9 +291,9 @@ moduleExporter(
                 _this.dispatch.resume();
             })
         } else {
-            $("#li-" + pinBtnId).hide("slide", { direction: "right" }, 800, function() {
+            // $("#li-" + pinBtnId).hide("slide", { direction: "right" }, 800, function() {
               $("#li-" + pinBtnId).remove();
-            });
+            // });
         }
 
         if (_this.config.pinnable) {
@@ -313,7 +313,7 @@ moduleExporter(
             if(_this.btnLabelList.indexOf(a.childNodes[0].textContent) > -1) {
               a.remove();
             } else {
-              console.log(a.childNodes[0].textContent)
+              // console.log(a.childNodes[0].textContent)
             }
           }
           
