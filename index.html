@@ -18,7 +18,7 @@
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap-theme.min.css"> -->
 
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/FrDH/mmenu-js@v9.1.6/dist/mmenu.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/FrDH/mmenu-js@v9.3.0/dist/mmenu.css"/>
     <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.7.0/css/perfect-scrollbar.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css" />
@@ -64,7 +64,7 @@
           </div>
           <div class="navbar-fixed-bottom">
             <ul class="nav navbar-nav">
-              <li >Copyright &copy; 2018-2022 FFBO</li>
+              <li>Copyright &copy; 2018-2022 FFBO</li>
               <li>
                 <div id="search-wrapper" class="search-bottom input-group input-group-mid">
                   <span class="input-group-btn"><button id = "info_btn" onclick="NeuroNLPUI.onShowReference()" class="btn btn-link" type="button" style="height:30px; bottom:2px;"><span class="glyphicon glyphicon-info-sign"></span></button></span>
@@ -112,13 +112,17 @@
                     <span>Pinned Neurons/Synapses <i class="icon-arrow-right"></i></span>
                     <ul id="single-pin">
                       <li><a id="btn-pin-keep" role="button" class='' style="width:100%" onclick="NeuroNLPUI.onRemoveUnpinned()">Delete unpinned neurons/synapses</a></li>
-                      <li><a id="btn-pin-keep" role="button" class='' style="width:100%" onclick="NeuroNLPUI.onRemovePinned()">Delete pinned neurons/synapses</a></li>
+                      <li><a id="btn-pin-remove" role="button" class='' style="width:100%" onclick="NeuroNLPUI.onRemovePinned()">Delete pinned neurons/synapses</a></li>
                       <li><a id="btn-pin-unpinall" role="button" class='' style="width:100%" onclick="NeuroNLPUI.onUnpinAll()">Unpin All</a></li>
                     </ul>
                   </li>
                   <li>
-                    <span>All Neurons/Synapses <i class="icon-arrow-right"></i></span>
+                    <span>All Neurons <i class="icon-arrow-right"></i></span>
                     <ul id="single-neu"></ul>
+                  </li>
+                  <li>
+                    <span>All Synapses <i class="icon-arrow-right"></i></span>
+                    <ul id="single-syn"></ul>
                   </li>
                 </ul>
               </li>
@@ -479,7 +483,7 @@
       </nav>
 
       <!-- Page Content -->
-      <div id="page-content-wrapper">
+      <div id="page-content-wrapper"></div>
 
         <div id="info-panel-wrapper" class="vis-info vis-info-pin">
           <div id="info-pin-div" >
@@ -509,7 +513,7 @@
               <br><br>
               <h4>News</h4>
               <p>
-                Updates and announcements for <u style="text-decoration:none; font-family:'Rajdhani',sans-serif; color:grey;">NeuroNLP.Hemibrain</u>.
+                Updates and announcements for <u style="text-decoration:none; font-family:'Rajdhani',sans-serif; color:grey;">NeuroNLP.dataset</u>.
               </p>
               <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-getting-started')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-getting-started')" onclick="NeuroNLPUI.onShowAnnounce()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> See What's New!</a>
               <br><br>
@@ -768,48 +772,159 @@
         <div id="arch-wrapper"></div>
         <div id="msg-wrapper"><p id="msg-diagram"></p></div>
         <div id="notifications"></div>
+        
         <div id="gui-3d" class='overlay'>
-          <ul class="list-inline">
-            <li><h2>3D GUI</h2></li>
-          </ul>
-          <div class="demo-table-wrapper">
-            <h4>Translation</h4>
-            <p>Right-click and then drag the cursor to translate the entire 3D scene. On mobile and tablets, the scene can be translated by dragging with three fingers.</p>
-            <h4>Rotation</h4>
-            <p>Left-click and then drag the cursor  to rotate the entire 3D scene. On mobile and tablets, touch and drag with one finger to rotate the scene.</p>
-            <h4>Zoom</h4>
-            <p>Scroll up or down to zoom in or out the entire 3D scene. On mobile and tablets, pinch out or in to zoom out or in respectively.</p>
-            <h4>Select</h4>
-            <p>Hover over a neuron and Left-Click to retrieve the detail information. On mobile and tablets, touch on the neuron with a single finger to select it.</p>
-            <h4>Pin</h4>
-            <p>Hover over a neuron and Double-Click to pin it in the scene. Pinned neurons will always be highlighted. After pinning neurons of interest, you can use the remove unpinned neurons icon (&nbsp;<i class="fa fa-trash" aria-hidden="true"></i>&nbsp;) to restrict the workspace to neurons you are interested in.</p>
-            <p> On mobile and tablets, select a neuron and then touch and hold on it for atleast 750ms to pin it.</p>
-          </div>
-          <div id="desktop-gui" class="demo-table-wrapper" style="display: none">
-            <h4>Translation</h4>
-            <p>Right-click and then drag the cursor to translate the entire 3D scene.</p>
-            <h4>Rotation</h4>
-            <p>Left-click and then drag the cursor  to rotate the entire 3D scene.</p>
-            <h4>Zoom</h4>
-            <p>Scroll up or down to zoom in or out the entire 3D scene.</p>
-            <h4>Select</h4>
-            <p>Hover over a neuron and Left-Click to retrieve its detailed information in the Info Panel.</p>
-            <h4>Pin</h4>
-            <p>Hover over a neuron and Double-Click to pin it in the scene. Pinned neurons will always be highlighted. After pinning neurons of interest, you can use the remove unpinned neurons icon (&nbsp;<i class="fa fa-trash" aria-hidden="true"></i>&nbsp;) to restrict the workspace to neurons you are interested in.</p>
-          </div>
-          <div id="mobile-gui" class="demo-table-wrapper" style="display: none">
-            <h4>Translation</h4>
-            <p>Touch anywhere on the scene with three fingers and then drag to translate the entire 3D scene.</p>
-            <h4>Rotation</h4>
-            <p>Touch anywhere on the scene with one finger and then drag to rotate the entire 3D scene.</p>
-            <h4>Zoom</h4>
-            <p>Pinch out or in to zoom in or out the entire 3D scene repectively.</p>
-            <h4>Select</h4>
-            <p>Touch on a neuron with a single finger to select it and retrieve its detailed information in the Info Panel.</p>
-            <h4>Pin</h4>
-            <p>Select a neuron and then touch and hold on it with a single finger for atleast 750ms to pin it.Pinned neurons will always be highlighted. After pinning neurons of interest, you can use the remove unpinned neurons icon (&nbsp;<i class="fa fa-trash" aria-hidden="true"></i>&nbsp;) to restrict the workspace to neurons you are interested in.</p>
-          </div>
+        <ul id="overview-header" class="overview-header list-inline">
+          <li>
+            <h2>Visualization Panel Guide</h2>
+          </li>
+        </ul>
+        <div class="overview-text">
+          <band>
+            <article>
+              <h4>To use your mouse to navigate in the 3D visualization:</h4>
+              <p>Try out the <a onclick="window.FFBODemoPlayer.startDemo('pin_select_highlight')">"Pin/Select/Highlight" Demo</a> (GUI Usage #3 in the <a onclick="NeuroNLPUI.onShowDemo()">Demos</a>).</p>
+              <h5>Translation</h5>
+              <p>Right-click and then drag the cursor to translate the entire 3D scene.</p>
+              <p>On mobile and tablets, the scene can
+              be translated by dragging with three fingers.</p>
+              <h5>Rotation</h5>
+              <p>Left-click and then drag the cursor to rotate the entire 3D scene.</p>
+              <p>On mobile and tablets, touch and drag with
+                one finger to rotate the scene.</p>
+              <h5>Zoom</h5>
+              <p>Scroll up or down to zoom in or out the entire 3D scene.</p>
+              <p>On mobile and tablets, pinch out or in to zoom out
+                or in respectively.</p>
+              <h5>Highlight a Neuron/Synapse</h5>
+              <p>Hover over a neuron/synapse will highlight that neuron, with all other objects dimmed (except for those pinned). 
+                Brightness of highlighted objects and dimmed objects can be respectively adjusted in the 
+                <a onclick="NeuroNLPUI.onClickVisualizationSettings()">Visualization Settings</a> 
+                (see also Visualization Settings below).</p>
+              <h5>Select a Neuron/Synapse</h5>
+              <p>Hover over a neuron/synapse and Left-Click to retrieve the detail information in the Info Panel.</p>
+              <p>On mobile and tablets, touch on the neuron
+                with a single finger to select it.</p>
+              <h5>Pin a Neuron/Synapse</h5>
+              <p>Hover over a neuron/synapse and Double-Click to pin it in the scene. Pinned neurons will always be highlighted. Brightness of pinned objects and 
+                unpinned objects can be respectively adjusted in the <a onclick="NeuroNLPUI.onClickVisualizationSettings()">Visualization Settings</a>
+                (see also Visualization Settings below).</p>
+              <p>After pinning neurons of interest, you can use the remove unpinned neurons icon (&nbsp;<i class="fa fa-trash" aria-hidden="true"></i>&nbsp;)
+                to restrict the workspace to neurons you are interested in.</p>
+              <p> On mobile and tablets, select a neuron and then touch and hold on it for at least 750ms to pin it.</p>
+            </article>
+          </band>
         </div>
+        <div class="overview-text">
+          <h4>Visualization Panel Buttons</h4>
+          <band>
+            <article>
+              <p>Try out the <a onclick="window.FFBODemoPlayer.startDemo('gui_buttons')">"Visualization Panel Buttons" Demo</a> (GUI Usage #4 in the <a onclick="NeuroNLPUI.onShowDemo()">Demos</a>).</p>
+              <p>Here we list the function of each button:</p>
+              <ul>
+                <li>
+                  <strong><i class="fa fa-cog"></i></strong>: Open visualization settings.
+                </li>
+                <li>
+                  <i class="fa fa-info-circle"></i>: Open this menu.
+                </li>
+                <li>
+                  <i class="fa fa-tachometer"></i>: Turn on/off stats performance monitor.
+                </li>
+                <li>
+                  <i class="fa fa-camera"></i>: Take a screenshot of the current 3D visualization. The quality of the screenshot depends on the resolution of the display and the browser window size.
+                </li>
+                <li>
+                  <i class="fa fa-refresh"></i>: Reset view to original setting.
+                </li>
+                <li>
+                  <i class="fa fa-binoculars"></i>: Zoom in onto the visualized (not hidden) neurons.
+                </li>
+                <li>
+                  <i class="fa fa-eye"></i>: Show all neurons, synapses and neuropils.
+                </li>
+                <li>
+                  <i class="fa fa-eye-slash"></i>: Hide all unpinned neurons/synapses.
+                </li>
+                <li>
+                  <strong><i class="fa fa-trash"></i></strong>: Remove all unpinned neurons/synapses.
+                </li>
+              </ul>
+            </article>
+          </band>
+        </div>
+
+        <div class="overview-text">
+          <h4>Graph View and Connectivity Buttons</h4>
+          <band>
+            <article>
+              <p>Try out the <a onclick="window.FFBODemoPlayer.startDemo('connectivity_1')">"Graph View / Connectivity Buttons" Demo</a> (GUI Usage #5 in the <a onclick="NeuroNLPUI.onShowDemo()">Demos</a>).</p>
+              <p>Three additional buttons in the Visualization Panel provide information about the graph of the visualized neural circuit:</p>
+              <ul>
+                <li>
+                  <i class="fa fa-connectdevelop"></i>: Open the Graph View to generate a neuronal level graph of the neurons in the current workspace. The graph is visualized in 2D. Nodes representing each neuron has the same color as in the 3D visualization. Nodes can be reordered by dragging them. Hovering over a node will highlight the corresponding neuron in the 3D visualization. Clicking on the node hide/unhide morphology of the corresponding neuron. You can adjust the synapse threshold to remove connections that has less number of synapses than the value. 
+                </li>
+                <li>
+                  <i class="fa fa-cubes"></i>: Open the Graph View to generate a cell type level graph of the neurons in the current workspace. Connections from all neurons of one cell type to all neurons of another cell type will be aggregated. Nodes can be reordered by dragging them. Hovering over a node will highlight the neurons of the corresponding cell type in the 3D visualization. Clicking on a node hide/unhide morphology of the neurons of the corresponding cell type.
+                </li>
+                <li>
+                 <i class="fa fa-download"></i>:  Download the graph in CSV format, that includes the pre-synaptic neuron name, post-synaptic neuron name and the number of synapses on each row.
+                </li>
+              </ul>
+            </article>
+            <images>
+              <img src="./img/overview-panel/graphviewpanel.png"> </img>
+            </images>
+          </band>
+        </div>
+        <div class="overview-text">
+          <h4>Visualization Settings <a onclick="NeuroNLPUI.onClickVisualizationSettings()"><i class="fa fa-cog"></i></a></h4>
+          <band>
+            <article>
+              <p>You can customize the visual effects in the Visualization Panel by using the Visualization Settings menu. Here is a break down of the options.</p>
+              <h5>Backgound</h5>
+              <ul>
+                <li>Color: change the color of the background of the Visualization Panel.</li>
+              </ul>
+              <h5>Neuron Rendering</h5>
+              <ul>
+                <li><strong>Rendering Mode</strong>: change the way neuron morphology is rendered.</li>
+                <li><strong>Default Neurite Radius</strong>: If the neuron skeleton does not contain radius information, this is the default value that will be used.</li>
+                <li><strong>Neurite Radius Range</strong>: The range of acceptable radius. Any radius outside of this range will be clipped to the nearest acceptable range.</li>
+                <li><strong>Default Soma Radius</strong>: If the soma of the neuron skeleton does not contain radius information, this is the default value that will be used.</li>
+                <li><strong>Soma Radius Range</strong>: The range of acceptable radius of soma. Any radius outside of this range will be clipped to the nearest acceptable range.</li>
+                <li><strong>Default Opacity</strong>: The opacity of visualized neurons/synapses when none of them are highlighted or pinned.</li>
+                <li><strong>Higlighted Neuron Opacity</strong>: The opacity of the neuron/synapse being highlighted.</li>
+                <li><strong>Low Opacity in Highlight Mode</strong>: When a neuron/synapse is highlighted, the opacity of the rest of the neurons/synapses.</li>
+                <li><strong>Pinned Neuron Opacity</strong>: The opacity of pinned neurons/synapses.</li>
+                <li><strong>Low Opacity in Pinned Mode</strong>: When some neurons/synapses are pinned, the opacity of the unpinned neurons/synapses.</li>
+                <li><strong>Ambient Light</strong>: Brightness of ambient light onto neurons/synapses.</li>
+                <li><strong>Directional Light</strong>: Brightness of directional light onto neurons/synapses.</li>
+              </ul>
+              <h5>Neuropil Rendering</h5>
+              <ul>
+                <li><strong>Color</strong>: Color of the Neuropil meshes.</li>
+                <li><strong>Opacity</strong>: Opacity of the Neuropil meshes.</li>
+                <li><strong>Wireframe Opacity</strong>: Opacity of the wireframe on the Neuropil meshes.</li>
+                <li><strong>Screen-space ambient occlusion pass (SSAO)</strong>: Whether to enable SSAO effect.</li>
+                <li><strong>Ambient Light</strong>: Brightness of ambient light onto neuropils.</li>
+                <li><strong>Directional Light</strong>: Brightness of directional light onto neuropils.</li>
+              </ul>
+              <h5>Synapse Rendering</h5>
+              <ul>
+                <li><strong>Synapse Size</strong>: Synapses are renders as a sphere with a radius specific by the value of Synapse Size.</li>
+                <li><strong>Synapse Size Range</strong>: Range of valid synapse size if they are specified in the data. If the synapse size is outside of this range, it will be clipped.</li>
+                <li><strong>Synapse Opacity</strong>: The opacity of the synapses when no neuron/synapse is highlighonclick="NeuroNLPUI.closeAllOveted or pinned.</li>
+              </ul>
+              <h5>PostProcessing Settings</h5>
+              <ul>
+                <li><strong>Fast approXimate Anti-Aliasing (FXAA)</strong>: Better anti-aliasing.</li>
+                <li><strong>Bloom Pass</strong>: Create a glowing effect.</li>
+              </ul>
+            </article>
+          </band>
+        </div>
+      </div>
         <div id="neuronlp-switch" class="overlay">
           <div class="neuronlp-switch-wrapper">
             <a class="info-try btn btn-xs" onclick="NeuroNLPUI.closeAllOverlay()">Stay at <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #999;">NeuroNLP.Hemibrain</span></a>
