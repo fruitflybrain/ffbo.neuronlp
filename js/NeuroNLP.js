@@ -658,11 +658,11 @@ require([
     });
     var textFile = null;
     ffbomesh.on("downData", function () {
-      if (!ffbomesh.uiVars.frontNum) {
+      if (!ffbomesh.uiVars.neuronNum) {
         client.notifyError("No neurons present in scene");
         return;
       }
-      if (ffbomesh.uiVars.frontNum > 500) {
+      if (ffbomesh.uiVars.neuronNum > 500) {
         client.notifyError("NeuroNLP currently limits this feature for use with upto 500 neurons");
         return;
       }
