@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>NeuroNLP.Hemibrain</title>
-    <!-- branch = hemibrain -->
+    <title>NeuroNLP.FlyWire</title>
+    <!-- branch = FlyWire -->
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
     <meta http-equiv="Cache-Control" content="max-age=1800">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -52,7 +52,7 @@
               <a href="http://fruitflybrain.org" target="_blank"><img src="/img/ffbo_logo.png" role="button"></a>
               <span style="font-family:var(--title-font-family); font-size: 20px; color:var(--navbar-text-color);">NeuroNLP</span>
               <a onclick="NeuroNLPUI.onShowNeuroNLP()">
-                <span>.Hemibrain</span>
+                <span>.FlyWire</span>
               </a>
             </div>
             <button id="ui_menu_btn" type="button" class="navbar-toggle collapsed" onclick="NeuroNLPUI.openRightMenu()" style="z-index:1">
@@ -64,7 +64,7 @@
           </div>
           <div class="navbar-fixed-bottom">
             <ul class="nav navbar-nav">
-              <li >Copyright &copy; 2018-2022 FFBO</li>
+              <li >Copyright &copy; 2018-2023 FFBO</li>
               <li>
                 <div id="search-wrapper" class="search-bottom input-group input-group-mid">
                   <span class="input-group-btn"><button id = "info_btn" onclick="NeuroNLPUI.onShowReference()" class="btn btn-link" type="button" style="height:30px; bottom:2px;"><span class="glyphicon glyphicon-info-sign"></span></button></span>
@@ -524,7 +524,7 @@
               <br><br>
               <h4>News</h4>
               <p>
-                Updates and announcements for <u style="text-decoration:none; font-family:'Rajdhani',sans-serif; color:grey;">NeuroNLP.Hemibrain</u>.
+                Updates and announcements for <u style="text-decoration:none; font-family:'Rajdhani',sans-serif; color:grey;">NeuroNLP.FlyWire</u>.
               </p>
               <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-getting-started')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-getting-started')" onclick="NeuroNLPUI.onShowAnnounce()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> FFBO News</a>
               <a onclick="NeuroNLPUI.onShowFeature()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> See What's New!</a>
@@ -604,14 +604,14 @@
                 </article>
                 <images></images>
               </band>
-              <h4>What Data is Accessible in NeuroNLP.Hemibrain</h4>
+              <h4>What Data is Accessible in NeuroNLP.FlyWire</h4>
               <band>
                 <article>
-                  <ul>Version 1.2/1.2.1 of the Hemibrain dataset is currently available.
-                    For more information, see <a target="_blank" href="https://doi.org/10.7554/eLife.57443">Louis K. Scheffer et al., A connectome and analysis of the adult Drosophila central brain. eLife 2020;9:e57443.</a>.
+                  <ul>Snapshot 630, Release April 2023 of the FlyWire dataset is currently available.
+                    For more information, see <a target="_blank" href="https://doi.org/10.1101/2023.06.27.546656">Sven Dorkenwald et al., Neuronal wiring diagram of an adult brain. bioRxiv 2023.06.27.546656</a>.
                     The dataset contains:
-                    <li><strong>Neurons</strong>: 3D morphology, neuron name, type, data source, etc. All "segments" that are not fully traced in the hemibraindataset are also included. Their names start with "segment". However, they can be only queried using the "BodyID" assigned in the Hemibrain dataset. </li>
-                    <li><strong>Synapses</strong>:  presynaptic and postsynaptic partners of a neuron, number of synapses and locations of synapses. Synapses of a neuron with fragments that have no morphology are bunched together.</li>
+                    <li><strong>Neurons</strong>: 3D morphology, neuron name, type, data source, etc.</li>
+                    <li><strong>Synapses</strong>:  presynaptic and postsynaptic partners of a neuron, number of synapses and locations of synapses. </li>
                   </ul>
                   
                   <h5>Want to programmatically access the data visualized here and computationally explore their functional logic?</h5>
@@ -667,7 +667,7 @@
                       <li>Tags: a menu for creating and loading tags. Tags are 3d snapshots of stored visualization panels.</li>
                       <li>Neurons/Synapses: a menu displaying the visualized neurons and synapses, as well as a list of pinned neurons/synapses. Checkout the <a onclick="window.FFBODemoPlayer.startDemo('neuron_menu')">"Neurons/Synapses Menu" Demo</a> (GUI Usage #1 in the <a onclick="NeuroNLPUI.onShowDemo()">Demos</a>)</li>
                       <li>Neuropils: a menu of neuropils. Checkout the <a onclick="window.FFBODemoPlayer.startDemo('neuropil_menu')">"Neuropil Menu" Demo</a> (GUI Usage #1 in the <a onclick="NeuroNLPUI.onShowDemo()">Demos</a>)</li>
-                      <li>Cell Types: a list of cell types in the each of the neuropil in the Hemibrain dataset. It provides an easy way to add neurons of different cell types directly, without using the search bar.</li>
+                      <li>Cell Types: a list of cell types in the each of the neuropil in the FlyWire dataset. It provides an easy way to add neurons of different cell types directly, without using the search bar.</li>
                     </ul>
                   </p>
                 </article>
@@ -718,11 +718,6 @@
                 <li>Better balance of performance and visualization in default rendering mode.</li>
                 <li>Change of synapse size is reflected immediately.</li>
               </ul>
-            <h5>Added Hemibrain "Segments"</h5>
-             <p>
-              "Segments" are fragments of neurons that have not been fully traced. Synapses to/from segments are listed in the pre/post-synaptic partners. If the morphology of a segment is available, it will appear in its own entry. All synapses from and to segments that have no morphology are grouped and listed in the entry, respectively, as segments_presynaptic_to_neuron_name and segments_postsynaptic_to_neuron_name.
-              Segments and only segments have the word "segment" in their names. This can be used to filter them in the list.
-            </p>
             <h5>Pre/Post-synaptic partners can be filtered by their name using regular expression</h5>
               <p>To use regular expression, start the search by /r. For example, to show only traced neurons, use /r^((?!segment).)*$ to remove all names that include "segment".</p>
             <h5>New Cell Types Menu</h5>
@@ -994,7 +989,7 @@
         </div>
         <div id="neuronlp-switch" class="overlay">
           <div class="neuronlp-switch-wrapper">
-            <a class="info-try btn btn-xs" onclick="NeuroNLPUI.closeAllOverlay()">Stay at <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #FFEF35;">NeuroNLP.Hemibrain</span></a>
+            <a class="info-try btn btn-xs" onclick="NeuroNLPUI.closeAllOverlay()">Stay at <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #FFEF35;">NeuroNLP.FlyWire</span></a>
             <h5>Or</h5>
             <a class="info-try btn btn-xs" href="https://neuronlp.fruitflybrain.org">Switch to <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #FFEF35;">NeuroNLP.FlyCircuit</span></a>
           </div>
