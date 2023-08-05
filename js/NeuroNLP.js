@@ -56,6 +56,8 @@ requirejs.config({
     bloompass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/postprocessing/BloomPass',
     unrealbloompass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/postprocessing/UnrealBloomPass',
     gltfloader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/loaders/GLTFLoader',
+    fontloader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/loaders/FontLoader',
+    textgeometry: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/geometries/TextGeometry',
     adaptivetonemappingpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/postprocessing/AdaptiveToneMappingPass',
     trackballcontrols: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/controls/TrackballControls',
     linematerial: "//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/lines/LineMaterial",
