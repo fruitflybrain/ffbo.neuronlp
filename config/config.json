@@ -41,7 +41,11 @@
       "synapseMode": 1,   
       "meshWireframe": true,
       "backgroundColor": "#260226",
-      "sceneBackgroundColor": "#030305"
+      "sceneBackgroundColor": "#030305",
+      "anteriorAxis": [0, 1, 0],
+      "dorsalAxis": [-1, 0, 0],
+      "rightHemisphereAxis": [0, 0, 1],
+      "axisOrigin": [0.004, 0, 0.016]
     },
     "neuron_mesh": {
       "url": ""
