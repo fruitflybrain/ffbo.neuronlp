@@ -300,7 +300,7 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "mmenu"], function($, Overlay
                 window.lastOpenedCellType = undefined;
               }
             } else if (panel.id.includes('-cell-types')) {
-                var neuropil = panel.id.replaceAll('-cell-types', '').replaceAll('____', '(').replaceAll('--__', ')'); 
+                var neuropil = panel.id.replaceAll('-cell-types', '').replaceAll('--__', ')').replaceAll('____', '('); // replace --__ first because ) can be followed by (
                 if (neuropil !== window.lastOpenedCellType) {
                   this.loadCellTypes(neuropil);
                 }
