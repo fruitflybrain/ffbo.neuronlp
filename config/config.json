@@ -1,11 +1,11 @@
 {
-  "branch": "hemibrain",
+  "branch": "manc",
   "connection": {
     "url": "ws://localhost:8081/ws",
     "user": "guest",
     "secret": "guestpass"
   },
-  "dataset": "hemibrain",
+  "dataset": "manc",
   "metadata": {
     "enablePositionReset": true,
     "resetPosition": {
@@ -42,9 +42,9 @@
       "meshWireframe": true,
       "backgroundColor": "#260226",
       "sceneBackgroundColor": "#030305",
-      "anteriorAxis": [0, 1, 0],
-      "dorsalAxis": [0, 0, -1],
-      "rightHemisphereAxis": [-1, 0, 0],
+      "anteriorAxis": [-0.0337103251, 0.25881904510252074, 0.9653374103741355],
+      "dorsalAxis": [0.224951054343865, -0.9411692099390114, 0.25218552974419584],
+      "rightHemisphereAxis": [0.97381627, 0.22565492, -0.0264945],
       "axisOrigin": [0.004, 0, 0.016]
     },
     "neuron_mesh": {
