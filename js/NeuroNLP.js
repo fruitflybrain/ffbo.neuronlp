@@ -18,7 +18,19 @@ requirejs.config({
     // app: 'app',
     mesh3d: '../lib/js/mesh3d',
     propertymanager: '../lib/js/propertymanager',
+    lightshelper: '../lib/js/lightshelper',
     infopanel: "info_panel/infopanel",
+    client: 'client',
+    overlay: 'overlay',
+    visualizationsettings: 'visualizationsettings',
+    ffbodemoplayer: 'ffbodemoplayer',
+    dynamicmenu: 'dynamicmenu',
+    tags: 'tags',
+    ui: 'ui',
+    connsvg: "info_panel/connsvg",
+    conntable: "info_panel/conntable",
+    preprocess: "info_panel/preprocess",
+    summarytable: "info_panel/summarytable",
     autobahn: '//cdn.jsdelivr.net/gh/crossbario/autobahn-js-browser@v20.9.2/autobahn/autobahn.min',
     d3: '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min',
     jquery: '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min',
@@ -44,29 +56,42 @@ requirejs.config({
     bloompass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/postprocessing/BloomPass',
     unrealbloompass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/postprocessing/UnrealBloomPass',
     gltfloader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/loaders/GLTFLoader',
+    fontloader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/loaders/FontLoader',
+    textgeometry: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/geometries/TextGeometry',
     adaptivetonemappingpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/postprocessing/AdaptiveToneMappingPass',
-    trackballcontrols: '../lib/js/TrackballControls',
-    lightshelper: '../lib/js/lightshelper',
+    trackballcontrols: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/controls/TrackballControls',
+    linematerial: "//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/lines/LineMaterial",
+    linesegmentsgeometry: "//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/lines/LineSegmentsGeometry",
+    linesegments2: "//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/lines/LineSegments2",
     modernizr: "//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min",
     d3: "//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3",
     jqueryui: "//code.jquery.com/ui/1.12.1/jquery-ui",
     perfectscrollbar: "//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.7.0/js/perfect-scrollbar.jquery.min",
     "jquery.mobile": "//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min",
     spectrum: "//cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min",
-    "jquery.mmenu": "../lib/js/jquery.mmenu.all",
+    mmenu: "//cdn.jsdelivr.net/gh/FrDH/mmenu-js@v9.3.0/dist/mmenu",
     bootsrapslider: "//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min",
     swiper: "//cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.2/js/swiper.min",
     bootstrap: "//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min",
     blockui: "//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min",
     tageditor: "//cdnjs.cloudflare.com/ajax/libs/tag-editor/1.0.20/jquery.tag-editor.min",
-    izitoast: "../lib/js/iziToast.min",
-    stats: "../lib/js/stats.min",
-    linematerial: "//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/lines/LineMaterial",
-    linesegmentsgeometry: "//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/lines/LineSegmentsGeometry",
-    linesegments2: "//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/lines/LineSegments2",
+    izitoast: "//cdn.jsdelivr.net/gh/marcelodolza/iziToast@1.4.0/dist/js/iziToast.min",
+    stats: "//cdn.jsdelivr.net/gh/mrdoob/stats.js@r17/build/stats.min",
     json: '//cdn.jsdelivr.net/gh/millermedeiros/requirejs-plugins@master/src/json',
     text: '//cdn.jsdelivr.net/gh/millermedeiros/requirejs-plugins@master/lib/text',
-    showdown: '//cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min'
+    showdown: '//cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min',
+    graphvis: '//cdn.jsdelivr.net/gh/mkturkcan/neuronlp.graphutils@1186d9766c01678e7e6877d4f79c60046e43959f/js/graphvis',
+    sigma: '//cdn.jsdelivr.net/gh/mkturkcan/neuronlp.graphutils@1186d9766c01678e7e6877d4f79c60046e43959f/sigma.js/sigma.min',
+    sigma_exporters: '//cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.exporters.svg.min',
+    sigma_forceAtlas2: '//cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.layout.forceAtlas2.min',
+    sigma_noverlap: '//cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.layout.noverlap.min',
+    sigma_cypher: '//cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.neo4j.cypher.min',
+    sigma_gexf: '//cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.parsers.gexf.min',
+    sigma_json: '//cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.parsers.json.min',
+    sigma_astar: '//cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.pathfinding.astar.min',
+    sigma_animate: '//cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.plugins.animate.min',
+    sigma_dragNodes: '//cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.plugins.dragNodes.min',
+    sigma_filter: '//cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/plugins/sigma.plugins.filter.min',
     /* Notify, bootbox, colormaps, demos, mouse, vis_set, ResizeSensor, read_vars, colorm[aps */
   },
   shim: {
@@ -100,7 +125,19 @@ requirejs.config({
     linematerial: {deps: ['three']},
     linesegmentsgeometry: {deps: ['three']},
     linesegments2: {deps: ['three', 'linesegmentsgeometry']},
-    gltfloader: {deps: ['three']}
+    gltfloader: {deps: ['three']},
+    sigma_forceAtlas2: {deps: ['sigma']},
+    sigma_exporters: {deps: ['sigma']},
+    sigma_forceAtlas2: {deps: ['sigma']},
+    sigma_noverlap: {deps: ['sigma']},
+    sigma_cypher: {deps: ['sigma']},
+    sigma_gexf: {deps: ['sigma']},
+    sigma_json: {deps: ['sigma']},
+    sigma_astar: {deps: ['sigma']},
+    sigma_animate: {deps: ['sigma']},
+    sigma_dragNodes: {deps: ['sigma']},
+    sigma_filter: {deps: ['sigma']},
+    graphvis: {deps: ['sigma', 'sigma_forceAtlas2', 'sigma_dragNodes', 'sigma_exporters', 'sigma_noverlap', 'sigma_cypher', 'sigma_gexf', 'sigma_json', 'sigma_astar', 'sigma_animate', 'sigma_filter']}
   },
   waitSeconds: 15
 });
@@ -130,6 +167,7 @@ require([
   'linematerial',
   'linesegmentsgeometry',
   'linesegments2',
+  'graphvis'
 ]
   , function (
     config,
@@ -162,11 +200,12 @@ require([
     window.NeuroNLPUI = new NeuroNLPUI();
     var infoPanel = new InfoPanel("info-panel");
     var dynamicNeuronMenu = new FFBODynamicMenu({ singleObjSel: '#single-neu > .mm-listview', pinnedObjSel: '#single-pin > .mm-listview', removable: true, pinnable: true });
+    var dynamicSynapseMenu = new FFBODynamicMenu({ singleObjSel: '#single-syn > .mm-listview', pinnedObjSel: '#single-pin > .mm-listview', removable: true, pinnable: true });
     var dynamicNeuropilMenu = new FFBODynamicMenu({ singleObjSel: '#toggle_neuropil > .mm-listview', compare: 'LeftRight' });
     var dynamicCellTypeMenu = new FFBODynamicMenu({ singleObjSel: '#toggle_celltype > .mm-listview', compare: 'LeftRight' });
     var ffbomesh = new FFBOMesh3D('vis-3d', undefined,
                                   config.metadata,
-                                  stats = true);
+                                  stats = false);
     var tagsPanel = new Tags('tagsMenu');
     var client = new FFBOClient(config.dataset);
     var visualizationSettings = new FFBOVisualizationSettings(ffbomesh);
@@ -240,13 +279,16 @@ require([
     window.ffbomesh = ffbomesh;
     window.infoPanel = infoPanel;
     window.dynamicNeuronMenu = dynamicNeuronMenu;
+    window.dynamicSynapseMenu = dynamicSynapseMenu;
+    window.dynamicNeuropilMenu = dynamicNeuropilMenu;
+    window.Neuropils = undefined;
+    window.CellTypes = undefined;
 
     function retrieveTagData(metadata) {
       queryID = client.retrieveState({ success: dataCallback }, "add");
       client.status.on("change", function () {
         ffbomesh.import_state(metadata);
         $('#ui-blocker').hide();
-        ffbomesh.resetVisibleView();
       }, queryID);
     }
 
@@ -440,6 +482,13 @@ require([
     dynamicNeuronMenu.dispatch.unpin = function (id) { ffbomesh.unpin(id) };
     dynamicNeuronMenu.dispatch.remove = function (id) { client.removeObjs(id) };
     dynamicNeuronMenu.dispatch.getInfo = function (id) { ffbomesh.select(id) };
+    dynamicSynapseMenu.dispatch.highlight = function (id) { ffbomesh.highlight(id, true) };
+    dynamicSynapseMenu.dispatch.resume = function (id) { ffbomesh.highlight(undefined) };
+    dynamicSynapseMenu.dispatch.toggle = function (id) { ffbomesh.toggleVis(id) };
+    dynamicSynapseMenu.dispatch.togglePin = function (id) { ffbomesh.togglePin(id) };
+    dynamicSynapseMenu.dispatch.unpin = function (id) { ffbomesh.unpin(id) };
+    dynamicSynapseMenu.dispatch.remove = function (id) { client.removeObjs(id) };
+    dynamicSynapseMenu.dispatch.getInfo = function (id) { ffbomesh.select(id) };
     dynamicNeuropilMenu.dispatch.toggle = function (id) { ffbomesh.toggleVis(id) };
     dynamicNeuropilMenu.dispatch.getInfo = function (id) { ffbomesh.toggleVis(id) };
     dynamicNeuropilMenu.dispatch.highlight = function (id) { ffbomesh.highlight(id, true) };
@@ -447,15 +496,25 @@ require([
 
     ffbomesh.on('add',
       function (e) {
-        if (!e.value.background)
-          dynamicNeuronMenu.addNeuron(e.prop, e.value.label);
+        if (!e.value.background) {
+          if(e.value['class'] === 'Neuron' || e.value['class'] === 'NeuronFragment') {
+            dynamicNeuronMenu.addNeuron(e.prop, e.value.label);
+          } else if (e.value['class'] === 'Synapse') {
+            dynamicSynapseMenu.addNeuron(e.prop, e.value.label);
+          }
+        }
         else
           dynamicNeuropilMenu.addNeuron(e.prop, e.value.label)
         infoPanel.renderAddRemoveBtn(e.value.label, true)
       });
     ffbomesh.on('remove', function (e) {
-      if (!e.value.background)
-        dynamicNeuronMenu.removeNeuron(e.prop)
+      if (!e.value.background) {
+        if(e.value['class'] === 'Neuron' || e.value['class'] === 'NeuronFragment') {
+          dynamicNeuronMenu.removeNeuron(e.prop);
+        } else if (e.value['class'] === 'Synapse') {
+          dynamicSynapseMenu.removeNeuron(e.prop);
+        }
+      }
       infoPanel.renderAddRemoveBtn(e.value.label, false)
     });
     ffbomesh.on('visibility', (function (e) {
@@ -528,15 +587,16 @@ require([
     window.NeuroNLPUI.dispatch.onUnpinAll = (function () { ffbomesh.unpinAll() });
 
     ffbomesh.createUIBtn("showSettings", "fa-cog", "Settings")
-    ffbomesh.createUIBtn("takeScreenshot", "fa-camera", "Download Screenshot")
     ffbomesh.createUIBtn("showInfo", "fa-info-circle", "GUI guideline")
+    ffbomesh.createUIBtn("showStats", "fa-tachometer", "Show/Hide Stats")
+    ffbomesh.createUIBtn("takeScreenshot", "fa-camera", "Download Screenshot")
     ffbomesh.createUIBtn("resetView", "fa-refresh", "Reset View")
-    ffbomesh.createUIBtn("resetVisibleView", "fa-align-justify", "Center and zoom into visible Neurons/Synapses")
+    ffbomesh.createUIBtn("resetVisibleView", "fa-binoculars", "Center and zoom into visible Neurons/Synapses")
     ffbomesh.createUIBtn("showAll", "fa-eye", "Show All")
     ffbomesh.createUIBtn("hideAll", "fa-eye-slash", "Hide All")
     ffbomesh.createUIBtn("removeUnpin", "fa-trash", "Remove Unpinned Neurons")
     ffbomesh.createUIBtn("downData", "fa-download", "Download Connectivity")
-    ffbomesh.createUIBtn("showGraph", "fa-bar-chart", "Show Connectivity Graph");
+    ffbomesh.createUIBtn("showGraph", "fa-connectdevelop", "Show Connectivity Graph");
     ffbomesh.createUIBtn("showCellGraph", "fa-cubes", "Show Cell-Type Connectivity Graph");
 
     ffbomesh.on('showSettings', (function () { window.NeuroNLPUI.onClickVisualizationSettings() }));
@@ -547,6 +607,7 @@ require([
     ffbomesh.on('showAll', (function () { ffbomesh.showAll() }));
     ffbomesh.on('takeScreenshot', (function () { ffbomesh._take_screenshot = true; }));
     ffbomesh.on('showInfo', function () { window.NeuroNLPUI.onShowGUIinfo(); });
+    ffbomesh.on('showStats', function () { ffbomesh.toggleStats(); });
 
     
     demoLoad = false;
@@ -555,7 +616,7 @@ require([
       GvisInitGraphs();
       if (isOnMobile)
         ffbomesh.backrenderSSAO.enabled = false;
-      FFBODemoPlayer = new FFBODemoPlayer(ffbomesh, $('#ui_menu_nav').data('mmenu'));
+      FFBODemoPlayer = new FFBODemoPlayer(ffbomesh, $('#ui_menu_nav')[0].mmApi);
       window.FFBODemoPlayer = FFBODemoPlayer;
       FFBODemoPlayer.onLoadingTag = () => {
         tagLoad = true;
@@ -599,11 +660,11 @@ require([
     });
     var textFile = null;
     ffbomesh.on("downData", function () {
-      if (!ffbomesh.uiVars.frontNum) {
+      if (!ffbomesh.uiVars.neuronNum) {
         client.notifyError("No neurons present in scene");
         return;
       }
-      if (ffbomesh.uiVars.frontNum > 500) {
+      if (ffbomesh.uiVars.neuronNum > 500) {
         client.notifyError("NeuroNLP currently limits this feature for use with upto 500 neurons");
         return;
       }
@@ -618,23 +679,23 @@ require([
       client.getConnectivity(function () { $('#ui-blocker').hide(); });
     });
 
-    window.NeuroNLPUI.loadAllCellTypes = function() {
-      var dynapmicCellTypeNeuropilMenu = {};
+    var dynamicCellTypeNeuropilMenu = {};
+    window.NeuroNLPUI.loadAllCellTypesNeuropil = function() {
       $.getJSON("./data/types_in_neuropils.json", function (json) {
         json = json[1];
+        window.CellTypes = json;
         for (var key in json) {
-          dynapmicCellTypeNeuropilMenu[key] = dynamicCellTypeMenu.addNeuropil(key);
-          dynapmicCellTypeNeuropilMenu[key].dispatch.addType = function (name) { client.addType(name, { success: dataCallback }) };
-          dynapmicCellTypeNeuropilMenu[key].dispatch.removeType = function (name) { client.removeType(name, { success: dataCallback }) };
-          for (var neuronType of json[key] ) {
-            dynapmicCellTypeNeuropilMenu[key].addCellType(neuronType);
-          }
+          dynamicCellTypeNeuropilMenu[key] = dynamicCellTypeMenu.addNeuropil(key);
+          dynamicCellTypeNeuropilMenu[key].dispatch.addType = function (name) { client.addType(name, { success: dataCallback }) };
+          dynamicCellTypeNeuropilMenu[key].dispatch.removeType = function (name) { client.removeType(name, { success: dataCallback }) };
         }
       });
     }
-
+    window.dynamicCellTypeNeuropilMenu = dynamicCellTypeNeuropilMenu;
+    
     $.getJSON("./data/config.json", function (json) {
       json = json[1];
+      window.Neuropils = json;
       ffbomesh.addJson({
         ffbo_json: json,
         showAfterLoadAll: false // true does not do anything
