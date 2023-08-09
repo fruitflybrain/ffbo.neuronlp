@@ -106,7 +106,7 @@ moduleExporter(
 
       this.addNeuropil = function( name ) {
         name = name.toString();
-        name_with_out_parenthesis = name.replaceAll('(R)', '_R').replaceAll('(L)', '_L');
+        name_with_out_parenthesis = name.replaceAll('(', '____').replaceAll(')', '--__');
 
         var domStr = `<li class="mm-listitem" data-mm-child="` + name_with_out_parenthesis+`-cell-types">` + 
                      `<a class="mm-btn mm-btn--next mm-listitem__btn mm-listitem__text" title="Open submenu" href="#`+ name_with_out_parenthesis+`-cell-types" onclick="lastOpenedCellType='`+name+`'">`+name+`<i class="icon-arrow-right"></i></a>` + 
@@ -130,8 +130,8 @@ moduleExporter(
       }
 
       this.addCellType = function( name ) {
-        var name_with_out_parenthesis = this.name.replaceAll('(R)', '_R').replaceAll('(L)', '_L');
-        var new_name = name.replaceAll(`'`, 'prime').replaceAll('<', 'less').replaceAll('>', 'greater').replaceAll('+','plus').replaceAll('/', 'slash')
+        var name_with_out_parenthesis = this.name.replaceAll('(', '____').replaceAll(')', '--__');
+        var new_name = name.replaceAll(`'`, 'prime').replaceAll('<', 'less').replaceAll('>', 'greater').replaceAll('+','plus').replaceAll('/', 'slash').replaceAll('(', 'leftp').replaceAll('(', 'rightp')
         var changed_label = name.replaceAll('<', '&lt').replaceAll('>', '&gt');
         var btnId = "btn-" + name_with_out_parenthesis+'-'+new_name;
         var btnToggleId = "btn-toggle-" + name_with_out_parenthesis+'-'+ new_name;
