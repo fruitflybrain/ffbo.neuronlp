@@ -132,7 +132,7 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "mmenu"], function($, Overlay
         if (neuropil === undefined) {
           neuropil = lastOpenedCellType;
         }
-        var name_with_out_parenthesis = neuropil.replaceAll('(R)', '_R').replaceAll('(L)', '_L');
+        var name_with_out_parenthesis = neuropil.replaceAll('(', '____').replaceAll(')', '--__');
         mm_menu_right.openPanel(document.querySelector('#'+name_with_out_parenthesis+"-cell-types"));
         lastOpenedCellType = neuropil;
       }
@@ -141,7 +141,7 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "mmenu"], function($, Overlay
 
     this.loadCellTypes = function(name) {
       name = name.toString();
-      name_with_out_parenthesis = name.replaceAll('(R)', '_R').replaceAll('(L)', '_L');
+      name_with_out_parenthesis = name.replaceAll('(', '____').replaceAll(')', '--__');
       for (var neuronType of window.CellTypes[name]) {
           window.dynamicCellTypeNeuropilMenu[name].addCellType(neuronType);
       }
@@ -300,7 +300,7 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "mmenu"], function($, Overlay
                 window.lastOpenedCellType = undefined;
               }
             } else if (panel.id.includes('-cell-types')) {
-                var neuropil = panel.id.split('-')[0].replaceAll('_R', '(R)').replaceAll('_L', '(L)');
+                var neuropil = panel.id.replaceAll('-cell-types', '').replaceAll('____', '(').replaceAll('--__', ')'); 
                 if (neuropil !== window.lastOpenedCellType) {
                   this.loadCellTypes(neuropil);
                 }
