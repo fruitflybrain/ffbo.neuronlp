@@ -26,6 +26,7 @@ moduleExporter("SummaryTable",
   function SummaryTable(div_id, parentObj, nameConfig={}){
     this.divId = div_id;  // wrapper
     this.parentObj = parentObj;
+    this.dataset_name = parentObj.dataset_name;
 
     // nameConfig = nameConfig || {};
     Object.defineProperty(this, "colorId",{
@@ -209,7 +210,7 @@ moduleExporter("SummaryTable",
       }
 
       if (key === 'referenceId'){
-            fieldName = 'Medulla FIB25 BodyID';
+            fieldName = this.dataset_name;
       }
 
       tableHtml += "<div><p>" + fieldName + ":</p><p>" + fieldValue +"</p></div>" ;
