@@ -6,6 +6,7 @@
     "secret": "guestpass"
   },
   "dataset": "medulla",
+  "datasetIdName": "Medulla FIB25 BodyId",
   "metadata": {
     "enablePositionReset": true,
     "resetPosition": {
