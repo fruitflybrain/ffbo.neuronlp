@@ -1,22 +1,22 @@
 {
-  "branch": "hemibrain",
+  "branch": "fib19",
   "connection": {
     "url": "ws://localhost:8081/ws",
     "user": "guest",
     "secret": "guestpass"
   },
-  "dataset": "hemibrain",
+  "dataset": "fib19",
   "metadata": {
     "enablePositionReset": true,
     "resetPosition": {
-      "x": 61.36,
-      "y": 1304.68,
-      "z": 205.3
+      "x": 115.56149804557238,
+      "y": -506.0712380114686,
+      "z": 63.159319468056665
     },
     "resetUp": {
-      "x": 0.0132266,
-      "y": -0.415534,
-      "z": -0.8719834
+      "x": -0.031346513522011184,
+      "y": 0.5438061434035809,
+      "z": -0.7978037180069333
     },
     "neu3dSettings": {
       "defaultOpacity": 0.7,
@@ -42,9 +42,9 @@
       "meshWireframe": true,
       "backgroundColor": "#260226",
       "sceneBackgroundColor": "#030305",
-      "anteriorAxis": [0, 1, 0],
-      "dorsalAxis": [0, 0, -1],
-      "rightHemisphereAxis": [-1, 0, 0],
+      "anteriorAxis": [1, 0, 0],
+      "dorsalAxis": [0, -1, 0],
+      "rightHemisphereAxis": [0, 0, -1],
       "axisOrigin": [0.004, 0, 0.016]
     },
     "neuron_mesh": {
