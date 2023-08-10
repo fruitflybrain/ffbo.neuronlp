@@ -125,6 +125,8 @@ requirejs.config({
     linematerial: {deps: ['three']},
     linesegmentsgeometry: {deps: ['three']},
     linesegments2: {deps: ['three', 'linesegmentsgeometry']},
+    fontloader: {deps: ['three']},
+    textgeometry: {deps: ['three']},
     gltfloader: {deps: ['three']},
     sigma_forceAtlas2: {deps: ['sigma']},
     sigma_exporters: {deps: ['sigma']},
