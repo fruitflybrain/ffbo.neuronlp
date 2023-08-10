@@ -6,6 +6,7 @@
     "secret": "guestpass"
   },
   "dataset": "hemibrain",
+  "datasetIdName": "Hemibrain BodyId",
   "metadata": {
     "enablePositionReset": true,
     "resetPosition": {
