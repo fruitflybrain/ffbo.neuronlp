@@ -6,6 +6,7 @@
     "secret": "guestpass"
   },
   "dataset": "fib19",
+  "datasetIdName": "FIB19 BodyId",
   "metadata": {
     "enablePositionReset": true,
     "resetPosition": {
