@@ -6,6 +6,7 @@
     "secret": "guestpass"
   },
   "dataset": "l1em",
+  "datasetIdName": "L1EM ID",
   "metadata": {
     "enablePositionReset": true,
     "resetPosition": {
