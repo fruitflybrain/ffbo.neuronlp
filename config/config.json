@@ -6,6 +6,7 @@
     "secret": "guestpass"
   },
   "dataset": "manc",
+  "datasetIdName": "MANC BodyId",
   "metadata": {
     "enablePositionReset": true,
     "resetPosition": {
