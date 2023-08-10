@@ -6,6 +6,7 @@
     "secret": "guestpass"
   },
   "dataset": "flywire",
+  "datasetIdName": "FlyWire ID",
   "metadata": {
     "enablePositionReset": true,
     "resetPosition":{
