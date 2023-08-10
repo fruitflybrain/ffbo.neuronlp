@@ -6,6 +6,7 @@
     "secret": "guestpass"
   },
   "dataset": "flycircuit",
+  "datasetIdName": "FlyCircuit ID",
   "metadata": {
     "enablePositionReset": true,
     "resetPosition": {
