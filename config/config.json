@@ -6,6 +6,7 @@
     "secret": "guestpass"
   },
   "dataset": "default",
+  "datasetIdName": "",
   "metadata": {
     "enablePositionReset": true,
     "resetPosition": {

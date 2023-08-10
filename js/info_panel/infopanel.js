@@ -32,8 +32,9 @@ moduleExporter("InfoPanel",[
   * @param {string} div_id - id for div element in which the connectivity table is held
   * @param {dict} [nameConfig={}] - configuration of children divs. The 3 children divs in ConnTable are `['connSVGId','connTableId','summaryTableId']`
   */
-  function InfoPanel(div_id, nameConfig={}){
+  function InfoPanel(div_id, dataset_name, nameConfig={}){
     this.divId = div_id;
+    this.dataset_name = dataset_name;
 
     // nameConfig = nameConfig || {};
     Object.defineProperty(this,"connSVGId",{

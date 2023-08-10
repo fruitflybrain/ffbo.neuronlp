@@ -200,7 +200,7 @@ require([
 
     //$.mobile.ajaxEnabled = false;
     window.NeuroNLPUI = new NeuroNLPUI();
-    var infoPanel = new InfoPanel("info-panel");
+    var infoPanel = new InfoPanel("info-panel", config.datasetIdName);
     var dynamicNeuronMenu = new FFBODynamicMenu({ singleObjSel: '#single-neu > .mm-listview', pinnedObjSel: '#single-pin > .mm-listview', removable: true, pinnable: true });
     var dynamicSynapseMenu = new FFBODynamicMenu({ singleObjSel: '#single-syn > .mm-listview', pinnedObjSel: '#single-pin > .mm-listview', removable: true, pinnable: true });
     var dynamicNeuropilMenu = new FFBODynamicMenu({ singleObjSel: '#toggle_neuropil > .mm-listview', compare: 'LeftRight' });
