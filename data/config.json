@@ -3,9 +3,9 @@
       "branch": "fib19"
     },
     {
-      "LO": {
-        "filename": "lib/mesh/fib19/LO.json",
-        "label": "LO",
+      "LO_R_": {
+        "filename": "lib/mesh/fib19/LO(R).json",
+        "label": "LO(R)",
         "highlight": false,
         "background": true,
         "color": [
@@ -14,9 +14,9 @@
           0.15
         ]
       },
-      "LOP": {
-        "filename": "lib/mesh/fib19/LOP.json",
-        "label": "LOP",
+      "LOP_R_": {
+        "filename": "lib/mesh/fib19/LOP(R).json",
+        "label": "LOP(R)",
         "highlight": false,
         "background": true,
         "color": [
@@ -25,9 +25,9 @@
           0.15
         ]
       },
-      "ME": {
-        "filename": "lib/mesh/fib19/ME.json",
-        "label": "ME",
+      "ME_R_": {
+        "filename": "lib/mesh/fib19/ME(R).json",
+        "label": "ME(R)",
         "highlight": false,
         "background": true,
         "color": [
