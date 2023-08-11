@@ -194,7 +194,7 @@ moduleExporter("SummaryTable",
           fieldValue = [];
           for (k in data[key]){
               if (data[key][k] != ''){
-                  fieldValue.push(k + ' v' + data[key][k]);
+                  fieldValue.push(k + ' ' + data[key][k]);
               }else{
                   fieldValue.push(k);
               }
