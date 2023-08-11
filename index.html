@@ -772,61 +772,51 @@
                               and synapses,</li>
                       <li><span style="color: #88CDF5">undo</span>: undo your last query.</li>
                     </ul>
-                    <ul>Next, we explain the rules for defining the criterion of the query, using the verb show as an example.
+                    <ul>Next, we explain the rules for defining the criterion of the query, using the verb show as an example. 
                         <li><span style="color: #88CDF5">show cell-type neurons</span>: Shows the neurons of the cell type. Example:
                             <ul>
-                                <li><a onclick="window.NLPsearch('show PEG neurons')"><span style="color: #97ba67">show PEG neurons</span></a>, or simply <a onclick="window.NLPsearch('show PEG neurons')"><span style="color: #97ba67">show peg</span></a>.</li>
+                                <li><a onclick="window.NLPsearch('show Mi1')"><span style="color: #97ba67">show Mi1 neurons</span></a>, or simply <a onclick="window.NLPsearch('show Mi1')"><span style="color: #97ba67">show mi1</span></a>.</li>
                             </ul>
                         </li>
                         <li><span style="color: #88CDF5">show $string$ neurons</span>: Shows neurons with a name that contains the string. Example:
                             <ul>
-                                <li><a onclick="window.NLPsearch('show $PEG$ neurons')"><span style="color: #97ba67">show $PEG$ neurons</span></a>, or simply <a onclick="window.NLPsearch('show $PEG$')"><span style="color: #97ba67">show $PEG$</span></a>, will query any neuron whose name contain the string *PEG*.</li>
+                                <li><a onclick="window.NLPsearch('show $T4a$ neurons')"><span style="color: #97ba67">show $T4a$ neurons</span></a>, or simply <a onclick="window.NLPsearch('show $T4a$')"><span style="color: #97ba67">show $T4a$</span></a>, will query any neuron whose name contain the string *T4a*.</li>
                             </ul>
                         </li>
                         <li><span style="color: #88CDF5"></span>show /rstring/r neurons</span>: Show neurons whose name matches the regular expressing string (This requires some knowledge of how the neurons are named in each dataset). Example:
                             <ul>
-                                <li><a onclick="window.NLPsearch('show /r(.*)PEG(.*)R1(.*)/r neurons')"><span style="color: #97ba67">show /r(.*)PEG(.*)R1(.*)/r neurons</span></a>, or simply <a onclick="window.NLPsearch('show /r(.*)PEG(.*)R1(.*)/r')"><span style="color: #97ba67">show /r(.*)PEG(.*)R1(.*)/r</span></a> will show the PEG neurons that innervate PB glomerulus R1.</li>
-                            </ul>
-                        </li>
-                        <li><span style="color: #88CDF5">show neurons in|that innervate|that arborize in neuropil/subregion</span>: Shows neurons that has output or input in a neuropil or a subregion of a neuropil. Examples:
-                            <ul>
-                                <li><a onclick="window.NLPsearch('show neurons in ellipsoid body')"><span style="color: #97ba67">show neurons in ellipsoid body</span></a>, or using abbreviations <a onclick="window.NLPsearch('show neurons in EB')"><span style="color: #97ba67">show neurons in EB</span></a>,</li>
-                                <li><a onclick="window.NLPsearch('show PEG neurons that arborize in PB glomerulus r9')"><span style="color: #97ba67">show PEG neurons that arborize in PB glomerulus r9</span></a>.</li>
-                                <li><a onclick="window.NLPsearch('show neurons that innervate right al and right mb')"><span style="color: #97ba67">show neurons that innervate right al and right mb</span></a>. Note that this is different from <a onclick="window.NLPsearch('show neurons that innervate right al or right mb')"><span style="color: #97ba67">show neurons that innervate right al or right mb</span></a>.</li>
-                            </ul>
-                        </li>
-                        <li><span style="color: #88CDF5">show local neurons in neuropil</span>: Shows the neurons that has only inputs and outputs within the neuropil (note that due to lack of data in some datasets, some neurons are only traced in one neuropil and thus are classified local neuron by default). Examples:
-                            <ul>
-                                <li><a onclick="window.NLPsearch('show local neurons in ellipsoid body')"><span style="color: #97ba67">show local neurons in ellipsoid body</span></a></li>
+                                <li><a onclick="window.NLPsearch('show /rTm2-[A-C]/r neurons')"><span style="color: #97ba67">show /rTm2-[A-C]/r neurons</span></a>, or simply <a onclick="window.NLPsearch('show /rTm2-[A-C]/r')"><span style="color: #97ba67">show /rTm2-[A-C]/r</span></a> will show the PEG neurons that innervate PB glomerulus R1.</li>
                             </ul>
                         </li>
                         <li><span style="color: #88CDF5">show neurons with|that have inputs|outputs in neuropil/subregion</span>: More specific then the previous query on the inputs or outputs. Examples:
                             <ul>
-                                <li><a onclick="window.NLPsearch('show neurons with inputs in AME')"><span style="color: #97ba67">show neurons with inputs in AME</span></a>,</li>
-                                <li><a onclick="window.NLPsearch('show ER3w neurons that have outputs in EB')"><span style="color: #97ba67">show ER3w neurons that have outputs in EB</span></a>,</li>
-                                <li><a onclick="window.NLPsearch('show neurons with inputs in right antennal lobe and outputs in right lateral horn')"><span style="color: #97ba67">show neurons with inputs in right antennal lobe and outputs in right lateral horn</span></a>, or equivalently <a onclick="window.NLPsearch('show neurons projecting from right antennal lobe to right lateral horn')"><span style="color: #97ba67">show neurons projecting from right antennal lobe to right lateral horn</span></a>,</li>
-                                <li><a onclick="window.NLPsearch('show neurons that connect right AL and right MB')"><span style="color: #97ba67">show neurons that connect right AL and right MB</span></a>. Includes both the neurons that has inputs in AL and outputs in MB, and those has inputs in MB and outputs in AL.</li>
+                                <li><a onclick="window.NLPsearch('show neurons in column A with outputs in lobula')"><span style="color: #97ba67">show neurons in column A with outputs in lobula</span></a></li>
                             </ul>
                         </li>
                         <li><span style="color: #88CDF5">show neurons presynaptic|postsynaptic to</span>: Shows the neurons that are presynaptic or postsynaptic to the neurons defined after the word to. Exmples:
                             <ul>
-                                <li><a onclick="window.NLPsearch('show neurons presynaptic to TuBu05')"><span style="color: #97ba67">show neurons presynaptic to TuBu05</span></a>,</li>
-                                <li><a onclick="window.NLPsearch(`show $aMe$ presynaptic to KCs that innervate alpha'1 compartment`)"><span style="color: #97ba67">show $aMe$ presynaptic to KCs that innervate alpha'1 compartment</span></a>,</li>
-                                <li><a onclick="window.NLPsearch('show DAN postsynaptic to MBONs with at least 30 synapses')"><span style="color: #97ba67">show DAN postsynaptic to MBONs with at least 30 synapses</span></a>.</li>
+                                <li><a onclick="window.NLPsearch('show neurons presynaptic to T4a in the home column')"><span style="color: #97ba67">show neurons presynaptic to $T4a-fb-home$</span></a>,</li>
+                                <li><a onclick="window.NLPsearch('show LPi1-2 postsynaptic to T4a with at least 5 synapses')"><span style="color: #97ba67">show LPi1-2 postsynaptic to T4a with at least 5 synapses</span></a>,</li>
                             </ul>
                         </li>
                         <li><span style="color: #88CDF5">show presynaptic|postsynaptic neurons</span>: Shows the neurons that are presynaptic or postsynaptic to the neurons already in workspace. Examples:
                             <ul>
                                 <li><span style="color: #97ba67">show presynaptic neurons</span>,</li>
-                                <li><span style="color: #97ba67">show postsynaptic neurons with at least 10 synapses</span>,</li>
-                                <li><span style="color: #97ba67">show postynaptic MBON that innervate gamma lobe with at least 5 synapses</span>. This searches for MBONs that satisfy: 1) postsyantpic to the neurons in the workspace with at least 5 synapses and 2) innervate gamma lobe of the mushroom body.</li>
+                                <li><span style="color: #97ba67">show postsynaptic neurons with at least 10 synapses</span></li>
+                                <li><span style="color: #97ba67">show postynaptic Dm1</span></li>
+                            </ul>
+                        </li>
+                        <li><span style="color: #88CDF5">show neurotransmitter neurons</span>: Shows the neurons that express the neurotramsitter. Examples:
+                            <ul>
+                                <li><a onclick="window.NLPsearch('show GABAergic neurons')"><span style="color: #97ba67">show GABAergic neurons</span></a></li>
+                                <li><span style="color: #97ba67">show cholinergic presynaptic neurons</span></li>
                             </ul>
                         </li>
                     </ul>
                     <ul>Other short-hands:
-                        <li><span style="color: #88CDF5">show /:referenceId:[5813014882, 912147912, 880875861]</span>: Shows the neurons whose referenceId in the original dataset is in the list. It can be used similar to \$ \\$ and regular expression and combined with other types of criteria. Examples:
+                        <li><span style="color: #88CDF5">show /:referenceId:[300, 1435702187]</span>: Shows the neurons whose referenceId in the original dataset is in the list. It can be used similar to \$ \\$ and regular expression and combined with other types of criteria. Examples:
                             <ul>
-                                <li><a onclick="window.NLPsearch('show /:referenceId:[5813014882, 912147912, 880875861]')"><span style="color: #97ba67">show /:referenceId:[5813014882, 912147912, 880875861]</span></a></li>
+                                <li><a onclick="window.NLPsearch('show /:referenceId:[300, 1435702187]')"><span style="color: #97ba67">show /:referenceId:[30465, 7892]</span></a></li>
                             </ul>
                         </li>
                     </ul>
