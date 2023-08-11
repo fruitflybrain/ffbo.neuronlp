@@ -216,6 +216,10 @@ moduleExporter("SummaryTable",
       tableHtml += "<div><p>" + fieldName + ":</p><p>" + fieldValue +"</p></div>" ;
     }
 
+    for (const [key, value] of Object.entries(data['info'])) {
+      tableHtml += "<div><p>" + snakeToSentence(key) + ":</p><p>" + value +"</p></div>" ;
+    }
+
     $('#'+this.tabId ).html(tableHtml);
 
     // set callback <TODO> check this
