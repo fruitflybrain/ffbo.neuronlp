@@ -131,7 +131,7 @@ moduleExporter(
 
       this.addCellType = function( name ) {
         var name_with_out_parenthesis = this.name.replaceAll('(', '____').replaceAll(')', '--__');
-        var new_name = name.replaceAll(`'`, 'prime').replaceAll('<', 'less').replaceAll('>', 'greater').replaceAll('+','plus').replaceAll('/', 'slash').replaceAll('(', 'leftp').replaceAll('(', 'rightp')
+        var new_name = name.replaceAll(`'`, 'prime').replaceAll('<', 'less').replaceAll('>', 'greater').replaceAll('+','plus').replaceAll('/', 'slash').replaceAll('(', 'leftp').replaceAll(')', 'rightp')
         var changed_label = name.replaceAll('<', '&lt').replaceAll('>', '&gt');
         var btnId = "btn-" + name_with_out_parenthesis+'-'+new_name;
         var btnToggleId = "btn-toggle-" + name_with_out_parenthesis+'-'+ new_name;
