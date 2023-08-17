@@ -104,12 +104,15 @@ moduleExporter(
       else if (typeof this.config.compare === 'string' || this.config.compare instanceof String)
         this.config.compare = compareFunc[this.config.compare];
 
-      this.addNeuropil = function( name ) {
+      this.addNeuropil = function( name, display_name) {
         name = name.toString();
-        name_with_out_parenthesis = name.replaceAll('(', '____').replaceAll(')', '--__');
+        if (display_name === undefined) {
+          display_name = name;
+        }
+        name_with_out_parenthesis = name.replaceAll('(', '____').replaceAll(')', '--__').replaceAll(' ', '-');
 
         var domStr = `<li class="mm-listitem" data-mm-child="` + name_with_out_parenthesis+`-cell-types">` + 
-                     `<a class="mm-btn mm-btn--next mm-listitem__btn mm-listitem__text" title="Open submenu" href="#`+ name_with_out_parenthesis+`-cell-types" onclick="lastOpenedCellType='`+name+`'">`+name+`<i class="icon-arrow-right"></i></a>` + 
+                     `<a class="mm-btn mm-btn--next mm-listitem__btn mm-listitem__text" title="Open submenu" href="#`+ name_with_out_parenthesis+`-cell-types" onclick="lastOpenedCellType='`+name+`'">`+display_name+`<i class="icon-arrow-right"></i></a>` + 
                      `</li>`;
 
         
@@ -123,13 +126,14 @@ moduleExporter(
 
         _this.btnLabelList.splice(idx, 0, name);
 
-        var domStr2 = `<div id="`+name_with_out_parenthesis+`-cell-types" class="mm-panel"> <div class="mm-navbar"><a class="mm-btn mm-btn--prev mm-navbar__btn" href="#toggle_celltype", onclick="" title="Close submenu"></a><a class="mm-navbar__title" href="#toggle_celltype" aria-hidden="true" onclick=""><span class="">`+name+`</span></a></div> <ul class="mm-listview"></ul></div>`
+        var domStr2 = `<div id="`+name_with_out_parenthesis+`-cell-types" class="mm-panel"> <div class="mm-navbar"><a class="mm-btn mm-btn--prev mm-navbar__btn" href="#toggle_celltype", onclick="" title="Close submenu"></a><a class="mm-navbar__title" href="#toggle_celltype" aria-hidden="true" onclick=""><span class="">`+display_name+`</span></a></div> <ul class="mm-listview"></ul></div>`
         $(".mm-panels").append(domStr2);
         var menu = new FFBODynamicMenu({ singleObjSel: '#'+name_with_out_parenthesis+ '-cell-types > .mm-listview', compare: 'LeftRight', name: name });
         return menu;
       }
 
       this.addCellType = function( name ) {
+        var neuropil = this.name;
         var name_with_out_parenthesis = this.name.replaceAll('(', '____').replaceAll(')', '--__');
         var new_name = name.replaceAll(`'`, 'prime').replaceAll('<', 'less').replaceAll('>', 'greater').replaceAll('+','plus').replaceAll('/', 'slash').replaceAll('(', 'leftp').replaceAll(')', 'rightp').replaceAll(' ', '-').replaceAll('&', 'and').replaceAll('.', 'dot');
         var changed_label = name.replaceAll('<', '&lt').replaceAll('>', '&gt');
@@ -158,19 +162,19 @@ moduleExporter(
         $("#" + btnId)
           .click( function() {
             var id = $(this).attr("label");
-            _this.dispatch.addType(id);
+            _this.dispatch.addType(id, _this.name);
         });
 
         $("#" + btnToggleId)
           .click( function() {
             var id = $(this).attr("label");
-            _this.dispatch.addType(id);
+            _this.dispatch.addType(id, _this.name);
         });
 
         $("#" + btnRmId)
           .click( function() {
             var id = $(this).attr("label");
-            _this.dispatch.removeType(id);
+            _this.dispatch.removeType(id, _this.name);
         });
 
       }

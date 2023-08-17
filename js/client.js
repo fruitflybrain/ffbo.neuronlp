@@ -583,34 +583,65 @@ ${connectivity.map(conn => `${conn[0]},${conn[1]},${conn[2]},${conn[3]}\n`).join
     }, callbacks, format);
   }
 
-  FFBOClient.prototype.addType = function (name, callbacks, format) {
+  FFBOClient.prototype.addType = function (name, neuropil, callbacks, format) {
     /**
      * Query to add a neuron by its name.
      */
-    return this.executeNAquery({
-      verb: "add",
-      query: [
-        {
-          action: { method: { query: { name: name } } },
-          object: { class: ["Neuron"] }
-        }
-      ]
-    }, callbacks, format);
+    if ( neuropil === undefined) {
+      return this.executeNAquery({
+        verb: "add",
+        query: [
+          {
+            action: { method: { query: { name: name } } },
+            object: { class: ["Neuron"] }
+          }
+        ]
+      }, callbacks, format);
+    } else {
+      return this.executeNAquery({
+        verb: "add",
+        query: [
+            {
+                action: { method: { query: { name: neuropil }}},
+                object: { class: ["Neuropil"] },
+            },
+            {
+                action: { method: { gen_traversal_in: {pass_through: ['ArborizesIn', 'Neuron', 'instanceof', {'name': name}], min_depth: 1}}},                      object: { memory: 0}
+            }
+        ]
+      }, callbacks, format);
+    }
+    
   }
 
   FFBOClient.prototype.removeType = function (name, callbacks, format) {
     /**
      * Query to add a neuron by its name.
      */
-    return this.executeNAquery({
-      verb: "remove",
-      query: [
-        {
-          action: { method: { query: { name: name } } },
-          object: { class: ["Neuron"] }
-        }
-      ]
-    }, callbacks, format);
+    if ( neuropil === undefined) {
+      return this.executeNAquery({
+        verb: "remove",
+        query: [
+          {
+            action: { method: { query: { name: name } } },
+            object: { class: ["Neuron"] }
+          }
+        ]
+      }, callbacks, format);
+    } else {
+      return this.executeNAquery({
+        verb: "remove",
+        query: [
+            {
+                action: { method: { query: { name: neuropil }}},
+                object: { class: ["Neuropil"] },
+            },
+            {
+                action: { method: { gen_traversal_in: {pass_through: ['ArborizesIn', 'Neuron', 'instanceof', {'name': name}], min_depth: 1}}},                      object: { memory: 0}
+            }
+        ]
+      }, callbacks, format);
+    }
   }
 
   FFBOClient.prototype.removeObjs = function (rids, callbacks, format) {

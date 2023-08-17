@@ -687,9 +687,11 @@ require([
         json = json[1];
         window.CellTypes = json;
         for (var key in json) {
-          dynamicCellTypeNeuropilMenu[key] = dynamicCellTypeMenu.addNeuropil(key);
-          dynamicCellTypeNeuropilMenu[key].dispatch.addType = function (name) { client.addType(name, { success: dataCallback }) };
-          dynamicCellTypeNeuropilMenu[key].dispatch.removeType = function (name) { client.removeType(name, { success: dataCallback }) };
+          const neuropil = key;
+          const display_key = ffbomesh.meshDict[key].label;
+          dynamicCellTypeNeuropilMenu[key] = dynamicCellTypeMenu.addNeuropil(key, display_key);
+          dynamicCellTypeNeuropilMenu[key].dispatch.addType = function (name) { client.addType(name, neuropil, { success: dataCallback }) };
+          dynamicCellTypeNeuropilMenu[key].dispatch.removeType = function (name) { client.removeType(name, neuropil, { success: dataCallback }) };
         }
       });
     }
