@@ -1,865 +1,865 @@
 [
-    {
-      "branch": "flywire"
+  {
+    "branch": "flywire"
+  },
+  {
+    "AVLP_R": {
+      "filename": "lib/mesh/flywire/AVLP_R.json",
+      "label": "Right Anterior Ventrolateral Protocerebrum",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
     },
-    {
-      "LO_L": {
-        "filename": "lib/mesh/flywire/LO_L.json",
-        "label": "LO_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "CRE_L": {
-        "filename": "lib/mesh/flywire/CRE_L.json",
-        "label": "CRE_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "PED_L": {
-        "filename": "lib/mesh/flywire/PED_L.json",
-        "label": "PED_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "IPS_R": {
-        "filename": "lib/mesh/flywire/IPS_R.json",
-        "label": "IPS_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "GA_R": {
-        "filename": "lib/mesh/flywire/GA_R.json",
-        "label": "GA_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "SLP_R": {
-        "filename": "lib/mesh/flywire/SLP_R.json",
-        "label": "SLP_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "AOTU_R": {
-        "filename": "lib/mesh/flywire/AOTU_R.json",
-        "label": "AOTU_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "AOTU_L": {
-        "filename": "lib/mesh/flywire/AOTU_L.json",
-        "label": "AOTU_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "AMMC_R": {
-        "filename": "lib/mesh/flywire/AMMC_R.json",
-        "label": "AMMC_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "WED_L": {
-        "filename": "lib/mesh/flywire/WED_L.json",
-        "label": "WED_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "PVLP_R": {
-        "filename": "lib/mesh/flywire/PVLP_R.json",
-        "label": "PVLP_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "IB_L": {
-        "filename": "lib/mesh/flywire/IB_L.json",
-        "label": "IB_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "SLP_L": {
-        "filename": "lib/mesh/flywire/SLP_L.json",
-        "label": "SLP_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "LA_L": {
-        "filename": "lib/mesh/flywire/LA_L.json",
-        "label": "LA_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "LOP_L": {
-        "filename": "lib/mesh/flywire/LOP_L.json",
-        "label": "LOP_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "ME_R": {
-        "filename": "lib/mesh/flywire/ME_R.json",
-        "label": "ME_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "ICL_R": {
-        "filename": "lib/mesh/flywire/ICL_R.json",
-        "label": "ICL_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "PB": {
-        "filename": "lib/mesh/flywire/PB.json",
-        "label": "PB",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "FB": {
-        "filename": "lib/mesh/flywire/FB.json",
-        "label": "FB",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "ME_L": {
-        "filename": "lib/mesh/flywire/ME_L.json",
-        "label": "ME_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "PED_R": {
-        "filename": "lib/mesh/flywire/PED_R.json",
-        "label": "PED_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "AME_L": {
-        "filename": "lib/mesh/flywire/AME_L.json",
-        "label": "AME_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "AL_R": {
-        "filename": "lib/mesh/flywire/AL_R.json",
-        "label": "AL_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "AVLP_R": {
-        "filename": "lib/mesh/flywire/AVLP_R.json",
-        "label": "AVLP_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "BU_R": {
-        "filename": "lib/mesh/flywire/BU_R.json",
-        "label": "BU_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "SIP_R": {
-        "filename": "lib/mesh/flywire/SIP_R.json",
-        "label": "SIP_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "VL_L": {
-        "filename": "lib/mesh/flywire/VL_L.json",
-        "label": "VL_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "AME_R": {
-        "filename": "lib/mesh/flywire/AME_R.json",
-        "label": "AME_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "LOP_R": {
-        "filename": "lib/mesh/flywire/LOP_R.json",
-        "label": "LOP_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "SMP_R": {
-        "filename": "lib/mesh/flywire/SMP_R.json",
-        "label": "SMP_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "NO": {
-        "filename": "lib/mesh/flywire/NO.json",
-        "label": "NO",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "EPA_L": {
-        "filename": "lib/mesh/flywire/EPA_L.json",
-        "label": "EPA_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "IPS_L": {
-        "filename": "lib/mesh/flywire/IPS_L.json",
-        "label": "IPS_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "ATL_R": {
-        "filename": "lib/mesh/flywire/ATL_R.json",
-        "label": "ATL_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "ICL_L": {
-        "filename": "lib/mesh/flywire/ICL_L.json",
-        "label": "ICL_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "SMP_L": {
-        "filename": "lib/mesh/flywire/SMP_L.json",
-        "label": "SMP_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "GNG": {
-        "filename": "lib/mesh/flywire/GNG.json",
-        "label": "GNG",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "PLP_R": {
-        "filename": "lib/mesh/flywire/PLP_R.json",
-        "label": "PLP_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "GOR_L": {
-        "filename": "lib/mesh/flywire/GOR_L.json",
-        "label": "GOR_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "WED_R": {
-        "filename": "lib/mesh/flywire/WED_R.json",
-        "label": "WED_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "VL_R": {
-        "filename": "lib/mesh/flywire/VL_R.json",
-        "label": "VL_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "SPS_L": {
-        "filename": "lib/mesh/flywire/SPS_L.json",
-        "label": "SPS_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "SCL_R": {
-        "filename": "lib/mesh/flywire/SCL_R.json",
-        "label": "SCL_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "GA_L": {
-        "filename": "lib/mesh/flywire/GA_L.json",
-        "label": "GA_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "BU_L": {
-        "filename": "lib/mesh/flywire/BU_L.json",
-        "label": "BU_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "LA_R": {
-        "filename": "lib/mesh/flywire/LA_R.json",
-        "label": "LA_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "LH_R": {
-        "filename": "lib/mesh/flywire/LH_R.json",
-        "label": "LH_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "AVLP_L": {
-        "filename": "lib/mesh/flywire/AVLP_L.json",
-        "label": "AVLP_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "ML_L": {
-        "filename": "lib/mesh/flywire/ML_L.json",
-        "label": "ML_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "VES_R": {
-        "filename": "lib/mesh/flywire/VES_R.json",
-        "label": "VES_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "PLP_L": {
-        "filename": "lib/mesh/flywire/PLP_L.json",
-        "label": "PLP_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "CAN_R": {
-        "filename": "lib/mesh/flywire/CAN_R.json",
-        "label": "CAN_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "PRW": {
-        "filename": "lib/mesh/flywire/PRW.json",
-        "label": "PRW",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "SCL_L": {
-        "filename": "lib/mesh/flywire/SCL_L.json",
-        "label": "SCL_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "SAD": {
-        "filename": "lib/mesh/flywire/SAD.json",
-        "label": "SAD",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "VES_L": {
-        "filename": "lib/mesh/flywire/VES_L.json",
-        "label": "VES_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "SIP_L": {
-        "filename": "lib/mesh/flywire/SIP_L.json",
-        "label": "SIP_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "GOR_R": {
-        "filename": "lib/mesh/flywire/GOR_R.json",
-        "label": "GOR_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "ATL_L": {
-        "filename": "lib/mesh/flywire/ATL_L.json",
-        "label": "ATL_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "FLA_L": {
-        "filename": "lib/mesh/flywire/FLA_L.json",
-        "label": "FLA_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "FLA_R": {
-        "filename": "lib/mesh/flywire/FLA_R.json",
-        "label": "FLA_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "LH_L": {
-        "filename": "lib/mesh/flywire/LH_L.json",
-        "label": "LH_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "CAN_L": {
-        "filename": "lib/mesh/flywire/CAN_L.json",
-        "label": "CAN_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "CA_R": {
-        "filename": "lib/mesh/flywire/CA_R.json",
-        "label": "CA_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "EB": {
-        "filename": "lib/mesh/flywire/EB.json",
-        "label": "EB",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "OCG": {
-        "filename": "lib/mesh/flywire/OCG.json",
-        "label": "OCG",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "AL_L": {
-        "filename": "lib/mesh/flywire/AL_L.json",
-        "label": "AL_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "CRE_R": {
-        "filename": "lib/mesh/flywire/CRE_R.json",
-        "label": "CRE_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "CA_L": {
-        "filename": "lib/mesh/flywire/CA_L.json",
-        "label": "CA_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "LAL_L": {
-        "filename": "lib/mesh/flywire/LAL_L.json",
-        "label": "LAL_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "IB_R": {
-        "filename": "lib/mesh/flywire/IB_R.json",
-        "label": "IB_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "AMMC_L": {
-        "filename": "lib/mesh/flywire/AMMC_L.json",
-        "label": "AMMC_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "ML_R": {
-        "filename": "lib/mesh/flywire/ML_R.json",
-        "label": "ML_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "SPS_R": {
-        "filename": "lib/mesh/flywire/SPS_R.json",
-        "label": "SPS_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "EPA_R": {
-        "filename": "lib/mesh/flywire/EPA_R.json",
-        "label": "EPA_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "PVLP_L": {
-        "filename": "lib/mesh/flywire/PVLP_L.json",
-        "label": "PVLP_L",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "LAL_R": {
-        "filename": "lib/mesh/flywire/LAL_R.json",
-        "label": "LAL_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      },
-      "LO_R": {
-        "filename": "lib/mesh/flywire/LO_R.json",
-        "label": "LO_R",
-        "highlight": false,
-        "background": true,
-        "color": [
-          0.15,
-          0.01,
-          0.15
-        ]
-      }
+    "CAN_L": {
+      "filename": "lib/mesh/flywire/CAN_L.json",
+      "label": "Left Cantle",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "AOTU_R": {
+      "filename": "lib/mesh/flywire/AOTU_R.json",
+      "label": "Right Anterior Optic Tubercle",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "LA_L": {
+      "filename": "lib/mesh/flywire/LA_L.json",
+      "label": "Left Lamina",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "SIP_L": {
+      "filename": "lib/mesh/flywire/SIP_L.json",
+      "label": "Left Superior Intermediate Protocerebrum",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "IPS_R": {
+      "filename": "lib/mesh/flywire/IPS_R.json",
+      "label": "Right Inferior Posterior Slope",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "SCL_L": {
+      "filename": "lib/mesh/flywire/SCL_L.json",
+      "label": "Left Superior Clamp",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "SAD": {
+      "filename": "lib/mesh/flywire/SAD.json",
+      "label": "Saddle",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "LH_L": {
+      "filename": "lib/mesh/flywire/LH_L.json",
+      "label": "Left Lateral Horn",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "ATL_R": {
+      "filename": "lib/mesh/flywire/ATL_R.json",
+      "label": "Right Antler",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "EPA_L": {
+      "filename": "lib/mesh/flywire/EPA_L.json",
+      "label": "Left Epaulette",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "VES_L": {
+      "filename": "lib/mesh/flywire/VES_L.json",
+      "label": "Left Vest",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "GA_R": {
+      "filename": "lib/mesh/flywire/GA_R.json",
+      "label": "Right Gall",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "BU_L": {
+      "filename": "lib/mesh/flywire/BU_L.json",
+      "label": "Left Bulb",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "BU_R": {
+      "filename": "lib/mesh/flywire/BU_R.json",
+      "label": "Right Bulb",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "AL_L": {
+      "filename": "lib/mesh/flywire/AL_L.json",
+      "label": "Left Antennal Lobe",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "AMMC_R": {
+      "filename": "lib/mesh/flywire/AMMC_R.json",
+      "label": "Right Antennal Mechanosensory and Motor Center",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "SPS_L": {
+      "filename": "lib/mesh/flywire/SPS_L.json",
+      "label": "Left Superior Posterior Slope",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "GNG": {
+      "filename": "lib/mesh/flywire/GNG.json",
+      "label": "Gnatal Ganglia",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "WED_R": {
+      "filename": "lib/mesh/flywire/WED_R.json",
+      "label": "Right Wedge",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "IB_R": {
+      "filename": "lib/mesh/flywire/IB_R.json",
+      "label": "Right Inferior Bridge",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "SPS_R": {
+      "filename": "lib/mesh/flywire/SPS_R.json",
+      "label": "Right Superior Posterior Slope",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "EPA_R": {
+      "filename": "lib/mesh/flywire/EPA_R.json",
+      "label": "Right Epaulette",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "LAL_L": {
+      "filename": "lib/mesh/flywire/LAL_L.json",
+      "label": "Left Lateral Accessory Lobe",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "LH_R": {
+      "filename": "lib/mesh/flywire/LH_R.json",
+      "label": "Right Lateral Horn",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "IPS_L": {
+      "filename": "lib/mesh/flywire/IPS_L.json",
+      "label": "Left Inferior Posterior Slope",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "LA_R": {
+      "filename": "lib/mesh/flywire/LA_R.json",
+      "label": "Right Lamina",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "GOR_L": {
+      "filename": "lib/mesh/flywire/GOR_L.json",
+      "label": "Left Gorget",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "AME_R": {
+      "filename": "lib/mesh/flywire/AME_R.json",
+      "label": "Right Accessory Medulla",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "ME_L": {
+      "filename": "lib/mesh/flywire/ME_L.json",
+      "label": "Left Medulla",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "GA_L": {
+      "filename": "lib/mesh/flywire/GA_L.json",
+      "label": "Left Gall",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "PED_L": {
+      "filename": "lib/mesh/flywire/PED_L.json",
+      "label": "Left Pedunculus",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "AVLP_L": {
+      "filename": "lib/mesh/flywire/AVLP_L.json",
+      "label": "Left Anterior Ventrolateral Protocerebrum",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "LOP_R": {
+      "filename": "lib/mesh/flywire/LOP_R.json",
+      "label": "Right Lobula Plate",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "AME_L": {
+      "filename": "lib/mesh/flywire/AME_L.json",
+      "label": "Left Accessory Medulla",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "PB": {
+      "filename": "lib/mesh/flywire/PB.json",
+      "label": "Protocerebral Bridge",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "CA_L": {
+      "filename": "lib/mesh/flywire/CA_L.json",
+      "label": "Left Calyx",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "ICL_L": {
+      "filename": "lib/mesh/flywire/ICL_L.json",
+      "label": "Left Inferior Clamp",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "SIP_R": {
+      "filename": "lib/mesh/flywire/SIP_R.json",
+      "label": "Right Superior Intermediate Protocerebrum",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "SMP_L": {
+      "filename": "lib/mesh/flywire/SMP_L.json",
+      "label": "Left Superior Medial Protocerebrum",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "LAL_R": {
+      "filename": "lib/mesh/flywire/LAL_R.json",
+      "label": "Right Lateral Accessory Lobe",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "CAN_R": {
+      "filename": "lib/mesh/flywire/CAN_R.json",
+      "label": "Right Cantle",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "CRE_L": {
+      "filename": "lib/mesh/flywire/CRE_L.json",
+      "label": "Left Crepine",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "FLA_L": {
+      "filename": "lib/mesh/flywire/FLA_L.json",
+      "label": "Left Flange",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "VL_L": {
+      "filename": "lib/mesh/flywire/VL_L.json",
+      "label": "Left Vertical Lobe",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "ME_R": {
+      "filename": "lib/mesh/flywire/ME_R.json",
+      "label": "Right Medulla",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "VES_R": {
+      "filename": "lib/mesh/flywire/VES_R.json",
+      "label": "Right Vest",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "SMP_R": {
+      "filename": "lib/mesh/flywire/SMP_R.json",
+      "label": "Right Superior Medial Protocerebrum",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "AMMC_L": {
+      "filename": "lib/mesh/flywire/AMMC_L.json",
+      "label": "Left Antennal Mechanosensory and Motor Center",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "PVLP_R": {
+      "filename": "lib/mesh/flywire/PVLP_R.json",
+      "label": "Right Posterior Ventrolateral Protocerebrum",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "PRW": {
+      "filename": "lib/mesh/flywire/PRW.json",
+      "label": "Prow",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "NO": {
+      "filename": "lib/mesh/flywire/NO.json",
+      "label": "Noduli",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "ATL_L": {
+      "filename": "lib/mesh/flywire/ATL_L.json",
+      "label": "Left Antler",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "SLP_R": {
+      "filename": "lib/mesh/flywire/SLP_R.json",
+      "label": "Right Superior Lateral Protocerebrum",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "CA_R": {
+      "filename": "lib/mesh/flywire/CA_R.json",
+      "label": "Right Calyx",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "PLP_L": {
+      "filename": "lib/mesh/flywire/PLP_L.json",
+      "label": "Left Posteriorlateral Protocerebrum",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "FB": {
+      "filename": "lib/mesh/flywire/FB.json",
+      "label": "Fan-shaped Body",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "LOP_L": {
+      "filename": "lib/mesh/flywire/LOP_L.json",
+      "label": "Left Lobula Plate",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "CRE_R": {
+      "filename": "lib/mesh/flywire/CRE_R.json",
+      "label": "Right Crepine",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "VL_R": {
+      "filename": "lib/mesh/flywire/VL_R.json",
+      "label": "Right Vertical Lobe",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "LO_L": {
+      "filename": "lib/mesh/flywire/LO_L.json",
+      "label": "Left Lobula",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "PVLP_L": {
+      "filename": "lib/mesh/flywire/PVLP_L.json",
+      "label": "Left Posterior Ventrolateral Protocerebrum",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "OCG": {
+      "filename": "lib/mesh/flywire/OCG.json",
+      "label": "Ocelli",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "PLP_R": {
+      "filename": "lib/mesh/flywire/PLP_R.json",
+      "label": "Right Posteriorlateral Protocerebrum",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "WED_L": {
+      "filename": "lib/mesh/flywire/WED_L.json",
+      "label": "Left Wedge",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "AL_R": {
+      "filename": "lib/mesh/flywire/AL_R.json",
+      "label": "Right Antennal Lobe",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "IB_L": {
+      "filename": "lib/mesh/flywire/IB_L.json",
+      "label": "Left Inferior Bridge",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "PED_R": {
+      "filename": "lib/mesh/flywire/PED_R.json",
+      "label": "Right Pedunculus",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "LO_R": {
+      "filename": "lib/mesh/flywire/LO_R.json",
+      "label": "Right Lobula",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "SCL_R": {
+      "filename": "lib/mesh/flywire/SCL_R.json",
+      "label": "Right Superior Clamp",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "ML_L": {
+      "filename": "lib/mesh/flywire/ML_L.json",
+      "label": "Left Medial Lobe",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "SLP_L": {
+      "filename": "lib/mesh/flywire/SLP_L.json",
+      "label": "Left Superior Lateral Protocerebrum",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "AOTU_L": {
+      "filename": "lib/mesh/flywire/AOTU_L.json",
+      "label": "Left Anterior Optic Tubercle",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "GOR_R": {
+      "filename": "lib/mesh/flywire/GOR_R.json",
+      "label": "Right Gorget",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "EB": {
+      "filename": "lib/mesh/flywire/EB.json",
+      "label": "Ellipsoid Body",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "FLA_R": {
+      "filename": "lib/mesh/flywire/FLA_R.json",
+      "label": "Right Flange",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "ICL_R": {
+      "filename": "lib/mesh/flywire/ICL_R.json",
+      "label": "Right Inferior Clamp",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "ML_R": {
+      "filename": "lib/mesh/flywire/ML_R.json",
+      "label": "Right Medial Lobe",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
     }
-  ]
+  }
+]
