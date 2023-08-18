@@ -134,7 +134,7 @@ moduleExporter(
 
       this.addCellType = function( name ) {
         var neuropil = this.name;
-        var name_with_out_parenthesis = this.name.replaceAll('(', '____').replaceAll(')', '--__');
+        var name_with_out_parenthesis = neuropil.replaceAll('(', '-').replaceAll(')', '-').replaceAll(' ', '-');
         var new_name = name.replaceAll(`'`, 'prime').replaceAll('<', 'less').replaceAll('>', 'greater').replaceAll('+','plus').replaceAll('/', 'slash').replaceAll('(', 'leftp').replaceAll(')', 'rightp').replaceAll(' ', '-').replaceAll('&', 'and').replaceAll('.', 'dot');
         var changed_label = name.replaceAll('<', '&lt').replaceAll('>', '&gt');
         var btnId = "btn-" + name_with_out_parenthesis+'-'+new_name;
@@ -180,11 +180,12 @@ moduleExporter(
       }
 
       this.addNeuron = function(id, label) {
-        var changed_label = label.replace('<', '&lt').replace('>', '&gt');
-        var btnId = "btn-" + uidDecode(id);
-        var btnToggleId = "btn-toggle-" + uidDecode(id);
-        var btnRmId = (_this.config.removable) ? "btn-rm-" + uidDecode(id): false;
-        var btnPinSymId = (_this.config.pinnable) ? "btn-pin-symbol-" + uidDecode(id): false;
+        var changed_label = label.replaceAll('<', '&lt').replaceAll('>', '&gt')
+        var new_id = id.replaceAll('(','_').replaceAll(')','_').replaceAll(' ', '_');
+        var btnId = "btn-" + uidDecode(new_id);
+        var btnToggleId = "btn-toggle-" + uidDecode(new_id);
+        var btnRmId = (_this.config.removable) ? "btn-rm-" + uidDecode(new_id): false;
+        var btnPinSymId = (_this.config.pinnable) ? "btn-pin-symbol-" + uidDecode(new_id): false;
         var domStr = `<li id='li-${btnId}' class='mm-listitem'>` +
                       "<span>" +
                       `<div id='${btnId}' role='button' label="${label}" class='btn-single-ob'>${changed_label}</div>` +

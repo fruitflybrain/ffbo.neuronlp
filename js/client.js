@@ -614,7 +614,7 @@ ${connectivity.map(conn => `${conn[0]},${conn[1]},${conn[2]},${conn[3]}\n`).join
     
   }
 
-  FFBOClient.prototype.removeType = function (name, callbacks, format) {
+  FFBOClient.prototype.removeType = function (name, neuropil, callbacks, format) {
     /**
      * Query to add a neuron by its name.
      */
