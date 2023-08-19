@@ -63,6 +63,16 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager", "showdown"], functi
     this.notifyError(err.args[0]);
   }
 
+  announcement = function(serverInfo) {
+    if (serverInfo.hasOwnProperty(0))
+      serverInfo = serverInfo[0];
+    if (typeof (serverInfo) == "object" && "processor" in serverInfo) {
+      if ("announcement" in serverInfo["processor"] ){
+        client.notifySuccess(serverInfo["processor"]["announcement"]);
+      }
+    }
+  }
+
   updateServers = function (serverInfo) {
     /** Update the Crossbar Session IDs of servers
      *  If current server drops, switched to a new server if available
@@ -750,6 +760,7 @@ ${connectivity.map(conn => `${conn[0]},${conn[1]},${conn[2]},${conn[3]}\n`).join
 
       session.call("ffbo.processor.server_information").then(
         (function (res) {
+          announcement([res]);
           updateServers([res]);
         }).bind(this),
         function (err) {

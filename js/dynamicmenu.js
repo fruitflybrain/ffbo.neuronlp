@@ -110,8 +110,8 @@ moduleExporter(
           display_name = name;
         }
         name_with_out_parenthesis = name.replaceAll('(', '____').replaceAll(')', '--__').replaceAll(' ', '-');
-
-        var domStr = `<li class="mm-listitem" data-mm-child="` + name_with_out_parenthesis+`-cell-types">` + 
+        var btnId = "btn-" + name_with_out_parenthesis + '-cell-types';
+        var domStr = `<li id='li-${btnId}' label="${name}" class="mm-listitem" data-mm-child="` + name_with_out_parenthesis+`-cell-types">` + 
                      `<a class="mm-btn mm-btn--next mm-listitem__btn mm-listitem__text" title="Open submenu" href="#`+ name_with_out_parenthesis+`-cell-types" onclick="lastOpenedCellType='`+name+`'">`+display_name+`<i class="icon-arrow-right"></i></a>` + 
                      `</li>`;
 
@@ -125,6 +125,15 @@ moduleExporter(
         }
 
         _this.btnLabelList.splice(idx, 0, name);
+
+        $("#li-" + btnId)
+          .mouseenter( function() {
+            var id = $(this).attr("label");
+            _this.dispatch.highlight(id);
+          })
+          .mouseleave( function() {
+            _this.dispatch.resume();
+          });
 
         var domStr2 = `<div id="`+name_with_out_parenthesis+`-cell-types" class="mm-panel"> <div class="mm-navbar"><a class="mm-btn mm-btn--prev mm-navbar__btn" href="#toggle_celltype", onclick="" title="Close submenu"></a><a class="mm-navbar__title" href="#toggle_celltype" aria-hidden="true" onclick=""><span class="">`+display_name+`</span></a></div> <ul class="mm-listview"></ul></div>`
         $(".mm-panels").append(domStr2);
