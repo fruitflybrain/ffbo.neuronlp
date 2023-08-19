@@ -195,13 +195,13 @@ moduleExporter(
         var btnToggleId = "btn-toggle-" + uidDecode(new_id);
         var btnRmId = (_this.config.removable) ? "btn-rm-" + uidDecode(new_id): false;
         var btnPinSymId = (_this.config.pinnable) ? "btn-pin-symbol-" + uidDecode(new_id): false;
-        var domStr = `<li id='li-${btnId}' class='mm-listitem'>` +
+        var domStr = `<li id='li-${btnId}' label="${id}" class='mm-listitem'>` +
                       "<span>" +
-                      `<div id='${btnId}' role='button' label="${label}" class='btn-single-ob'>${changed_label}</div>` +
+                      `<div id='${btnId}' role='button' label="${id}" class='btn-single-ob'>${changed_label}</div>` +
                       "<div class='btn-single-obj-ctrl'>" +
-                        ((btnRmId) ? `<a id='${btnRmId}' role='button'>${_this.config.removeSymbol}</a>` : '') +
-                        ((btnPinSymId) ? `<a id='${btnPinSymId}' class='btn-unpinned' role='button'>${_this.config.pinSymbol}</a>` : '') +
-                        `<a id='${btnToggleId}' role='button'>${_this.config.showSymbol}</a>` +
+                        ((btnRmId) ? `<a id='${btnRmId}' label='${id}' role='button'>${_this.config.removeSymbol}</a>` : '') +
+                        ((btnPinSymId) ? `<a id='${btnPinSymId}' label='${id}' class='btn-unpinned' role='button'>${_this.config.pinSymbol}</a>` : '') +
+                        `<a id='${btnToggleId}' label='${id}' role='button'>${_this.config.showSymbol}</a>` +
                         "</div>" +
                       "</span>" +
                      `</li>`;
@@ -218,20 +218,20 @@ moduleExporter(
         _this.btnLabelList.splice(idx, 0, label);
         $("#" + btnId)
           .click( function() {
-            var id = $(this).attr("id").substring(4);
-            id = uidEncode(id);
+            var id = $(this).attr("label");
+            //id = uidEncode(id);
             _this.dispatch.getInfo(id);
         });
         $("#" + btnToggleId)
           .click( function() {
-            var id = $(this).attr("id").substring(11);
-            id = uidEncode(id);
+            var id = $(this).attr("label");
+            //id = uidEncode(id);
             _this.dispatch.toggle(id);
         });
         $("#li-" + btnId)
           .mouseenter( function() {
-            var id = $(this).attr("id").substring(7);
-            id = uidEncode(id);
+            var id = $(this).attr("label");
+            // id = uidEncode(id);
             _this.dispatch.highlight(id);
           })
           .mouseleave( function() {
@@ -239,15 +239,15 @@ moduleExporter(
           });
         if (btnRmId) {
           $("#" + btnRmId).click( function() {
-              var id = $(this).attr("id").substring(7);
-              id = uidEncode(id);
+              var id = $(this).attr("label");
+              //id = uidEncode(id);
               _this.dispatch.remove(id);
           })
         }
         if (btnPinSymId) {
           $("#" + btnPinSymId).click( function() {
-              var id = $(this).attr("id").substring(15);
-              id = uidEncode(id);
+              var id = $(this).attr("label");
+              // id = uidEncode(id);
               _this.dispatch.togglePin(id);
           })
         }
