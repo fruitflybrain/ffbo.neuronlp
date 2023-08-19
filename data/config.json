@@ -5,8 +5,8 @@
   {
     "mVAC(T3)(R)": {
       "filename": "lib/mesh/manc/mVAC(T3)(R).json",
-      "label": "mVAC(T3)(R)",
-      "highlight": false,
+      "label": "Right Medial Ventral Association Center T3 (mVAC T3)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -16,8 +16,8 @@
     },
     "LegNp(T1)(L)": {
       "filename": "lib/mesh/manc/LegNp(T1)(L).json",
-      "label": "LegNp(T1)(L)",
-      "highlight": false,
+      "label": "Left Leg Neuropil T1 (LegNp T1)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -27,8 +27,8 @@
     },
     "ADMN(L)": {
       "filename": "lib/mesh/manc/ADMN(L).json",
-      "label": "ADMN(L)",
-      "highlight": false,
+      "label": "Left Anterior Dorsal Mesothoracic Nerve (ADMN)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -38,8 +38,8 @@
     },
     "GF(L)": {
       "filename": "lib/mesh/manc/GF(L).json",
-      "label": "GF(L)",
-      "highlight": false,
+      "label": "Left Giant Fibers (GF)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -49,8 +49,8 @@
     },
     "AbN3(L)": {
       "filename": "lib/mesh/manc/AbN3(L).json",
-      "label": "AbN3(L)",
-      "highlight": false,
+      "label": "Left Third Abdominal Nerve (AbN3)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -61,7 +61,7 @@
     "MesoAN(L)": {
       "filename": "lib/mesh/manc/MesoAN(L).json",
       "label": "MesoAN(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -71,8 +71,8 @@
     },
     "ProCN(R)": {
       "filename": "lib/mesh/manc/ProCN(R).json",
-      "label": "ProCN(R)",
-      "highlight": false,
+      "label": "Right Prothoracic Chordotonal Nerve (ProCN)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -82,8 +82,8 @@
     },
     "ANm": {
       "filename": "lib/mesh/manc/ANm.json",
-      "label": "ANm",
-      "highlight": false,
+      "label": "Abdominal Neuromeres (ANm)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -93,8 +93,8 @@
     },
     "mVAC(T2)(L)": {
       "filename": "lib/mesh/manc/mVAC(T2)(L).json",
-      "label": "mVAC(T2)(L)",
-      "highlight": false,
+      "label": "Left Medial Ventral Association Center T2 (mVAC T2)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -104,8 +104,8 @@
     },
     "AbN4(R)": {
       "filename": "lib/mesh/manc/AbN4(R).json",
-      "label": "AbN4(R)",
-      "highlight": false,
+      "label": "Right Fourth Abdominal Nerve (AbN4)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -115,8 +115,8 @@
     },
     "WTct(UTct-T2)(L)": {
       "filename": "lib/mesh/manc/WTct(UTct-T2)(L).json",
-      "label": "WTct(UTct-T2)(L)",
-      "highlight": false,
+      "label": "Left Wing Tectulum (WTct / UTct-T2)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -126,8 +126,8 @@
     },
     "AbN2(L)": {
       "filename": "lib/mesh/manc/AbN2(L).json",
-      "label": "AbN2(L)",
-      "highlight": false,
+      "label": "Left Second Abdominal Nerve (AbN2)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -137,8 +137,8 @@
     },
     "IntTct": {
       "filename": "lib/mesh/manc/IntTct.json",
-      "label": "IntTct",
-      "highlight": false,
+      "label": "Intermediate Tectulum (IntTct)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -148,8 +148,8 @@
     },
     "mVAC(T2)(R)": {
       "filename": "lib/mesh/manc/mVAC(T2)(R).json",
-      "label": "mVAC(T2)(R)",
-      "highlight": false,
+      "label": "Right Medial Ventral Association Center T2 (mVAC T2)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -159,8 +159,8 @@
     },
     "mVAC(T3)(L)": {
       "filename": "lib/mesh/manc/mVAC(T3)(L).json",
-      "label": "mVAC(T3)(L)",
-      "highlight": false,
+      "label": "Left Medial Ventral Association Center T3 (mVAC T3)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -170,8 +170,8 @@
     },
     "ProCN(L)": {
       "filename": "lib/mesh/manc/ProCN(L).json",
-      "label": "ProCN(L)",
-      "highlight": false,
+      "label": "Left Prothoracic Chordotonal Nerve (ProCN)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -181,8 +181,8 @@
     },
     "CvN(R)": {
       "filename": "lib/mesh/manc/CvN(R).json",
-      "label": "CvN(R)",
-      "highlight": false,
+      "label": "Right Cervical Nerve (CvN)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -192,8 +192,8 @@
     },
     "VProN(R)": {
       "filename": "lib/mesh/manc/VProN(R).json",
-      "label": "VProN(R)",
-      "highlight": false,
+      "label": "Right Ventral Prothoracic Nerve (VProN)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -203,8 +203,8 @@
     },
     "MetaLN(L)": {
       "filename": "lib/mesh/manc/MetaLN(L).json",
-      "label": "MetaLN(L)",
-      "highlight": false,
+      "label": "Left Metathoracic Leg Nerve (MetaLN)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -214,8 +214,8 @@
     },
     "mVAC(T1)(R)": {
       "filename": "lib/mesh/manc/mVAC(T1)(R).json",
-      "label": "mVAC(T1)(R)",
-      "highlight": false,
+      "label": "Right Medial Ventral Association Center T1 (mVAC T1)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -225,8 +225,8 @@
     },
     "ProAN(L)": {
       "filename": "lib/mesh/manc/ProAN(L).json",
-      "label": "ProAN(L)",
-      "highlight": false,
+      "label": "Left Prothoracic Accessory Nerve (ProAN)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -236,8 +236,8 @@
     },
     "PrN(R)": {
       "filename": "lib/mesh/manc/PrN(R).json",
-      "label": "PrN(R)",
-      "highlight": false,
+      "label": "Right Prosternal Nerve (PrN)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -247,8 +247,8 @@
     },
     "LegNp(T2)(L)": {
       "filename": "lib/mesh/manc/LegNp(T2)(L).json",
-      "label": "LegNp(T2)(L)",
-      "highlight": false,
+      "label": "Left Leg Neuropil T2 (LegNp T2)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -258,8 +258,8 @@
     },
     "CvN(L)": {
       "filename": "lib/mesh/manc/CvN(L).json",
-      "label": "CvN(L)",
-      "highlight": false,
+      "label": "Left Cervical Nerve (CvN)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -269,8 +269,8 @@
     },
     "DMetaN(L)": {
       "filename": "lib/mesh/manc/DMetaN(L).json",
-      "label": "DMetaN(L)",
-      "highlight": false,
+      "label": "Left Dorsal Mesothoracic Nerve (DMetaN)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -280,8 +280,8 @@
     },
     "PDMN(L)": {
       "filename": "lib/mesh/manc/PDMN(L).json",
-      "label": "PDMN(L)",
-      "highlight": false,
+      "label": "Left Posterior Dorsal Mesothoracic Nerve (PDMN)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -291,8 +291,8 @@
     },
     "WTct(UTct-T2)(R)": {
       "filename": "lib/mesh/manc/WTct(UTct-T2)(R).json",
-      "label": "WTct(UTct-T2)(R)",
-      "highlight": false,
+      "label": "Right Wing Tectulum (WTct / UTct-T2)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -302,8 +302,8 @@
     },
     "HTct(UTct-T3)(R)": {
       "filename": "lib/mesh/manc/HTct(UTct-T3)(R).json",
-      "label": "HTct(UTct-T3)(R)",
-      "highlight": false,
+      "label": "Right Haltere Tectulum (HTct / UTct-T3)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -313,8 +313,8 @@
     },
     "MesoAN(R)": {
       "filename": "lib/mesh/manc/MesoAN(R).json",
-      "label": "MesoAN(R)",
-      "highlight": false,
+      "label": "Right Mesothoracic Accessory Nerve (MesoAN)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -324,8 +324,8 @@
     },
     "GF(R)": {
       "filename": "lib/mesh/manc/GF(R).json",
-      "label": "GF(R)",
-      "highlight": false,
+      "label": "Right Giant Fibers (GF)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -335,8 +335,8 @@
     },
     "ADMN(R)": {
       "filename": "lib/mesh/manc/ADMN(R).json",
-      "label": "ADMN(R)",
-      "highlight": false,
+      "label": "Right Anterior Dorsal Mesothoracic Nerve (ADMN)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -346,8 +346,8 @@
     },
     "PrN(L)": {
       "filename": "lib/mesh/manc/PrN(L).json",
-      "label": "PrN(L)",
-      "highlight": false,
+      "label": "Left Prosternal Nerve (PrN)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -357,8 +357,8 @@
     },
     "AbN1(L)": {
       "filename": "lib/mesh/manc/AbN1(L).json",
-      "label": "AbN1(L)",
-      "highlight": false,
+      "label": "Left First Abdominal Nerve (AbN1)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -368,8 +368,8 @@
     },
     "DProN(R)": {
       "filename": "lib/mesh/manc/DProN(R).json",
-      "label": "DProN(R)",
-      "highlight": false,
+      "label": "Right Dorsal Prothoracic Nerve (DProN)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -379,8 +379,8 @@
     },
     "ProLN(L)": {
       "filename": "lib/mesh/manc/ProLN(L).json",
-      "label": "ProLN(L)",
-      "highlight": false,
+      "label": "Left Prothoracic Leg Nerve (ProLN)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -390,8 +390,8 @@
     },
     "MesoLN(L)": {
       "filename": "lib/mesh/manc/MesoLN(L).json",
-      "label": "MesoLN(L)",
-      "highlight": false,
+      "label": "Left Mesothoracic Leg Nerve (MesoLN)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -401,8 +401,8 @@
     },
     "LegNp(T1)(R)": {
       "filename": "lib/mesh/manc/LegNp(T1)(R).json",
-      "label": "LegNp(T1)(R)",
-      "highlight": false,
+      "label": "Right Leg Neuropil T1 (LegNp T1)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -412,8 +412,8 @@
     },
     "LegNp(T3)(R)": {
       "filename": "lib/mesh/manc/LegNp(T3)(R).json",
-      "label": "LegNp(T3)(R)",
-      "highlight": false,
+      "label": "Right Leg Neuropil T3 (LegNp T3)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -423,8 +423,8 @@
     },
     "ProLN(R)": {
       "filename": "lib/mesh/manc/ProLN(R).json",
-      "label": "ProLN(R)",
-      "highlight": false,
+      "label": "Right Prothoracic Leg Nerve (ProLN)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -434,8 +434,8 @@
     },
     "AbN2(R)": {
       "filename": "lib/mesh/manc/AbN2(R).json",
-      "label": "AbN2(R)",
-      "highlight": false,
+      "label": "Right Second Abdominal Nerve (AbN3)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -446,7 +446,7 @@
     "DProN(L)": {
       "filename": "lib/mesh/manc/DProN(L).json",
       "label": "DProN(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -456,8 +456,8 @@
     },
     "LegNp(T3)(L)": {
       "filename": "lib/mesh/manc/LegNp(T3)(L).json",
-      "label": "LegNp(T3)(L)",
-      "highlight": false,
+      "label": "Left Leg Neuropil T3 (LegNp T3)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -467,8 +467,8 @@
     },
     "MetaLN(R)": {
       "filename": "lib/mesh/manc/MetaLN(R).json",
-      "label": "MetaLN(R)",
-      "highlight": false,
+      "label": "Right Metathoracic Leg Nerve (MetaLN)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -478,8 +478,8 @@
     },
     "AbNT": {
       "filename": "lib/mesh/manc/AbNT.json",
-      "label": "AbNT",
-      "highlight": false,
+      "label": "Abdominal Nerve Trunk (AbNT)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -489,8 +489,8 @@
     },
     "HTct(UTct-T3)(L)": {
       "filename": "lib/mesh/manc/HTct(UTct-T3)(L).json",
-      "label": "HTct(UTct-T3)(L)",
-      "highlight": false,
+      "label": "Left Haltere Tectulum (HTct / UTct-T3)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -500,8 +500,8 @@
     },
     "NTct(UTct-T1)(R)": {
       "filename": "lib/mesh/manc/NTct(UTct-T1)(R).json",
-      "label": "NTct(UTct-T1)(R)",
-      "highlight": false,
+      "label": "Right Neck Tectulum (NTct / UTct-T1)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -511,8 +511,8 @@
     },
     "AbN4(L)": {
       "filename": "lib/mesh/manc/AbN4(L).json",
-      "label": "AbN4(L)",
-      "highlight": false,
+      "label": "Left Fourth Abdominal Nerve (AbN4)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -522,8 +522,8 @@
     },
     "NTct(UTct-T1)(L)": {
       "filename": "lib/mesh/manc/NTct(UTct-T1)(L).json",
-      "label": "NTct(UTct-T1)(L)",
-      "highlight": false,
+      "label": "Left Neck Tectulum (NTct / UTct-T1)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -533,8 +533,8 @@
     },
     "MesoLN(R)": {
       "filename": "lib/mesh/manc/MesoLN(R).json",
-      "label": "MesoLN(R)",
-      "highlight": false,
+      "label": "Right Mesothoracic Leg Nerve (MesoLN)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -544,8 +544,8 @@
     },
     "LegNp(T2)(R)": {
       "filename": "lib/mesh/manc/LegNp(T2)(R).json",
-      "label": "LegNp(T2)(R)",
-      "highlight": false,
+      "label": "Right Leg Neuropil T2 (LegNp T2)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -555,8 +555,8 @@
     },
     "AbN1(R)": {
       "filename": "lib/mesh/manc/AbN1(R).json",
-      "label": "AbN1(R)",
-      "highlight": false,
+      "label": "Right First Abdominal Nerve (AbN1)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -566,8 +566,8 @@
     },
     "VProN(L)": {
       "filename": "lib/mesh/manc/VProN(L).json",
-      "label": "VProN(L)",
-      "highlight": false,
+      "label": "Left Ventral Prothoracic Nerve (VProN)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -577,8 +577,8 @@
     },
     "ProAN(R)": {
       "filename": "lib/mesh/manc/ProAN(R).json",
-      "label": "ProAN(R)",
-      "highlight": false,
+      "label": "Right Prothoracic Accessory Nerve (ProAN)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -588,8 +588,8 @@
     },
     "mVAC(T1)(L)": {
       "filename": "lib/mesh/manc/mVAC(T1)(L).json",
-      "label": "mVAC(T1)(L)",
-      "highlight": false,
+      "label": "Left Medial Ventral Association Center T1 (mVAC T1)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -599,8 +599,8 @@
     },
     "Ov(R)": {
       "filename": "lib/mesh/manc/Ov(R).json",
-      "label": "Ov(R)",
-      "highlight": false,
+      "label": "Right Ovoid Neuropil (Ov)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -610,8 +610,8 @@
     },
     "AbN3(R)": {
       "filename": "lib/mesh/manc/AbN3(R).json",
-      "label": "AbN3(R)",
-      "highlight": false,
+      "label": "Right Third Abdominal Nerve (AbN3)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -621,8 +621,8 @@
     },
     "PDMN(R)": {
       "filename": "lib/mesh/manc/PDMN(R).json",
-      "label": "PDMN(R)",
-      "highlight": false,
+      "label": "Right Posterior Dorsal Mesothoracic Nerve (PDMN)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -632,8 +632,8 @@
     },
     "DMetaN(R)": {
       "filename": "lib/mesh/manc/DMetaN(R).json",
-      "label": "DMetaN(R)",
-      "highlight": false,
+      "label": "Right Dorsal Mesothoracic Nerve (DMetaN)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -643,8 +643,8 @@
     },
     "CV": {
       "filename": "lib/mesh/manc/CV.json",
-      "label": "CV",
-      "highlight": false,
+      "label": "Cervical Connective (CV)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -654,8 +654,8 @@
     },
     "Ov(L)": {
       "filename": "lib/mesh/manc/Ov(L).json",
-      "label": "Ov(L)",
-      "highlight": false,
+      "label": "Left Ovoid Neuropil (Ov)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -665,8 +665,8 @@
     },
     "LTct": {
       "filename": "lib/mesh/manc/LTct.json",
-      "label": "LTct",
-      "highlight": false,
+      "label": "Lower Tectulum (LTct)",
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
