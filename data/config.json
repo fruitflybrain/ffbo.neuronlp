@@ -6,7 +6,7 @@
       "LO(R)": {
         "filename": "lib/mesh/fib19/LO(R).json",
         "label": "Right Lobula (LO)",
-        "highlight": false,
+        "highlight": true,
         "background": true,
         "color": [
           0.15,
@@ -17,7 +17,7 @@
       "LOP(R)": {
         "filename": "lib/mesh/fib19/LOP(R).json",
         "label": "Right Lobula Plate (LOP)",
-        "highlight": false,
+        "highlight": true,
         "background": true,
         "color": [
           0.15,
@@ -28,7 +28,7 @@
       "ME(R)": {
         "filename": "lib/mesh/fib19/ME(R).json",
         "label": "Right Medulla (ME)",
-        "highlight": false,
+        "highlight": true,
         "background": true,
         "color": [
           0.15,
