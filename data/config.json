@@ -3,7 +3,7 @@
   {
       "AL": {
         "filename": "lib/mesh/l1em/AL_um.json",
-        "label": "AL",
+        "label": "Antennal Lobe (AL)",
         "highlight": false,
         "background": true,
         "color": [
@@ -14,7 +14,7 @@
       },
       "MB": {
           "filename": "lib/mesh/l1em/MB_um.json",
-          "label": "MB",
+          "label": "Mushroom Body (MB)",
           "highlight": false,
           "background": true,
           "color": [
