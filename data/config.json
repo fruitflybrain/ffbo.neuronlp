@@ -1,10 +1,10 @@
 [
 {"branch": "flycircuit"},
 {
-  "al_l": {
+  "AL_L": {
     "filename": "lib/mesh/flycircuit/al_l.json",
-    "label": "Left AL",
-    "highlight": false,
+    "label": "Left Antennal Lobe (AL)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -12,10 +12,10 @@
       0.15
     ]
   },
-  "al_r": {
+  "AL_R": {
     "filename": "lib/mesh/flycircuit/al_r.json",
-    "label": "Right AL",
-    "highlight": false,
+    "label": "Right Aentennal Lobe (AL)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -23,10 +23,10 @@
       0.15
     ]
   },
-  "ammc_l": {
+  "AMMC_L": {
     "filename": "lib/mesh/flycircuit/ammc_l.json",
-    "label": "Left AMMC",
-    "highlight": false,
+    "label": "Left Antennal Mechanosensory and Motor Center (AMMC)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -34,10 +34,10 @@
       0.15
     ]
   },
-  "ammc_r": {
+  "AMMC_R": {
     "filename": "lib/mesh/flycircuit/ammc_r.json",
-    "label": "Right AMMC",
-    "highlight": false,
+    "label": "Right Antennal Mechanosensory and Motor Center (AMMC)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -45,10 +45,10 @@
       0.15
     ]
   },
-  "cal_l": {
+  "CAL_L": {
     "filename": "lib/mesh/flycircuit/cal_l.json",
-    "label": "Left CAL",
-    "highlight": false,
+    "label": "Left Calyx (CAL)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -56,10 +56,10 @@
       0.15
     ]
   },
-  "cal_r": {
+  "CAL_R": {
     "filename": "lib/mesh/flycircuit/cal_r.json",
-    "label": "Right CAL",
-    "highlight": false,
+    "label": "Right Calyx (CAL)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -67,10 +67,10 @@
       0.15
     ]
   },
-  "ccp_l": {
+  "CCP_L": {
     "filename": "lib/mesh/flycircuit/ccp_l.json",
-    "label": "Left CCP",
-    "highlight": false,
+    "label": "Left Caudalcentral Protocerebrum (CCP)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -78,10 +78,10 @@
       0.15
     ]
   },
-  "ccp_r": {
+  "CCP_R": {
     "filename": "lib/mesh/flycircuit/ccp_r.json",
-    "label": "Right CCP",
-    "highlight": false,
+    "label": "Right Caudalcentral Protocerebrum (CCP)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -89,10 +89,10 @@
       0.15
     ]
   },
-  "cmp_l": {
+  "CMP_L": {
     "filename": "lib/mesh/flycircuit/cmp_l.json",
-    "label": "Left CMP",
-    "highlight": false,
+    "label": "Left Caudalmedial Protocerebrum (CMP)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -100,10 +100,10 @@
       0.15
     ]
   },
-  "cmp_r": {
+  "CMP_R": {
     "filename": "lib/mesh/flycircuit/cmp_r.json",
-    "label": "Right CMP",
-    "highlight": false,
+    "label": "Right Caudalmedial Protocerebrum (CMP)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -111,10 +111,10 @@
       0.15
     ]
   },
-  "cvlp_l": {
+  "CVLP_L": {
     "filename": "lib/mesh/flycircuit/cvlp_l.json",
-    "label": "Left CVLP",
-    "highlight": false,
+    "label": "Left Caudal Ventrolateral Protocerebrum (CVLP)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -122,10 +122,10 @@
       0.15
     ]
   },
-  "cvlp_r": {
+  "CVLP_R": {
     "filename": "lib/mesh/flycircuit/cvlp_r.json",
-    "label": "Right CVLP",
-    "highlight": false,
+    "label": "Right Caudal Ventrolateral Protocerebrum (CVLP)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -133,10 +133,10 @@
       0.15
     ]
   },
-  "dlp_l": {
+  "DLP_L": {
     "filename": "lib/mesh/flycircuit/dlp_l.json",
-    "label": "Left DLP",
-    "highlight": false,
+    "label": "Left Dorsolateral Protocerebrum (DLP)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -144,10 +144,10 @@
       0.15
     ]
   },
-  "dlp_r": {
+  "DLP_R": {
     "filename": "lib/mesh/flycircuit/dlp_r.json",
-    "label": "Right DLP",
-    "highlight": false,
+    "label": "Right Dorsolateral Protocerebrum (DLP)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -155,10 +155,10 @@
       0.15
     ]
   },
-  "dmp_l": {
+  "DMP_L": {
     "filename": "lib/mesh/flycircuit/dmp_l.json",
-    "label": "Left DMP",
-    "highlight": false,
+    "label": "Left Dorsomedial Protocerebrum (DMP)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -166,10 +166,10 @@
       0.15
     ]
   },
-  "dmp_r": {
+  "DMP_R": {
     "filename": "lib/mesh/flycircuit/dmp_r.json",
-    "label": "Right DMP",
-    "highlight": false,
+    "label": "Right Dorsomedial Protocerebrum (DMP)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -177,10 +177,10 @@
       0.15
     ]
   },
-  "eb": {
+  "EB": {
     "filename": "lib/mesh/flycircuit/eb.json",
-    "label": "EB",
-    "highlight": false,
+    "label": "Ellipsoid Body (EB)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -188,10 +188,10 @@
       0.15
     ]
   },
-  "fb": {
+  "FB": {
     "filename": "lib/mesh/flycircuit/fb.json",
-    "label": "FB",
-    "highlight": false,
+    "label": "Fan-shaped Body (FB)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -199,10 +199,10 @@
       0.15
     ]
   },
-  "fspp_l": {
+  "FSPP_L": {
     "filename": "lib/mesh/flycircuit/fspp_l.json",
-    "label": "Left FSPP",
-    "highlight": false,
+    "label": "Left Frontal Superpeduncular Protocerebrum (FSPP)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -210,10 +210,10 @@
       0.15
     ]
   },
-  "fspp_r": {
+  "FSPP_R": {
     "filename": "lib/mesh/flycircuit/fspp_r.json",
-    "label": "Right FSPP",
-    "highlight": false,
+    "label": "Right Frontal Superpeduncular Protocerebrum (FSPP)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -221,10 +221,10 @@
       0.15
     ]
   },
-  "idfp_l": {
+  "IDFP_L": {
     "filename": "lib/mesh/flycircuit/idfp_l.json",
-    "label": "Left IDFP",
-    "highlight": false,
+    "label": "Left Inferior Dorsofrontal Protocerebrum (IDFP)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -232,10 +232,10 @@
       0.15
     ]
   },
-  "idfp_r": {
+  "IDFP_R": {
     "filename": "lib/mesh/flycircuit/idfp_r.json",
-    "label": "Right IDFP",
-    "highlight": false,
+    "label": "Right Inferior Dorsofrontal Protocerebrum (IDFP)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -243,10 +243,10 @@
       0.15
     ]
   },
-  "idlp_l": {
+  "IDLP_L": {
     "filename": "lib/mesh/flycircuit/idlp_l.json",
-    "label": "Left IDLP",
-    "highlight": false,
+    "label": "Left Inferior Dorsolateral Protocerebrum (IDLP)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -254,10 +254,10 @@
       0.15
     ]
   },
-  "idlp_r": {
+  "IDLP_R": {
     "filename": "lib/mesh/flycircuit/idlp_r.json",
-    "label": "Right IDLP",
-    "highlight": false,
+    "label": "Right Inferior Dorsolateral Protocerebrum (IDLP)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -265,10 +265,10 @@
       0.15
     ]
   },
-  "lat_l": {
+  "LAT_L": {
     "filename": "lib/mesh/flycircuit/lat_l.json",
-    "label": "Left LAT",
-    "highlight": false,
+    "label": "Left Lateral Triangle (LAT)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -276,10 +276,10 @@
       0.15
     ]
   },
-  "lat_r": {
+  "LAT_R": {
     "filename": "lib/mesh/flycircuit/lat_r.json",
-    "label": "Right LAT",
-    "highlight": false,
+    "label": "Right Lateral Triangle (LAT)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -287,10 +287,10 @@
       0.15
     ]
   },
-  "lh_l": {
+  "LH_L": {
     "filename": "lib/mesh/flycircuit/lh_l.json",
-    "label": "Left LH",
-    "highlight": false,
+    "label": "Left Lateral Horn (LH)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -298,10 +298,10 @@
       0.15
     ]
   },
-  "lh_r": {
+  "LH_R": {
     "filename": "lib/mesh/flycircuit/lh_r.json",
-    "label": "Right LH",
-    "highlight": false,
+    "label": "Right Lateral Horn (LH)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -309,10 +309,10 @@
       0.15
     ]
   },
-  "lob_l": {
+  "LOB_L": {
     "filename": "lib/mesh/flycircuit/lob_l.json",
-    "label": "Left LOB",
-    "highlight": false,
+    "label": "Left Lobula (LOB)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -320,10 +320,10 @@
       0.15
     ]
   },
-  "lob_r": {
+  "LOB_R": {
     "filename": "lib/mesh/flycircuit/lob_r.json",
-    "label": "Right LOB",
-    "highlight": false,
+    "label": "Right Lobula (LOB)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -331,10 +331,10 @@
       0.15
     ]
   },
-  "lop_l": {
+  "LOP_L": {
     "filename": "lib/mesh/flycircuit/lop_l.json",
-    "label": "Left LOP",
-    "highlight": false,
+    "label": "Left Lobula Plate (LOP)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -342,10 +342,10 @@
       0.15
     ]
   },
-  "lop_r": {
+  "LOP_R": {
     "filename": "lib/mesh/flycircuit/lop_r.json",
-    "label": "Right LOP",
-    "highlight": false,
+    "label": "Right Lobula Plate (LOP)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -353,10 +353,10 @@
       0.15
     ]
   },
-  "mb_l": {
+  "MB_L": {
     "filename": "lib/mesh/flycircuit/mb_l.json",
-    "label": "Left MB",
-    "highlight": false,
+    "label": "Left Mushroom Body (MB)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -364,10 +364,10 @@
       0.15
     ]
   },
-  "mb_r": {
+  "MB_R": {
     "filename": "lib/mesh/flycircuit/mb_r.json",
-    "label": "Right MB",
-    "highlight": false,
+    "label": "Right Mushroom Body (MB)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -375,10 +375,10 @@
       0.15
     ]
   },
-  "med_l": {
+  "MED_L": {
     "filename": "lib/mesh/flycircuit/med_l.json",
-    "label": "Left MED",
-    "highlight": false,
+    "label": "Left Medulla (MED)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -386,10 +386,10 @@
       0.15
     ]
   },
-  "med_r": {
+  "MED_R": {
     "filename": "lib/mesh/flycircuit/med_r.json",
-    "label": "Right MED",
-    "highlight": false,
+    "label": "Right Medulla (MED)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -397,10 +397,10 @@
       0.15
     ]
   },
-  "nod_l": {
+  "NOD_L": {
     "filename": "lib/mesh/flycircuit/nod_l.json",
-    "label": "Left NOD",
-    "highlight": false,
+    "label": "Left Nodulus (NOD)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -408,10 +408,10 @@
       0.15
     ]
   },
-  "nod_r": {
+  "NOD_R": {
     "filename": "lib/mesh/flycircuit/nod_r.json",
-    "label": "Right NOD",
-    "highlight": false,
+    "label": "Right Nodulus (NOD)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -419,10 +419,10 @@
       0.15
     ]
   },
-  "og_l": {
+  "OG_L": {
     "filename": "lib/mesh/flycircuit/og_l.json",
-    "label": "Left OG",
-    "highlight": false,
+    "label": "Left Optic Glomeruli (OG)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -430,10 +430,10 @@
       0.15
     ]
   },
-  "og_r": {
+  "OG_R": {
     "filename": "lib/mesh/flycircuit/og_r.json",
-    "label": "Right OG",
-    "highlight": false,
+    "label": "Right Optic Glomeruli (OG)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -441,10 +441,10 @@
       0.15
     ]
   },
-  "optu_l": {
+  "OPTU_L": {
     "filename": "lib/mesh/flycircuit/optu_l.json",
-    "label": "Left OPTU",
-    "highlight": false,
+    "label": "Left Optic Tubercle (OPTU)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -452,10 +452,10 @@
       0.15
     ]
   },
-  "optu_r": {
+  "OPTU_R": {
     "filename": "lib/mesh/flycircuit/optu_r.json",
-    "label": "Right OPTU",
-    "highlight": false,
+    "label": "Right Optic Tubercle (OPTU)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -463,10 +463,10 @@
       0.15
     ]
   },
-  "pan_l": {
+  "PAN_L": {
     "filename": "lib/mesh/flycircuit/pan_l.json",
-    "label": "Left PAN",
-    "highlight": false,
+    "label": "Left Proximal Antennal Protocerebrum (PAN)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -474,10 +474,10 @@
       0.15
     ]
   },
-  "pan_r": {
+  "PAN_R": {
     "filename": "lib/mesh/flycircuit/pan_r.json",
-    "label": "Right PAN",
-    "highlight": false,
+    "label": "Right Proximal Antennal Protocerebrum (PAN)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -485,10 +485,10 @@
       0.15
     ]
   },
-  "pb": {
+  "PB": {
     "filename": "lib/mesh/flycircuit/pb.json",
-    "label": "PB",
-    "highlight": false,
+    "label": "Protocerebral Bridge (PB)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -496,10 +496,10 @@
       0.15
     ]
   },
-  "sdfp_l": {
+  "SDFP_L": {
     "filename": "lib/mesh/flycircuit/sdfp_l.json",
-    "label": "Left SDFP",
-    "highlight": false,
+    "label": "Left Superior Dorsofrontal Protocerebrum (SDFP)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -507,10 +507,10 @@
       0.15
     ]
   },
-  "sdfp_r": {
+  "SDFP_R": {
     "filename": "lib/mesh/flycircuit/sdfp_r.json",
-    "label": "Right SDFP",
-    "highlight": false,
+    "label": "Right Superior Dorsofrontal Protocerebrum (SDFP)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -518,10 +518,10 @@
       0.15
     ]
   },
-  "sog_l": {
+  "SOG_L": {
     "filename": "lib/mesh/flycircuit/sog_l.json",
-    "label": "Left SOG",
-    "highlight": false,
+    "label": "Left Subesophageal Ganglion (SOG)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -529,10 +529,10 @@
       0.15
     ]
   },
-  "sog_r": {
+  "SOG_R": {
     "filename": "lib/mesh/flycircuit/sog_r.json",
-    "label": "Right SOG",
-    "highlight": false,
+    "label": "Right Subesophageal Ganglion (SOG)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -540,10 +540,10 @@
       0.15
     ]
   },
-  "spp_l": {
+  "SPP_L": {
     "filename": "lib/mesh/flycircuit/spp_l.json",
-    "label": "Left SPP",
-    "highlight": false,
+    "label": "Left Superpeduncular Protocerebrum (SPP)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -551,10 +551,10 @@
       0.15
     ]
   },
-  "spp_r": {
+  "SPP_R": {
     "filename": "lib/mesh/flycircuit/spp_r.json",
-    "label": "Right SPP",
-    "highlight": false,
+    "label": "Right Superpeduncular Protocerebrum (SPP)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -562,10 +562,10 @@
       0.15
     ]
   },
-  "vlp_l": {
+  "VLP_L": {
     "filename": "lib/mesh/flycircuit/vlp_l.json",
-    "label": "Left VLP",
-    "highlight": false,
+    "label": "Left Ventrolateral Protocerebrum (VLP)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -573,10 +573,10 @@
       0.15
     ]
   },
-  "vlp_r": {
+  "VLP_R": {
     "filename": "lib/mesh/flycircuit/vlp_r.json",
-    "label": "Right VLP",
-    "highlight": false,
+    "label": "Right Ventrolateral Protocerebrum (VLP)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -584,10 +584,10 @@
       0.15
     ]
   },
-  "vmp_l": {
+  "VMP_L": {
     "filename": "lib/mesh/flycircuit/vmp_l.json",
-    "label": "Left VMP",
-    "highlight": false,
+    "label": "Left Ventromedial Protocerebrum (VMP)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
@@ -595,10 +595,10 @@
       0.15
     ]
   },
-  "vmp_r": {
+  "VMP_R": {
     "filename": "lib/mesh/flycircuit/vmp_r.json",
-    "label": "Right VMP",
-    "highlight": false,
+    "label": "Right Ventromedial Protocerebrum (VMP)",
+    "highlight": true,
     "background": true,
     "color": [
       0.15,
