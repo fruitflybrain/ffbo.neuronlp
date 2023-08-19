@@ -308,7 +308,7 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "mmenu"], function($, Overlay
               if (window.dynamicNeuropilMenu.btnLabelList.length > $(window.dynamicNeuropilMenu.config.singleObjSel)[0].children.length) {
                 window.dynamicNeuropilMenu.reset();
                 for (var key in window.Neuropils) {
-                  dynamicNeuropilMenu.addNeuron(key, window.Neuropils[key]['label']);
+                  dynamicNeuropilMenu.addNeuron(key, key);
                 }
               }
             }
