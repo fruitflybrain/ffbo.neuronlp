@@ -478,14 +478,14 @@ require([
 
 
     dynamicNeuronMenu.dispatch.highlight = function (id) { ffbomesh.highlight(id, true) };
-    dynamicNeuronMenu.dispatch.resume = function (id) { ffbomesh.highlight(undefined) };
+    dynamicNeuronMenu.dispatch.resume = function () { ffbomesh.highlight(undefined) };
     dynamicNeuronMenu.dispatch.toggle = function (id) { ffbomesh.toggleVis(id) };
     dynamicNeuronMenu.dispatch.togglePin = function (id) { ffbomesh.togglePin(id) };
     dynamicNeuronMenu.dispatch.unpin = function (id) { ffbomesh.unpin(id) };
     dynamicNeuronMenu.dispatch.remove = function (id) { client.removeObjs(id) };
     dynamicNeuronMenu.dispatch.getInfo = function (id) { ffbomesh.select(id) };
     dynamicSynapseMenu.dispatch.highlight = function (id) { ffbomesh.highlight(id, true) };
-    dynamicSynapseMenu.dispatch.resume = function (id) { ffbomesh.highlight(undefined) };
+    dynamicSynapseMenu.dispatch.resume = function () { ffbomesh.highlight(undefined) };
     dynamicSynapseMenu.dispatch.toggle = function (id) { ffbomesh.toggleVis(id) };
     dynamicSynapseMenu.dispatch.togglePin = function (id) { ffbomesh.togglePin(id) };
     dynamicSynapseMenu.dispatch.unpin = function (id) { ffbomesh.unpin(id) };
@@ -494,7 +494,9 @@ require([
     dynamicNeuropilMenu.dispatch.toggle = function (id) { ffbomesh.toggleVis(id) };
     dynamicNeuropilMenu.dispatch.getInfo = function (id) { ffbomesh.toggleVis(id) };
     dynamicNeuropilMenu.dispatch.highlight = function (id) { ffbomesh.highlight(id, true) };
-    dynamicNeuropilMenu.dispatch.resume = function (id) { ffbomesh.highlight(undefined) };
+    dynamicNeuropilMenu.dispatch.resume = function () { ffbomesh.highlight(undefined) };
+    dynamicCellTypeMenu.dispatch.highlight = function (id) {ffbomesh.highlight(id, true) };
+    dynamicCellTypeMenu.dispatch.resume = function() {ffbomesh.highlight()};
 
     ffbomesh.on('add',
       function (e) {
@@ -506,7 +508,7 @@ require([
           }
         }
         else
-          dynamicNeuropilMenu.addNeuron(e.prop, e.value.label)
+          dynamicNeuropilMenu.addNeuron(e.prop, e.prop);
         infoPanel.renderAddRemoveBtn(e.value.label, true)
       });
     ffbomesh.on('remove', function (e) {
@@ -687,9 +689,11 @@ require([
         json = json[1];
         window.CellTypes = json;
         for (var key in json) {
-          dynamicCellTypeNeuropilMenu[key] = dynamicCellTypeMenu.addNeuropil(key);
-          dynamicCellTypeNeuropilMenu[key].dispatch.addType = function (name) { client.addType(name, { success: dataCallback }) };
-          dynamicCellTypeNeuropilMenu[key].dispatch.removeType = function (name) { client.removeType(name, { success: dataCallback }) };
+          const neuropil = key;
+          const display_key = key; //ffbomesh.meshDict[key].label;
+          dynamicCellTypeNeuropilMenu[key] = dynamicCellTypeMenu.addNeuropil(key, display_key);
+          dynamicCellTypeNeuropilMenu[key].dispatch.addType = function (name) { client.addType(name, neuropil, { success: dataCallback }) };
+          dynamicCellTypeNeuropilMenu[key].dispatch.removeType = function (name) { client.removeType(name, neuropil, { success: dataCallback }) };
         }
       });
     }
