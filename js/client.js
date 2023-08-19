@@ -63,6 +63,16 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager", "showdown"], functi
     this.notifyError(err.args[0]);
   }
 
+  announcement = function(serverInfo) {
+    if (serverInfo.hasOwnProperty(0))
+      serverInfo = serverInfo[0];
+    if (typeof (serverInfo) == "object" && "processor" in serverInfo) {
+      if ("announcement" in serverInfo["processor"] ){
+        client.notifySuccess(serverInfo["processor"]["announcement"]);
+      }
+    }
+  }
+
   updateServers = function (serverInfo) {
     /** Update the Crossbar Session IDs of servers
      *  If current server drops, switched to a new server if available
@@ -583,34 +593,65 @@ ${connectivity.map(conn => `${conn[0]},${conn[1]},${conn[2]},${conn[3]}\n`).join
     }, callbacks, format);
   }
 
-  FFBOClient.prototype.addType = function (name, callbacks, format) {
+  FFBOClient.prototype.addType = function (name, neuropil, callbacks, format) {
     /**
      * Query to add a neuron by its name.
      */
-    return this.executeNAquery({
-      verb: "add",
-      query: [
-        {
-          action: { method: { query: { name: name } } },
-          object: { class: ["Neuron"] }
-        }
-      ]
-    }, callbacks, format);
+    if ( neuropil === undefined) {
+      return this.executeNAquery({
+        verb: "add",
+        query: [
+          {
+            action: { method: { query: { name: name } } },
+            object: { class: ["Neuron"] }
+          }
+        ]
+      }, callbacks, format);
+    } else {
+      return this.executeNAquery({
+        verb: "add",
+        query: [
+            {
+                action: { method: { query: { name: neuropil }}},
+                object: { class: ["Neuropil"] },
+            },
+            {
+                action: { method: { gen_traversal_in: {pass_through: ['ArborizesIn', 'Neuron', 'instanceof', {'name': name}], min_depth: 1}}},                      object: { memory: 0}
+            }
+        ]
+      }, callbacks, format);
+    }
+    
   }
 
-  FFBOClient.prototype.removeType = function (name, callbacks, format) {
+  FFBOClient.prototype.removeType = function (name, neuropil, callbacks, format) {
     /**
      * Query to add a neuron by its name.
      */
-    return this.executeNAquery({
-      verb: "remove",
-      query: [
-        {
-          action: { method: { query: { name: name } } },
-          object: { class: ["Neuron"] }
-        }
-      ]
-    }, callbacks, format);
+    if ( neuropil === undefined) {
+      return this.executeNAquery({
+        verb: "remove",
+        query: [
+          {
+            action: { method: { query: { name: name } } },
+            object: { class: ["Neuron"] }
+          }
+        ]
+      }, callbacks, format);
+    } else {
+      return this.executeNAquery({
+        verb: "remove",
+        query: [
+            {
+                action: { method: { query: { name: neuropil }}},
+                object: { class: ["Neuropil"] },
+            },
+            {
+                action: { method: { gen_traversal_in: {pass_through: ['ArborizesIn', 'Neuron', 'instanceof', {'name': name}], min_depth: 1}}},                      object: { memory: 0}
+            }
+        ]
+      }, callbacks, format);
+    }
   }
 
   FFBOClient.prototype.removeObjs = function (rids, callbacks, format) {
@@ -719,6 +760,7 @@ ${connectivity.map(conn => `${conn[0]},${conn[1]},${conn[2]},${conn[3]}\n`).join
 
       session.call("ffbo.processor.server_information").then(
         (function (res) {
+          announcement([res]);
           updateServers([res]);
         }).bind(this),
         function (err) {
