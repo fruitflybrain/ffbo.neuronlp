@@ -195,13 +195,13 @@ moduleExporter(
         var btnToggleId = "btn-toggle-" + uidDecode(new_id);
         var btnRmId = (_this.config.removable) ? "btn-rm-" + uidDecode(new_id): false;
         var btnPinSymId = (_this.config.pinnable) ? "btn-pin-symbol-" + uidDecode(new_id): false;
-        var domStr = `<li id='li-${btnId}' label="${id}" class='mm-listitem'>` +
+        var domStr = `<li id='li-${btnId}' rid="${id}" class='mm-listitem'>` +
                       "<span>" +
-                      `<div id='${btnId}' role='button' label="${id}" class='btn-single-ob'>${changed_label}</div>` +
+                      `<div id='${btnId}' role='button' rid="${id}" label="${label}" class='btn-single-ob'>${changed_label}</div>` +
                       "<div class='btn-single-obj-ctrl'>" +
-                        ((btnRmId) ? `<a id='${btnRmId}' label='${id}' role='button'>${_this.config.removeSymbol}</a>` : '') +
-                        ((btnPinSymId) ? `<a id='${btnPinSymId}' label='${id}' class='btn-unpinned' role='button'>${_this.config.pinSymbol}</a>` : '') +
-                        `<a id='${btnToggleId}' label='${id}' role='button'>${_this.config.showSymbol}</a>` +
+                        ((btnRmId) ? `<a id='${btnRmId}' rid='${id}' role='button'>${_this.config.removeSymbol}</a>` : '') +
+                        ((btnPinSymId) ? `<a id='${btnPinSymId}' rid='${id}' class='btn-unpinned' role='button'>${_this.config.pinSymbol}</a>` : '') +
+                        `<a id='${btnToggleId}' rid='${id}' role='button'>${_this.config.showSymbol}</a>` +
                         "</div>" +
                       "</span>" +
                      `</li>`;
@@ -218,19 +218,19 @@ moduleExporter(
         _this.btnLabelList.splice(idx, 0, label);
         $("#" + btnId)
           .click( function() {
-            var id = $(this).attr("label");
+            var id = $(this).attr("rid");
             //id = uidEncode(id);
             _this.dispatch.getInfo(id);
         });
         $("#" + btnToggleId)
           .click( function() {
-            var id = $(this).attr("label");
+            var id = $(this).attr("rid");
             //id = uidEncode(id);
             _this.dispatch.toggle(id);
         });
         $("#li-" + btnId)
           .mouseenter( function() {
-            var id = $(this).attr("label");
+            var id = $(this).attr("rid");
             // id = uidEncode(id);
             _this.dispatch.highlight(id);
           })
@@ -239,14 +239,14 @@ moduleExporter(
           });
         if (btnRmId) {
           $("#" + btnRmId).click( function() {
-              var id = $(this).attr("label");
+              var id = $(this).attr("rid");
               //id = uidEncode(id);
               _this.dispatch.remove(id);
           })
         }
         if (btnPinSymId) {
           $("#" + btnPinSymId).click( function() {
-              var id = $(this).attr("label");
+              var id = $(this).attr("rid");
               // id = uidEncode(id);
               _this.dispatch.togglePin(id);
           })
@@ -271,34 +271,34 @@ moduleExporter(
       }
 
       this.updatePinnedNeuron = function(id, label, pinned) {
-        id = uidDecode(id);
+        new_id = uidDecode(id);
         var changed_label = label.replace('<', '&lt').replace('>', '&gt');
-        var pinBtnId = "btn-pin-" + id;
-        var pinnedSymbolId = "btn-pinned-" + id;
+        var pinBtnId = "btn-pin-" + new_id;
+        var pinnedSymbolId = "btn-pinned-" + new_id;
         if (pinned) {
-          var domStr = `<li id='li-${pinBtnId}' class='mm-listitem'>` +
+          var domStr = `<li id='li-${pinBtnId}' rid='${id}' class='mm-listitem'>` +
                          "<span>" +
-                           `<div id='${pinBtnId}' role='button'  class='btn-single-ob btn-pinned'>${changed_label}</div>` +
-                           `<div class='btn-single-obj-ctrl'><a id='${pinnedSymbolId}' class='btn-pinned' role='button'>${_this.config.pinSymbol}</a></div>` +
+                           `<div id='${pinBtnId}' rid='${id}' role='button'  class='btn-single-ob btn-pinned'>${changed_label}</div>` +
+                           `<div class='btn-single-obj-ctrl'><a id='${pinnedSymbolId}' rid='${id}' class='btn-pinned' role='button'>${_this.config.pinSymbol}</a></div>` +
                          "</span>" +
                        "</li>";
           $( _this.config.pinnedObjSel ).append(domStr);
           $("#" + pinBtnId)
             .click( function() {
-                var id = $(this).attr("id").substring(8);
-                _this.dispatch.getInfo(uidEncode(id));
+                var id = $(this).attr("rid");
+                _this.dispatch.getInfo(id);
             })
           $("#" + pinnedSymbolId)
             .click( function() {
-                var id = $(this).attr("id").substring(11);
+                var id = $(this).attr("rid");
                 $(this).removeClass("btn-pinned");
                 $(this).addClass("btn-unpinned");
-                _this.dispatch.unpin(uidEncode(id));
+                _this.dispatch.unpin(id);
             })
           $("#li-" + pinBtnId)
             .mouseenter( function() {
-                var id = $(this).attr("id").substring(11);
-                id = uidEncode(id);
+                var id = $(this).attr("rid");
+                //id = uidEncode(id);
                 _this.dispatch.highlight(id);
             })
             .mouseleave( function() {
@@ -311,7 +311,7 @@ moduleExporter(
         }
 
         if (_this.config.pinnable) {
-          var btnPinSymId = "btn-pin-symbol-" + id;
+          var btnPinSymId = "btn-pin-symbol-" + new_id;
           var oldClass = ((pinned) ? "btn-unpinned" : "btn-pinned");
           var newClass = ((pinned) ? "btn-pinned" : "btn-unpinned");
           $(`[id=${btnPinSymId}]`).removeClass(oldClass).addClass(newClass);
