@@ -53,7 +53,8 @@ moduleExporter(
          unpinAll: '#btn-pin-unpinall',
          lpuShowAll: '#btn-lpu-all',
          lpuHideAll: '#btn-lpu-none',
-         tags: '#toggle_tag'
+         tags: '#toggle_tag',
+         cellTypes: '#toggle_celltype',
        }, menuSelectors)
        this.uiBtns = Object.assign({}, {
          showGraph: 'showGraph',
@@ -139,6 +140,11 @@ moduleExporter(
                  });
                }).catch(reject);
              }
+             else if (panel.endsWith("-cell-types")){
+              console.log(panel);
+              this.menu.openPanel(document.querySelector(panel));
+              setTimeout(function(){resolve()}, panelOpenPause + this._timeOutPause);
+             }
              else if (panel == this.menuSels.neu){
                if(moveTo) {
                  sel = this.menuSels.top + ' > ul > li:nth-child(3)'
@@ -184,7 +190,17 @@ moduleExporter(
                    setTimeout(function(){resolve()}, panelOpenPause + this._timeOutPause);
                  }
                });
-             }else if(panel == this.menuSels.top){
+             }
+             else if(panel == this.menuSels.cellTypes){
+              sel = "#btn-celltype";
+              this._moveTo(sel, moveToDur).then(()=>{
+                this.cursor.click();
+                this.menu.openPanel(document.querySelector(panel));
+                this.menu.open();
+                setTimeout(function(){resolve()}, panelOpenPause + this._timeOutPause);
+              }).catch(reject)
+             } 
+             else if(panel == this.menuSels.top){
                if($('#ui_menu_btn').is(':visible') && moveTo){
                  this._moveTo('#ui_menu_btn', moveToDur).then(() =>{
                    this.cursor.click();
@@ -329,6 +345,11 @@ moduleExporter(
                    this._clickMenu(sel, object.cursorMove, object.cursorMoveDuration).then(() => {resolve()});
                  }).catch(reject)
                  break;
+               case "cellTypes":
+                 this._openPanel(this.menuSels.cellTypes, object.cursorMove, object.cursorMoveDuration).then(()=>{
+                  resolve()
+                 }).catch(reject)
+                 break;
                case "pinKeep":
                  this._openPanel(this.menuSels.singlePin, object.cursorMove, object.cursorMoveDuration).then(()=>{
                    sel = this.menuSels.pinKeep;
@@ -347,6 +368,21 @@ moduleExporter(
                    this._clickMenu(sel, object.cursorMove, object.cursorMoveDuration).then(() => {resolve()});
                  }).catch(reject);
                  break;
+                case "toggleCellType":
+                    this._openPanel(this.menuSels.cellTypes, object.cursorMove, object.cursorMoveDuration).then(()=>{
+                      sel = this.menuSels.cellTypes + ' > ul > li:nth-child(1)'
+                      this._moveTo(sel, object.cursorMoveDuration).then(() =>{
+                        this.cursor.click();
+                        np_name = object.menu.neuropil.replaceAll('(', '____').replaceAll(')', '--__');
+                        np_panel_name = "#" + np_name + "-cell-types";
+                        this._openPanel(np_panel_name, object.cursorMove, object.cursorMoveDuration).then(()=>{
+                          sel = '#btn-toggle-'+ np_name +'-' + object.menu.label.replaceAll(`'`, 'prime').replaceAll('<', 'less').replaceAll('>', 'greater').replaceAll('+','plus').replaceAll('/', 'slash').replaceAll('(', 'leftp').replaceAll('(', 'rightp');
+                          this._clickMenu(sel, object.cursorMove, object.cursorMoveDuration).then(() => {resolve()});
+                        });
+                        
+                      });
+                    }).catch(reject);
+                    break;
                case "loadTag":
                  this._openPanel(this.menuSels.tags, object.cursorMove, object.cursorMoveDuration).then(()=>{
                    sel = '#toggle_tag > ul > li:nth-child(2) > a';
@@ -560,7 +596,6 @@ moduleExporter(
            else
              $("#btn-demo-" + demoId).prop( 'disabled', true);
          }
-
        },
        // Should be overwritten by NeuroNLP.js
        notify: function(message, settings){
