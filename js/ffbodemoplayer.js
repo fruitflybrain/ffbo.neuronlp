@@ -374,9 +374,10 @@ moduleExporter(
                       this._moveTo(sel, object.cursorMoveDuration).then(() =>{
                         this.cursor.click();
                         np_name = object.menu.neuropil.replaceAll('(', '____').replaceAll(')', '--__');
+                        np_name_2 = object.menu.neuropil.replaceAll('(', '-').replaceAll(')', '-');
                         np_panel_name = "#" + np_name + "-cell-types";
                         this._openPanel(np_panel_name, object.cursorMove, object.cursorMoveDuration).then(()=>{
-                          sel = '#btn-toggle-'+ np_name +'-' + object.menu.label.replaceAll(`'`, 'prime').replaceAll('<', 'less').replaceAll('>', 'greater').replaceAll('+','plus').replaceAll('/', 'slash').replaceAll('(', 'leftp').replaceAll('(', 'rightp');
+                          sel = '#btn-toggle-'+ np_name_2 +'-' + object.menu.label.replaceAll(`'`, 'prime').replaceAll('<', 'less').replaceAll('>', 'greater').replaceAll('+','plus').replaceAll('/', 'slash').replaceAll('(', 'leftp').replaceAll('(', 'rightp');
                           this._clickMenu(sel, object.cursorMove, object.cursorMoveDuration).then(() => {resolve()});
                         });
                         
