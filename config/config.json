@@ -1,11 +1,11 @@
 {
   "branch": "l1em",
   "connection": {
-    "url": "ws://localhost:8081/ws",
+    "url": "ws://larva3000.neuronlp.fruitflybrain.org/ws",
     "user": "guest",
     "secret": "guestpass"
   },
-  "dataset": "l1em",
+  "dataset": "l1em3000",
   "datasetIdName": "L1EM ID",
   "metadata": {
     "enablePositionReset": true,

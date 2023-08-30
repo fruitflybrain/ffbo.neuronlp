@@ -1,147 +1,6 @@
 [
-{"branch": "l1em"},
+{"branch": "l1em3000"},
 {
-  "show_1": {
-    "keyword": "Show",
-    "script": [
-      ["notify", {"message": "Hi there!"}],
-      ["notify", {"message": "Let's query for local neurons in the left antennal lobe that express glutamate neurotransmitter!"}],
-      ["search", {"query": "show glutamatergic local neurons in the left antennal lobe"}],
-      ["notify", {"message": "'Show' always clears the visualization panel before visualizing the neurons in the query!"}],
-      ["notify", {"message": "Let's try using 'Show' again."}],
-      ["search", {"query": "Show Mushroom Body Output Neurons in the right MB"}],
-      ["notify", {"message": "Done. Compare this to the 'Add' demo!", "pause": 1000}],
-      ["notify", {"message": "Try it yourself!", "pause": 0}]
-    ],
-    "description": "Clear the work space and visualize neurons according to a specific query.",
-    "category": "Basic English Queries (Supported Verbs)"
-  },
-  "add_1": {
-    "keyword": "Add",
-    "script": [
-      ["notify", {"message": "Hi!"}],
-      ["notify", {"message": "Let's query for local neurons in the left antennal lobe that express glutamate neurotransmitter!"}],
-      ["search", {"query": "show glutamatergic local neurons in the left antennal lobe"}],
-      ["notify", {"message": "'Add' visualizes the neurons in the query on top of what's in the visualization panel!"}],
-      ["notify", {"message": "Let's try using adding some neurons."}],
-      ["search", {"query": "Add Mushroom Body Output Neurons in the right MB"}],
-      ["notify", {"message": "Done", "pause": 1000}],
-      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
-    ],
-    "description": "In addition to what is currently displayed, visualize the neurons according to a specific query",
-    "category": "Basic English Queries (Supported Verbs)"
-  },
-  "undo_1": {
-    "keyword": "Undo",
-    "script": [
-      ["notify", {"message": "Hi!"}],
-      ["notify", {"message": "Let's query for dopaminergic neurons in the Mushroom Body!"}],
-      ["search", {"query": "Show dopaminergic neurons in mb"}],
-      ["notify", {"message": "Now let's add Kenyon Cells."}],
-      ["search", {"query": "Add kenyon cells"}],
-      ["notify", {"message": "Now let's undo what we just did."}],
-      ["search", {"query": "Undo"}],
-      ["notify", {"message": "Now let's add Mushroom Body Output Neurons."}],
-      ["search", {"query": "Add MBON"}],
-      ["notify", {"message": "Done", "pause": 1000}],
-      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
-    ],
-    "description": "Go back to a previous step (UNDO).",
-    "category": "Basic English Queries (Supported Verbs)"
-  },
-  "keep_1": {
-    "keyword": "Keep",
-    "script": [
-      ["notify", {"message": "Hi!"}],
-      ["notify", {"message": "Let's query for neurons from the Antennal Lobe!"}],
-      ["search", {"query": "Show neurons in AL"}],
-      ["notify", {"message": "Now let's only keep those expressing glutamate that innervate the left AL and remove the rest."}],
-      ["search", {"query": "Keep glutamatergic neurons in left AL"}],
-      ["notify", {"message": "Done", "pause": 1000}],
-      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
-    ],
-    "description": "Filter neurons in the current visualization panel based on a specific query.",
-    "category": "Basic English Queries (Supported Verbs)"
-  },
-  "remove_1": {
-    "keyword": "Remove",
-    "script": [
-      ["notify", {"message": "Hi!"}],
-      ["notify", {"message": "Let's query for local neurons from the right antennal lobe!"}],
-      ["search", {"query": "Show LN in right al"}],
-      ["notify", {"message": "Now let's only remove the glutamatergic neurons in the right AL."}],
-      ["search", {"query": "Remove glutamatergic neurons from the right al"}],
-      ["notify", {"message": "Done", "pause": 1000}],
-      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
-    ],
-    "description": "Remove neurons from the current visualization panel based on a specific query.",
-    "category": "Basic English Queries (Supported Verbs)"
-  },
-  "pinunpin_1": {
-    "keyword": "Pin/Unpin",
-    "script": [
-      ["notify", {"message": "Hi!"}],
-      ["notify", {"message": "Let's query for neurons innervating the right antennal lobe!"}],
-      ["search", {"query": "Show neurons in right al"}],
-      ["notify", {"message": "Now let's pin the local neurons."}],
-      ["search", {"query": "Pin LNs in the right AL"}],
-      ["notify", {"message": "Now let's unpin glutamatergic neurons."}],
-      ["search", {"query": "Unpin glutamatergic neurons"}],
-      ["notify", {"message": "Done", "pause": 1000}],
-      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
-    ],
-    "description": "Pin (Persistently highlight) or Unpin neurons in the current visualization panel based on a specific query.",
-    "category": "Basic English Queries (Supported Verbs)"
-  },
-  "hide_1": {
-    "keyword": "Hide/unhide",
-    "script": [
-      ["notify", {"message": "Hi!"}],
-      ["notify", {"message": "Let's query for dopaminergic  neurons in the right MB."}],
-      ["search", {"query": "Show dopaminergic neurons in the right MB"}],
-      ["notify", {"message": "Let's add Mushroom Body Output Neuron in the left MB."}],
-      ["search", {"query": "add MBON in the left MB"}],
-      ["notify", {"message": "Now let's hide the dopaminergic neurons."}],
-      ["search", {"query": "hide dopaminergic neurons"}],
-      ["notify", {"message": "Now let's reveal all the DANs that is in the visualization panel."}],
-      ["search", {"query": "unhide DAN"}],
-      ["notify", {"message": "Done", "pause": 1000}],
-      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
-    ],
-    "description": "Hide or reveal neurons in the current visualization panel based on a specific query.",
-    "category": "Basic English Queries (Supported Verbs)"
-  },
-  "color_1": {
-    "keyword": "Color",
-    "script": [
-      ["notify", {"message": "Hi!"}],
-      ["notify", {"message": "Let's query for local neurons from the right antennal lobe!"}],
-      ["search", {"query": "Show LN in right al"}],
-      ["notify", {"message": "Now let's color them red."}],
-      ["search", {"query": "Color red"}],
-      ["notify", {"message": "If only a color is specified, the last queried neurons will be colored."}],
-      ["notify", {"message": "Neurons to be colored can also be specified. For example, we can color GABAergic neurons blue, using the hex code for blue."}],
-      ["search", {"query": "Color gabaergic neurons 0000FF"}],
-      ["notify", {"message": "Done", "pause": 1000}],
-      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
-    ],
-    "description": "Color neurons in the current visualization panelvisualization panel based on a specific query",
-    "category": "Basic English Queries (Supported Verbs)"
-  },
-  "clear_1": {
-    "keyword": "Clear",
-    "script": [
-      ["notify", {"message": "Hi!"}],
-      ["notify", {"message": "Let's query for local neurons from the right antennal lobe!"}],
-      ["search", {"query": "Show local neurons in right al"}],
-      ["notify", {"message": "Now we clear the visualization panel."}],
-      ["search", {"query": "Clear"}],
-      ["notify", {"message": "Done", "pause": 1000}],
-      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
-    ],
-    "description": "Clear out the visualization panel.",
-    "category": "Basic English Queries (Supported Verbs)"
-  },
   "neuropil_menu": {
     "script": [
       ["notify", {"message": "The Neuropil menu accessible from the Header Bar lists all neuropils."}],
@@ -299,6 +158,148 @@
     "description": "Bring up Info Panel for the neuron to access detail information about neurons and their synaptic partners.",
     "category": "GUI Usage"
   },
+  "show_1": {
+    "keyword": "Show",
+    "script": [
+      ["notify", {"message": "Hi there!"}],
+      ["notify", {"message": "Let's query for local neurons in the left antennal lobe that express glutamate neurotransmitter!"}],
+      ["search", {"query": "show glutamatergic local neurons in the left antennal lobe"}],
+      ["notify", {"message": "'Show' always clears the visualization panel before visualizing the neurons in the query!"}],
+      ["notify", {"message": "Let's try using 'Show' again."}],
+      ["search", {"query": "Show Mushroom Body Output Neurons in the right MB"}],
+      ["notify", {"message": "Done. Compare this to the 'Add' demo!", "pause": 1000}],
+      ["notify", {"message": "Try it yourself!", "pause": 0}]
+    ],
+    "description": "Clear the work space and visualize neurons according to a specific query.",
+    "category": "Basic English Queries (Supported Verbs)"
+  },
+  "add_1": {
+    "keyword": "Add",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for local neurons in the left antennal lobe that express glutamate neurotransmitter!"}],
+      ["search", {"query": "show glutamatergic local neurons in the left antennal lobe"}],
+      ["notify", {"message": "'Add' visualizes the neurons in the query on top of what's in the visualization panel!"}],
+      ["notify", {"message": "Let's try using adding some neurons."}],
+      ["search", {"query": "Add Mushroom Body Output Neurons in the right MB"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "In addition to what is currently displayed, visualize the neurons according to a specific query",
+    "category": "Basic English Queries (Supported Verbs)"
+  },
+  "undo_1": {
+    "keyword": "Undo",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for dopaminergic neurons in the Mushroom Body!"}],
+      ["search", {"query": "Show dopaminergic neurons in mb"}],
+      ["notify", {"message": "Now let's add Kenyon Cells."}],
+      ["search", {"query": "Add kenyon cells"}],
+      ["notify", {"message": "Now let's undo what we just did."}],
+      ["search", {"query": "Undo"}],
+      ["notify", {"message": "Now let's add Mushroom Body Output Neurons."}],
+      ["search", {"query": "Add MBON"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Go back to a previous step (UNDO).",
+    "category": "Basic English Queries (Supported Verbs)"
+  },
+  "keep_1": {
+    "keyword": "Keep",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for neurons from the Antennal Lobe!"}],
+      ["search", {"query": "Show neurons in AL"}],
+      ["notify", {"message": "Now let's only keep those expressing glutamate that innervate the left AL and remove the rest."}],
+      ["search", {"query": "Keep glutamatergic neurons in left AL"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Filter neurons in the current visualization panel based on a specific query.",
+    "category": "Basic English Queries (Supported Verbs)"
+  },
+  "remove_1": {
+    "keyword": "Remove",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for local neurons from the right antennal lobe!"}],
+      ["search", {"query": "Show LN in right al"}],
+      ["notify", {"message": "Now let's only remove the glutamatergic neurons in the right AL."}],
+      ["search", {"query": "Remove glutamatergic neurons from the right al"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Remove neurons from the current visualization panel based on a specific query.",
+    "category": "Basic English Queries (Supported Verbs)"
+  },
+  "pinunpin_1": {
+    "keyword": "Pin/Unpin",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for neurons innervating the right antennal lobe!"}],
+      ["search", {"query": "Show neurons in right al"}],
+      ["notify", {"message": "Now let's pin the local neurons."}],
+      ["search", {"query": "Pin LNs in the right AL"}],
+      ["notify", {"message": "Now let's unpin glutamatergic neurons."}],
+      ["search", {"query": "Unpin glutamatergic neurons"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Pin (Persistently highlight) or Unpin neurons in the current visualization panel based on a specific query.",
+    "category": "Basic English Queries (Supported Verbs)"
+  },
+  "hide_1": {
+    "keyword": "Hide/unhide",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for dopaminergic  neurons in the right MB."}],
+      ["search", {"query": "Show dopaminergic neurons in the right MB"}],
+      ["notify", {"message": "Let's add Mushroom Body Output Neuron in the left MB."}],
+      ["search", {"query": "add MBON in the left MB"}],
+      ["notify", {"message": "Now let's hide the dopaminergic neurons."}],
+      ["search", {"query": "hide dopaminergic neurons"}],
+      ["notify", {"message": "Now let's reveal all the DANs that is in the visualization panel."}],
+      ["search", {"query": "unhide DAN"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Hide or reveal neurons in the current visualization panel based on a specific query.",
+    "category": "Basic English Queries (Supported Verbs)"
+  },
+  "color_1": {
+    "keyword": "Color",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for local neurons from the right antennal lobe!"}],
+      ["search", {"query": "Show LN in right al"}],
+      ["notify", {"message": "Now let's color them red."}],
+      ["search", {"query": "Color red"}],
+      ["notify", {"message": "If only a color is specified, the last queried neurons will be colored."}],
+      ["notify", {"message": "Neurons to be colored can also be specified. For example, we can color GABAergic neurons blue, using the hex code for blue."}],
+      ["search", {"query": "Color gabaergic neurons 0000FF"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Color neurons in the current visualization panelvisualization panel based on a specific query",
+    "category": "Basic English Queries (Supported Verbs)"
+  },
+  "clear_1": {
+    "keyword": "Clear",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for local neurons from the right antennal lobe!"}],
+      ["search", {"query": "Show local neurons in right al"}],
+      ["notify", {"message": "Now we clear the visualization panel."}],
+      ["search", {"query": "Clear"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Clear out the visualization panel.",
+    "category": "Basic English Queries (Supported Verbs)"
+  },
+
   "basic_query1": {
     "keyword": "Name-based Queries",
     "script": [
