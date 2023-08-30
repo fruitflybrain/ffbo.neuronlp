@@ -329,7 +329,7 @@ moduleExporter(
                  break;
                case "lpuToggle":
                 this._openPanel(this.menuSels.lpu, object.cursorMove, object.cursorMoveDuration).then(()=>{
-                  sel = '#btn-toggle-' + ('label' in object.menu ? uidDecode(this.ffbomesh._labelToRid[object.menu.label]) : uidDecode(object.menu.rid));
+                  sel = '#btn-toggle-' + object.menu.label.replaceAll('(', '_').replaceAll(')', '_');
                   this._clickMenu(sel, object.cursorMove, object.cursorMoveDuration).then(() => {resolve()});
                 }).catch(reject)
                 break;
