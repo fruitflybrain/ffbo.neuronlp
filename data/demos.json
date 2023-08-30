@@ -1,147 +1,6 @@
 [
 {"branch": "flywire"},
 {
-  "show_1": {
-    "keyword": "Show",
-    "script": [
-      ["notify", {"message": "Hi there!"}],
-      ["notify", {"message": "Let's query for a type of Mushroom Body Output Neuron called MBON09!"}],
-      ["search", {"query": "show MBON09"}],
-      ["notify", {"message": "'Show' always clears the visualization panel before visualizing the neurons in the query!"}],
-      ["notify", {"message": "Let's try using 'Show' again."}],
-      ["search", {"query": "Show PEG"}],
-      ["notify", {"message": "Done. Compare this with the 'Add' demo!", "pause": 1000}],
-      ["notify", {"message": "Try it yourself!", "pause": 0}]
-    ],
-    "description": "Clear the work space and visualize neurons according to a specific query.",
-    "category": "Basic Rule-based English Queries (Supported Verbs)"
-  },
-  "add_1": {
-    "keyword": "Add",
-    "script": [
-      ["notify", {"message": "Hi!"}],
-      ["notify", {"message": "Let's query for a type of Mushroom Body Output Neuron called MBON09!"}],
-      ["search", {"query": "show MBON09"}],
-      ["notify", {"message": "'Add' visualizes the neurons in the query on top of what's in the visualization panel!"}],
-      ["notify", {"message": "Let's try using adding some neurons."}],
-      ["search", {"query": "Add PEG"}],
-      ["notify", {"message": "Done", "pause": 1000}],
-      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
-    ],
-    "description": "In addition to what is currently displayed, visualize the neurons according to a specific query",
-    "category": "Basic Rule-based English Queries (Supported Verbs)"
-  },
-  "undo_1": {
-    "keyword": "Undo",
-    "script": [
-      ["notify", {"message": "Hi!"}],
-      ["notify", {"message": "Let's query for mushroom body output neurons (MBONs) in the alpha3 compartment of the right Mushroom body."}],
-      ["search", {"query": "Show MBON in the right alpha lobe compartment 3"}],
-      ["notify", {"message": "Now let's add dopaminergic neurons (DANs) in the same compartment."}],
-      ["search", {"query": "Add DAN that has output in the right alpha3 compartment"}],
-      ["notify", {"message": "Now let's undo what we just did."}],
-      ["search", {"query": "Undo"}],
-      ["notify", {"message": "Now let's add the DANs that are presynaptic to any of the MBONs in the workspace and provide at least 200 synapses in the connection."}],
-      ["search", {"query": "Add presynaptic DANs with at least 200 synapses."}],
-      ["notify", {"message": "Done", "pause": 1000}],
-      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
-    ],
-    "description": "Go back to a previous step (UNDO).",
-    "category": "Basic Rule-based English Queries (Supported Verbs)"
-  },
-  "keep_1": {
-    "keyword": "Keep",
-    "script": [
-      ["notify", {"message": "Hi!"}],
-      ["notify", {"message": "Let's query for neurons uniglomarular projection neurons (uPNs) in the antennal lobe!"}],
-      ["search", {"query": "Show uPN in right antennal lobe"}],
-      ["notify", {"message": "Now let's only keep those presynaptic to gamma lobe Kenyon Cells (KCg)"}],
-      ["search", {"query": "Keep uPN neurons presynaptic to KC in the right gamma lobe"}],
-      ["notify", {"message": "Done", "pause": 1000}],
-      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
-    ],
-    "description": "Filter neurons in the current visualization panel based on a specific query.",
-    "category": "Basic Rule-based English Queries (Supported Verbs)"
-  },
-  "remove_1": {
-    "keyword": "Remove",
-    "script": [
-      ["notify", {"message": "Hi!"}],
-      ["notify", {"message": "Let's query for neurons uniglomarular projection neurons (uPNs) in the antennal lobe!"}],
-      ["search", {"query": "Show uPN in right antennal lobe"}],
-      ["notify", {"message": "Now let's remove those presynaptic to gamma lobe Kenyon Cells (KCg)"}],
-      ["search", {"query": "Remove uPN neurons presynaptic to KC in the right gamma lobe"}],
-      ["notify", {"message": "Done", "pause": 1000}],
-      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
-    ],
-    "description": "Remove neurons from the current visualization panel based on a specific query.",
-    "category": "Basic Rule-based English Queries (Supported Verbs)"
-  },
-  "pinunpin_1": {
-    "keyword": "Pin/Unpin",
-    "script": [
-      ["notify", {"message": "Hi!"}],
-      ["notify", {"message": "Let's query TuBu Neurons that connect AOTU to the Bulb!"}],
-      ["search", {"query": "Show TuBu neurons"}],
-      ["notify", {"message": "Now let's pin the ones that are presynaptic to R5 ring neurons."}],
-      ["search", {"query": "Pin neurons presynaptic to ER5 neurons"}],
-      ["notify", {"message": "You can remove the unpinned neurons by the <i class=\"fa fa-trash\"><\/i> button."}],
-      ["click", {"uiBtn": {"type": "removeUnpin"}}],
-      ["notify", {"message": "Now let's unpin the pinned neurons."}],
-      ["search", {"query": "Unpin TuBu06"}],
-      ["notify", {"message": "Done", "pause": 1000}],
-      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
-    ],
-    "description": "Pin (Persistently highlight) or Unpin neurons in the current visualization panel based on a specific query.",
-    "category": "Basic Rule-based English Queries (Supported Verbs)"
-  },
-  "hide_1": {
-    "keyword": "Hide/unhide",
-    "script": [
-      ["notify", {"message": "Hi!"}],
-      ["notify", {"message": "Let's query for EPG neurons"}],
-      ["search", {"query": "Show EPG neurons"}],
-      ["notify", {"message": "Let's hide the ones that innervate glomerulus R6 or glomerulus L4 of the protocerebrum bridge."}],
-      ["search", {"query": "hide neurons innervating PB glomerulus R6 or PBL4"}],
-      ["notify", {"message": "Now let's reveal all the EPG neurons again"}],
-      ["search", {"query": "unhide EPG neurons"}],
-      ["notify", {"message": "Done", "pause": 1000}],
-      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
-    ],
-    "description": "Hide or reveal neurons in the current visualization panel based on a specific query.",
-    "category": "Basic Rule-based English Queries (Supported Verbs)"
-  },
-  "color_1": {
-    "keyword": "Color",
-    "script": [
-      ["notify", {"message": "Hi!"}],
-      ["notify", {"message": "Let's query for PEG neurons!"}],
-      ["search", {"query": "Show PEG"}],
-      ["notify", {"message": "Now let's color them red."}],
-      ["search", {"query": "Color red"}],
-      ["notify", {"message": "If only a color is specified, the last queried neurons will be colored."}],
-      ["notify", {"message": "Neurons to be colored can also be specified. For example, we can color only the neurons with inputs in PB glomerulus R6 blue, using the hex code for blue."}],
-      ["search", {"query": "Color neurons that has inputs in PB glomerulus R6 0000FF"}],
-      ["notify", {"message": "Done", "pause": 1000}],
-      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
-    ],
-    "description": "Color neurons in the current visualization panelvisualization panel based on a specific query",
-    "category": "Basic Rule-based English Queries (Supported Verbs)"
-  },
-  "clear_1": {
-    "keyword": "Clear",
-    "script": [
-      ["notify", {"message": "Hi!"}],
-      ["notify", {"message": "Let's query for PEN neurons!"}],
-      ["search", {"query": "Show PEN neurons"}],
-      ["notify", {"message": "Now we clear the visualization panel."}],
-      ["search", {"query": "Clear"}],
-      ["notify", {"message": "Done", "pause": 1000}],
-      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
-    ],
-    "description": "Clear out the visualization panel.",
-    "category": "Basic Rule-based English Queries (Supported Verbs)"
-  },
   "neuropil_menu": {
     "script": [
       ["notify", {"message": "The Neuropil menu accessible from the Header Bar lists all neuropils."}],
@@ -149,9 +8,9 @@
       ["notify", {"message": "First we hide all neuropils"}],
       ["click", {"menu": {"type": "lpuHideAll"}}],
       ["notify", {"message": "Next we toggle a few neuropils"}],
-      ["click", {"menu": {"type": "lpuToggle", "label": "MB(R)"}}],
+      ["click", {"menu": {"type": "lpuToggle", "label": "EB"}}],
       ["click", {"menu": {"type": "lpuToggle", "label": "PB"}}],
-      ["click", {"menu": {"type": "lpuToggle", "label": "AL(R)"}}],
+      ["click", {"menu": {"type": "lpuToggle", "label": "FB"}}],
       ["notify", {"message": "Finally we show all neuropils"}],
       ["click", {"menu": {"type": "lpuShowAll"}}],
       ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
@@ -165,44 +24,59 @@
       ["notify", {"message": "The Neurons/Synapses menu accessible from the Header Bar lists all neurons and synapses visualized in the visualization panel."}],
       ["notify", {"message": "It is useful to highlight, hide, pin neurons of interest when the view in the visualization panel becomes cluttered."}],
       ["notify", {"message": "First we visualize some neurons."}],
-      ["search", {"query": "show MBON in the right alpha lobe compartment 3"}],
+      ["search", {"query": "show EL neurons"}],
       ["notify", {"message": "Now we open the Neurons/Synapses Menu and click on one of the neurons"}],
-      ["click", {"menu": {"type": "neuClick", "label": "MBON14(a3)_R_1"}}],
+      ["click", {"menu": {"type": "neuClick", "label": "EL_R_1"}}],
       ["notify", {"message": "This has the same effect of clicking on the neuron in the 3D visualization."}],
       ["notify", {"message": "and brings up the info panel for this neuron."}],
       ["notify", {"message": "We can hide the neuron"}],
-      ["click", {"menu": {"type": "visToggle", "label": "MBON14(a3)_R_1"}}],
+      ["click", {"menu": {"type": "visToggle", "label": "EL_R_1"}}],
       ["notify", {"message": "reveal the neuron"}],
-      ["click", {"menu": {"type": "visToggle", "label": "MBON14(a3)_R_1"}}],
+      ["click", {"menu": {"type": "visToggle", "label": "EL_R_1"}}],
       ["notify", {"message": "pin the neuron"}],
-      ["click", {"menu": {"type": "pinToggle", "label": "MBON14(a3)_R_1"}}],
+      ["click", {"menu": {"type": "pinToggle", "label": "EL_R_1"}}],
       ["notify", {"message": "unpin the neuron"}],
-      ["click", {"menu": {"type": "pinToggle", "label": "MBON14(a3)_R_1"}}],
+      ["click", {"menu": {"type": "pinToggle", "label": "EL_R_1"}}],
       ["notify", {"message": "and delete the neuron"}],
-      ["click", {"menu": {"type": "remove", "label": "MBON14(a3)_R_1"}}],
+      ["click", {"menu": {"type": "remove", "label": "EL_R_1"}}],
       ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
     ],
     "keyword": "Neurons/Synapses Menu",
     "description": "Access the list of neurons and synapses in the visualization panel to highlight, retrieve info of, pin, hide and delete individual neurons.",
     "category": "GUI Usage"
   },
+  "celltype_menu": {
+    "script": [
+      ["notify", {"message": "The Cell Types Menu accessible from the Header Bar lists all cell types present in each Neuropil."}],
+      ["notify", {"message": "Most cells are only designated under one neuropil, hence some neuropils might not display any cell type."}],
+      ["notify", {"message": "This menu can also be helpful when exploring the dataset without prior knowledge about any cell type"}],
+      ["notify", {"message": "Let's begin by navigating to the Cell Type Menu"}],
+      ["click", {"menu": {"type": "cellTypes"}}],
+      ["notify", {"message": "and select AL(L) (left antenna lobe)"}],
+      ["click", {"menu": {"type": "toggleCellType", "neuropil": "AL_L", "label": "AL-AST1"}}],
+      ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
+    ], 
+    "keyword": "Cell Types Menu",
+    "description": "Access the list of Cell Type that arborizes in each Neuropil",
+    "category": "GUI Usage"
+  },
   "pin_select_highlight": {
     "script": [
       ["notify", {"message": "You can use your mouse to navigate through neurons in the visualization panel."}],
       ["notify", {"message": "Let's first bring up some neurons!"}],
-      ["search", {"query": "Show MBON in the right alpha lobe compartment 3"}],
+      ["search", {"query": "Show EL"}],
       ["notify", {"message": "To highlight a neuron, move mouse cursor onto the displayed neuron."}],
-      ["highlight", {"label": "MBON11(y1pedc>a/B)_R_1"}],
+      ["highlight", {"label": "EL_R_2"}],
       ["notify", {"message": "Let's try another neuron."}],
-      ["highlight", {"label": "MBON18(a2sc)_R_1"}],
+      ["highlight", {"label": "EL_L_3"}],
       ["notify", {"message": "To obtain the detailed info about this neuron, single click on the neuron."}],
-      ["click", {"label": "MBON11(y1pedc>a/B)_R_1"}],
+      ["click", {"label": "EL_L_3"}],
       ["notify", {"message": "Info Panel on the left will display basic info of the neuron, and the synaptic partners of the neuron. Check out the 'Info Panel' demo for more information on how to use the Info Panel", "pause": 10000}],
       ["notify", {"message": "Double-clicking a neuron pins the neuron."}],
-      ["pin", {"label": "MBON11(y1pedc>a/B)_R_1"}],
-      ["highlight", {"label": "MBON18(a2sc)_R_1"}],
+      ["pin", {"label": "EL_L_3"}],
+      ["highlight", {"label": "EL_L_3"}],
       ["notify", {"message": "Double-clicking it again to unpin."}],
-      ["pin", {"label": "MBON11(y1pedc>a/B)_R_1"}],
+      ["pin", {"label": "EL_L_3"}],
       ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
     ],
     "keyword": "Pin/Select/Highlight",
@@ -215,15 +89,15 @@
       ["notify", {"message": "Clicking on the <i class=\"fa fa-info-circle\"><\/i> button, the GUI Usage Info will pop out."}],
       ["click", {"uiBtn": {"type": "showInfo"}}],
       ["notify", {"message": "Now let's make a simple query"}],
-      ["search", {"query": "show MBON14"}],
-      ["search", {"query": "add PPL106"}],
+      ["search", {"query": "show EPG"}],
+      ["search", {"query": "add PEG"}],
       ["notify", {"message": "We can use the <i class=\"fa fa-binoculars\"><\/i> button zoom into the neurons visualized."}],
       ["notify", {"message": "Let's take a screenshot of the visualization using the <i class=\"fa fa-camera\"><\/i> button ."}],
       ["click", {"uiBtn": {"type": "takeScreenshot"}}],
       ["notify", {"message": "We can reset the view to the original by clicking on <i class=\"fa fa-refresh\"><\/i> button."}],
       ["click", {"uiBtn": {"type": "resetView"}}],
       ["notify", {"message": "Now we will pin some of the neurons"}],
-      ["search", {"query": "pin MBON"}],
+      ["search", {"query": "pin PEG"}],
       ["notify", {"message": "We can hide everything but the pinned neurons using the <i class=\"fa fa-eye-slash\"><\/i> button"}],
       ["click", {"uiBtn": {"type": "hideAll"}}],
       ["notify", {"message": "and reveal everything in the visualization panel using the <i class=\"fa fa-eye\"><\/i> button"}],
@@ -240,16 +114,15 @@
   },
   "connectivity_1": {
     "script": [
-      ["notify", {"message": "Let's explore some connectivity in the antennal lobe", "pause": 1000}],
-      ["notify", {"message": "Let's add Olfacotry Sensosry neurons that converge onto the DM4 glomerulus", "pause": 2000}],
-      ["search", {"query": "show ORN_DM4"}],
+      ["notify", {"message": "Let's explore some connectivity in the ellipsoid body", "pause": 1000}],
+      ["search", {"query": "show EPG"}],
       ["search", {"query": "color red"}],
-      ["notify", {"message": "We then add DM4 PN", "pause": 2000}],
-      ["search", {"query": "add DM4_adPN neurons"}],
+      ["notify", {"message": "We then add ER4d", "pause": 2000}],
+      ["search", {"query": "add ER4d neurons"}],
       ["search", {"query": "color blue"}],
-      ["search", {"query": "add lLN2S neurons"}],
+      ["search", {"query": "add ER2 neurons"}],
       ["search", {"query": "color lime"}],
-      ["search", {"query": "add lLN2P neurons"}],
+      ["search", {"query": "add ExR1 neurons"}],
       ["search", {"query": "color yellow"}],
       ["notify", {"message": "Now let's open Graph View to see the neuronal-level graph with the <i class=\"fa fa-connectdevelop\"><\/i> button.", "pause": 6000}],
       ["click", {"uiBtn": {"type": "showGraph"}}],
@@ -287,17 +160,17 @@
   "infopanel": {
     "script": [
       ["notify", {"message": "Info Panel provides all information available of a neuron."}],
-      ["search", {"query": "show DM4_adPN in the right AL"}],
+      ["search", {"query": "show EL"}],
       ["notify", {"message": "Simply click on the neuron in the visualization panel or from the Neurons/Synapses menu to bring up its information."}],
-      ["click", {"label": "DM4_adPN_R_1"}],
+      ["click", {"label": "EL_R_1"}],
       ["notify", {"message": "You can bring up one of pre- and post-synaptic partner by clicking on the + button in the list of partners."}],
-      ["click", {"selector": "#btn-pre-add-LHPD5c1_R_1"}],
-      ["click", {"selector": "#btn-pre-add-LN_1671297064"}],
+      ["click", {"selector": "#btn-pre-add-EPG_R_20"}],
+      ["click", {"selector": "#btn-pre-add-ExR6_R_1"}],
       ["notify", {"message": "You can bring up or remove all of its pre- and post-synaptic partner according to the filtered value."}],
       ["click", {"selector": "#presyn-N"}],
       ["notify", {"message": "And remove them."}],
       ["click", {"selector": "#btn-pre-remove-all-neuron"}],
-      ["search", {"query": "color DM4_adPN blue"}],
+      ["search", {"query": "color EL blue"}],
       ["notify", {"message": "We can also add synapses. For example, let's add all postsynaptic sites of this neuron and color them white."}],
       ["click", {"selector": "#btn-pre-add-all-synapse"}],
       ["search", {"query": "color red"}],
@@ -309,6 +182,147 @@
     "keyword": "Info Panel",
     "description": "Bring up Info Panel for the neuron to access detail information about neurons and their synaptic partners.",
     "category": "GUI Usage"
+  },
+  "show_1": {
+    "keyword": "Show",
+    "script": [
+      ["notify", {"message": "Hi there!"}],
+      ["notify", {"message": "Let's query for a type of ring neuron called ER4d!"}],
+      ["search", {"query": "show ER4d"}],
+      ["notify", {"message": "'Show' always clears the visualization panel before visualizing the neurons in the query!"}],
+      ["notify", {"message": "Let's try using 'Show' again."}],
+      ["search", {"query": "Show PEG"}],
+      ["notify", {"message": "Done. Compare this with the 'Add' demo!", "pause": 1000}],
+      ["notify", {"message": "Try it yourself!", "pause": 0}]
+    ],
+    "description": "Clear the work space and visualize neurons according to a specific query.",
+    "category": "Basic Rule-based English Queries (Supported Verbs)"
+  },
+  "add_1": {
+    "keyword": "Add",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for a type of ring neuron called ER4d!"}],
+      ["search", {"query": "show ER4d"}],
+      ["notify", {"message": "'Add' visualizes the neurons in the query on top of what's in the visualization panel!"}],
+      ["notify", {"message": "Let's try using adding some neurons."}],
+      ["search", {"query": "Add PEG"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "In addition to what is currently displayed, visualize the neurons according to a specific query",
+    "category": "Basic Rule-based English Queries (Supported Verbs)"
+  },
+  "undo_1": {
+    "keyword": "Undo",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for mushroom body output neurons (MBONs) in the medial lobe of the left Mushroom body."}],
+      ["search", {"query": "Show MBON in the left medial lobe"}],
+      ["notify", {"message": "Now let's add dopaminergic neurons (DANs) in the same compartment."}],
+      ["search", {"query": "Add DAN that has output in the left medial lobe"}],
+      ["notify", {"message": "Now let's undo what we just did."}],
+      ["search", {"query": "Undo"}],
+      ["notify", {"message": "Now let's add the DANs that are presynaptic to any of the MBONs in the workspace and provide at least 200 synapses in the connection."}],
+      ["search", {"query": "Add presynaptic DANs with at least 200 synapses."}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Go back to a previous step (UNDO).",
+    "category": "Basic Rule-based English Queries (Supported Verbs)"
+  },
+  "keep_1": {
+    "keyword": "Keep",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for EL neurons in the ellipsoid body!"}],
+      ["search", {"query": "Show EL neurons"}],
+      ["notify", {"message": "Now let's only keep those presynaptic to a specific EPG neuron"}],
+      ["search", {"query": "Keep EL neurons presynaptic to $EPG_R_4$"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Filter neurons in the current visualization panel based on a specific query.",
+    "category": "Basic Rule-based English Queries (Supported Verbs)"
+  },
+  "remove_1": {
+    "keyword": "Remove",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for EL neurons in the ellipsoid body!"}],
+      ["search", {"query": "Show EL neurons"}],
+      ["notify", {"message": "Now let's remove those that are presynaptic to a specific EPG neuron"}],
+      ["search", {"query": "Remove EL neurons presynaptic to $EPG_R_4$"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Remove neurons from the current visualization panel based on a specific query.",
+    "category": "Basic Rule-based English Queries (Supported Verbs)"
+  },
+  "pinunpin_1": {
+    "keyword": "Pin/Unpin",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for EL neurons in the ellipsoid body!"}],
+      ["search", {"query": "Show EL neurons"}],
+      ["notify", {"message": "Now let's pin the ones that are presynaptic to R5 ring neurons."}],
+      ["search", {"query": "Pin neurons presynaptic to ER5 neurons"}],
+      ["notify", {"message": "You can remove the unpinned neurons by the <i class=\"fa fa-trash\"><\/i> button."}],
+      ["click", {"uiBtn": {"type": "removeUnpin"}}],
+      ["notify", {"message": "Now let's unpin the pinned neurons."}],
+      ["search", {"query": "Unpin EL"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Pin (Persistently highlight) or Unpin neurons in the current visualization panel based on a specific query.",
+    "category": "Basic Rule-based English Queries (Supported Verbs)"
+  },
+  "hide_1": {
+    "keyword": "Hide/unhide",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for EPG neurons"}],
+      ["search", {"query": "Show EPG neurons"}],
+      ["notify", {"message": "Let's hide the ones that innervate the right gall neuropil"}],
+      ["search", {"query": "hide neurons innervating right gall"}],
+      ["notify", {"message": "Now let's reveal all the EPG neurons again"}],
+      ["search", {"query": "unhide EPG neurons"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Hide or reveal neurons in the current visualization panel based on a specific query.",
+    "category": "Basic Rule-based English Queries (Supported Verbs)"
+  },
+  "color_1": {
+    "keyword": "Color",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for EPG neurons!"}],
+      ["search", {"query": "Show EPG"}],
+      ["notify", {"message": "Now let's color them red."}],
+      ["search", {"query": "Color red"}],
+      ["notify", {"message": "If only a color is specified, the last queried neurons will be colored."}],
+      ["notify", {"message": "Neurons to be colored can also be specified. For example, we can color only the neurons with inputs in left gall blue, using the hex code for blue."}],
+      ["search", {"query": "Color neurons that has inputs in left gall 0000FF"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Color neurons in the current visualization panel based on a specific query",
+    "category": "Basic Rule-based English Queries (Supported Verbs)"
+  },
+  "clear_1": {
+    "keyword": "Clear",
+    "script": [
+      ["notify", {"message": "Hi!"}],
+      ["notify", {"message": "Let's query for PEG neurons!"}],
+      ["search", {"query": "Show PEG neurons"}],
+      ["notify", {"message": "Now we clear the visualization panel."}],
+      ["search", {"query": "Clear"}],
+      ["notify", {"message": "Done", "pause": 1000}],
+      ["notify", {"message": "It is all yours now! Try it yourself!", "pause": 0}]
+    ],
+    "description": "Clear out the visualization panel.",
+    "category": "Basic Rule-based English Queries (Supported Verbs)"
   },
   "basic_query1": {
     "keyword": "Name-based Queries",
@@ -327,11 +341,11 @@
     "category": "Basic Rule-based English Queries (Specifying what you want to search for)"
   },
   "basic_query2": {
-  "keyword": "Hemibrain BodyID-based Queries",
+  "keyword": "FlyWire BodyID-based Queries",
   "script": [
     ["notify", {"message": "Hi there!"}],
-    ["notify", {"message": "Let's load multiple neurons using their Hemibrain Body IDs.", "pause": 1000}],
-    ["search", {"query": "show /:referenceId:[5813014882, 912147912, 880875861]"}],
+    ["notify", {"message": "Let's load multiple neurons using their FlyWire Body IDs.", "pause": 1000}],
+    ["search", {"query": "show /:referenceId:[720575940642634532, 720575940604801993, 720575940610453427, 720575940614926475]"}],
     ["notify", {"message": "Try it yourself!", "pause": 0}]
   ],
   "description": "Load a list of neurons using their Hemibrain Body IDs using: show /:referenceId:[bodyId1, bodyId2, ...]",
@@ -341,10 +355,8 @@
     "keyword": "Arborization-based Queries",
     "script": [
       ["notify", {"message": "Hi there!"}],
-      ["notify", {"message": "Let's show all neurons that have arborizations in right AOTU.", "pause": 5000}],
-      ["search", {"query": "show neurons in right AOTU"}],
-      ["notify", {"message": "Let's show neurons that have input site from the NEUROPIL EB and has output sites in the SUBREGION PB glomerulus R3.", "pause": 5000}],
-      ["search", {"query": "show neurons that have inputs in EB and outputs in PB glomerulus R3"}],
+      ["notify", {"message": "Let's show neurons that have inputs sites in EB and output sites in NO", "pause": 5000}],
+      ["search", {"query": "show neurons that have inputs in NO and outputs in EB"}],
       ["notify", {"message": "Try it yourself!", "pause": 0}]
     ],
     "description": "Query neurons based on arborization patterns.",
@@ -354,8 +366,8 @@
     "keyword": "Synaptic Partners-based Queries",
     "script": [
       ["notify", {"message": "Hi there!"}],
-      ["notify", {"message": "Let's display a EPG (EB-PB-LAL) neuron that has outputs in PB glomerulus R5."}],
-      ["search", {"query": "show EPG neurons that has outputs in PB glomerulus R5"}],
+      ["notify", {"message": "Let's display an EPG (EB-PB-LAL) neuron."}],
+      ["search", {"query": "show $EPG_R_21$"}],
       ["notify", {"message": "To add PEG (PB-EB-LAL) neurons that are postsyaptic to the neurons in the current workspace, and has at least 10 synapses from any one of these neurons, we use the following query.", "pause": 1000}],
       ["search", {"query": "add postsynaptic PEG neurons with at least 10 synapses"}],
       ["notify", {"message": "Try it yourself!", "pause": 0}]
@@ -363,55 +375,51 @@
     "description": "Query neurons based on synaptic partners",
     "category": "Basic Rule-based English Queries (Specifying what you want to search for)"
   },
-  "hemibrain_1": {
-    "keyword": "OSN",
+  "flywire_1": {
+    "keyword": "T4a",
     "script": [
       ["notify", {"message": "Hi there!"}],
-      ["notify", {"message": "Let's query for olfactory sensory neurons!"}],
-      ["search", {"query": "show OSN"}],
-      ["notify", {"message": "We restrict the query for OSNs that terminate in the DM4 glomerulus!"}],
-      ["search", {"query": "show $DM4$ OSN"}],
+      ["notify", {"message": "Let's query for T4a neurons!"}],
+      ["search", {"query": "show T4a"}],
+      ["notify", {"message": "We can also restrict the query to T4a neurons in the right medulla"}],
+      ["search", {"query": "show $T4a_R$ neurons"}],
       ["notify", {"message": "Try it yourself!", "pause": 0}]
     ],
-    "description": "Show olfactory sensory neurons.",
-    "category": "Early Olfactory System"
+    "description": "Show T4a neurons.",
+    "category": "Early Visual System"
   },
-  "hemibrain_2": {
-    "keyword": "AL uPN",
+  "flywire_2": {
+    "keyword": "Mi1",
     "script": [
       ["notify", {"message": "Hi there!"}],
-      ["notify", {"message": "Let's query for antennal lobe uniglomarular projection neurons!"}],
-      ["search", {"query": "show uPN"}],
-      ["notify", {"message": "We can also narrow down the search to the uPN arboring the DM4 glomerulus"}],
-      ["search", {"query": "show $DM4$ uPN"}],
-      
+      ["notify", {"message": "Let's query for Mi1 neurons in medulla!"}],
+      ["search", {"query": "show Mi1"}],
       ["notify", {"message": "Try it yourself!", "pause": 0}]
     ],
-    "description": "Show antennal lobe projection neurons.",
-    "category": "Early Olfactory System"
+    "description": "Show Mi1 neurons.",
+    "category": "Early Visual System"
   },
-  "hemibrain_3": {
-    "keyword": "AL LN",
+  "flywire_3": {
+    "keyword": "L3",
     "script": [
       ["notify", {"message": "Hi there!"}],
-      ["notify", {"message": "Let's query for local neurons in antennal lobe!"}],
-      ["search", {"query": "Show ALLN"}],
-      
+      ["notify", {"message": "Let's query for L3 neurons innervating lamina and medulla!"}],
+      ["search", {"query": "Show L3"}],
       ["notify", {"message": "Try it yourself!", "pause": 0}]
     ],
-    "description": "Show local neurons in antennal lobe.",
-    "category": "Early Olfactory System"
+    "description": "Show L3 neurons.",
+    "category": "Early Visual System"
   },
-  "hemibrain_4": {
-    "keyword": "AL mPN",
+  "flywire_4": {
+    "keyword": "LPLC2",
     "script": [
       ["notify", {"message": "Hi there!"}],
-      ["notify", {"message": "Let's query for multiglomerular projection neurons!"}],
-      ["search", {"query": "show mPN"}],
+      ["notify", {"message": "Let's query for LPLC2 neurons in lobulla plate!"}],
+      ["search", {"query": "show LPLC2"}],
       ["notify", {"message": "Try it yourself!", "pause": 0}]
     ],
-    "description": "Show multiglomerular projection neurons.",
-    "category": "Early Olfactory System"
+    "description": "Show LPLC2 neurons.",
+    "category": "Early Visual System"
   }
 }
 ]
