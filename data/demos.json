@@ -32,7 +32,7 @@
       ["notify", {"message": "We can hide the neuron"}],
       ["click", {"menu": {"type": "visToggle", "label": "AN08B119_T1_L_6"}}],
       ["notify", {"message": "reveal the neuron"}],
-      ["click", {"menu": {"type": "visToggle", "label": "AN09A004_T2_L_1"}}],
+      ["click", {"menu": {"type": "visToggle", "label": "AN08B119_T1_L_6"}}],
       ["notify", {"message": "pin the neuron"}],
       ["click", {"menu": {"type": "pinToggle", "label": "AN18B002_T3_R_1"}}],
       ["notify", {"message": "unpin the neuron"}],
@@ -100,7 +100,7 @@
       ["notify", {"message": "We can reset the view to the original by clicking on <i class=\"fa fa-refresh\"><\/i> button."}],
       ["click", {"uiBtn": {"type": "resetView"}}],
       ["notify", {"message": "Now we will pin some of the neurons"}],
-      ["search", {"query": "pin MBON"}],
+      ["search", {"query": "pin MNwm16"}],
       ["notify", {"message": "We can hide everything but the pinned neurons using the <i class=\"fa fa-eye-slash\"><\/i> button"}],
       ["click", {"uiBtn": {"type": "hideAll"}}],
       ["notify", {"message": "and reveal everything in the visualization panel using the <i class=\"fa fa-eye\"><\/i> button"}],
@@ -121,10 +121,11 @@
       ["notify", {"message": "Let's add wing motor neurons and their interneurons, staring with MNwm03", "pause": 2000}],
       ["search", {"query": "show MNwm03"}],
       ["search", {"query": "color red"}],
-      ["notify", {"message": "We then add DM4 PN", "pause": 2000}],
+      ["notify", {"message": "We then add MNwm23", "pause": 2000}],
       ["search", {"query": "add MNwm23 neurons"}],
       ["search", {"query": "color blue"}],
-      ["search", {"query": "add interneuron IN19B008"}],
+      ["notify", {"message": "We then add interneurons", "pause": 2000}],
+      ["search", {"query": "add IN19B008"}],
       ["search", {"query": "color lime"}],
       ["search", {"query": "add IN11B003"}],
       ["search", {"query": "color yellow"}],
@@ -229,7 +230,7 @@
     "script": [
       ["notify", {"message": "Hi!"}],
       ["notify", {"message": "Let's query for neurons in the giant fibers!"}],
-      ["search", {"query": "Show uPN in giant fibers"}],
+      ["search", {"query": "Show neurons in giant fibers"}],
       ["notify", {"message": "Now let's remove those in the left giant fibers"}],
       ["search", {"query": "Remove neurons in the the left giant fibers"}],
       ["notify", {"message": "Done", "pause": 1000}],
@@ -261,7 +262,7 @@
     "script": [
       ["notify", {"message": "Hi!"}],
       ["notify", {"message": "Let's query for the wing neurons (MNwm)"}],
-      ["search", {"query": "Show giant fibers"}],
+      ["search", {"query": "Show $MNwm$"}],
       ["notify", {"message": "Let's hide the some of these neurons, namely, MNwm20, MNwm16 and MNwm17."}],
       ["search", {"query": "hide MNwm20 and MNwm16 and MNwm17"}],
       ["notify", {"message": "Now let's reveal all the MNwm neurons again."}],
@@ -277,7 +278,7 @@
     "script": [
       ["notify", {"message": "Hi!"}],
       ["notify", {"message": "Let's query for MNwm20 neurons!"}],
-      ["search", {"query": "Show MNwm"}],
+      ["search", {"query": "Show MNwm20"}],
       ["notify", {"message": "Now let's color them red."}],
       ["search", {"query": "Color red"}],
       ["notify", {"message": "If only a color is specified, the last queried neurons will be colored."}],
@@ -306,7 +307,7 @@
   "infopanel": {
     "script": [
       ["notify", {"message": "Info Panel provides all information available of a neuron."}],
-      ["search", {"query": "show MNwm in the right PDMN"}],
+      ["search", {"query": "show MNwm01 in the right PDMN"}],
       ["notify", {"message": "Simply click on the neuron in the visualization panel or from the Neurons/Synapses menu to bring up its information."}],
       ["click", {"label": "MNwm01_T2_R_1"}],
       ["notify", {"message": "You can bring up one of pre- and post-synaptic partner by clicking on the + button in the list of partners."}],
@@ -347,7 +348,7 @@
   "keyword": "MANC BodyID-based Queries",
   "script": [
     ["notify", {"message": "Hi there!"}],
-    ["notify", {"message": "Let's load multiple neurons using their Hemibrain Body IDs.", "pause": 1000}],
+    ["notify", {"message": "Let's load multiple neurons using their MANC Body IDs.", "pause": 1000}],
     ["search", {"query": "show /:referenceId:[13314, 11335, 11451, 12293]"}],
     ["notify", {"message": "Try it yourself!", "pause": 0}]
   ],
