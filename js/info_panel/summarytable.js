@@ -23,7 +23,7 @@ moduleExporter("SummaryTable",
    * @param {obj} parentObj -  parentObject
    * @param {dict} [nameConfig={}] - configuration of children divs. The 3 children divs in ConnTable are `['colorId','extraImgId','overlayId']`
    */
-  function SummaryTable(div_id, parentObj, nameConfig={}){
+  function SummaryTable(div_id, parentObj, nameConfig={},database="neuroarch"){
     this.divId = div_id;  // wrapper
     this.parentObj = parentObj;
     this.dataset_name = parentObj.dataset_name;
@@ -124,8 +124,133 @@ moduleExporter("SummaryTable",
    * SummaryTable Information Update
    *
    */
-  SummaryTable.prototype.update = function(data){
 
+  SummaryTable.prototype.update = function(data,db="neuroarch"){
+    console.log("summar")
+    if (db ==='neuroarch'){
+      this.updatena(data)
+    }
+    if (db ==='neo4j'){
+      console.log("neeo")
+      this.updateneo(data)
+    }
+  
+  };
+
+
+  SummaryTable.prototype.updateneo = function(data){
+    if (verifyDataIntegrity(data) == false){
+      return;
+    }
+
+    this.reset();
+    $('#'+this.divId).show(); // show summary information
+    console.log("redfs")
+    console.log(data)
+    // extra name and color
+    var objName;
+    var objType;
+    if ('uname' in data){
+        objName = data['uname'];
+        objType = data['name'];
+    }else{
+        objName = data['Name'];
+        objType = data['Name'];
+    }
+    var objName_changed = objName.replace('<', '&lt').replace('>', '&gt')
+    if (data['class'] === 'Synapse'){
+//      objName = "Synapse between " + objName.split("--")[0]+ " and " + objName.split("--")[1];
+        // removed as it is not consistent with uname naming, and cannot removal this synapse based on uname
+      // objName = objName.split("--")[0]+ " to " + objName.split("--")[1];
+    }
+
+    var tableHtml = '<div> <p>Name :</p><p>' + objName_changed;
+    tableHtml +=  '</p></div>';
+    
+    // var oRId = data['orid'];
+
+    console.log(objRId)
+
+
+
+
+
+    
+
+    tableHtml += '<div> <p>Type :</p><p>' + objType;
+    tableHtml +=  '</p></div>';
+    var dum =tableHtml
+    // if (objColor){
+    //   // add choose color
+    //   tableHtml += '<div><p>Choose Color:</p><p> <input class="color_inp"';
+    //   if(Modernizr.inputtypes.color){
+    //     tableHtml+='type="color"';
+    //   }else{
+    //     tableHtml+='type="text"';
+    //   }
+    //   tableHtml+='name="neu_col" id="' + this.colorId+ '" value="#' + objColor  + '"/></p></div>';
+
+    // }else{
+    //   //do nothing;
+    // }
+
+    console.log(897)
+  
+    let displayKeys = ['FBID','Comment','Definition','Flywire_ref','Hemibrain_ref','References','Synonyms'];
+    var displayCtr = 0;
+
+    let keyCounter = 0;
+    for (let key of displayKeys){
+      if (!(key in data) || data[key] == 0){
+        continue;
+      }
+
+      let fieldName = snakeToSentence(key);
+      let fieldValue = undefined;
+      if (key == 'data_source'){
+          fieldValue = [];
+          for (k in data[key]){
+              if (data[key][k] != ''){
+                  fieldValue.push(k + ' ' + data[key][k]);
+              }else{
+                  fieldValue.push(k);
+              }
+          }
+      }else if(key == 'Hemibrain_ref'){
+
+        var objRIds = data['Hemibrain_ref'];
+        for (var i = 0; i < objRIds.length; i++) {
+          var objRId = objRIds[i];
+    
+          console.log(objRId)
+          fieldValue = '<p>' + objRId;
+      
+          if (this.parentObj.isInWorkspace(objRId)) {
+            fieldValue += '<button class="btn btn-remove-type btn-danger" id="btn-add-type' + objRId + '" name="' + objRId + '" style="margin-left:20px;">-</button>';
+          } else {
+            fieldValue += '<button class="btn btn-add-type btn-success" id="btn-add-type' + objRId + '" name="' + objRId + '" style="margin-left:20px;">+</button>';
+          }
+          fieldValue += '</p>';
+      }
+
+      tableHtml += "<div><p>" + fieldName + ":</p><p>" + fieldValue +"</p></div>" ;
+      }else{
+        fieldValue = data[key];
+        tableHtml += "<div><p>" + fieldName + ":</p><p>" + fieldValue +"</p></div>" ;
+      }
+
+    }
+
+    // for (const [key, value] of Object.entries(data)) {
+    //   tableHtml += "<div><p>" + snakeToSentence(key) + ":</p><p>" + value +"</p></div>" ;
+    // }
+
+    $('#'+this.tabId ).html(tableHtml);
+    console.log(tableHtml)
+    this.setupCallbacks();
+  };
+
+  SummaryTable.prototype.updatena = function(data){
     if (verifyDataIntegrity(data) == false){
       return;
     }
@@ -179,7 +304,15 @@ moduleExporter("SummaryTable",
       //do nothing;
     }
 
-    let displayKeys = ['class','vfb_id','data_source','transgenic_lines','transmitters','expresses','referenceId'];
+    if (this.database==="neuroarch"){
+    var dispKeys = ['class','vfb_id','data_source','transgenic_lines','transmitters','expresses','referenceId'];}
+    else{
+
+      var dispKeys = ['FBID','Comment','Definition','Flywire_ref','Hemibrain_ref','Name','References','Synonyms'];
+    }
+
+    let displayKeys=dispKeys
+
     var displayCtr = 0;
 
     let keyCounter = 0;
@@ -315,12 +448,21 @@ moduleExporter("SummaryTable",
   SummaryTable.prototype.setupCallbacks = function(){
       let that = this;
       $("#"+that.divId + " button").click(function(){
+        if(this.className.includes('type')){
+          if(this.className.includes('add')){
+            console.log("show this",this.id.replace('btn-add-type', ''))
+            that.parentObj.addByType(this.id.replace('btn-add-type', ''))
+        }else{
+          that.parentObj.removeByType(this.id.replace('btn-add-type', ''))
+        }
+        }else{
         if(this.className.includes('add')){
             that.parentObj.addByRid(this.id.replace('btn-add-', ''))
         }else{
           that.parentObj.removeByRid(this.id.replace('btn-add-', ''))
         }
-      })
+      }})
+
       .mouseenter( function() {
         if (this.className.includes('remove')) {
           that.parentObj.highlight(this.name);

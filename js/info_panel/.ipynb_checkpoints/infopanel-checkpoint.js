@@ -32,10 +32,9 @@ moduleExporter("InfoPanel",[
   * @param {string} div_id - id for div element in which the connectivity table is held
   * @param {dict} [nameConfig={}] - configuration of children divs. The 3 children divs in ConnTable are `['connSVGId','connTableId','summaryTableId']`
   */
-  function InfoPanel(div_id, dataset_name, nameConfig={},database="neuroarch"){
+  function InfoPanel(div_id, dataset_name, nameConfig={}){
     this.divId = div_id;
     this.dataset_name = dataset_name;
-    this.database=database;
 
     // nameConfig = nameConfig || {};
     Object.defineProperty(this,"connSVGId",{
@@ -98,7 +97,7 @@ moduleExporter("InfoPanel",[
 
     this.connSVG = new ConnSVG(this.connSVGId, this);
     this.connTable = new ConnTable(this.connTableId, this);
-    this.summaryTable = new SummaryTable(this.summaryTableId, this,this.database); // neuron information table
+    this.summaryTable = new SummaryTable(this.summaryTableId, this); // neuron information table
   };
 
 
@@ -139,16 +138,7 @@ moduleExporter("InfoPanel",[
   InfoPanel.prototype.addNeuronByUname = function(uname){
     return;
   };
-  InfoPanel.prototype.removeNeuronByUname = function(uname){
-    return;
-  };
 
- InfoPanel.prototype.addByType = function(uname){
-   return;
- };
- InfoPanel.prototype.removeByType = function(uname){
-   return;
- };
   /**
    * Add a synapse into the workspace.
    *
@@ -230,53 +220,25 @@ moduleExporter("InfoPanel",[
         });
     }
   };
-
-
-  InfoPanel.prototype.renderAddRemoveBtnType = function(btnName,state){
-    //let btn = $('#'+btnId)[0];
-    if (! state){
-      $('button[name="' + btnName + '"]').each(
-        (idx,dom) => {
-    dom.innerText = "+";
-    dom.className = "btn btn-add-type btn-success";
-        });
-    }else{
-      $('button[name="' + btnName + '"]').each(
-        (idx,dom) => {
-    dom.innerText = "-";
-    dom.className = "btn btn-remove-type btn-danger";
-        });
-    }
-  };
   /**
   * Update Info Panel
   *
   * @param {obj} neuData - neuron Data
   * @param {obj} synData - synapse Data
   */
-  InfoPanel.prototype.update = function(data,db="neuroarch"){
-    console.log(1,data['summary'])
-    if (db==="neuroarch"){
-    var classOfObj = data['summary']['class'];
-    var new_name = ('uname' in data['summary']) ? data['summary']['uname']: data['summar']['name'];
-    }
-    if (db==="neo4j"){
-      console.log(2)
-      var new_name = data['summary']['Name']
-      console.log(data,data['summary']['Name'],new_name)
-    }
+  InfoPanel.prototype.update = function(data){
+    let classOfObj = data['summary']['class'];
+    let new_name = ('uname' in data['summary']) ? data['summary']['uname']: data['summar']['name'];
+
     if (this.name === new_name) {
-      console.log(4,this.name)
       /** do not update if the object already exists, just show */
       this.show();
       this.resize();
       return;
     }else{
-      console.log(2.5)
       this.name = new_name;
 
       if ('connectivity' in data){ // synapse data does not have connectivity
-        console.log(9)
         if (data['summary']['class'] == 'Neuron') {
             this.connSVG.update(data['connectivity']);
             this.connTable.update(data['connectivity']);
@@ -290,12 +252,10 @@ moduleExporter("InfoPanel",[
             this.summaryTable.show(); //show all
         }
       }else{
-        console.log(3)
-        // this.connSVG.hide();
-        // this.connTable.hide();
-        this.summaryTable.update(data['summary'],db);
-        // this.summaryTable.show();
-        this.show();
+        this.connSVG.hide();
+        this.connTable.hide();
+        this.summaryTable.update(data['summary']);
+        this.summaryTable.show();
       }
 
       this.resize();

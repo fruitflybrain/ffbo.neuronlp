@@ -17,6 +17,8 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager", "showdown"], functi
   naServerID = undefined;
   // NLP server crossbar id
   nlpServerID = undefined;
+  // LLM server crossbar id
+  llmServerID = undefined;
   // EP server crossbar id
   epServerID = undefined;
   // nk server crossbar id
@@ -139,6 +141,36 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager", "showdown"], functi
         }
       }
     }
+    if (typeof (serverInfo) == "object" && 'llm' in serverInfo) {
+      if (llmServerID === undefined) { // not connected
+        if (!(Object.keys(serverInfo.llm).length)) {
+          if (!llmServerLost) {
+            client.notifyError('LLM server not detected.');
+            llmServerLost = true;
+          }
+        } else {
+          for(var key of Object.keys(serverInfo.llm)) {
+            if(serverInfo.llm[key]['dataset'] == dataset) { //doesnt matter
+                llmServerID = key;
+            }
+          }
+          if(llmServerID !== undefined) {
+            client.notifySuccess('LLM server detected.')
+          } else {
+            if (!llmServerLost) {
+              client.notifyError('LLM server not detected.');
+              llmServerLost = true;
+            }
+          }
+        }
+      } else { // llmServerID !== undefined, connected
+        if (!(llmServerID in serverInfo.llm)) {
+          llmServerID = undefined;
+          client.notifyError('LLM server lost.');
+          llmServerLost = true;
+        }
+      }
+    }
     if (typeof (serverInfo) == "object" && 'nk' in serverInfo) {
       if (nkServerID != undefined && !(nkServerID in serverInfo.nk))
         nkServerID = undefined
@@ -173,7 +205,17 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager", "showdown"], functi
     return html
   }
 
-
+  drosogptResponse = function(query, message) {
+    var text_to_convert = `<a onclick="document.getElementById('info-intro').innerHTML = window.info_intro.innerHTML;">Return to Overview</a>  <h4> Query: ` + query + `</h4> <p>The entries below are the search results retrieved by Drosobot. Click on the 'Add to Visualization Panel' button to visualize neurons of the corresponding cell type.  </p> <p> Note that Drosobot is a search engine, and not all entries in the result may be relevant. Overlapping synonyms or nomenclature terms might result in mistakes in the output. Please double check the descriptions in the results.</p>`;
+    for (mes of message) {
+      var name = mes['name'];
+      var text = '\n <strong>' + mes['entry']+'.' + mes['label'] + `</strong> (<a target="_blank" href='` + name + `'>` + name + '</a>)' + ` <p></p><a id='plusplusresult`+ mes['link_id'] + `' onclick="window.NLPsearch('!visualize ` + name + `')" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Add to Visualization Panel</a>` + `<a id='plusplusbresult`+ mes['link_id'] + `' onclick="window.NLPsearch('!pin ` + name + `')" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Pin</a>` + `<a id='pluspluscresult`+ mes['link_id'] + `' onclick="window.NLPsearch('!unpin ` + name + `')" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Unpin</a>` + '\n <i>' + mes['definition'] + '</i> \n'
+      text_to_convert = text_to_convert + `<hr>` + text.replace(/\n/g,'<p>').replaceAll('_','sbackslash');
+    }
+    var converter = new showdown.Converter();
+    var html = converter.makeHtml(text_to_convert).replace(/\n/g,'<p>').replaceAll('sbackslash','_');
+    return html
+  }
   function FFBOClient(ds) {
     /**
      * This is the FFBOClient object that holds client session
@@ -211,7 +253,94 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager", "showdown"], functi
   // Should be overloaded by application
   FFBOClient.prototype.notifyError = function (message) { }
 
+  FFBOClient.prototype.executeLLMquery = function (query, callbacks, format,current_neuron) {
+    /**
+     * Sends natrual language query to LLM Server.
+     * If successfully interpreted by LLM modele,
+     * sends NA query to NA server.
+     */
+    if (llmServerID === undefined) {
+      this.notifyError("LLM Server not available");
+      return null;
+    }
+    var request ={}
+    if (current_neuron === undefined) {
+      request["current"]=current_neuron
 
+    }
+    else{
+
+      request["current"]=current_neuron["summary"]
+    }
+    
+    // poi=this.getInfo(current_rid,{success:function(data){request["state"]=data}});
+    console.log("current_neuron",current_neuron)
+    
+    uri = 'ffbo.llm.query.' + llmServerID;
+    request['user']=this.session.id
+    request['query']=query
+    var result="Try again"
+    queryID = guidGenerator()
+    this.status[queryID] = 0;
+    
+    console.log("AWEa",request);
+    return new Promise((resolve, reject)=> {
+      console.log("@#322",uri)
+    this.session.call(uri, [request]).then(
+      (function (res) {
+        console.log("res",res)
+        if (typeof (res) == "object" && Object.keys(res).length) {
+          if ('engine' in res){
+            if (res['engine'] === 'nlp') {
+              if (Object.keys(res).length > 1) {
+                this.notifySuccess("NLP module successfully interpreted the query");
+                this.executeNAquery(res, callbacks, format, queryID);
+              } else {
+                this.status[queryID] = -1;
+              this.notifyError('NLP module did not understand the query');
+              }
+            } else if (res['engine'] === 'llm') {
+              if (Object.keys(res).length > 1) {
+                result=res["response"]
+                console.log(result)
+
+                resolve(res)
+                this.notifySuccess("LLM module successfully interpreted the query");
+                // this.executeNLPquery("show da1", callbacks, format);
+                // this.executeNAquery(res, callbacks, format, queryID);
+              } else {
+                this.status[queryID] = -1;
+              this.notifyError('LLM module did not understand the query');
+              }
+            }  else if (res['engine'] === 'llmviz') {
+              this.notifySuccess("LLM module successfully interpreted the query");
+              this.notifySuccess("showing Neurons");
+              result=res["response"]
+
+              let values = result.split(';'); // This splits the string into an array of values
+              for (const value of values){
+                this.executeNLPquery( value, callbacks, format);
+                 // This will log each value to the console
+              }
+              resolve(res)
+            }
+          } else {
+              this.status[queryID] = -1;
+              this.notifyError('LLM module did not understand the query');
+          }
+        } else {
+          this.status[queryID] = -1;
+          this.notifyError('LLM module did not understand the query');
+        }
+      }
+      ).bind(this),
+      (function (err) {
+        this.notifyError(err.args[0]);
+        this.status[queryID] = -1;
+      }).bind(this)
+    );
+  });
+  }
 
   FFBOClient.prototype.executeNLPquery = function (query, callbacks, format) {
     /**
@@ -433,6 +562,22 @@ ${connectivity.map(conn => `${conn[0]},${conn[1]},${conn[2]},${conn[3]}\n`).join
     //  {'action': {'method': {'traverse_owns': {'cls': 'Neuron'}}}, 'object': {'memory': 0}}] // eb => traverse for neurons
   }
 
+  FFBOClient.prototype.recentState =function (callbacks, format) {
+    /**
+     * Query to keep a list of Objs based on their Rids. rids must be an array
+     */
+    return this.executeNAquery({
+      format: "nx",
+      query: [
+        {
+          action: { method: { has: {} } },
+          object: { state: 0 }
+        }
+      ],
+      temp: true
+    }, callbacks, format);
+  }
+
 
   FFBOClient.prototype.addByUname = function (uname, callbacks, format) {
     /**
@@ -539,6 +684,23 @@ ${connectivity.map(conn => `${conn[0]},${conn[1]},${conn[2]},${conn[3]}\n`).join
       ]
     }, callbacks, format);
   }
+
+
+  FFBOClient.prototype.removeNeuronByType = function (uname, callbacks, format) {
+    /**
+     * Query to remove a neuron by its uname.
+     */
+    return this.executeNLPquery({
+      verb: "remove",
+      query: [
+        {
+          action: { method: { query: { uname: uname } } },
+          object: { class: ["Neuron"] }
+        }
+      ]
+    }, callbacks, format);
+  }
+
 
   FFBOClient.prototype.removeSynapseByUname = function (uname, callbacks, format) {
     /**
@@ -798,6 +960,7 @@ ${connectivity.map(conn => `${conn[0]},${conn[1]},${conn[2]},${conn[3]}\n`).join
       naServerID = undefined;
       nkServerID = undefined;
       nlpServerID = undefined;
+      llmServerID = undefined;
       epServerID = undefined;
     }).bind(this);
 

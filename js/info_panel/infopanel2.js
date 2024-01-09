@@ -12,50 +12,40 @@ if( moduleExporter === undefined){
   };
 }
 
-moduleExporter("InfoPanel",[
+moduleExporter("InfoPanel2",[
   'jquery',
-  'summarytable',
+  'summarytable2',
   'connsvg',
   'conntable',
   ],
   function(
     $,
+    SummaryTable2,
     SummaryTable,
-    ConnSVG,
-    ConnTable
+
   )
 {
 
   /**
-  * InfoPanel
+  * InfoPanel2
   * @constuctor
   * @param {string} div_id - id for div element in which the connectivity table is held
   * @param {dict} [nameConfig={}] - configuration of children divs. The 3 children divs in ConnTable are `['connSVGId','connTableId','summaryTableId']`
   */
-  function InfoPanel(div_id, dataset_name, nameConfig={},database="neuroarch"){
+  function InfoPanel2(div_id, dataset_name, nameConfig={},database="neo4j"){
     this.divId = div_id;
     this.dataset_name = dataset_name;
     this.database=database;
 
     // nameConfig = nameConfig || {};
-    Object.defineProperty(this,"connSVGId",{
-      value: nameConfig.connSVGId || "info-panel-conn",
-      configurable: false,
-      writable: false
-    });
-    Object.defineProperty(this,"connTableId",{
-      value: nameConfig.connTableId || "info-panel-table",
-      configurable: false,
-      writable: false
-    });
+
     Object.defineProperty(this,"summaryTableId",{
-      value: nameConfig.summaryTableId || "info-panel-summary",
+      value: nameConfig.summaryTableId || "info-panel2-summary",
       configurable: false,
       writable: false
     });
 
-    this.connSVG = undefined;
-    this.connTable = undefined;
+
     this.summaryTable = undefined;
 
     this.htmlTemplate = createTemplate(this);
@@ -70,12 +60,11 @@ moduleExporter("InfoPanel",[
    */
   function createTemplate(obj){
     var template = "";
-    template += "<a onclick=\"$('#info-panel').hide(); $('#info-intro').show();\">Back to Overview</a>";
+    template += "<a onclick=\"$('#info-panel2').hide(); $('#info-intro2').show();\">Back to Overview</a>";
     template += '<div id="'+ obj.summaryTableId+ '"></div>';  // summary
     // innerhtml += '<div id="info-panel-summary-extra"></div>';  // summary
-    template += '<div id="' + obj.connSVGId + '"></div>';  // SVG
-    template += '<div id="' + obj.connTableId + '"></div>';
-    template += '<div class="slider-bar ui-draggable ui-draggable-handle" draggable="true" id="info_panel_dragger"></div>';
+
+    template += '<div class="slider-bar ui-draggable ui-draggable-handle" draggable="true" id="info_panel2_dragger"></div>';
     return template;
   }
 
@@ -83,22 +72,15 @@ moduleExporter("InfoPanel",[
   /**
    * Reset to detaul HTML
    */
-  InfoPanel.prototype.reset = function (){
+  InfoPanel2.prototype.reset = function (){
     // purge div and add table
     this.dom.innerHTML = this.htmlTemplate;
-    if (this.connSVG !== undefined){
-      delete this.connSVG;
-    }
-    if (this.connTable !== undefined){
-      delete this.connTable;
-    }
+
     if (this.summaryTable !== undefined){
       delete this.summaryTable;
     }
 
-    this.connSVG = new ConnSVG(this.connSVGId, this);
-    this.connTable = new ConnTable(this.connTableId, this);
-    this.summaryTable = new SummaryTable(this.summaryTableId, this,this.database); // neuron information table
+    this.summaryTable = new SummaryTable2(this.summaryTableId, this); // neuron information table
   };
 
 
@@ -109,7 +91,7 @@ moduleExporter("InfoPanel",[
    * @param {string} rid -  rid of target object (neuron/synapse)
    * @returns {bool} if object in workspace
    */
-  InfoPanel.prototype.isInWorkspace = function(rid){
+  InfoPanel2.prototype.isInWorkspace = function(rid){
     return false;
   };
 
@@ -118,7 +100,7 @@ moduleExporter("InfoPanel",[
    *
    * @param {string} uname -  uname of target object (neuron/synapse)
    */
-  InfoPanel.prototype.addByUname = function(uname){
+  InfoPanel2.prototype.addByUname = function(uname){
     return;
   };
 
@@ -127,7 +109,7 @@ moduleExporter("InfoPanel",[
    *
    * @param {string} rid -  uname of target object (neuron/synapse)
    */
-  InfoPanel.prototype.addByRid = function(rid){
+  InfoPanel2.prototype.addByRid = function(rid){
     return;
   };
 
@@ -136,17 +118,18 @@ moduleExporter("InfoPanel",[
    *
    * @param {string} uname -  uname of target object (neuron/synapse)
    */
-  InfoPanel.prototype.addNeuronByUname = function(uname){
-    return;
-  };
-  InfoPanel.prototype.removeNeuronByUname = function(uname){
+  InfoPanel2.prototype.addNeuronByUname = function(uname){
     return;
   };
 
- InfoPanel.prototype.addByType = function(uname){
+  InfoPanel2.prototype.removeNeuronByUname = function(uname){
+    return;
+  };
+
+ InfoPanel2.prototype.addByType = function(uname){
    return;
  };
- InfoPanel.prototype.removeByType = function(uname){
+ InfoPanel2.prototype.removeByType = function(uname){
    return;
  };
   /**
@@ -154,7 +137,7 @@ moduleExporter("InfoPanel",[
    *
    * @param {string} uname -  uname of target object (neuron/synapse)
    */
-  InfoPanel.prototype.addSynapseByUname = function(uname){
+  InfoPanel2.prototype.addSynapseByUname = function(uname){
     return;
   };
 
@@ -163,7 +146,7 @@ moduleExporter("InfoPanel",[
    *
    * @param {string} uname -  uname of target object (neuron/synapse)
    */
-  InfoPanel.prototype.removeByRid = function(rid){
+  InfoPanel2.prototype.removeByRid = function(rid){
     return;
   };
 
@@ -172,7 +155,7 @@ moduleExporter("InfoPanel",[
    *
    * @param {string} rid -  uname of target object (neuron/synapse)
    */
-  InfoPanel.prototype.addByRid = function(rid){
+  InfoPanel2.prototype.addByRid = function(rid){
     return;
   };
 
@@ -181,7 +164,7 @@ moduleExporter("InfoPanel",[
    *
    * @param {string} uname -  uname of target object (neuron/synapse)
    */
-  InfoPanel.prototype.removeNeuronByUname = function(uname){
+  InfoPanel2.prototype.removeNeuronByUname = function(uname){
     return;
   };
 
@@ -190,7 +173,7 @@ moduleExporter("InfoPanel",[
    *
    * @param {string} uname -  uname of target object (neuron/synapse)
    */
-  InfoPanel.prototype.removeSynapseByUname = function(uname){
+  InfoPanel2.prototype.removeSynapseByUname = function(uname){
     return;
   };
 
@@ -201,7 +184,7 @@ moduleExporter("InfoPanel",[
    * @param {string} rid -  rid of target object
    * @returns {value} return Value as expected by the attribute
    */
-  InfoPanel.prototype.getAttr = function(rid,attr){
+  InfoPanel2.prototype.getAttr = function(rid,attr){
     return undefined;
   };
 
@@ -214,7 +197,7 @@ moduleExporter("InfoPanel",[
    * @example
    * infoPanel.renderAddRemoveBtn("pre-add-mi1-5",true);
    */
-  InfoPanel.prototype.renderAddRemoveBtn = function(btnName,state){
+  InfoPanel2.prototype.renderAddRemoveBtn = function(btnName,state){
     //let btn = $('#'+btnId)[0];
     if (! state){
       $('button[name="' + btnName + '"]').each(
@@ -232,7 +215,7 @@ moduleExporter("InfoPanel",[
   };
 
 
-  InfoPanel.prototype.renderAddRemoveBtnType = function(btnName,state){
+  InfoPanel2.prototype.renderAddRemoveBtnType = function(btnName,state){
     //let btn = $('#'+btnId)[0];
     if (! state){
       $('button[name="' + btnName + '"]').each(
@@ -254,14 +237,18 @@ moduleExporter("InfoPanel",[
   * @param {obj} neuData - neuron Data
   * @param {obj} synData - synapse Data
   */
-  InfoPanel.prototype.update = function(data,db="neuroarch"){
-    console.log(1,data['summary'])
+
+
+  InfoPanel2.prototype.update = function(all_data,db="neuroarch"){
+    console.log(1,all_data['summary'])
+    var data ={}
+    data["summary"]=all_data["summary"]["neuron"]
     if (db==="neuroarch"){
     var classOfObj = data['summary']['class'];
     var new_name = ('uname' in data['summary']) ? data['summary']['uname']: data['summar']['name'];
     }
     if (db==="neo4j"){
-      console.log(2)
+      console.log(2244)
       var new_name = data['summary']['Name']
       console.log(data,data['summary']['Name'],new_name)
     }
@@ -274,50 +261,65 @@ moduleExporter("InfoPanel",[
     }else{
       console.log(2.5)
       this.name = new_name;
-
-      if ('connectivity' in data){ // synapse data does not have connectivity
-        console.log(9)
-        if (data['summary']['class'] == 'Neuron') {
-            this.connSVG.update(data['connectivity']);
-            this.connTable.update(data['connectivity']);
-            this.summaryTable.update(data['summary']);
-            this.show();
-        }else{
-            this.connSVG.hide();
-            this.connTable.update(data['connectivity']);
-            this.summaryTable.update(data['summary']);
-            this.connTable.show();
-            this.summaryTable.show(); //show all
-        }
-      }else{
         console.log(3)
         // this.connSVG.hide();
         // this.connTable.hide();
-        this.summaryTable.update(data['summary'],db);
+        this.summaryTable.update(all_data['summary'],db);
         // this.summaryTable.show();
         this.show();
-      }
+      
 
       this.resize();
     }
   };
 
+  // InfoPanel2.prototype.update = function(data){
+  //   let classOfObj = data['summary']['class'];
+  //   let new_name = ('uname' in data['summary']) ? data['summary']['uname']: data['summar']['name'];
+
+  //   if (this.name === new_name) {
+  //     /** do not update if the object already exists, just show */
+  //     this.show();
+  //     this.resize();
+  //     return;
+  //   }else{
+  //     this.name = new_name;
+
+  //     if ('connectivity' in data){ // synapse data does not have connectivity
+  //       if (data['summary']['class'] == 'Neuron') {
+
+  //           this.summaryTable.update(data['summary']);
+  //           this.show();
+  //       }else{
+
+  //           this.summaryTable.update(data['summary']);
+
+  //           this.summaryTable.show(); //show all
+  //       }
+  //     }else{
+
+  //       this.summaryTable.update(data['summary']);
+  //       this.summaryTable.show();
+  //     }
+
+  //     this.resize();
+  //   }
+  // };
+
   /**
    * show infopanel
    */
-  InfoPanel.prototype.show = function(){
+  InfoPanel2.prototype.show = function(){
     $('#'+this.divId).show();
-    this.connSVG.show();
-    this.connTable.show();
+
     this.summaryTable.show();
   };
 
   /**
    * hide infopanel
    */
-  InfoPanel.prototype.hide = function(){
-    this.connSVG.hide();
-    this.connTable.hide();
+  InfoPanel2.prototype.hide = function(){
+
     this.summaryTable.hide();
     $('#'+this.divId).hide();
   };
@@ -325,14 +327,12 @@ moduleExporter("InfoPanel",[
   /**
    * resize infopanel
    */
-  InfoPanel.prototype.resize = function(){
-    this.connSVG.resize();
-    this.connTable.resize();
+  InfoPanel2.prototype.resize = function(){
     this.summaryTable.resize();
   };
 
   /**
-   * Return Constructor for InfoPanel
+   * Return Constructor for InfoPanel2
    */
-  return InfoPanel;
+  return InfoPanel2;
 });

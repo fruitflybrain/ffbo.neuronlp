@@ -31,8 +31,6 @@ requirejs.config({
     conntable: "info_panel/conntable",
     preprocess: "info_panel/preprocess",
     summarytable: "info_panel/summarytable",
-    infopanel2: "info_panel/infopanel2",
-    summarytable2: "info_panel/summarytable2",   
     autobahn: '//cdn.jsdelivr.net/gh/crossbario/autobahn-js-browser@v20.9.2/autobahn/autobahn.min',
     d3: '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min',
     jquery: '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min',
@@ -157,7 +155,6 @@ require([
   'buffergeometryutils',
   'mesh3d',
   'infopanel',
-  'infopanel2',
   'dynamicmenu',
   'ui',
   'tags',
@@ -172,7 +169,7 @@ require([
   'linematerial',
   'linesegmentsgeometry',
   'linesegments2',
-  'graphvis',
+  'graphvis'
 ]
   , function (
     config,
@@ -183,7 +180,6 @@ require([
     BGUtils,
     FFBOMesh3D,
     InfoPanel,
-    InfoPanel2,
     FFBODynamicMenu,
     NeuroNLPUI,
     Tags,
@@ -205,8 +201,6 @@ require([
     //$.mobile.ajaxEnabled = false;
     window.NeuroNLPUI = new NeuroNLPUI();
     var infoPanel = new InfoPanel("info-panel", config.datasetIdName);
-    var infoPanel2 = new InfoPanel2("info-panel2", config.datasetIdName);
-    
     var dynamicNeuronMenu = new FFBODynamicMenu({ singleObjSel: '#single-neu > .mm-listview', pinnedObjSel: '#single-pin > .mm-listview', removable: true, pinnable: true });
     var dynamicSynapseMenu = new FFBODynamicMenu({ singleObjSel: '#single-syn > .mm-listview', pinnedObjSel: '#single-pin > .mm-listview', removable: true, pinnable: true });
     var dynamicNeuropilMenu = new FFBODynamicMenu({ singleObjSel: '#toggle_neuropil > .mm-listview', compare: 'LeftRight' });
@@ -286,9 +280,6 @@ require([
     window.tagsPanel = tagsPanel;
     window.ffbomesh = ffbomesh;
     window.infoPanel = infoPanel;
-    window.infoPanel2 = infoPanel2;
-    window.NeuroNLPUI.resizeInfoPanel2();
-    
     window.dynamicNeuronMenu = dynamicNeuronMenu;
     window.dynamicSynapseMenu = dynamicSynapseMenu;
     window.dynamicNeuropilMenu = dynamicNeuropilMenu;
@@ -385,14 +376,7 @@ require([
         oldWidth = ffbomesh.container.clientWidth;
       }
     }, 200);
-    setInterval(() => {
-      if (oldHeight != ffbomesh.container.clientHeight || oldWidth != ffbomesh.container.clientWidth) {
-        ffbomesh.onWindowResize();
-        infoPanel2.resize();
-        oldHeight = ffbomesh.container.clientHeight;
-        oldWidth = ffbomesh.container.clientWidth;
-      }
-    }, 200);
+
 
     if (!isOnMobile)
       client.notifySuccess = function (message) {
@@ -442,14 +426,6 @@ require([
     infoPanel.addByRid = (rid) => {
       queryID = client.addByRid(rid, { success: dataCallback });
     };
-    infoPanel.addByType = (uname) => {
-      console.log("was called with",uname)
-      queryID = client.executeNLPquery("show "+ uname,{ success: dataCallback })//(uname,undefined ,{ success: dataCallback });
-    };
-    infoPanel.removeByType = (uname) => {
-      queryID = client.executeNLPquery("remove "+ uname,{ success: dataCallback })//client.removeType(uname,undefined, { success: dataCallback });
-    };
-
 
     infoPanel.addNeuronByUname = (uname) => {
       queryID = client.addNeuronByUname(uname, { success: dataCallback });
@@ -487,28 +463,18 @@ require([
       }
       ffbomesh.setColor(id, value);
     };
-    var global_info 
+
     ffbomesh.on('click', function (e) {
       $("#info-intro").hide();
       //$("#info-panel").show();
-      global_rid =e.value;
-      console.log("when clicked",e)
       queryID = client.getInfo(e.value, {
         success: function (data) {
           data['summary']['rid'] = e.value;
-          global_info=data
           infoPanel.update(data);
         }
       });
     })
 
-    infoPanel2.addByType = (uname) => {
-      console.log("was called with",uname)
-      queryID = client.executeNLPquery("show "+ uname,{ success: dataCallback })//(uname,undefined ,{ success: dataCallback });
-    };
-    infoPanel2.removeByType = (uname) => {
-      queryID = client.executeNLPquery("remove "+ uname,{ success: dataCallback })//client.removeType(uname,undefined, { success: dataCallback });
-    };
 
 
     dynamicNeuronMenu.dispatch.highlight = function (id) { ffbomesh.highlight(id, true) };
@@ -605,7 +571,7 @@ require([
       });
     }
 
-    // add event listener
+    //add event listener
     srchBtn.addEventListener('click', function (event) {
       NLPsearch();
     });
@@ -615,270 +581,6 @@ require([
       if (event.key == "Enter")
         srchBtn.click();
     });
-
-    function makeDraggable(element) {
-      var posX = 0, posY = 0, posInitX = 0, posInitY = 0;
-  
-      element.onmousedown = dragMouseDown;
-  
-      function dragMouseDown(e) {
-        if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.tagName === "BUTTON") {
-          // If the target is an input, textarea, or button, do not initiate drag
-          return;
-      }
-          e = e || window.event;
-          e.preventDefault();
-  
-          // Get initial cursor position
-          posInitX = e.clientX;
-          posInitY = e.clientY;
-  
-          // Call functions when cursor moves or is released
-          document.onmouseup = closeDragElement;
-          document.onmousemove = elementDrag;
-      }
-  
-      function elementDrag(e) {
-          e = e || window.event;
-          e.preventDefault();
-  
-          // Calculate new cursor position
-          posX = posInitX - e.clientX;
-          posY = posInitY - e.clientY;
-          posInitX = e.clientX;
-          posInitY = e.clientY;
-  
-          // Set element's new position
-          element.style.top = (element.offsetTop - posY) + "px";
-          element.style.left = (element.offsetLeft - posX) + "px";
-      }
-  
-      function closeDragElement() {
-          // Stop moving when mouse button is released
-          document.onmouseup = null;
-          document.onmousemove = null;
-      }
-  }
-  
-  // Make the chat window draggable
-  makeDraggable(document.getElementById("chat-window2"));
-  makeDraggable(document.getElementById("info-panel2-wrapper"));
-
-
-    window.chatOpen =function () {
-      document.getElementById("chat-open").style.display = "none";
-      document.getElementById("chat-close").style.display = "block";
-      document.getElementById("chat-window2").style.display = "block";
-    
-    }
-    window.chatClose= function () {
-      document.getElementById("chat-open").style.display = "block";
-      document.getElementById("chat-close").style.display = "none";
-      document.getElementById("chat-window2").style.display = "none";
-    
-    }
-  
-
-    window.LLMchat = function (query) {
-      window.latestQuery = query;
-      window.NeuroNLPUI.closeAllOverlay();
-      return new Promise(function (resolve, reject) {
-          if (query === undefined) {
-              query = document.getElementById('textInput').value;
-              document.getElementById('textInput').value = "";
-          }
-
-          client.executeLLMquery(query, { success: dataCallback },undefined,global_info)
-              .then(result => {
-
-                  // Update the DOM with the result
-                  response =result['response']
-                  document.getElementById("messageBox").innerHTML += `<div class="second-chat">
-                      <div class="circle" id="circle-mar"></div>
-                      <p>${response}</p>
-                      <div class="arrow"></div>
-                  </div>`;
-                  console.log("test")
-                  
-
-                  
-                  
-
-                  if ((result["summary"] && Object.keys(result["summary"]).length !== 0) || (result["summary"] !== undefined && result["summary"] !== null)) {
-                    console.log(result["summary"]);
-                    infoPanel2.update(result, "neo4j");
-                }
-                  var objDiv = document.getElementById("messageBox");
-                  objDiv.scrollTop = objDiv.scrollHeight;
-  
-                  resolve(); // Resolve the outer promise
-              })
-              .catch(error => {
-                  console.error("Error:", error);
-                  reject(error); // Reject the outer promise
-              });
-  
-          // It seems this client.status.on("change", ...) might be intended for something else.
-          // Make sure it doesn't conflict with the new promise handling logic.
-          // client.status.on("change", function (e) {
-          //     $("#search-wrapper").unblock();
-          //     if (!isOnMobile) srchInput.focus();
-          //     srchInput.value = "";
-          //     if (e.value === -1) resolve(); // You might need to adjust this logic
-          // });
-      });
-  };
- 
-
-
-    // window.LLMchat = function (query) {
-    //   window.latestQuery = query;
-    //   window.NeuroNLPUI.closeAllOverlay();
-    //   return new Promise(function (resolve, reject) {
-    //     if (query == undefined) {
-    //       query = document.getElementById('textInput').value;
-    //       document.getElementById('textInput').value=""
-    //     }
-    //     console.log("query lvl1")
-    //     console.log(query)
-    //     result = client.executeLLMquery(query, { success: dataCallback });
-    //     console.log("response")
-    //     console.log(result)
-    //     document.getElementById(
-    //       "messageBox"
-    //     ).innerHTML += `<div class="second-chat">
-    //         <div class="circle" id="circle-mar"></div>
-    //         <p>${result}</p>
-    //         <div class="arrow"></div>
-    //       </div>`;
-        
-    //       var objDiv = document.getElementById("messageBox");
-    //       objDiv.scrollTop = objDiv.scrollHeight;
-
-
-    //     client.status.on("change", function (e) {
-    //       $("#search-wrapper").unblock();
-    //       if (!isOnMobile)
-    //         srchInput.focus();
-    //       srchInput.value = "";
-    //       if (e.value == -1)
-    //         resolve();
-    //       else
-    //         resolve();
-    //     });
-        
-    //   });
-    // }
-    
-    //Gets the text from the input box(user)
-    function userResponse() {
-
-      let userText = document.getElementById("textInput").value;
-
-      if (userText == "") {
-        const wq=0;
-      } else {
-        document.getElementById("messageBox").innerHTML += `<div class="first-chat">
-          <p>${userText}</p>
-          <div class="arrow"></div>
-        </div>`;
-  
-  
-        document.getElementById("textInput").value = "";
-        var objDiv = document.getElementById("messageBox");
-        objDiv.scrollTop = objDiv.scrollHeight;
-    
-        setTimeout(() => {
-          LLMchat(userText);
-        }, 1000);
-      }
-    }
-    
-
-    
-    //press enter on keyboard and send message
-    addEventListener("keypress", (e) => {
-      if (e.keyCode === 13) {
-        
-        const e = document.getElementById("textInput");
-        if (e === document.activeElement) {
-          userResponse();
-        }
-      }
-    });
-
-    var sendInput =document.getElementById("textInput")
-    var sendButton = document.getElementById("send")
-    // add event listener
-    sendButton.addEventListener('click', function (event) {
-      chatOpen();
-      userResponse();
-    });
-
-    sendInput.addEventListener("keyup", function (event) {
-      event.preventDefault();
-      if (event.key == "Enter")
-        sendButton.click();
-    });
-
-
-
-    var chatOpenButton =document.getElementById("chat-open-button")
-    // add event listener
-    chatOpenButton.addEventListener('click', function (event) {
-      chatOpen();
-    });
-
-    var chatCloseButton =document.getElementById("chat-close-button")
-    // add event listener
-    chatCloseButton.addEventListener('click', function (event) {
-      chatClose();
-    });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // window.latestQuery = "";
-    // window.LLMsearch = function (query) {
-    //   window.latestQuery = query;
-    //   window.NeuroNLPUI.closeAllOverlay();
-    //   return new Promise(function (resolve, reject) {
-    //     if (query == undefined) {
-    //       query = document.getElementById('srch_box').value;
-    //     }
-    //     $("#search-wrapper").block({ message: null });
-    //     srchInput.blur();
-        
-    //     queryID = client.executeLLMquery(query, { success: dataCallback });
-    //     client.status.on("change", function (e) {
-    //       $("#search-wrapper").unblock();
-    //       if (!isOnMobile)
-    //         srchInput.focus();
-    //       srchInput.value = "";
-    //       if (e.value == -1)
-    //         resolve();
-    //       else
-    //         resolve();
-    //     }, queryID);
-        
-    //   });
-    // }
-    // //add event listener
-    // srchBtn.addEventListener('click', function (event) {
-    //   LLMsearch();
-    // });
 
     window.NeuroNLPUI.dispatch.onRemovePinned = (function () { removePinned() });
     window.NeuroNLPUI.dispatch.onRemoveUnpinned = (function () { removeUnpinned() });

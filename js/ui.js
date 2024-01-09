@@ -188,7 +188,13 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "mmenu"], function($, Overlay
       $("#vis-3d").toggleClass("vis-3d-lg vis-3d-hf");
       $("#btn-info-pin").toggleClass('btn-clicked btn-unclicked');
     }
-
+    this.resizeInfoPanel2 = function() {
+      $("#btn-info-pin2").children().toggleClass("fa-compress fa-expand");
+      $("#info-panel2-dragger").toggle();
+      $("#info-panel2-wrapper").toggleClass("vis-info-sm vis-info-pin");
+      // $("#vis-3d").toggleClass("vis-3d-lg vis-3d-hf");
+      $("#btn-info-pin2").toggleClass('btn-clicked btn-unclicked');
+    }
     $( ".slider-bar" ).draggable({
       axis: "x",
       delay: 200,

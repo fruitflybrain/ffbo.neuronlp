@@ -1,0 +1,39 @@
+[
+  {"branch": "l1em"},
+  {
+      "AL": {
+        "filename": "lib/mesh/l1em/AL_um.json",
+        "label": "Antennal Lobe (AL)",
+        "highlight": true,
+        "background": true,
+        "color": [
+          0.15,
+          0.01,
+          0.15
+        ]
+      },
+      "MB": {
+          "filename": "lib/mesh/l1em/MB_um.json",
+          "label": "Mushroom Body (MB)",
+          "highlight": true,
+          "background": true,
+          "color": [
+          0.15,
+          0.01,
+          0.15
+          ]
+      },
+      "CNS": {
+          "filename": "lib/mesh/l1em/CNS_um.json",
+          "label": "CNS",
+          "highlight": true,
+          "background": true,
+          "color": [
+          0.15,
+          0.01,
+          0.15
+          ]
+      }
+  }
+  ]
+  
