@@ -181,52 +181,69 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "mmenu"], function($, Overlay
       _this.dispatch.onUnpinAll();
     }
 
+    function updateVis3D() {
+      // Check the current state of both info panels
+      var panel1Pinned = $("#info-panel-wrapper").hasClass("vis-info-pin");
+      var panel2Pinned = $("#info-panel2-wrapper").hasClass("vis-info-pin");
+  
+      // Determine the appropriate class for #vis-3d
+      if (panel1Pinned || panel2Pinned) {
+          // If either panel is pinned, set to half-size
+          $("#vis-3d").removeClass("vis-3d-lg").addClass("vis-3d-hf");
+      } else {
+          // If both panels are not pinned, set to large
+          $("#vis-3d").removeClass("vis-3d-hf").addClass("vis-3d-lg");
+      }
+  }
     this.resizeInfoPanel = function() {
       $("#btn-info-pin").children().toggleClass("fa-compress fa-expand");
       $("#info-panel-dragger").toggle();
       $("#info-panel-wrapper").toggleClass("vis-info-sm vis-info-pin");
-      $("#vis-3d").toggleClass("vis-3d-lg vis-3d-hf");
+      // $("#vis-3d").toggleClass("vis-3d-lg vis-3d-hf");
       $("#btn-info-pin").toggleClass('btn-clicked btn-unclicked');
+      updateVis3D();
     }
     this.resizeInfoPanel2 = function() {
+
       $("#btn-info-pin2").children().toggleClass("fa-compress fa-expand");
       $("#info-panel2-dragger").toggle();
-      $("#info-panel2-wrapper").toggleClass("vis-info-sm vis-info-pin");
-      // $("#vis-3d").toggleClass("vis-3d-lg vis-3d-hf");
+      $("#info-panel2-wrapper").toggleClass("vis-info-pin vis-info-sm");
+      // $("#vis-3d").toggleClass("vis-3d-hf vis-3d-lg");
       $("#btn-info-pin2").toggleClass('btn-clicked btn-unclicked');
+      updateVis3D();
     }
-    $( ".slider-bar" ).draggable({
-      axis: "x",
-      delay: 200,
-      start: function( event, ui ) {
-        $(".vis-info-pin").addClass("notransition");
-      },
-      drag: function( event, ui ) {
-        var rect;
-        var objs = document.getElementsByClassName('vis-info-pin');
-        for (var i=0; i < objs.length; ++i) {
-          if ($(objs[i]).is(':visible')) {
-            rect = objs[i].getBoundingClientRect();
-          }
-        }
-        var width = ui.position.left - rect.left;
-        $(".vis-info-pin").css("width", width + "px");
-      },
-      stop: function( event, ui ) {
-        var perc = event.pageX / window.innerWidth * 100;
-        if (perc < (315./window.innerWidth *100)){
-          perc = 315./window.innerWidth *100; // minimum 315px
-        }else if (perc > 50){
-          perc = 50;   //maximum 50 percent
-        }
+    // $( ".slider-bar2" ).draggable({
+    //   axis: "x",
+    //   delay: 200,
+    //   start: function( event, ui ) {
+    //     $(".vis-info-pin").addClass("notransition");
+    //   },
+    //   drag: function( event, ui ) {
+    //     var rect;
+    //     var objs = document.getElementsByClassName('vis-info-pin');
+    //     for (var i=0; i < objs.length; ++i) {
+    //       if ($(objs[i]).is(':visible')) {
+    //         rect = objs[i].getBoundingClientRect();
+    //       }
+    //     }
+    //     var width = ui.position.left - rect.left;
+    //     $(".vis-info-pin").css("width", width + "px");
+    //   },
+    //   stop: function( event, ui ) {
+    //     var perc = event.pageX / window.innerWidth * 100;
+    //     if (perc < (315./window.innerWidth *100)){
+    //       perc = 315./window.innerWidth *100; // minimum 315px
+    //     }else if (perc > 50){
+    //       perc = 50;   //maximum 50 percent
+    //     }
 
-        document.documentElement.style.setProperty("--boundary-horizontal", perc + "%");
+    //     document.documentElement.style.setProperty("--boundary-horizontal", perc + "%");
 
-        $(".vis-info-pin").removeClass("notransition");
-        $("#info-panel-dragger").css({"top": "", "left":""});
-        $(".vis-info-pin").css("width","");
-      },
-    });
+    //     $(".vis-info-pin").removeClass("notransition");
+    //     $("#info-panel-dragger").css({"top": "", "left":""});
+    //     $(".vis-info-pin").css("width","");
+    //   },
+    // });
 
     $(document).ready(() => {
       const menu = new Mmenu( "#ui_menu_nav", {

@@ -511,6 +511,9 @@ require([
     };
 
 
+
+
+
     dynamicNeuronMenu.dispatch.highlight = function (id) { ffbomesh.highlight(id, true) };
     dynamicNeuronMenu.dispatch.resume = function () { ffbomesh.highlight(undefined) };
     dynamicNeuronMenu.dispatch.toggle = function (id) { ffbomesh.toggleVis(id) };
@@ -659,27 +662,15 @@ require([
           document.onmousemove = null;
       }
   }
-  
-  // Make the chat window draggable
-  makeDraggable(document.getElementById("chat-window2"));
+
+
+  // makeDraggable(document.getElementById("chat-window2"));
   makeDraggable(document.getElementById("info-panel2-wrapper"));
 
-
-    window.chatOpen =function () {
-      document.getElementById("chat-open").style.display = "none";
-      document.getElementById("chat-close").style.display = "block";
-      document.getElementById("chat-window2").style.display = "block";
-    
-    }
-    window.chatClose= function () {
-      document.getElementById("chat-open").style.display = "block";
-      document.getElementById("chat-close").style.display = "none";
-      document.getElementById("chat-window2").style.display = "none";
-    
-    }
   
 
-    window.LLMchat = function (query) {
+    window.LLMchat = function (query) {};
+    window.LLMchatw = function (query) {
       window.latestQuery = query;
       window.NeuroNLPUI.closeAllOverlay();
       return new Promise(function (resolve, reject) {
@@ -695,23 +686,37 @@ require([
                   response =result['response']
                   document.getElementById("messageBox").innerHTML += `<div class="second-chat">
                       <div class="circle" id="circle-mar"></div>
-                      <p>${response}</p>
+                      ${response}
                       <div class="arrow"></div>
                   </div>`;
                   console.log("test")
                   
 
-                  
-                  
-
+              
                   if ((result["summary"] && Object.keys(result["summary"]).length !== 0) || (result["summary"] !== undefined && result["summary"] !== null)) {
                     console.log(result["summary"]);
                     infoPanel2.update(result, "neo4j");
                 }
                   var objDiv = document.getElementById("messageBox");
                   objDiv.scrollTop = objDiv.scrollHeight;
-  
+
+                  $("#messageBox").on('click', '.copy-doi', function() {
+                    var doi = $(this).data('doi');
+                    navigator.clipboard.writeText("doi:"+doi).then(function() {
+                        console.log('DOI copied to clipboard:', doi);
+                    }).catch(function(error) {
+                        console.error('Error copying DOI to clipboard:', error);
+                    });
+                });
+
+
+
+
                   resolve(); // Resolve the outer promise
+
+        // Adding click event listener for DOI copying
+
+
               })
               .catch(error => {
                   console.error("Error:", error);
@@ -726,6 +731,8 @@ require([
           //     srchInput.value = "";
           //     if (e.value === -1) resolve(); // You might need to adjust this logic
           // });
+
+          
       });
   };
  
@@ -770,8 +777,53 @@ require([
     //   });
     // }
     
+
+    function useraResponse() {
+      var input = document.getElementById("user-input");
+      var message = input.value.trim();
+      if (message !== "") {
+          var chatHistory = document.getElementById("chat-history");
+          var messageDiv = document.createElement("div");
+          messageDiv.classList.add("message", "my-message");
+          messageDiv.textContent = message;
+          chatHistory.appendChild(messageDiv);
+  
+          // Clear input after sending
+          input.value = "";
+          chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to the latest message
+      }
+  }
+  function userResponse() {
+    var input = document.getElementById("user-input");
+    var message = input.value.trim();
+    if (message !== "") {
+        var chatHistory = document.getElementById("chat-history");
+        
+        // Display the user's message
+        var userMessageDiv = document.createElement("div");
+        userMessageDiv.classList.add("message", "my-message");
+        var formattedMessage = message.replace(/\n/g, "<br>");
+        userMessageDiv.innerHTML = "<strong>User:</strong><br>"+ formattedMessage;
+        chatHistory.appendChild(userMessageDiv);
+
+        // Simulate a bot response after 1 second
+        setTimeout(function() {
+            var botResponseDiv = document.createElement("div");
+            botResponseDiv.classList.add("message", "bot-message");
+            
+            botResponseDiv.innerHTML = "<strong>System:</strong><br>This is a simulated response to " + formattedMessage + "'";
+            chatHistory.appendChild(botResponseDiv);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }, 1000);
+
+        // Clear input after sending
+        input.value = "";
+        chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to the latest message
+    }
+}
+
     //Gets the text from the input box(user)
-    function userResponse() {
+    function auserResponse() {
 
       let userText = document.getElementById("textInput").value;
 
@@ -793,61 +845,60 @@ require([
         }, 1000);
       }
     }
-    
 
-    
-    //press enter on keyboard and send message
-    addEventListener("keypress", (e) => {
-      if (e.keyCode === 13) {
-        
-        const e = document.getElementById("textInput");
-        if (e === document.activeElement) {
-          userResponse();
-        }
+    function handleKeyPress(event) {
+      if (event.keyCode === 13 && !event.shiftKey) { // Checks if Enter is pressed without Shift
+          event.preventDefault(); // Prevents a new line
+          userResponse(); // Calls the send message function
       }
-    });
+  }
+  
 
-    var sendInput =document.getElementById("textInput")
+  function auto_height(elem) {  /* javascript */
+    elem.style.height = '1px';
+    elem.style.height = `${elem.scrollHeight}px`;
+}
+    // //press enter on keyboard and send message
+    // addEventListener("keypress", (e) => {
+    //   if (e.keyCode === 13) {
+        
+    //     const e = document.getElementById("user-input");
+    //     if (e === document.activeElement) {
+    //       userResponse();
+    //     }
+    //   }
+    // });
+
+    var sendInput =document.getElementById("user-input")
     var sendButton = document.getElementById("send")
     // add event listener
     sendButton.addEventListener('click', function (event) {
-      chatOpen();
+      // chatOpen();
       userResponse();
     });
 
     sendInput.addEventListener("keyup", function (event) {
       event.preventDefault();
-      if (event.key == "Enter")
+      if (event.key == "Enter"&& !event.shiftKey){
         sendButton.click();
+        adjustTextAreaHeight(this);
+      }
+      else if (event.key == "Enter"&& event.shiftKey) {
+      sendInput.style.height = '1px';
+      sendInput.style.height = `${sendInput.scrollHeight}px`;
+      }
     });
 
-
-
-    var chatOpenButton =document.getElementById("chat-open-button")
-    // add event listener
-    chatOpenButton.addEventListener('click', function (event) {
-      chatOpen();
-    });
-
-    var chatCloseButton =document.getElementById("chat-close-button")
-    // add event listener
-    chatCloseButton.addEventListener('click', function (event) {
-      chatClose();
-    });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    function adjustTextAreaHeight(textarea) {
+      // Temporarily shrink the textarea to '1px' to reset its height
+      textarea.style.height = '1px';
+  
+      // Set the textarea's height based on its scroll height
+      textarea.style.height = `${textarea.scrollHeight}px`;
+  }
+    sendInput.addEventListener('input', function () {
+      adjustTextAreaHeight(this);
+  });
 
 
     // window.latestQuery = "";

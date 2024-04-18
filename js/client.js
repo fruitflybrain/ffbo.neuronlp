@@ -265,12 +265,14 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager", "showdown"], functi
     }
     var request ={}
     if (current_neuron === undefined) {
-      request["current"]=current_neuron
+      request["current"]="no neuron selected in visualisation"
 
     }
     else{
 
-      request["current"]=current_neuron["summary"]
+      // request["current"]=current_neuron["summary"]
+      console.log("cur_sum",current_neuron["summary"])
+      request["current"]="This was the neuron selected in the visualisation:"+current_neuron["summary"]["name"]
     }
     
     // poi=this.getInfo(current_rid,{success:function(data){request["state"]=data}});
@@ -285,7 +287,7 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager", "showdown"], functi
     
     console.log("AWEa",request);
     return new Promise((resolve, reject)=> {
-      console.log("@#322",uri)
+      console.log("@#322",request)
     this.session.call(uri, [request]).then(
       (function (res) {
         console.log("res",res)
