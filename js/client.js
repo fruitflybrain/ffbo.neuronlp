@@ -288,7 +288,7 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager", "showdown"], functi
     console.log("AWEa",request);
     return new Promise((resolve, reject)=> {
       console.log("@#322",request)
-    this.session.call(uri, [request]).then(
+    this.session.call(uri, [request], {}, { receive_progress: true }).then(
       (function (res) {
         console.log("res",res)
         if (typeof (res) == "object" && Object.keys(res).length) {
@@ -303,9 +303,13 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager", "showdown"], functi
               }
             } else if (res['engine'] === 'llm') {
               if (Object.keys(res).length > 1) {
-                result=res["response"]
-                console.log(result)
-
+                
+                // console.log(result)
+                // for (const value of res.naQuery){
+                //   await this.executeNAquery( value);
+                //    // This will log each value to the console
+                // }
+                this.processQueries(res,callbacks,format)
                 resolve(res)
                 this.notifySuccess("LLM module successfully interpreted the query");
                 // this.executeNLPquery("show da1", callbacks, format);
@@ -324,6 +328,10 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager", "showdown"], functi
                 this.executeNLPquery( value, callbacks, format);
                  // This will log each value to the console
               }
+              resolve(res)
+            }else if (res['engine'] === 'na') {
+              this.executeNAquery( res, callbacks, format, queryID);
+
               resolve(res)
             }
           } else {
@@ -403,7 +411,12 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager", "showdown"], functi
     );
     return queryID;
   }
-
+  FFBOClient.prototype.processQueries=async function (res, callbacks, format) {
+    for (const query of res.naQuery) {
+        console.log(query);
+        await this.executeNAquery(query, callbacks, format);
+    }
+  }
   FFBOClient.prototype.executeNAquery = function (msg, callbacks, format, queryID) {
     /**
      * Sends a standard command to NA; allows for custom callbacks and calls.

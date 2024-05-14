@@ -29,6 +29,7 @@
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/marcelodolza/iziToast@v1.4.0/dist/css/iziToast.min.css">
 
+    <script src="js/plotly-2.32.0.min.js" charset="utf-8"></script>
     <script data-main="js/NeuroNLP" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
     <link rel="stylesheet" type="text/css" href="./lib/css/ffbo.theme_settings.css">
     <link rel="stylesheet" id="current_theme" type="text/css" href="./lib/css/ffbo.default_theme.css">
@@ -494,7 +495,7 @@
       <!-- Page Content -->
       <div id="page-content-wrapper"></div>
 
-        <div id="info-panel-wrapper" class="vis-info vis-info-pin">
+        <div id="info-panel-wrapper" class="vis-info vis-info-sm">
           <div id="info-pin-div" >
             <ul class="list-inline" style="pointer-events:none">
               <li><p>Info Panel</p></li>
@@ -554,8 +555,8 @@
 
         <div id="page-content-wrapper"></div>
 
-        <div id="info-panel2-wrapper" class="vis-info vis-info-pin">
-          <div id="info-pin2-div" >
+        <div id="info-panel2-wrapper" class="vis-info vis-info-pin" style="top:152px;left:10px;">
+          <div id="info-pin-div" >
             <ul class="list-inline" style="pointer-events:auto">
               <li><p>Info Panel2</p></li>
               <li><button id="btn-info-pin2" style="pointer-events:auto" class="btn btn-xs btn-clicked"  onclick="NeuroNLPUI.resizeInfoPanel2()"><i class="fa fa-compress" aria-hidden="true"></i></button></li>
@@ -566,7 +567,7 @@
               <div id="chat-history" class="chat-history"></div>
               <div class="chat-input">
                   <!-- <textarea id="user-input" placeholder="Type a message..." onkeypress="if(event.keyCode == 13) {NeuroNLP.sendMessage();}" ></textarea> -->
-                  <textarea id="user-input" placeholder="Type a message..." rows="1" class="auto_height" onInput="auto_height(this)"></textarea>
+                  <textarea id="user-input" placeholder="Type a message..." rows="1" class="auto_height" ></textarea>
                   <div class="send-button">
                     <button
                       type="submit"

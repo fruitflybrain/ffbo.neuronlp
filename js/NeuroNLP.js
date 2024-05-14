@@ -32,7 +32,7 @@ requirejs.config({
     preprocess: "info_panel/preprocess",
     summarytable: "info_panel/summarytable",
     infopanel2: "info_panel/infopanel2",
-    summarytable2: "info_panel/summarytable2",   
+    summarytable2: "info_panel/summarytable2",
     autobahn: '//cdn.jsdelivr.net/gh/crossbario/autobahn-js-browser@v20.9.2/autobahn/autobahn.min',
     d3: '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min',
     jquery: '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min',
@@ -104,7 +104,7 @@ requirejs.config({
     trackballcontrols: { deps: ['three'] },
     simplifymodifier: { deps: ['three'] },
     lut: { deps: ['three'] },
-    buffergeometryutils: {deps: ['three']},
+    buffergeometryutils: { deps: ['three'] },
     copyshader: { deps: ['three'] },
     convolutionshader: { deps: ['three'] },
     fxaashader: { deps: ['three'] },
@@ -124,24 +124,24 @@ requirejs.config({
     unrealbloompass: { deps: ['three', 'effectcomposer'] },
     adaptivetonemappingpass: { deps: ['three', 'effectcomposer'] },
     tageditor: { deps: ['jquery'] },
-    linematerial: {deps: ['three']},
-    linesegmentsgeometry: {deps: ['three']},
-    linesegments2: {deps: ['three', 'linesegmentsgeometry']},
-    fontloader: {deps: ['three']},
-    textgeometry: {deps: ['three']},
-    gltfloader: {deps: ['three']},
-    sigma_forceAtlas2: {deps: ['sigma']},
-    sigma_exporters: {deps: ['sigma']},
-    sigma_forceAtlas2: {deps: ['sigma']},
-    sigma_noverlap: {deps: ['sigma']},
-    sigma_cypher: {deps: ['sigma']},
-    sigma_gexf: {deps: ['sigma']},
-    sigma_json: {deps: ['sigma']},
-    sigma_astar: {deps: ['sigma']},
-    sigma_animate: {deps: ['sigma']},
-    sigma_dragNodes: {deps: ['sigma']},
-    sigma_filter: {deps: ['sigma']},
-    graphvis: {deps: ['sigma', 'sigma_forceAtlas2', 'sigma_dragNodes', 'sigma_exporters', 'sigma_noverlap', 'sigma_cypher', 'sigma_gexf', 'sigma_json', 'sigma_astar', 'sigma_animate', 'sigma_filter']}
+    linematerial: { deps: ['three'] },
+    linesegmentsgeometry: { deps: ['three'] },
+    linesegments2: { deps: ['three', 'linesegmentsgeometry'] },
+    fontloader: { deps: ['three'] },
+    textgeometry: { deps: ['three'] },
+    gltfloader: { deps: ['three'] },
+    sigma_forceAtlas2: { deps: ['sigma'] },
+    sigma_exporters: { deps: ['sigma'] },
+    sigma_forceAtlas2: { deps: ['sigma'] },
+    sigma_noverlap: { deps: ['sigma'] },
+    sigma_cypher: { deps: ['sigma'] },
+    sigma_gexf: { deps: ['sigma'] },
+    sigma_json: { deps: ['sigma'] },
+    sigma_astar: { deps: ['sigma'] },
+    sigma_animate: { deps: ['sigma'] },
+    sigma_dragNodes: { deps: ['sigma'] },
+    sigma_filter: { deps: ['sigma'] },
+    graphvis: { deps: ['sigma', 'sigma_forceAtlas2', 'sigma_dragNodes', 'sigma_exporters', 'sigma_noverlap', 'sigma_cypher', 'sigma_gexf', 'sigma_json', 'sigma_astar', 'sigma_animate', 'sigma_filter'] }
   },
   waitSeconds: 15
 });
@@ -206,14 +206,14 @@ require([
     window.NeuroNLPUI = new NeuroNLPUI();
     var infoPanel = new InfoPanel("info-panel", config.datasetIdName);
     var infoPanel2 = new InfoPanel2("info-panel2", config.datasetIdName);
-    
+
     var dynamicNeuronMenu = new FFBODynamicMenu({ singleObjSel: '#single-neu > .mm-listview', pinnedObjSel: '#single-pin > .mm-listview', removable: true, pinnable: true });
     var dynamicSynapseMenu = new FFBODynamicMenu({ singleObjSel: '#single-syn > .mm-listview', pinnedObjSel: '#single-pin > .mm-listview', removable: true, pinnable: true });
     var dynamicNeuropilMenu = new FFBODynamicMenu({ singleObjSel: '#toggle_neuropil > .mm-listview', compare: 'LeftRight' });
     var dynamicCellTypeMenu = new FFBODynamicMenu({ singleObjSel: '#toggle_celltype > .mm-listview', compare: 'LeftRight' });
     var ffbomesh = new FFBOMesh3D('vis-3d', undefined,
-                                  config.metadata,
-                                  stats = false);
+      config.metadata,
+      stats = false);
     var tagsPanel = new Tags('tagsMenu');
     var client = new FFBOClient(config.dataset);
     var visualizationSettings = new FFBOVisualizationSettings(ffbomesh);
@@ -267,7 +267,7 @@ require([
                 }
                 break;
               }
-            } 
+            }
           }
           if (!foundMorphology) {
             if (unit['class'] === 'Neuron' || unit['class'] === 'NeuronFragment') {
@@ -288,7 +288,7 @@ require([
     window.infoPanel = infoPanel;
     window.infoPanel2 = infoPanel2;
     window.NeuroNLPUI.resizeInfoPanel2();
-    
+
     window.dynamicNeuronMenu = dynamicNeuronMenu;
     window.dynamicSynapseMenu = dynamicSynapseMenu;
     window.dynamicNeuropilMenu = dynamicNeuropilMenu;
@@ -366,7 +366,7 @@ require([
    * Add tag retrieval functionality.
    */
     tagsPanel.activateTagLinks = (function (tagName) {
-      $('.tag-el').click( (e) => {
+      $('.tag-el').click((e) => {
         let tag_name = $(e.currentTarget).attr('tag_name');
         this.retrieveTag(tag_name);
         this.overlay.closeAll();
@@ -428,7 +428,7 @@ require([
     };
 
     infoPanel.resume = (rid) => {
-      ffbomesh.highlight(undefined) 
+      ffbomesh.highlight(undefined)
     };
 
     infoPanel.isInWorkspace = (rid) => {
@@ -443,11 +443,11 @@ require([
       queryID = client.addByRid(rid, { success: dataCallback });
     };
     infoPanel.addByType = (uname) => {
-      console.log("was called with",uname)
-      queryID = client.executeNLPquery("show "+ uname,{ success: dataCallback })//(uname,undefined ,{ success: dataCallback });
+      console.log("was called with", uname)
+      queryID = client.executeNLPquery("show " + uname, { success: dataCallback })//(uname,undefined ,{ success: dataCallback });
     };
     infoPanel.removeByType = (uname) => {
-      queryID = client.executeNLPquery("remove "+ uname,{ success: dataCallback })//client.removeType(uname,undefined, { success: dataCallback });
+      queryID = client.executeNLPquery("remove " + uname, { success: dataCallback })//client.removeType(uname,undefined, { success: dataCallback });
     };
 
 
@@ -487,27 +487,27 @@ require([
       }
       ffbomesh.setColor(id, value);
     };
-    var global_info 
+    var global_info
     ffbomesh.on('click', function (e) {
       $("#info-intro").hide();
       //$("#info-panel").show();
-      global_rid =e.value;
-      console.log("when clicked",e)
+      global_rid = e.value;
+      console.log("when clicked", e)
       queryID = client.getInfo(e.value, {
         success: function (data) {
           data['summary']['rid'] = e.value;
-          global_info=data
+          global_info = data
           infoPanel.update(data);
         }
       });
     })
 
     infoPanel2.addByType = (uname) => {
-      console.log("was called with",uname)
-      queryID = client.executeNLPquery("show "+ uname,{ success: dataCallback })//(uname,undefined ,{ success: dataCallback });
+      console.log("was called with", uname)
+      queryID = client.executeNLPquery("show " + uname, { success: dataCallback })//(uname,undefined ,{ success: dataCallback });
     };
     infoPanel2.removeByType = (uname) => {
-      queryID = client.executeNLPquery("remove "+ uname,{ success: dataCallback })//client.removeType(uname,undefined, { success: dataCallback });
+      queryID = client.executeNLPquery("remove " + uname, { success: dataCallback })//client.removeType(uname,undefined, { success: dataCallback });
     };
 
 
@@ -532,13 +532,13 @@ require([
     dynamicNeuropilMenu.dispatch.getInfo = function (id) { ffbomesh.toggleVis(id) };
     dynamicNeuropilMenu.dispatch.highlight = function (id) { ffbomesh.highlight(id, true) };
     dynamicNeuropilMenu.dispatch.resume = function () { ffbomesh.highlight(undefined) };
-    dynamicCellTypeMenu.dispatch.highlight = function (id) {ffbomesh.highlight(id, true) };
-    dynamicCellTypeMenu.dispatch.resume = function() {ffbomesh.highlight()};
+    dynamicCellTypeMenu.dispatch.highlight = function (id) { ffbomesh.highlight(id, true) };
+    dynamicCellTypeMenu.dispatch.resume = function () { ffbomesh.highlight() };
 
     ffbomesh.on('add',
       function (e) {
         if (!e.value.background) {
-          if(e.value['class'] === 'Neuron' || e.value['class'] === 'NeuronFragment') {
+          if (e.value['class'] === 'Neuron' || e.value['class'] === 'NeuronFragment') {
             dynamicNeuronMenu.addNeuron(e.prop, e.value.label);
           } else if (e.value['class'] === 'Synapse') {
             dynamicSynapseMenu.addNeuron(e.prop, e.value.label);
@@ -550,7 +550,7 @@ require([
       });
     ffbomesh.on('remove', function (e) {
       if (!e.value.background) {
-        if(e.value['class'] === 'Neuron' || e.value['class'] === 'NeuronFragment') {
+        if (e.value['class'] === 'Neuron' || e.value['class'] === 'NeuronFragment') {
           dynamicNeuronMenu.removeNeuron(e.prop);
         } else if (e.value['class'] === 'Synapse') {
           dynamicSynapseMenu.removeNeuron(e.prop);
@@ -592,7 +592,7 @@ require([
         }
         $("#search-wrapper").block({ message: null });
         srchInput.blur();
-        
+
         queryID = client.executeNLPquery(query, { success: dataCallback });
         client.status.on("change", function (e) {
           $("#search-wrapper").unblock();
@@ -604,7 +604,7 @@ require([
           else
             resolve();
         }, queryID);
-        
+
       });
     }
 
@@ -621,121 +621,120 @@ require([
 
     function makeDraggable(element) {
       var posX = 0, posY = 0, posInitX = 0, posInitY = 0;
-  
+
       element.onmousedown = dragMouseDown;
-  
+
       function dragMouseDown(e) {
         if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.tagName === "BUTTON") {
           // If the target is an input, textarea, or button, do not initiate drag
           return;
+        }
+        e = e || window.event;
+        e.preventDefault();
+
+        // Get initial cursor position
+        posInitX = e.clientX;
+        posInitY = e.clientY;
+
+        // Call functions when cursor moves or is released
+        document.onmouseup = closeDragElement;
+        document.onmousemove = elementDrag;
       }
-          e = e || window.event;
-          e.preventDefault();
-  
-          // Get initial cursor position
-          posInitX = e.clientX;
-          posInitY = e.clientY;
-  
-          // Call functions when cursor moves or is released
-          document.onmouseup = closeDragElement;
-          document.onmousemove = elementDrag;
-      }
-  
+
       function elementDrag(e) {
-          e = e || window.event;
-          e.preventDefault();
-  
-          // Calculate new cursor position
-          posX = posInitX - e.clientX;
-          posY = posInitY - e.clientY;
-          posInitX = e.clientX;
-          posInitY = e.clientY;
-  
-          // Set element's new position
-          element.style.top = (element.offsetTop - posY) + "px";
-          element.style.left = (element.offsetLeft - posX) + "px";
+        e = e || window.event;
+        e.preventDefault();
+
+        // Calculate new cursor position
+        posX = posInitX - e.clientX;
+        posY = posInitY - e.clientY;
+        posInitX = e.clientX;
+        posInitY = e.clientY;
+
+        // Set element's new position
+        element.style.top = (element.offsetTop - posY) + "px";
+        element.style.left = (element.offsetLeft - posX) + "px";
       }
-  
+
       function closeDragElement() {
-          // Stop moving when mouse button is released
-          document.onmouseup = null;
-          document.onmousemove = null;
+        // Stop moving when mouse button is released
+        document.onmouseup = null;
+        document.onmousemove = null;
       }
-  }
+    }
 
 
-  // makeDraggable(document.getElementById("chat-window2"));
-  makeDraggable(document.getElementById("info-panel2-wrapper"));
+    // makeDraggable(document.getElementById("chat-window2"));
+    // makeDraggable(document.getElementById("info-panel2-wrapper"));
 
-  
 
-    window.LLMchat = function (query) {};
-    window.LLMchatw = function (query) {
+
+    window.LLMchat = function (query) {
       window.latestQuery = query;
       window.NeuroNLPUI.closeAllOverlay();
       return new Promise(function (resolve, reject) {
-          if (query === undefined) {
-              query = document.getElementById('textInput').value;
-              document.getElementById('textInput').value = "";
-          }
+        if (query === undefined) {
+          query = document.getElementById('textInput').value;
+          document.getElementById('textInput').value = "";
+        }
 
-          client.executeLLMquery(query, { success: dataCallback },undefined,global_info)
-              .then(result => {
+        client.executeLLMquery(query, { success: dataCallback }, undefined, global_info)
+          .then(result => {
 
-                  // Update the DOM with the result
-                  response =result['response']
-                  document.getElementById("messageBox").innerHTML += `<div class="second-chat">
+            // Update the DOM with the result
+            response = result['response']
+            document.getElementById("messageBox").innerHTML += `<div class="second-chat">
                       <div class="circle" id="circle-mar"></div>
                       ${response}
                       <div class="arrow"></div>
                   </div>`;
-                  console.log("test")
-                  
-
-              
-                  if ((result["summary"] && Object.keys(result["summary"]).length !== 0) || (result["summary"] !== undefined && result["summary"] !== null)) {
-                    console.log(result["summary"]);
-                    infoPanel2.update(result, "neo4j");
-                }
-                  var objDiv = document.getElementById("messageBox");
-                  objDiv.scrollTop = objDiv.scrollHeight;
-
-                  $("#messageBox").on('click', '.copy-doi', function() {
-                    var doi = $(this).data('doi');
-                    navigator.clipboard.writeText("doi:"+doi).then(function() {
-                        console.log('DOI copied to clipboard:', doi);
-                    }).catch(function(error) {
-                        console.error('Error copying DOI to clipboard:', error);
-                    });
-                });
+            console.log("test")
 
 
 
+            if ((result["summary"] && Object.keys(result["summary"]).length !== 0) || (result["summary"] !== undefined && result["summary"] !== null)) {
+              console.log(result["summary"]);
+              infoPanel2.update(result, "neo4j");
+            }
+            var objDiv = document.getElementById("messageBox");
+            objDiv.scrollTop = objDiv.scrollHeight;
 
-                  resolve(); // Resolve the outer promise
-
-        // Adding click event listener for DOI copying
-
-
-              })
-              .catch(error => {
-                  console.error("Error:", error);
-                  reject(error); // Reject the outer promise
+            $("#messageBox").on('click', '.copy-doi', function () {
+              var doi = $(this).data('doi');
+              navigator.clipboard.writeText("doi:" + doi).then(function () {
+                console.log('DOI copied to clipboard:', doi);
+              }).catch(function (error) {
+                console.error('Error copying DOI to clipboard:', error);
               });
-  
-          // It seems this client.status.on("change", ...) might be intended for something else.
-          // Make sure it doesn't conflict with the new promise handling logic.
-          // client.status.on("change", function (e) {
-          //     $("#search-wrapper").unblock();
-          //     if (!isOnMobile) srchInput.focus();
-          //     srchInput.value = "";
-          //     if (e.value === -1) resolve(); // You might need to adjust this logic
-          // });
+            });
 
-          
+
+
+
+            resolve(); // Resolve the outer promise
+
+            // Adding click event listener for DOI copying
+
+
+          })
+          .catch(error => {
+            console.error("Error:", error);
+            reject(error); // Reject the outer promise
+          });
+
+        // It seems this client.status.on("change", ...) might be intended for something else.
+        // Make sure it doesn't conflict with the new promise handling logic.
+        // client.status.on("change", function (e) {
+        //     $("#search-wrapper").unblock();
+        //     if (!isOnMobile) srchInput.focus();
+        //     srchInput.value = "";
+        //     if (e.value === -1) resolve(); // You might need to adjust this logic
+        // });
+
+
       });
-  };
- 
+    };
+
 
 
     // window.LLMchat = function (query) {
@@ -758,7 +757,7 @@ require([
     //         <p>${result}</p>
     //         <div class="arrow"></div>
     //       </div>`;
-        
+
     //       var objDiv = document.getElementById("messageBox");
     //       objDiv.scrollTop = objDiv.scrollHeight;
 
@@ -773,307 +772,387 @@ require([
     //       else
     //         resolve();
     //     });
-        
+
     //   });
     // }
-    
+
 
     function useraResponse() {
       var input = document.getElementById("user-input");
       var message = input.value.trim();
       if (message !== "") {
-          var chatHistory = document.getElementById("chat-history");
-          var messageDiv = document.createElement("div");
-          messageDiv.classList.add("message", "my-message");
-          messageDiv.textContent = message;
-          chatHistory.appendChild(messageDiv);
-  
-          // Clear input after sending
-          input.value = "";
-          chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to the latest message
-      }
-  }
-  function userResponse() {
-    var input = document.getElementById("user-input");
-    var message = input.value.trim();
-    if (message !== "") {
         var chatHistory = document.getElementById("chat-history");
-        
-        // Display the user's message
-        var userMessageDiv = document.createElement("div");
-        userMessageDiv.classList.add("message", "my-message");
-        var formattedMessage = message.replace(/\n/g, "<br>");
-        userMessageDiv.innerHTML = "<strong>User:</strong><br>"+ formattedMessage;
-        chatHistory.appendChild(userMessageDiv);
-
-        // Simulate a bot response after 1 second
-        setTimeout(function() {
-            var botResponseDiv = document.createElement("div");
-            botResponseDiv.classList.add("message", "bot-message");
-            
-            botResponseDiv.innerHTML = "<strong>System:</strong><br>This is a simulated response to " + formattedMessage + "'";
-            chatHistory.appendChild(botResponseDiv);
-            chatHistory.scrollTop = chatHistory.scrollHeight;
-        }, 1000);
+        var messageDiv = document.createElement("div");
+        messageDiv.classList.add("message", "my-message");
+        messageDiv.textContent = message;
+        chatHistory.appendChild(messageDiv);
 
         // Clear input after sending
         input.value = "";
         chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to the latest message
-    }
-}
-
-    //Gets the text from the input box(user)
-    function auserResponse() {
-
-      let userText = document.getElementById("textInput").value;
-
-      if (userText == "") {
-        const wq=0;
-      } else {
-        document.getElementById("messageBox").innerHTML += `<div class="first-chat">
-          <p>${userText}</p>
-          <div class="arrow"></div>
-        </div>`;
-  
-  
-        document.getElementById("textInput").value = "";
-        var objDiv = document.getElementById("messageBox");
-        objDiv.scrollTop = objDiv.scrollHeight;
-    
-        setTimeout(() => {
-          LLMchat(userText);
-        }, 1000);
       }
     }
 
-    function handleKeyPress(event) {
-      if (event.keyCode === 13 && !event.shiftKey) { // Checks if Enter is pressed without Shift
-          event.preventDefault(); // Prevents a new line
-          userResponse(); // Calls the send message function
-      }
-  }
-  
-
-  function auto_height(elem) {  /* javascript */
-    elem.style.height = '1px';
-    elem.style.height = `${elem.scrollHeight}px`;
-}
-    // //press enter on keyboard and send message
-    // addEventListener("keypress", (e) => {
-    //   if (e.keyCode === 13) {
-        
-    //     const e = document.getElementById("user-input");
-    //     if (e === document.activeElement) {
-    //       userResponse();
-    //     }
-    //   }
-    // });
-
-    var sendInput =document.getElementById("user-input")
-    var sendButton = document.getElementById("send")
-    // add event listener
-    sendButton.addEventListener('click', function (event) {
-      // chatOpen();
-      userResponse();
-    });
-
-    sendInput.addEventListener("keyup", function (event) {
-      event.preventDefault();
-      if (event.key == "Enter"&& !event.shiftKey){
-        sendButton.click();
-        adjustTextAreaHeight(this);
-      }
-      else if (event.key == "Enter"&& event.shiftKey) {
-      sendInput.style.height = '1px';
-      sendInput.style.height = `${sendInput.scrollHeight}px`;
-      }
-    });
-
-    function adjustTextAreaHeight(textarea) {
-      // Temporarily shrink the textarea to '1px' to reset its height
-      textarea.style.height = '1px';
-  
-      // Set the textarea's height based on its scroll height
-      textarea.style.height = `${textarea.scrollHeight}px`;
-  }
-    sendInput.addEventListener('input', function () {
-      adjustTextAreaHeight(this);
-  });
 
 
-    // window.latestQuery = "";
-    // window.LLMsearch = function (query) {
-    //   window.latestQuery = query;
-    //   window.NeuroNLPUI.closeAllOverlay();
-    //   return new Promise(function (resolve, reject) {
-    //     if (query == undefined) {
-    //       query = document.getElementById('srch_box').value;
-    //     }
-    //     $("#search-wrapper").block({ message: null });
-    //     srchInput.blur();
-        
-    //     queryID = client.executeLLMquery(query, { success: dataCallback });
-    //     client.status.on("change", function (e) {
-    //       $("#search-wrapper").unblock();
-    //       if (!isOnMobile)
-    //         srchInput.focus();
-    //       srchInput.value = "";
-    //       if (e.value == -1)
-    //         resolve();
-    //       else
-    //         resolve();
-    //     }, queryID);
-        
-    //   });
-    // }
-    // //add event listener
-    // srchBtn.addEventListener('click', function (event) {
-    //   LLMsearch();
-    // });
 
-    window.NeuroNLPUI.dispatch.onRemovePinned = (function () { removePinned() });
-    window.NeuroNLPUI.dispatch.onRemoveUnpinned = (function () { removeUnpinned() });
-    window.NeuroNLPUI.dispatch.onShowAllNeuron = (function () { ffbomesh.showFrontAll() });
-    window.NeuroNLPUI.dispatch.onHideAllNeuron = (function () { ffbomesh.hideFrontAll() });
-    window.NeuroNLPUI.dispatch.onShowAllNeuropil = (function () { ffbomesh.showBackAll() });
-    window.NeuroNLPUI.dispatch.onHideAllNeuropil = (function () { ffbomesh.hideBackAll() });
-    window.NeuroNLPUI.dispatch.onUnpinAll = (function () { ffbomesh.unpinAll() });
 
-    ffbomesh.createUIBtn("showSettings", "fa-cog", "Settings")
-    ffbomesh.createUIBtn("showInfo", "fa-info-circle", "GUI guideline")
-    ffbomesh.createUIBtn("showStats", "fa-tachometer", "Show/Hide Stats")
-    ffbomesh.createUIBtn("takeScreenshot", "fa-camera", "Download Screenshot")
-    ffbomesh.createUIBtn("resetView", "fa-refresh", "Reset View")
-    ffbomesh.createUIBtn("resetVisibleView", "fa-binoculars", "Center and zoom into visible Neurons/Synapses")
-    ffbomesh.createUIBtn("showAll", "fa-eye", "Show All")
-    ffbomesh.createUIBtn("hideAll", "fa-eye-slash", "Hide All")
-    ffbomesh.createUIBtn("removeUnpin", "fa-trash", "Remove Unpinned Neurons")
-    ffbomesh.createUIBtn("downData", "fa-download", "Download Connectivity")
-    ffbomesh.createUIBtn("showGraph", "fa-connectdevelop", "Show Connectivity Graph");
-    ffbomesh.createUIBtn("showCellGraph", "fa-cubes", "Show Cell-Type Connectivity Graph");
+    function initializePlot(divId, data, layout) {
+      if (window.Plotly && document.getElementById(divId)) {
+        Plotly.newPlot(divId, data, layout, { "responsive": true })
+      };};
 
-    ffbomesh.on('showSettings', (function () { window.NeuroNLPUI.onClickVisualizationSettings() }));
-    ffbomesh.on('resetView', (function () { ffbomesh.resetView() }));
-    ffbomesh.on('resetVisibleView', (function () { ffbomesh.resetVisibleView() }));
-    ffbomesh.on('removeUnpin', (function () { removeUnpinned() }));
-    ffbomesh.on('hideAll', (function () { ffbomesh.hideAll() }));
-    ffbomesh.on('showAll', (function () { ffbomesh.showAll() }));
-    ffbomesh.on('takeScreenshot', (function () { ffbomesh._take_screenshot = true; }));
-    ffbomesh.on('showInfo', function () { window.NeuroNLPUI.onShowGUIinfo(); });
-    ffbomesh.on('showStats', function () { ffbomesh.toggleStats(); });
 
-    
-    demoLoad = false;
-    $(document).ready(function () {
-      GvisInitCallbacks();
-      GvisInitGraphs();
-      if (isOnMobile)
-        ffbomesh.backrenderSSAO.enabled = false;
-      FFBODemoPlayer = new FFBODemoPlayer(ffbomesh, $('#ui_menu_nav')[0].mmApi);
-      window.FFBODemoPlayer = FFBODemoPlayer;
-      FFBODemoPlayer.onLoadingTag = () => {
-        tagLoad = true;
+      function userResponse() {
+        var input = document.getElementById("user-input");
+        var message = input.value.trim();
+        if (message !== "") {
+          var chatHistory = document.getElementById("chat-history");
+
+          // Display the user's message
+          var userMessageDiv = document.createElement("div");
+          userMessageDiv.classList.add("message", "my-message");
+          var formattedMessage = message.replace(/\n/g, "<br>");
+          userMessageDiv.innerHTML = "<strong>User:</strong><br>How is the output of this LN distributed across the glomeruli." //+ formattedMessage;
+          chatHistory.appendChild(userMessageDiv);
+
+          input.value = "";
+          var connGraph = document.createElement("div");
+          connGraph.className = 'plotly-graph-div';
+          connGraph.style.height = '300px';
+          connGraph.style.width = '100%';
+          connGraph.id = 'plotly-graph-' + Date.now();
+          chatHistory.appendChild(connGraph);
+
+          // Execute the LLM query and handle the response
+          client.executeLLMquery(message, { success: dataCallback }, undefined, global_info).then(result => {
+            if ('plot' in result) {
+
+
+              // Initialize Plotly after the content is added
+              initializePlot(connGraph.id, result["plot"]["data"], result["plot"]["layout"]);
+            }
+          });
+          var userMessageDiv = document.createElement("div");
+          userMessageDiv.classList.add("message", "my-message");
+          userMessageDiv.innerHTML = "<strong>User:</strong><br>What are patchy LNs ?How are they related to ORNs?" //+ formattedMessage;
+          // chatHistory.appendChild(userMessageDiv);
+          var botResponseDiv = document.createElement("div");
+          botResponseDiv.classList.add("message", "bot-message");
+          var response= `PN and LN neurons in the Antennal lobe glomeruli have distinct roles. PN neurons are projection neurons that transmit information from the glomerulus to higher brain regions and help distinguish odorants and elicit appropriate behavioral responses. They propagate odor information to higher olfactory centers in the brain and transfer activity from one glomerulus to another [1][6]. On the other hand, LN neurons are local interneurons that modulate the activity of the antennal lobe circuitry. They innervate multiple glomeruli and provide inhibitory inputs onto a large fraction of PN neurons, amplifying differences between PN responses to odors [2].</br><span class="copy-doi" data-doi= 10.1523/JNEUROSCI.1099-12.2012>1-Plasticity of recurrent inhibition in the Drosophila antennal lobe </span></br><span class="copy-doi" data-doi= 10.1016/j.peptides.2012.09.019>2-Fruit fly behavior in response to chemosensory signals </span></br><span class="copy-doi" data-doi= 10.1016/j.pneurobio.2010.04.010>3-Drosophila neuropeptides in regulation of physiology and behavior </span></br><span class="copy-doi" data-doi= 10.1146/annurev-neuro-062111-150533>4-Early olfactory processing in Drosophila: mechanisms and principles </span></br><span class="copy-doi" data-doi= 10.1016/j.cell.2005.04.026>5-Neural circuitry that governs Drosophila male courtship behavior </span></br><span class="copy-doi" data-doi= 10.1016/j.cub.2017.03.011>6-Neural Circuits: Reduced Inhibition in Fragile X Syndrome </span></br><span class="copy-doi" data-doi= 10.1186/s12915-017-0389-z>7-Olfactory coding from the periphery to higher brain centers in the Drosophila brain </span></br><span class="copy-doi" data-doi= 10.1016/j.neubiorev.2010.12.006>8-Brain organization and the roots of anticipation in Drosophila olfactory conditioning </span></br><span class="copy-doi" data-doi= 10.1016/j.neuron.2010.12.015>9-DSL-Notch signaling in the Drosophila brain in response to olfactory stimulation </span></br>`
+          
+          var response = `1. Patchy LNs are local neurons in the antennal lobe of insects that have dendrites in specific glomeruli and axons that send projections to other glomeruli. 
+          2. Patchy LNs are not uniformly connected to all glomeruli, but rather, each patchy LN receives input from a few glomeruli and targets a few other glomeruli. 
+          3. The glomeruli that are the targets of a patchy LN's axons are not necessarily the same as the glomeruli that provide input to its dendrites.
+          4. The precise connectivity of patchy LNs is thought to be determined by the expression of specific transcription factors in these cells. 
+          5. Patchy LNs are related to olfactory receptor neurons (ORNs) in that they receive input from ORNs and send output to PNs. However, unlike ORNs, patchy LNs do not send output to higher brain centers, but rather, provide lateral connections between glomeruli.`
+          var formattedResponse = response.replace(/\n/g, "<br>");
+          botResponseDiv.innerHTML = "<strong>System:</strong><br>" + formattedResponse ;
+          // chatHistory.appendChild(botResponseDiv);
+
+          $("#message").on('click', '.copy-doi', function () {
+              var doi = $(this).data('doi');
+              navigator.clipboard.writeText("doi:" + doi).then(function () {
+                console.log('DOI copied to clipboard:', doi);
+              }).catch(function (error) {
+                console.error('Error copying DOI to clipboard:', error);
+              });
+            });
+        }
       };
-      FFBODemoPlayer.notify = function (message, settings) {
-        iziToast.info(Object.assign({ message: message }, settings))
-      }
-      FFBODemoPlayer.afterDemo = function () {
-        iziToast.hide({ transitionOut: 'fadeOut' }, document.querySelector('.demoplayer-status-notify'));
-      }
-      FFBODemoPlayer.beforeDemo = (function (keyword) {
-        timeout = demoLoad && isOnMobile ? 2000 : false
-        this.ffbomesh.resetView();
-        iziToast.info({
-          close: true,
-          class: 'demoplayer-status-notify',
-          timeout: timeout,
-          drag: false,
-          overlay: false,
-          color: 'yellow',
-          title: "Demo",
-          message: "Running <u>" + keyword + "</u> Demo",
-          position: "topCenter",
-          buttons: [
-            ['<button><b>Stop</b></button>', function (instance, toast) {
-              instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-              FFBODemoPlayer.stopDemo();
-            }, true],
-          ],
-        });
-        window.NeuroNLPUI.closeAllOverlay();
-      }).bind(FFBODemoPlayer);
-      $.getJSON("./data/demos.json", function (json) {
-        FFBODemoPlayer.addDemos(json[1]);
-        FFBODemoPlayer.updateDemoTable('#demo-table-wrapper');
-        if (searchParams.get('demo') && !searchParams.get('tag')) {
-          demoLoad = true;
-          FFBODemoPlayer.startDemo(searchParams.get('demo'))
-        }
-      });
-    });
-    var textFile = null;
-    ffbomesh.on("downData", function () {
-      if (!ffbomesh.uiVars.neuronNum) {
-        client.notifyError("No neurons present in scene");
-        return;
-      }
-      if (ffbomesh.uiVars.neuronNum > 500) {
-        client.notifyError("NeuroNLP currently limits this feature for use with upto 500 neurons");
-        return;
-      }
-      iziToast.info({
-        class: 'fetching_conn_notification',
-        message: "Fetching Connectivity Data",
-        timeout: 2000,
-        color: 'green',
-        close: false
-      })
-      $('#ui-blocker').show();
-      client.getConnectivity(function () { $('#ui-blocker').hide(); });
-    });
 
-    var dynamicCellTypeNeuropilMenu = {};
-    window.NeuroNLPUI.loadAllCellTypesNeuropil = function() {
-      $.getJSON("./data/types_in_neuropils.json", function (json) {
-        json = json[1];
-        window.CellTypes = json;
-        for (var key in json) {
-          const neuropil = key;
-          const display_key = key; //ffbomesh.meshDict[key].label;
-          dynamicCellTypeNeuropilMenu[key] = dynamicCellTypeMenu.addNeuropil(key, display_key);
-          dynamicCellTypeNeuropilMenu[key].dispatch.addType = function (name) { client.addType(name, neuropil, { success: dataCallback }) };
-          dynamicCellTypeNeuropilMenu[key].dispatch.removeType = function (name) { client.removeType(name, neuropil, { success: dataCallback }) };
+
+      //   .then(result => {
+      //     response= result['response']
+      //   // console.log("myman",response)
+      //   var botResponseDiv = document.createElement("div");
+      //   botResponseDiv.classList.add("message", "bot-message");
+      //   var formattedResponse = response.replace(/\n/g, "<br>");
+      //   botResponseDiv.innerHTML = "<strong>System:</strong><br>" + formattedResponse ;
+      //   chatHistory.appendChild(botResponseDiv);
+      //   chatHistory.scrollTop = chatHistory.scrollHeight;
+      // });
+      // Simulate a bot response after 1 second
+      // setTimeout(function() {
+      //     var botResponseDiv = document.createElement("div");
+      //     botResponseDiv.classList.add("message", "bot-message");
+
+      //     botResponseDiv.innerHTML = "<strong>System:</strong><br>This is a simulated response to " + formattedMessage + "'";
+      //     chatHistory.appendChild(botResponseDiv);
+      //     chatHistory.scrollTop = chatHistory.scrollHeight;
+      // }, 1000);
+
+      // fetch('http://localhost:8000/v1/completions', {
+      //     method: 'POST',
+      //     headers: {
+      //         'Content-Type': 'application/json'
+      //     },
+      //     body: JSON.stringify({
+      //         model: "/mnt/nvme/node03/pranav/DrosoLLM/mistral_finetune/models/droso_raw",
+      //         prompt:"<s>[INST]question:"+ message+"[/INST]",
+      //         max_tokens: 200,
+      //         temperature: 0
+      //     })
+      // })
+      // .then(response => response.json())
+      // .then(data => {
+      //     // Display the bot's response
+      //     var botResponseDiv = document.createElement("div");
+      //     botResponseDiv.classList.add("message", "bot-message");
+      //     // Extracting text from the first choice (assuming there's always at least one choice)
+      //     var responseText = data.choices[0].text || "No response";
+      //     botResponseDiv.innerHTML = "<strong>System:</strong><br>" + responseText;
+      //     chatHistory.appendChild(botResponseDiv);
+      //     chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to the latest message
+      // })
+      // .catch(error => console.error('Error:', error));
+
+
+      // Clear input after sending
+
+      // Scroll to the latest message
+
+      // //Gets the text from the input box(user)
+      // function auserResponse() {
+
+      //   let userText = document.getElementById("textInput").value;
+
+      //   if (userText == "") {
+      //     const wq=0;
+      //   } else {
+      //     document.getElementById("messageBox").innerHTML += `<div class="first-chat">
+      //       <p>${userText}</p>
+      //       <div class="arrow"></div>
+      //     </div>`;
+
+
+      //     document.getElementById("textInput").value = "";
+      //     var objDiv = document.getElementById("messageBox");
+      //     objDiv.scrollTop = objDiv.scrollHeight;
+
+      //     setTimeout(() => {
+      //       LLMchat(userText);
+      //     }, 1000);
+      //   }
+      // }
+
+
+      // //press enter on keyboard and send message
+      // addEventListener("keypress", (e) => {
+      //   if (e.keyCode === 13) {
+
+      //     const e = document.getElementById("user-input");
+      //     if (e === document.activeElement) {
+      //       userResponse();
+      //     }
+      //   }
+      // });
+
+      var sendInput = document.getElementById("user-input")
+      var sendButton = document.getElementById("send")
+      // add event listener
+      sendButton.addEventListener('click', function (event) {
+        // chatOpen();
+        userResponse();
+      });
+
+      sendInput.addEventListener("keyup", function (event) {
+        event.preventDefault();
+        if (event.key == "Enter" && !event.shiftKey) {
+          sendButton.click();
+          adjustTextAreaHeight(this);
+        }
+        else if (event.key == "Enter" && event.shiftKey) {
+          sendInput.style.height = '1px';
+          sendInput.style.height = `${sendInput.scrollHeight}px`;
         }
       });
-    }
-    window.dynamicCellTypeNeuropilMenu = dynamicCellTypeNeuropilMenu;
-    
-    $.getJSON("./data/config.json", function (json) {
-      json = json[1];
-      window.Neuropils = json;
-      ffbomesh.addJson({
-        ffbo_json: json,
-        showAfterLoadAll: false // true does not do anything
-      }).then(function () {
-        if (Object.keys(json).length) {
-          var c = json[Object.keys(json)[0]].color;
-          var rgb = parseInt(c.b * 255) | (parseInt(c.g * 255) << 8) | (parseInt(c.r * 255) << 16);
-          var hex = '#' + (0x1000000 + rgb).toString(16).slice(1);
-          visualizationSettings.setColorPickerBackground(hex);
+
+      function adjustTextAreaHeight(textarea) {
+        // Temporarily shrink the textarea to '1px' to reset its height
+        textarea.style.height = '1px';
+
+        // Set the textarea's height based on its scroll height
+        textarea.style.height = `${textarea.scrollHeight}px`;
+      }
+      sendInput.addEventListener('input', function () {
+        adjustTextAreaHeight(this);
+      });
+
+
+      // window.latestQuery = "";
+      // window.LLMsearch = function (query) {
+      //   window.latestQuery = query;
+      //   window.NeuroNLPUI.closeAllOverlay();
+      //   return new Promise(function (resolve, reject) {
+      //     if (query == undefined) {
+      //       query = document.getElementById('srch_box').value;
+      //     }
+      //     $("#search-wrapper").block({ message: null });
+      //     srchInput.blur();
+
+      //     queryID = client.executeLLMquery(query, { success: dataCallback });
+      //     client.status.on("change", function (e) {
+      //       $("#search-wrapper").unblock();
+      //       if (!isOnMobile)
+      //         srchInput.focus();
+      //       srchInput.value = "";
+      //       if (e.value == -1)
+      //         resolve();
+      //       else
+      //         resolve();
+      //     }, queryID);
+
+      //   });
+      // }
+      // //add event listener
+      // srchBtn.addEventListener('click', function (event) {
+      //   LLMsearch();
+      // });
+
+      window.NeuroNLPUI.dispatch.onRemovePinned = (function () { removePinned() });
+      window.NeuroNLPUI.dispatch.onRemoveUnpinned = (function () { removeUnpinned() });
+      window.NeuroNLPUI.dispatch.onShowAllNeuron = (function () { ffbomesh.showFrontAll() });
+      window.NeuroNLPUI.dispatch.onHideAllNeuron = (function () { ffbomesh.hideFrontAll() });
+      window.NeuroNLPUI.dispatch.onShowAllNeuropil = (function () { ffbomesh.showBackAll() });
+      window.NeuroNLPUI.dispatch.onHideAllNeuropil = (function () { ffbomesh.hideBackAll() });
+      window.NeuroNLPUI.dispatch.onUnpinAll = (function () { ffbomesh.unpinAll() });
+
+      ffbomesh.createUIBtn("showSettings", "fa-cog", "Settings")
+      ffbomesh.createUIBtn("showInfo", "fa-info-circle", "GUI guideline")
+      ffbomesh.createUIBtn("showStats", "fa-tachometer", "Show/Hide Stats")
+      ffbomesh.createUIBtn("takeScreenshot", "fa-camera", "Download Screenshot")
+      ffbomesh.createUIBtn("resetView", "fa-refresh", "Reset View")
+      ffbomesh.createUIBtn("resetVisibleView", "fa-binoculars", "Center and zoom into visible Neurons/Synapses")
+      ffbomesh.createUIBtn("showAll", "fa-eye", "Show All")
+      ffbomesh.createUIBtn("hideAll", "fa-eye-slash", "Hide All")
+      ffbomesh.createUIBtn("removeUnpin", "fa-trash", "Remove Unpinned Neurons")
+      ffbomesh.createUIBtn("downData", "fa-download", "Download Connectivity")
+      ffbomesh.createUIBtn("showGraph", "fa-connectdevelop", "Show Connectivity Graph");
+      ffbomesh.createUIBtn("showCellGraph", "fa-cubes", "Show Cell-Type Connectivity Graph");
+
+      ffbomesh.on('showSettings', (function () { window.NeuroNLPUI.onClickVisualizationSettings() }));
+      ffbomesh.on('resetView', (function () { ffbomesh.resetView() }));
+      ffbomesh.on('resetVisibleView', (function () { ffbomesh.resetVisibleView() }));
+      ffbomesh.on('removeUnpin', (function () { removeUnpinned() }));
+      ffbomesh.on('hideAll', (function () { ffbomesh.hideAll() }));
+      ffbomesh.on('showAll', (function () { ffbomesh.showAll() }));
+      ffbomesh.on('takeScreenshot', (function () { ffbomesh._take_screenshot = true; }));
+      ffbomesh.on('showInfo', function () { window.NeuroNLPUI.onShowGUIinfo(); });
+      ffbomesh.on('showStats', function () { ffbomesh.toggleStats(); });
+
+
+      demoLoad = false;
+      $(document).ready(function () {
+        GvisInitCallbacks();
+        GvisInitGraphs();
+        if (isOnMobile)
+          ffbomesh.backrenderSSAO.enabled = false;
+        FFBODemoPlayer = new FFBODemoPlayer(ffbomesh, $('#ui_menu_nav')[0].mmApi);
+        window.FFBODemoPlayer = FFBODemoPlayer;
+        FFBODemoPlayer.onLoadingTag = () => {
+          tagLoad = true;
+        };
+        FFBODemoPlayer.notify = function (message, settings) {
+          iziToast.info(Object.assign({ message: message }, settings))
         }
-        if (!tagLoad) $('#ui-blocker').hide();
-        srchInput.focus();
-        if (client.loginStatus.connected) {
-          tagsPanel.retrieveTag(searchParams.get('tag'))
-        } else {
-          client.loginStatus.on("change", function () {
-            if (tagLoad) tagsPanel.retrieveTag(searchParams.get('tag'))
-            if (queryLoad) NLPsearch(searchParams.get('query'))
-          }, "connected");
+        FFBODemoPlayer.afterDemo = function () {
+          iziToast.hide({ transitionOut: 'fadeOut' }, document.querySelector('.demoplayer-status-notify'));
         }
+        FFBODemoPlayer.beforeDemo = (function (keyword) {
+          timeout = demoLoad && isOnMobile ? 2000 : false
+          this.ffbomesh.resetView();
+          iziToast.info({
+            close: true,
+            class: 'demoplayer-status-notify',
+            timeout: timeout,
+            drag: false,
+            overlay: false,
+            color: 'yellow',
+            title: "Demo",
+            message: "Running <u>" + keyword + "</u> Demo",
+            position: "topCenter",
+            buttons: [
+              ['<button><b>Stop</b></button>', function (instance, toast) {
+                instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                FFBODemoPlayer.stopDemo();
+              }, true],
+            ],
+          });
+          window.NeuroNLPUI.closeAllOverlay();
+        }).bind(FFBODemoPlayer);
+        $.getJSON("./data/demos.json", function (json) {
+          FFBODemoPlayer.addDemos(json[1]);
+          FFBODemoPlayer.updateDemoTable('#demo-table-wrapper');
+          if (searchParams.get('demo') && !searchParams.get('tag')) {
+            demoLoad = true;
+            FFBODemoPlayer.startDemo(searchParams.get('demo'))
+          }
+        });
+      });
+      var textFile = null;
+      ffbomesh.on("downData", function () {
+        if (!ffbomesh.uiVars.neuronNum) {
+          client.notifyError("No neurons present in scene");
+          return;
+        }
+        if (ffbomesh.uiVars.neuronNum > 500) {
+          client.notifyError("NeuroNLP currently limits this feature for use with upto 500 neurons");
+          return;
+        }
+        iziToast.info({
+          class: 'fetching_conn_notification',
+          message: "Fetching Connectivity Data",
+          timeout: 2000,
+          color: 'green',
+          close: false
+        })
+        $('#ui-blocker').show();
+        client.getConnectivity(function () { $('#ui-blocker').hide(); });
+      });
+
+      var dynamicCellTypeNeuropilMenu = {};
+      window.NeuroNLPUI.loadAllCellTypesNeuropil = function () {
+        $.getJSON("./data/types_in_neuropils.json", function (json) {
+          json = json[1];
+          window.CellTypes = json;
+          for (var key in json) {
+            const neuropil = key;
+            const display_key = key; //ffbomesh.meshDict[key].label;
+            dynamicCellTypeNeuropilMenu[key] = dynamicCellTypeMenu.addNeuropil(key, display_key);
+            dynamicCellTypeNeuropilMenu[key].dispatch.addType = function (name) { client.addType(name, neuropil, { success: dataCallback }) };
+            dynamicCellTypeNeuropilMenu[key].dispatch.removeType = function (name) { client.removeType(name, neuropil, { success: dataCallback }) };
+          }
+        });
+      }
+      window.dynamicCellTypeNeuropilMenu = dynamicCellTypeNeuropilMenu;
+
+      $.getJSON("./data/config.json", function (json) {
+        json = json[1];
+        window.Neuropils = json;
+        ffbomesh.addJson({
+          ffbo_json: json,
+          showAfterLoadAll: false // true does not do anything
+        }).then(function () {
+          if (Object.keys(json).length) {
+            var c = json[Object.keys(json)[0]].color;
+            var rgb = parseInt(c.b * 255) | (parseInt(c.g * 255) << 8) | (parseInt(c.r * 255) << 16);
+            var hex = '#' + (0x1000000 + rgb).toString(16).slice(1);
+            visualizationSettings.setColorPickerBackground(hex);
+          }
+          if (!tagLoad) $('#ui-blocker').hide();
+          srchInput.focus();
+          if (client.loginStatus.connected) {
+            tagsPanel.retrieveTag(searchParams.get('tag'))
+          } else {
+            client.loginStatus.on("change", function () {
+              if (tagLoad) tagsPanel.retrieveTag(searchParams.get('tag'))
+              if (queryLoad) NLPsearch(searchParams.get('query'))
+            }, "connected");
+          }
+        });
       });
     });
-  });
 
 
 window.onbeforeunload = function () {

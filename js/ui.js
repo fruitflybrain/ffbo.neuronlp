@@ -195,6 +195,7 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "mmenu"], function($, Overlay
           $("#vis-3d").removeClass("vis-3d-hf").addClass("vis-3d-lg");
       }
   }
+
     this.resizeInfoPanel = function() {
       $("#btn-info-pin").children().toggleClass("fa-compress fa-expand");
       $("#info-panel-dragger").toggle();
@@ -206,8 +207,14 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "mmenu"], function($, Overlay
     this.resizeInfoPanel2 = function() {
 
       $("#btn-info-pin2").children().toggleClass("fa-compress fa-expand");
-      $("#info-panel2-dragger").toggle();
-      $("#info-panel2-wrapper").toggleClass("vis-info-pin vis-info-sm");
+      $("#info-panel-dragger").toggle();
+      $("#info-panel2-wrapper").toggleClass("vis-info-sm vis-info-pin");
+      var element = document.getElementById('info-panel2-wrapper');
+      if ($("#info-panel2-wrapper").hasClass("vis-info-sm")){
+        element.style.top = '152px';
+      }
+      else{element.style.top = '60px';}
+
       // $("#vis-3d").toggleClass("vis-3d-hf vis-3d-lg");
       $("#btn-info-pin2").toggleClass('btn-clicked btn-unclicked');
       updateVis3D();
