@@ -355,6 +355,17 @@
         0.15
       ]
     },
+    "a'L_R_": {
+      "filename": "lib/mesh/optic_lobe/a'L_R_.json",
+      "label": "a'L(R)",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
     "RUB_L_": {
       "filename": "lib/mesh/optic_lobe/RUB_L_.json",
       "label": "RUB(L)",
@@ -391,6 +402,17 @@
     "ICL_L_": {
       "filename": "lib/mesh/optic_lobe/ICL_L_.json",
       "label": "ICL(L)",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "b'L_L_": {
+      "filename": "lib/mesh/optic_lobe/b'L_L_.json",
+      "label": "b'L(L)",
       "highlight": false,
       "background": true,
       "color": [
@@ -597,6 +619,17 @@
         0.15
       ]
     },
+    "a'L_L_": {
+      "filename": "lib/mesh/optic_lobe/a'L_L_.json",
+      "label": "a'L(L)",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
     "SPS_L_": {
       "filename": "lib/mesh/optic_lobe/SPS_L_.json",
       "label": "SPS(L)",
@@ -655,6 +688,17 @@
     "CA_L_": {
       "filename": "lib/mesh/optic_lobe/CA_L_.json",
       "label": "CA(L)",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "b'L_R_": {
+      "filename": "lib/mesh/optic_lobe/b'L_R_.json",
+      "label": "b'L(R)",
       "highlight": false,
       "background": true,
       "color": [
@@ -886,6 +930,17 @@
     "PRW": {
       "filename": "lib/mesh/optic_lobe/PRW.json",
       "label": "PRW",
+      "highlight": false,
+      "background": true,
+      "color": [
+        0.15,
+        0.01,
+        0.15
+      ]
+    },
+    "VNC": {
+      "filename": "lib/mesh/optic_lobe/VNC.json",
+      "label": "VNC",
       "highlight": false,
       "background": true,
       "color": [

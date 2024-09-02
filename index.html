@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>NeuroNLP.OpticLobe</title>
-    <!-- branch = fib19 -->
+    <title>NeuroNLP.Optic_Lobe</title>
+    <!-- branch = optic_lobe -->
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
     <meta http-equiv="Cache-Control" content="max-age=1800">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -52,7 +52,7 @@
               <a href="http://fruitflybrain.org" target="_blank"><img src="/img/ffbo_logo.png" role="button"></a>
               <span style="font-family:var(--title-font-family); font-size: 20px; color:var(--navbar-text-color);">NeuroNLP</span>
               <a onclick="NeuroNLPUI.onShowNeuroNLP()">
-                <span>.OpticLobe</span>
+                <span>.Optic Lobe</span>
               </a>
             </div>
             <button id="ui_menu_btn" type="button" class="navbar-toggle collapsed" onclick="NeuroNLPUI.openRightMenu()" style="z-index:1">
@@ -68,7 +68,7 @@
               <li>
                 <div id="search-wrapper" class="search-bottom input-group input-group-mid">
                   <span class="input-group-btn"><button id = "info_btn" onclick="NeuroNLPUI.onShowReference()" class="btn btn-link" type="button" style="height:30px; bottom:2px;"><span class="glyphicon glyphicon-info-sign"></span></button></span>
-                  <input id = "srch_box" type="text" class="form-control" title="please type in query string..."  placeholder="enter query here, ex. "show Mi1".">
+                  <input id = "srch_box" type="text" class="form-control" title="please type in query string..."  placeholder="enter query here, ex. show EPG neurons that have outputs in PB glomerulus L8 or PB glomerulus R2">
                   <span class="input-group-btn">
                     <button id = "srch_box_btn" class="btn btn-mid btn-primary" type="button"><span class="glyphicon glyphicon-search"></span></button>
                   </span>
@@ -513,30 +513,35 @@
               <h4>Overview</h4>
                 <p>NeuroNLP is a query interface for navigating fruit fly brain datasets.
                   It enables in-depth explorations and investigations of the connectomic/synaptomic structure of the brain, using intuitive rule-based English queries, such as
-                  <a onclick="window.NLPsearch('show cholinergic neurons presynaptic to T4a neuron with at least 5 synapses')"><br><u style="font-style:italic">"show cholinergic neurons presynaptic to T4a neuron with at least 5 synapses".</u></br></a>
+                  <a onclick="window.NLPsearch('show Dm6 neuron with inputs in medulla column 10_10 and outputs in medulla column 15_15')"><br><u style="font-style:italic">"show Dm6 neuron with inputs in medulla column 10_10 and outputs in medulla column 15_15".</u></br></a>
                 </p>
+            
+                <p>This dataset contains Version 1.0 of the Optic Lobe dataset, with detailed information of the Drosophila <i>right optic lobe</i>, including neuron and synapse connectivity, regional arborization for neuropils, strata and columns, addressable grid and rings, and much more. </p>
                 <p>
-                  For more information about the NeuroNLP user interface
+                  For more information about the NeuroNLP user interface and this Optic Lobe dataset:
                 </p>
                 <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-getting-started')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-getting-started')"
                 onclick="NeuroNLPUI.onShowOverview()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right"
                   aria-hidden="true"></i> Open Overview!</a>
               <br><br>
+            
+              <h4>Quick Demos</h4>
+              <p>
+                Want to get started? Go check out some real-time "Demos" for NLP queries, GUI usage and Optic Lobe-specific functionalities!
+              </p>
+              <a  onmouseover="NeuroNLPUI.mimicMouseOver('#btn-getting-started')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-getting-started')" onclick="NeuroNLPUI.onShowDemo()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Try Demos!</a>
+              <br><br>
+            
               <h4>Credits</h4>
-                <p>The original Hemibrain dataset is provided by the HHMI Janelia Research Campus and can be accessed on Neuprint <a target="_blank" href="https://neuprint.janelia.org/?dataset=fib19:v1.0&qt=findneurons">here</a>. It is licensed under <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">CC-BY</a>.</p>
+                <p>The original Optic Lobe dataset is provided by the HHMI Janelia Research Campus and can be accessed <a target="_blank" href="https://www.janelia.org/project-team/flyem/optic-lobe">here</a>. It is licensed under <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">CC-BY</a>.</p>
               <h4>News</h4>
               <p>
-                Updates and announcements for <u style="text-decoration:none; font-family:'Rajdhani',sans-serif; color:grey;">NeuroNLP.OpticLobe</u>.
+                Updates and announcements for <u style="text-decoration:none; font-family:'Rajdhani',sans-serif; color:grey;">NeuroNLP.Optic_Lobe</u>.
               </p>
               <a onmouseover="NeuroNLPUI.mimicMouseOver('#btn-getting-started')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-getting-started')" onclick="NeuroNLPUI.onShowAnnounce()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> FFBO News</a>
               <a onclick="NeuroNLPUI.onShowFeature()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> See What's New!</a>
               <br><br>
-              <h4>Quick Demos</h4>
-              <p>
-                Want to get started? Go check out some real-time "Demos" for NLP queries and GUI usage!
-              </p>
-              <a  onmouseover="NeuroNLPUI.mimicMouseOver('#btn-getting-started')" onmouseout="NeuroNLPUI.mimicMouseOut('#btn-getting-started')" onclick="NeuroNLPUI.onShowDemo()" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Try Demos!</a>
-              <br><br>
+              
               <!--
               <h4>Tutorial Video</h4>
               <p>
@@ -594,7 +599,8 @@
                   <p>
                     NeuroNLP is a query interface for navigating fruit fly brain datasets.
                     It enables in-depth explorations and investigations of the connectomic/synaptomic structure of the brain, using intuitive rule-based English queries, such as
-                    <a onclick="window.NLPsearch('show cholinergic neurons presynaptic to T4a neuron with at least 5 synapses')"><br><u style="font-style:italic">"show cholinergic neurons presynaptic to T4a neuron with at least 5 synapses".</u></br></a>
+                    <a onclick="window.NLPsearch('show Dm6 neuron with inputs in medulla column 10_10 and outputs in medulla column 15_15')"><br><u style="font-style:italic">"show Dm6 neuron with inputs in medulla column 10_10 and outputs in medulla column 15_15".</u></br></a>
+                  We provide detailed information on arborization, connectivity and neurotransmitter, which can all be specified as search constraints in the natural language queries.
                   </p>
                   <h5>Relevant Publications</h5>
                   <ul>
@@ -606,24 +612,29 @@
                 </article>
                 <images></images>
               </band>
-              <h4>What Data is Accessible in NeuroNLP.OpticLobe</h4>
+              <h4>What Data is Accessible in NeuroNLP.Optic_Lobe</h4>
               <band>
                 <article>
-                  <ul>Version 1.0 of the FIB19 dataset of the right eye and optic lobe of a 6-day post-eclosion female fruit fly is currently available.
-                    For more information, see <a target="_blank" href="https://doi.org/10.7554/eLife.40025">Kazunori Shinomiya et al., Comparisons between the ON- and OFF-edge motion pathways in the Drosophila brain. eLife 2019;8:e40025.</a>.
-                    The dataset contains:
-                    <li><strong>Neurons</strong>: 3D morphology, neuron name, type, data source, etc. All "segments" that are not fully traced in the FIB19 dataset are also included. Their names start with "segment". However, they can be only queried using the "BodyId" assigned in the FIB19 dataset. </li>
-                    <li><strong>Synapses</strong>:  presynaptic and postsynaptic partners of a neuron, number of synapses and locations of synapses. Synapses of a neuron with fragments that have no morphology are bunched together.</li>
-                  </ul>
+                  <ul>Version 1.0 of the Optic Lobe dataset is currently available.
+                    For more information, see <a target="_blank" href="https://doi.org/10.1101/2024.04.16.589741">Aljoscha Nern, et al., Connectome-driven neural inventory of a complete visual system.</a>.
+                    The dataset contains detailed information of the Drosophila <i>right optic lobe</i>, specifically:
+                       <h6>Neurons</h6><p>3D morphology, neuron name, type, neurotransmitter, transmitter probability, data source, etc. All "segments" that are not fully traced in the Optic Lobe dataset are also included. Their names start with "segment". However, they can be only queried using the "BodyID" assigned in the Optic Lobe dataset. </p>
+                    <h6>Synapses</h6><p>Presynaptic and postsynaptic partners of a neuron, number of synapses and locations of synapses. Synapses of a neuron with fragments that have no morphology are bunched together.</p>
+                    <h6>Regional Arborization</h6><p>Arborization of neurons specifiable with 'inputs' and 'outputs', the regions support neuropils, strata (layers) and columns in the medulla, lobula and lobula plate, and a few more neuropils involved in the visual system.</p> 
+                     <h6> Strata/layers in Medulla, Lobula and Lobula Plate</h6><p>This dataset supports defined layers or strata in the optic lobe neuropils. In medulla, we have 'medulla layer 1' or 'medulla stratum 1' or 'm1', for layers 1 through 10. In lobula, we have layers lo1, lo2, lo3, lo4, lo5a, lo5b, lo6, and in lopula plate, lop1 through 4"</p>
+                    <h6> Column addressable with pair indices defined on a Grid</h6><p>This dataset supports building circuits by querying neurons in Medulla, Lobula and Lobula Plate based on columns defined/addressed on a grid (strictly orthogonal in the medulla). Note that this is not retinotopically accurate within nor across neuropils, and a column defined as such would have more than one column-unique columar neurons such as L1. Syntax example: 'medulla column 15_15' or 'medulla column 15_15'.</p>
+                    <h6>Columns addressable with unique index defined on Hexagonal Ring</h6><p> We have added support for building circuits based on neurons in a column explicitly defined in the right Medulla with unique indexing on hexagonal rings (as shown in the <i>left figure</i>). This is only for columnar neurons that have a single instance in each medulla columns, including types C2, C3, L1, L2, l3, L5, Mi1, Mi4, Mi9, Tm1, Tm2, Tm9, and R7/8. Syntax example: 'medulla column 0' or 'medulla column_0'.<br> the rings can also be directly queried. Syntaxs example: 'medulla ring 0' or 'medulla ring_0'.</p>
 
-                  <p>The FIB19 dataset is licensed under <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">CC BY</a>.</p>
+                  </ul>
                   
                   <h5>Want to programmatically access the data visualized here and computationally explore their functional logic?</h5>
                   <p>
                     Try <a target="_blank" href="https://flybrainlab.fruitflybrain.org">FlyBrainLab</a>, an interactive computing platform for studying the function of executable circuits constructed from fruit fly brain data.
                   </p>
                 </article>
-                <images></images>
+                <images>
+                  <img src="/img/overview-panel/col_index.png"> </img>
+                </images>
               </band>
             </div>
 
@@ -643,7 +654,6 @@
                   <img src="/img/overview-panel/layout_release_overview.png"> </img>
                 </images>
               </band>
-
             </div>
 
             <div class="overview-text">
@@ -671,7 +681,7 @@
                       <li>Tags: a menu for creating and loading tags. Tags are 3d snapshots of stored visualization panels.</li>
                       <li>Neurons/Synapses: a menu displaying the visualized neurons and synapses, as well as a list of pinned neurons/synapses. Checkout the <a onclick="window.FFBODemoPlayer.startDemo('neuron_menu')">"Neurons/Synapses Menu" Demo</a> (GUI Usage #1 in the <a onclick="NeuroNLPUI.onShowDemo()">Demos</a>)</li>
                       <li>Neuropils: a menu of neuropils. Checkout the <a onclick="window.FFBODemoPlayer.startDemo('neuropil_menu')">"Neuropil Menu" Demo</a> (GUI Usage #1 in the <a onclick="NeuroNLPUI.onShowDemo()">Demos</a>)</li>
-                      <li>Cell Types: a list of cell types in the each of the neuropil in the FIB19 dataset. It provides an easy way to add neurons of different cell types directly, without using the search bar.</li>
+                      <li>Cell Types: a list of cell types in the each of the neuropil in the Optic Lobe dataset. It provides an easy way to add neurons of different cell types directly, without using the search bar.</li>
                     </ul>
                   </p>
                 </article>
@@ -722,7 +732,7 @@
                 <li>Better balance of performance and visualization in default rendering mode.</li>
                 <li>Change of synapse size is reflected immediately.</li>
               </ul>
-            <h5>Added FIB19 "Segments"</h5>
+            <h5>Added Optic Lobe "Segments"</h5>
              <p>
               "Segments" are fragments of neurons that have not been fully traced. Synapses to/from segments are listed in the pre/post-synaptic partners. If the morphology of a segment is available, it will appear in its own entry. All synapses from and to segments that have no morphology are grouped and listed in the entry, respectively, as segments_presynaptic_to_neuron_name and segments_postsynaptic_to_neuron_name.
               Segments and only segments have the word "segment" in their names. This can be used to filter them in the list.
@@ -774,51 +784,56 @@
                               and synapses,</li>
                       <li><span style="color: #88CDF5">undo</span>: undo your last query.</li>
                     </ul>
-                    <ul>Next, we explain the rules for defining the criterion of the query, using the verb show as an example. 
+                    <ul>Next, we explain the rules for defining the criterion of the query, using the verb show as an example.
                         <li><span style="color: #88CDF5">show cell-type neurons</span>: Shows the neurons of the cell type. Example:
                             <ul>
-                                <li><a onclick="window.NLPsearch('show Mi1')"><span style="color: #97ba67">show Mi1 neurons</span></a>, or simply <a onclick="window.NLPsearch('show Mi1')"><span style="color: #97ba67">show mi1</span></a>.</li>
+                                <li><a onclick="window.NLPsearch('show Mi1 neurons')"><span style="color: #97ba67">show Mi1 neurons</span></a>, or simply <a onclick="window.NLPsearch('show Mi1 neurons')"><span style="color: #97ba67">show Mi1</span></a>.</li>
                             </ul>
                         </li>
                         <li><span style="color: #88CDF5">show $string$ neurons</span>: Shows neurons with a name that contains the string. Example:
                             <ul>
-                                <li><a onclick="window.NLPsearch('show $T4a$ neurons')"><span style="color: #97ba67">show $T4a$ neurons</span></a>, or simply <a onclick="window.NLPsearch('show $T4a$')"><span style="color: #97ba67">show $T4a$</span></a>, will query any neuron whose name contain the string *T4a*.</li>
+                                <li><a onclick="window.NLPsearch('show $Mi1$ neurons')"><span style="color: #97ba67">show $Mi1$ neurons</span></a>, or simply <a onclick="window.NLPsearch('show $Mi1$')"><span style="color: #97ba67">show $Mi1$</span></a>, will query any neuron whose name contain the string *PEG*.</li>
                             </ul>
                         </li>
                         <li><span style="color: #88CDF5"></span>show /rstring/r neurons</span>: Show neurons whose name matches the regular expressing string (This requires some knowledge of how the neurons are named in each dataset). Example:
                             <ul>
-                                <li><a onclick="window.NLPsearch('show /rTm2-[A-C]/r neurons')"><span style="color: #97ba67">show /rTm2-[A-C]/r neurons</span></a>, or simply <a onclick="window.NLPsearch('show /rTm2-[A-C]/r')"><span style="color: #97ba67">show /rTm2-[A-C]/r</span></a> will show the PEG neurons that innervate PB glomerulus R1.</li>
+                                <li><a onclick="window.NLPsearch('show /r(.*)Mi1(.*)R1(.*)/r neurons')"><span style="color: #97ba67">show /r(.*)Mi1(.*)R1(.*)/r neurons</span></a>, or simply <a onclick="window.NLPsearch('show /r(.*)Mi1(.*)R1(.*)/r')"><span style="color: #97ba67">show /r(.*)Mi1(.*)R1(.*)/r</span></a> will show the PEG neurons that innervate PB glomerulus R1.</li>
+                            </ul>
+                        </li>
+                        <li><span style="color: #88CDF5">show neurons in|that innervate|that arborize in neuropil/subregion</span>: Shows neurons that has output or input in a neuropil or a subregion of a neuropil. Examples:
+                            <ul>
+                                <li><a onclick="window.NLPsearch('show Mi1 neurons in medulla column 0')"><span style="color: #97ba67">show Mi1 neurons in medulla column 0</span></a>, or using abbreviations <a onclick="window.NLPsearch('show Mi1 in med column 0')"><span style="color: #97ba67">show Mi1 in med column 0</span></a>,</li>
+                                <li><a onclick="window.NLPsearch('show Mi1 neurons that arborize in medulla column 15_15')"><span style="color: #97ba67">show Mi1 neurons that arborize in medulla column 15_15</span></a>.</li>
+                                <li><a onclick="window.NLPsearch('show neurons that innervate m2 and right PVLP')"><span style="color: #97ba67">show neurons that innervate m2 and right PVLP</span></a>. Note that this is different from <a onclick="window.NLPsearch('show neurons that innervate m2 and right PVLP')"><span style="color: #97ba67">show neurons that innervate m2 and right PVLP</span></a>.</li>
                             </ul>
                         </li>
                         <li><span style="color: #88CDF5">show neurons with|that have inputs|outputs in neuropil/subregion</span>: More specific then the previous query on the inputs or outputs. Examples:
                             <ul>
-                                <li><a onclick="window.NLPsearch('show neurons in column A with outputs in lobula')"><span style="color: #97ba67">show neurons in column A with outputs in lobula</span></a></li>
+                                <li><a onclick="window.NLPsearch('show MeTu neurons with inputs in M3')"><span style="color: #97ba67">show MeTu neurons with inputs in M3</span></a>,</li>
+                                <li><a onclick="window.NLPsearch('show LC9 neurons that have outputs in PVLP')"><span style="color: #97ba67">show LC9 neurons that have outputs in PVLP</span></a>,</li>
+                                <li><a onclick="window.NLPsearch('show neurons with inputs in medulla strata 2 and outputs in right PVLP')"><span style="color: #97ba67">show neurons with inputs in medulla layer 2 and outputs in right PVLP</span></a>, or equivalently <a onclick="window.NLPsearch('show neurons projecting from m2 to right PVLP')"><span style="color: #97ba67">show neurons projecting from medulla strata 2 to right PVLP</span></a>,</li>
+                                <li><a onclick="window.NLPsearch('show neurons that connect m2 and right PVLP')"><span style="color: #97ba67">show neurons that connect m2 and right PVLP</span></a>. Includes both the neurons that has inputs in medulla strata 2 and outputs in the right PVLP, and those has inputs in right PVLP and outputs in m2.</li>
                             </ul>
                         </li>
                         <li><span style="color: #88CDF5">show neurons presynaptic|postsynaptic to</span>: Shows the neurons that are presynaptic or postsynaptic to the neurons defined after the word to. Exmples:
                             <ul>
-                                <li><a onclick="window.NLPsearch('show neurons presynaptic to T4a in the home column')"><span style="color: #97ba67">show neurons presynaptic to $T4a-fb-home$</span></a>,</li>
-                                <li><a onclick="window.NLPsearch('show LPi1-2 postsynaptic to T4a with at least 5 synapses')"><span style="color: #97ba67">show LPi1-2 postsynaptic to T4a with at least 5 synapses</span></a>,</li>
+                                <li><span style="color: #97ba67">show neurons presynaptic to AOTU045</span>,</li>
+                                <li><span style="color: #97ba67">show $aMe$ presynaptic to KCs that innervate alpha'1 compartment</span></li>
+                                <li><span style="color: #97ba67">show DAN postsynaptic to MBONs with at least 30 synapses</span></li>
                             </ul>
                         </li>
                         <li><span style="color: #88CDF5">show presynaptic|postsynaptic neurons</span>: Shows the neurons that are presynaptic or postsynaptic to the neurons already in workspace. Examples:
                             <ul>
                                 <li><span style="color: #97ba67">show presynaptic neurons</span>,</li>
-                                <li><span style="color: #97ba67">show postsynaptic neurons with at least 10 synapses</span></li>
-                                <li><span style="color: #97ba67">show postynaptic Dm1</span></li>
-                            </ul>
-                        </li>
-                        <li><span style="color: #88CDF5">show neurotransmitter neurons</span>: Shows the neurons that express the neurotramsitter. Examples:
-                            <ul>
-                                <li><a onclick="window.NLPsearch('show GABAergic neurons')"><span style="color: #97ba67">show GABAergic neurons</span></a></li>
-                                <li><span style="color: #97ba67">show cholinergic presynaptic neurons</span></li>
+                                <li><span style="color: #97ba67">show postsynaptic neurons with at least 10 synapses</span>,</li>
+                                <li><span style="color: #97ba67">show postynaptic T4a that innervate gamma lobe with at least 5 synapses</span>. This searches for MBONs that satisfy: 1) postsyantpic to the neurons in the workspace with at least 5 synapses and 2) innervate gamma lobe of the mushroom body.</li>
                             </ul>
                         </li>
                     </ul>
                     <ul>Other short-hands:
-                        <li><span style="color: #88CDF5">show /:referenceId:[300, 1435702187]</span>: Shows the neurons whose referenceId in the original dataset is in the list. It can be used similar to \$ \\$ and regular expression and combined with other types of criteria. Examples:
+                        <li><span style="color: #88CDF5">show /:referenceId:[38366, 39841]</span>: Shows the neurons whose referenceId in the original dataset is in the list. It can be used similar to \$ \\$ and regular expression and combined with other types of criteria. Examples:
                             <ul>
-                                <li><a onclick="window.NLPsearch('show /:referenceId:[300, 1435702187]')"><span style="color: #97ba67">show /:referenceId:[30465, 7892]</span></a></li>
+                                <li><a onclick="window.NLPsearch('show /:referenceId:[38366, 39841]')"><span style="color: #97ba67">show /:referenceId:[38366, 39841]</span></a></li>
                             </ul>
                         </li>
                     </ul>
@@ -931,6 +946,9 @@
                   <li>
                    <i class="fa fa-download"></i>:  Download the graph in CSV format, that includes the pre-synaptic neuron name, post-synaptic neuron name and the number of synapses on each row.
                   </li>
+                  <li>
+                   <i class="fa fa-image" onclick="NeuroNLPUI.viewMedullaColumnIndex()" title="View Medulla Column Index"></i>
+                  </li>
                 </ul>
               </article>
               <images>
@@ -988,10 +1006,16 @@
         </div>
         <div id="neuronlp-switch" class="overlay">
           <div class="neuronlp-switch-wrapper">
-            <a class="info-try btn btn-xs" onclick="NeuroNLPUI.closeAllOverlay()">Stay at <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #FFEF35;">NeuroNLP.FIB19</span></a>
+            <a class="info-try btn btn-xs" onclick="NeuroNLPUI.closeAllOverlay()">Stay at <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #FFEF35;">NeuroNLP.Optic_Lobe</span></a>
             <h5>Or</h5>
             <a class="info-try btn btn-xs" href="https://neuronlp.fruitflybrain.org">Switch to <span style="font-family:'Rajdhani',sans-serif; font-size: 15px; color: #FFEF35;">NeuroNLP.FlyCircuit</span></a>
           </div>
+        </div>
+        
+        <div id="medulla-column-index" class="overlay-container" style="display: none;">
+            <div class="overlay-content" style="height: 400px; max-height: 90%; margin: auto;">
+                <img src="img/col_index.svg" alt="Medulla Column Index" style="width: 100%; height: auto;">
+            </div>
         </div>
 
         <div id="announce-panel" class="overlay">

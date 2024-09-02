@@ -402,7 +402,7 @@
     "script": [
       ["notify", {"message": "Hi there!"}],
       ["notify", {"message": "Let's display two L1 neuron"}],
-      ["search", {"query": "show /:referenceId:[38366, 39841]"}],
+      ["search", {"query": "show /:referenceId:[38366, 39841, ...]"}],
       ["click", {"uiBtn": {"type": "resetVisibleView"}}],
       ["notify", {"message": "Try it yourself!", "pause": 0}]
     ],
