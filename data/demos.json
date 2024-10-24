@@ -377,10 +377,10 @@
       ["search", {"query": "color DM4_adPN blue"}],
       ["notify", {"message": "We can also add synapses. For example, let's add all postsynaptic sites of this neuron and color them white."}],
       ["click", {"selector": "#btn-pre-add-all-synapse"}],
-      ["search", {"query": "color red"}],
+      ["search", {"query": "color white"}],
       ["notify", {"message": "We then add all presynaptic sites of this neuron and color them yellow."}],
       ["click", {"selector": "#btn-post-add-all-synapse"}],
-      ["search", {"query": "color lime"}],
+      ["search", {"query": "color yellow"}],
       ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
     ],
     "keyword": "Info Panel",
