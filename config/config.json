@@ -30,7 +30,7 @@
       "highlightedObjectOpacity": 1.0,
       "defaultRadius": 1.0,
       "defaultSomaRadius": 3.0,
-      "defaultSynapseRadius": 0.2,
+      "defaultSynapseRadius": 0.5,
       "RadiusRange": [0.01, 10.0],
       "SomaRadiusRange": [1.0, 10.0],
       "SynapseRadiusRange": [0.1, 1.0],
