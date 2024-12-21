@@ -6,7 +6,7 @@
     "ROB(R)": {
       "filename": "lib/mesh/optic_lobe/ROB_R_.json",
       "label": "ROB(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -17,7 +17,7 @@
     "PED(R)": {
       "filename": "lib/mesh/optic_lobe/PED_R_.json",
       "label": "PED(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -28,7 +28,7 @@
     "AOTU(L)": {
       "filename": "lib/mesh/optic_lobe/AOTU_L_.json",
       "label": "AOTU(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -39,7 +39,7 @@
     "gL(L)": {
       "filename": "lib/mesh/optic_lobe/gL_L_.json",
       "label": "gL(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -50,7 +50,7 @@
     "AVLP(L)": {
       "filename": "lib/mesh/optic_lobe/AVLP_L_.json",
       "label": "AVLP(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -61,7 +61,7 @@
     "GA(L)": {
       "filename": "lib/mesh/optic_lobe/GA_L_.json",
       "label": "GA(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -72,7 +72,7 @@
     "AME(L)": {
       "filename": "lib/mesh/optic_lobe/AME_L_.json",
       "label": "AME(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -83,7 +83,7 @@
     "SPS(R)": {
       "filename": "lib/mesh/optic_lobe/SPS_R_.json",
       "label": "SPS(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -94,7 +94,7 @@
     "LAL(R)": {
       "filename": "lib/mesh/optic_lobe/LAL_R_.json",
       "label": "LAL(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -105,7 +105,7 @@
     "VES(L)": {
       "filename": "lib/mesh/optic_lobe/VES_L_.json",
       "label": "VES(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -116,7 +116,7 @@
     "EPA(L)": {
       "filename": "lib/mesh/optic_lobe/EPA_L_.json",
       "label": "EPA(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -127,7 +127,7 @@
     "SCL(L)": {
       "filename": "lib/mesh/optic_lobe/SCL_L_.json",
       "label": "SCL(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -138,7 +138,7 @@
     "LO(L)": {
       "filename": "lib/mesh/optic_lobe/LO_L_.json",
       "label": "LO(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -149,7 +149,7 @@
     "SMP(R)": {
       "filename": "lib/mesh/optic_lobe/SMP_R_.json",
       "label": "SMP(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -160,7 +160,7 @@
     "PB": {
       "filename": "lib/mesh/optic_lobe/PB.json",
       "label": "PB",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -171,7 +171,7 @@
     "ME(L)": {
       "filename": "lib/mesh/optic_lobe/ME_L_.json",
       "label": "ME(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -182,7 +182,7 @@
     "BU(L)": {
       "filename": "lib/mesh/optic_lobe/BU_L_.json",
       "label": "BU(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -193,7 +193,7 @@
     "ROB(L)": {
       "filename": "lib/mesh/optic_lobe/ROB_L_.json",
       "label": "ROB(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -204,7 +204,7 @@
     "LA(L)": {
       "filename": "lib/mesh/optic_lobe/LA_L_.json",
       "label": "LA(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -215,7 +215,7 @@
     "SIP(R)": {
       "filename": "lib/mesh/optic_lobe/SIP_R_.json",
       "label": "SIP(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -226,7 +226,7 @@
     "CRE(L)": {
       "filename": "lib/mesh/optic_lobe/CRE_L_.json",
       "label": "CRE(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -237,7 +237,7 @@
     "SAD": {
       "filename": "lib/mesh/optic_lobe/SAD.json",
       "label": "SAD",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -248,7 +248,7 @@
     "GA(R)": {
       "filename": "lib/mesh/optic_lobe/GA_R_.json",
       "label": "GA(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -259,7 +259,7 @@
     "bL(R)": {
       "filename": "lib/mesh/optic_lobe/bL_R_.json",
       "label": "bL(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -270,7 +270,7 @@
     "AMMC(L)": {
       "filename": "lib/mesh/optic_lobe/AMMC_L_.json",
       "label": "AMMC(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -281,7 +281,7 @@
     "IPS(R)": {
       "filename": "lib/mesh/optic_lobe/IPS_R_.json",
       "label": "IPS(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -292,7 +292,7 @@
     "FLA(R)": {
       "filename": "lib/mesh/optic_lobe/FLA_R_.json",
       "label": "FLA(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -303,7 +303,7 @@
     "SCL(R)": {
       "filename": "lib/mesh/optic_lobe/SCL_R_.json",
       "label": "SCL(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -314,7 +314,7 @@
     "SLP(R)": {
       "filename": "lib/mesh/optic_lobe/SLP_R_.json",
       "label": "SLP(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -325,7 +325,7 @@
     "LH(L)": {
       "filename": "lib/mesh/optic_lobe/LH_L_.json",
       "label": "LH(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -336,7 +336,7 @@
     "AVLP(R)": {
       "filename": "lib/mesh/optic_lobe/AVLP_R_.json",
       "label": "AVLP(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -347,7 +347,7 @@
     "CAN(R)": {
       "filename": "lib/mesh/optic_lobe/CAN_R_.json",
       "label": "CAN(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -358,7 +358,7 @@
     "RUB(L)": {
       "filename": "lib/mesh/optic_lobe/RUB_L_.json",
       "label": "RUB(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -369,7 +369,7 @@
     "WED(L)": {
       "filename": "lib/mesh/optic_lobe/WED_L_.json",
       "label": "WED(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -380,7 +380,7 @@
     "WED(R)": {
       "filename": "lib/mesh/optic_lobe/WED_R_.json",
       "label": "WED(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -391,7 +391,7 @@
     "ICL(L)": {
       "filename": "lib/mesh/optic_lobe/ICL_L_.json",
       "label": "ICL(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -402,7 +402,7 @@
     "BU(R)": {
       "filename": "lib/mesh/optic_lobe/BU_R_.json",
       "label": "BU(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -413,7 +413,7 @@
     "AL(L)": {
       "filename": "lib/mesh/optic_lobe/AL_L_.json",
       "label": "AL(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -424,7 +424,7 @@
     "FB": {
       "filename": "lib/mesh/optic_lobe/FB.json",
       "label": "FB",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -435,7 +435,7 @@
     "LH(R)": {
       "filename": "lib/mesh/optic_lobe/LH_R_.json",
       "label": "LH(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -446,7 +446,7 @@
     "SMP(L)": {
       "filename": "lib/mesh/optic_lobe/SMP_L_.json",
       "label": "SMP(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -457,7 +457,7 @@
     "NO": {
       "filename": "lib/mesh/optic_lobe/NO.json",
       "label": "NO",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -468,7 +468,7 @@
     "ME(R)": {
       "filename": "lib/mesh/optic_lobe/ME_R_.json",
       "label": "ME(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -479,7 +479,7 @@
     "LO(R)": {
       "filename": "lib/mesh/optic_lobe/LO_R_.json",
       "label": "LO(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -490,7 +490,7 @@
     "PVLP(L)": {
       "filename": "lib/mesh/optic_lobe/PVLP_L_.json",
       "label": "PVLP(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -501,7 +501,7 @@
     "GNG": {
       "filename": "lib/mesh/optic_lobe/GNG.json",
       "label": "GNG",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -512,7 +512,7 @@
     "GOR(R)": {
       "filename": "lib/mesh/optic_lobe/GOR_R_.json",
       "label": "GOR(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -523,7 +523,7 @@
     "EB": {
       "filename": "lib/mesh/optic_lobe/EB.json",
       "label": "EB",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -534,7 +534,7 @@
     "VES(R)": {
       "filename": "lib/mesh/optic_lobe/VES_R_.json",
       "label": "VES(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -545,7 +545,7 @@
     "LOP(R)": {
       "filename": "lib/mesh/optic_lobe/LOP_R_.json",
       "label": "LOP(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -556,7 +556,7 @@
     "LOP(L)": {
       "filename": "lib/mesh/optic_lobe/LOP_L_.json",
       "label": "LOP(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -567,7 +567,7 @@
     "CRE(R)": {
       "filename": "lib/mesh/optic_lobe/CRE_R_.json",
       "label": "CRE(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -578,7 +578,7 @@
     "ICL(R)": {
       "filename": "lib/mesh/optic_lobe/ICL_R_.json",
       "label": "ICL(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -589,7 +589,7 @@
     "LA(R)": {
       "filename": "lib/mesh/optic_lobe/LA_R_.json",
       "label": "LA(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -600,7 +600,7 @@
     "SPS(L)": {
       "filename": "lib/mesh/optic_lobe/SPS_L_.json",
       "label": "SPS(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -611,7 +611,7 @@
     "SIP(L)": {
       "filename": "lib/mesh/optic_lobe/SIP_L_.json",
       "label": "SIP(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -622,7 +622,7 @@
     "AOTU(R)": {
       "filename": "lib/mesh/optic_lobe/AOTU_R_.json",
       "label": "AOTU(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -633,7 +633,7 @@
     "CAN(L)": {
       "filename": "lib/mesh/optic_lobe/CAN_L_.json",
       "label": "CAN(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -644,7 +644,7 @@
     "ATL(R)": {
       "filename": "lib/mesh/optic_lobe/ATL_R_.json",
       "label": "ATL(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -655,7 +655,7 @@
     "CA(L)": {
       "filename": "lib/mesh/optic_lobe/CA_L_.json",
       "label": "CA(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -666,7 +666,7 @@
     "bL(L)": {
       "filename": "lib/mesh/optic_lobe/bL_L_.json",
       "label": "bL(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -677,7 +677,7 @@
     "AMMC(R)": {
       "filename": "lib/mesh/optic_lobe/AMMC_R_.json",
       "label": "AMMC(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -688,7 +688,7 @@
     "LAL(L)": {
       "filename": "lib/mesh/optic_lobe/LAL_L_.json",
       "label": "LAL(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -699,7 +699,7 @@
     "aL(L)": {
       "filename": "lib/mesh/optic_lobe/aL_L_.json",
       "label": "aL(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -710,7 +710,7 @@
     "GOR(L)": {
       "filename": "lib/mesh/optic_lobe/GOR_L_.json",
       "label": "GOR(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -721,7 +721,7 @@
     "AL(R)": {
       "filename": "lib/mesh/optic_lobe/AL_R_.json",
       "label": "AL(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -732,7 +732,7 @@
     "PLP(L)": {
       "filename": "lib/mesh/optic_lobe/PLP_L_.json",
       "label": "PLP(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -743,7 +743,7 @@
     "PVLP(R)": {
       "filename": "lib/mesh/optic_lobe/PVLP_R_.json",
       "label": "PVLP(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -754,7 +754,7 @@
     "RUB(R)": {
       "filename": "lib/mesh/optic_lobe/RUB_R_.json",
       "label": "RUB(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -765,7 +765,7 @@
     "CA(R)": {
       "filename": "lib/mesh/optic_lobe/CA_R_.json",
       "label": "CA(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -776,7 +776,7 @@
     "aL(R)": {
       "filename": "lib/mesh/optic_lobe/aL_R_.json",
       "label": "aL(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -787,7 +787,7 @@
     "EPA(R)": {
       "filename": "lib/mesh/optic_lobe/EPA_R_.json",
       "label": "EPA(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -798,7 +798,7 @@
     "FLA(L)": {
       "filename": "lib/mesh/optic_lobe/FLA_L_.json",
       "label": "FLA(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -809,7 +809,7 @@
     "IPS(L)": {
       "filename": "lib/mesh/optic_lobe/IPS_L_.json",
       "label": "IPS(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -820,7 +820,7 @@
     "IB": {
       "filename": "lib/mesh/optic_lobe/IB.json",
       "label": "IB",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -831,7 +831,7 @@
     "gL(R)": {
       "filename": "lib/mesh/optic_lobe/gL_R_.json",
       "label": "gL(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -842,7 +842,7 @@
     "SLP(L)": {
       "filename": "lib/mesh/optic_lobe/SLP_L_.json",
       "label": "SLP(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -853,7 +853,7 @@
     "PLP(R)": {
       "filename": "lib/mesh/optic_lobe/PLP_R_.json",
       "label": "PLP(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -864,7 +864,7 @@
     "PED(L)": {
       "filename": "lib/mesh/optic_lobe/PED_L_.json",
       "label": "PED(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -875,7 +875,7 @@
     "ATL(L)": {
       "filename": "lib/mesh/optic_lobe/ATL_L_.json",
       "label": "ATL(L)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -886,7 +886,7 @@
     "PRW": {
       "filename": "lib/mesh/optic_lobe/PRW.json",
       "label": "PRW",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
@@ -897,7 +897,7 @@
     "AME(R)": {
       "filename": "lib/mesh/optic_lobe/AME_R_.json",
       "label": "AME(R)",
-      "highlight": false,
+      "highlight": true,
       "background": true,
       "color": [
         0.15,
