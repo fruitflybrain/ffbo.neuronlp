@@ -9,15 +9,20 @@
   "datasetIdName": "FlyWire ID",
   "metadata": {
     "enablePositionReset": true,
-    "resetPosition":{
-      "x":426.38,
-      "y":259.16,
-      "z":-1779.122
+    "resetPosition": {
+      "x": 554.39,
+      "y": 253.97,
+      "z": -1826.30
     },
-    "resetUp":{
-      "x":-0.0509,
-      "y":-0.3273,
-      "z":-0.72306
+    "resetUp": {
+      "x": 0.0065,
+      "y": -0.3298,
+      "z": -0.7237
+    },
+    "cameraTarget": {
+      "x": 499.24,
+      "y": 254.14,
+      "z": 134.86
     },
     "neu3dSettings": {
       "defaultOpacity": 0.7,
