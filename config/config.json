@@ -10,14 +10,19 @@
   "metadata": {
     "enablePositionReset": true,
     "resetPosition": {
-      "x": -1500.0,
-      "y": 664.680,
-      "z": 2083.338
+      "x": -1016.55,
+      "y": 537.43,
+      "z": 1577.88
     },
     "resetUp": {
-      "x": 0.4230,
+      "x": 0.423,
       "y": -0.8500,
       "z": 0.1780
+    },
+    "cameraTarget": {
+      "x": 177.88,
+      "y": 223.04,
+      "z": 329.09
     },
     "neu3dSettings": {
       "defaultOpacity": 0.7,
