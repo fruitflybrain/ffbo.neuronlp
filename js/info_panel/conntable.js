@@ -174,11 +174,12 @@ moduleExporter("ConnTable",
       let preTableData = {};
       let preTypeData = {};
 
-      for(x in data['pre']['details']){ // loop through all partners
-        d = data['pre']['details'][x];
-        let uname = ('uname' in d) ? d['uname'] : d['name'];
-        let name = d['name'];
-        let N = ('number' in d) ? d['number'] : 0;
+      for(const x in data['pre']['details']){ // loop through all partners
+        const d = data['pre']['details'][x];
+        const uname = ('uname' in d) ? d['uname'] : d['name'];
+        const name = d['name'];
+        const N = ('number' in d) ? d['number'] : 0;
+
         preTableData[uname] = {
           'name': name,
           'N': N
@@ -206,19 +207,20 @@ moduleExporter("ConnTable",
           preTableData[uname]['syn_rid'] = d['syn_rid'];
           preTypeData[name]['s_rids'].push(d['s_rid']);
         }
-
-        let entries = Object.entries(preTypeData);
-        entries.sort(([keyA, valA], [keyB, valB]) => {
-          return valA.N - valB.N;
-        });
-        this.preTypeData = Object.fromEntries(entries);
-
-        entries = Object.entries(preTableData);
-        entries.sort(([keyA, valA], [keyB, valB]) => {
-          return valA.N - valB.N;
-        });
-        this.preTableData = Object.fromEntries(entries);
       }
+
+      let entries = Object.entries(preTypeData);
+      entries.sort(([keyA, valA], [keyB, valB]) => {
+        return valA.N - valB.N;
+      });
+      this.preTypeData = Object.fromEntries(entries);
+
+      entries = Object.entries(preTableData);
+      entries.sort(([keyA, valA], [keyB, valB]) => {
+        return valA.N - valB.N;
+      });
+      this.preTableData = Object.fromEntries(entries);
+    
     } else {
       this.preTypeData = {};
       this.preTableData = {};
@@ -227,11 +229,11 @@ moduleExporter("ConnTable",
     if ('post' in data ) {
       let postTableData = {};
       let postTypeData = {};
-      for(x in data['post']['details']){ // loop through all partners
-        d = data['post']['details'][x];
-        let uname = ('uname' in d) ? d['uname'] : d['name'];
-        let name = d['name'];
-        let N = ('number' in d) ? d['number'] : 0;
+      for(const x in data['post']['details']){ // loop through all partners
+        const d = data['post']['details'][x];
+        const uname = ('uname' in d) ? d['uname'] : d['name'];
+        const name = d['name'];
+        const N = ('number' in d) ? d['number'] : 0;
         postTableData[uname] = {
           'name': name,
           'N': N,
@@ -259,19 +261,19 @@ moduleExporter("ConnTable",
           postTableData[uname]['syn_rid'] = d['syn_rid'];
           postTypeData[name]['s_rids'].push(d['s_rid']);
         }
-
-        let entries = Object.entries(postTypeData);
-        entries.sort(([keyA, valA], [keyB, valB]) => {
-          return valA.N - valB.N;
-        });
-        this.postTypeData = Object.fromEntries(entries);
-
-        entries = Object.entries(postTableData);
-        entries.sort(([keyA, valA], [keyB, valB]) => {
-          return valA.N - valB.N;
-        });
-        this.postTableData = Object.fromEntries(entries);
       }
+
+      let entries = Object.entries(postTypeData);
+      entries.sort(([keyA, valA], [keyB, valB]) => {
+        return valA.N - valB.N;
+      });
+      this.postTypeData = Object.fromEntries(entries);
+
+      entries = Object.entries(postTableData);
+      entries.sort(([keyA, valA], [keyB, valB]) => {
+        return valA.N - valB.N;
+      });
+      this.postTableData = Object.fromEntries(entries);
     } else {
       this.postTypeData = {};
       this.postTableData = {};
