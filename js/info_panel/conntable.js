@@ -186,7 +186,15 @@ moduleExporter("ConnTable",
         };
 
         if (!(name in preTypeData)) {
-          preTypeData[name] = {'unames': [],  'N': 0, 'count': 0, 'n_rids': [], 's_rids': []};
+          preTypeData[name] = {
+            'unames': [], 
+            'N': 0,
+            'count': 0,
+            'n_rids': [],
+            'o_rids': [],
+            's_rids': [],
+            'syn_rids': []
+          };
         }
         
         preTypeData[name]['unames'].push(uname);
@@ -198,6 +206,7 @@ moduleExporter("ConnTable",
           preTableData[uname]['orid'] = d['rid'];
           preTableData[uname]['has_morph'] = true;
           preTypeData[name]['n_rids'].push(d['n_rid']);
+          preTypeData[name]['o_rids'].push(d['rid']);
         }
   
         if(d['has_syn_morph'] && 'syn_uname' in d){
@@ -206,6 +215,7 @@ moduleExporter("ConnTable",
           preTableData[uname]['s_rid'] = d['s_rid'];
           preTableData[uname]['syn_rid'] = d['syn_rid'];
           preTypeData[name]['s_rids'].push(d['s_rid']);
+          preTypeData[name]['syn_rids'].push(d['syn_rid']);
         }
       }
 
@@ -241,7 +251,15 @@ moduleExporter("ConnTable",
         };
         
         if (!(name in postTypeData)) {
-          postTypeData[name] = {'unames': [],  'N': 0, 'count': 0, 'n_rids': [], 's_rids': []};
+          postTypeData[name] = {
+            'unames': [], 
+            'N': 0,
+            'count': 0,
+            'n_rids': [],
+            'o_rids': [],
+            's_rids': [],
+            'syn_rids': []
+          };
         }
         postTypeData[name]['unames'].push(uname);
         postTypeData[name]['N'] += N;
@@ -252,6 +270,7 @@ moduleExporter("ConnTable",
           postTableData[uname]['orid'] = d['rid'];
           postTableData[uname]['has_morph'] = true;
           postTypeData[name]['n_rids'].push(d['n_rid']);
+          postTypeData[name]['o_rids'].push(d['rid']);
         }
   
         if(d['has_syn_morph'] && 'syn_uname' in d){
@@ -260,6 +279,7 @@ moduleExporter("ConnTable",
           postTableData[uname]['s_rid'] = d['s_rid'];
           postTableData[uname]['syn_rid'] = d['syn_rid'];
           postTypeData[name]['s_rids'].push(d['s_rid']);
+          postTypeData[name]['syn_rids'].push(d['syn_rid']);
         }
       }
 
@@ -339,58 +359,66 @@ moduleExporter("ConnTable",
         c1.innerHTML = disp_name + ' - (' + typeData[name]['count'] + ')';
         c2.innerHTML = N;
 
-        let btn = document.createElement('button');
-        btn.className = 'btn';
-        btn.className += ' btn-add btn-success';
-        btn.innerText = '+';
-        
-        btn.id = (connDir==='pre') ? 'btn-pre-add-type-' + name : 'btn-post-add-type' + name;
-        btn.name = name;
-        btn.rid = typeData[name]['n_rids'];
-
         if (typeData[name]['n_rids'].length > 0) {
-          neuron_add = true;
+
+          let btn = document.createElement('button');
+          btn.className = 'btn';
+          btn.className += ' btn-add btn-type btn-success';
+          btn.innerText = '+';
+          
+          btn.id = (connDir==='pre') ? 'btn-pre-add-type-' + name : 'btn-post-add-type' + name;
+          btn.name = name;
+          btn.rid = typeData[name]['n_rids'];
+          btn.orid = typeData[name]['o_rids'];
+
+          if (typeData[name]['n_rids'].length > 0) {
+            neuron_add = true;
+          }
+
+          c3.appendChild(btn);
+
+          btn = document.createElement('button');
+          btn.className = 'btn';
+          btn.className += ' btn-remove btn-type btn-danger';
+          btn.innerText = '-';
+          
+          btn.id = (connDir==='pre') ? 'btn-pre-remove-type-' + name : 'btn-post-remove-type' + name;
+          btn.name = name;
+          btn.rid = typeData[name]['n_rids'];
+          btn.orid = typeData[name]['o_rids'];
+
+          c3.appendChild(btn);
         }
-
-        c3.appendChild(btn);
-
-        btn = document.createElement('button');
-        btn.className = 'btn';
-        btn.className += ' btn-remove btn-danger';
-        btn.innerText = '-';
-        
-        btn.id = (connDir==='pre') ? 'btn-pre-remove-type-' + name : 'btn-post-remove-type' + name;
-        btn.name = name;
-        btn.rid = typeData[name]['n_rids'];
-
-        c3.appendChild(btn);
-
-        btn = document.createElement('button');
-        btn.className = 'btn';
-        btn.className += ' btn-add btn-success';
-        btn.innerText = '+';
-        
-        btn.id = (connDir==='pre') ? 'btn-pre-syn-add-type-' + name : 'btn-post-syn-add-type' + name;
-        btn.name = name;
-        btn.rid = typeData[name]['s_rids'];
 
         if (typeData[name]['s_rids'].length > 0) {
-          synapse_add = true;
+          btn = document.createElement('button');
+          btn.className = 'btn';
+          btn.className += ' btn-add btn-type btn-success';
+          btn.innerText = '+';
+          
+          btn.id = (connDir==='pre') ? 'btn-pre-syn-add-type-' + name : 'btn-post-syn-add-type' + name;
+          btn.name = name;
+          btn.rid = typeData[name]['s_rids'];
+          btn.orid = typeData[name]['syn_rids'];
+
+          if (typeData[name]['s_rids'].length > 0) {
+            synapse_add = true;
+          }
+
+          c4.appendChild(btn);
+
+          btn = document.createElement('button');
+          btn.className = 'btn';
+          btn.className += ' btn-remove btn-type btn-danger';
+          btn.innerText = '-';
+          
+          btn.id = (connDir==='pre') ? 'btn-pre-syn-remove-type-' + name : 'btn-post-syn-remove-type' + name;
+          btn.name = name;
+          btn.rid = typeData[name]['s_rids'];
+          btn.orid = typeData[name]['syn_rids'];
+
+          c4.appendChild(btn);
         }
-
-        c4.appendChild(btn);
-
-        btn = document.createElement('button');
-        btn.className = 'btn';
-        btn.className += ' btn-remove btn-danger';
-        btn.innerText = '-';
-        
-        btn.id = (connDir==='pre') ? 'btn-pre-syn-remove-type-' + name : 'btn-post-syn-remove-type' + name;
-        btn.name = name;
-        btn.rid = typeData[name]['s_rids'];
-
-        c4.appendChild(btn);
-
       }
     } else {
       for (var uname in tableData) {
@@ -844,13 +872,21 @@ moduleExporter("ConnTable",
         } else{}
     })
     .mouseenter( function() {
-      if (this.className.includes('remove')) {
+      if (this.className.includes('btn-type')) {
         that.parentObj.highlight(this.orid);
+      } else {
+        if (this.className.includes('remove')) {
+          that.parentObj.highlight(this.orid);
+        }
       }
     })
     .mouseleave( function() {
-      if (this.className.includes('remove')) {
+      if (this.className.includes('btn-type')) {
         that.parentObj.resume();
+      } else {
+        if (this.className.includes('remove')) {
+          that.parentObj.resume();
+        }
       }
     });
 
