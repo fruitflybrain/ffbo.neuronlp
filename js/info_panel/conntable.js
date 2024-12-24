@@ -666,7 +666,7 @@ moduleExporter("ConnTable",
     $("#pregroup-toggle-checkbox").prop("checked", that.preGroupByName);
     $("#postgroup-toggle-checkbox").prop("checked", that.postGroupByName);
 
-    $("#"+that.divId + " button").click(function(){
+    $("#"+that.divId + " button").off("click").on("click", function(){
         if(this.name.includes('pre-add-all')){
           const rid_list = that.get_table_list('add', 'pre', this.name.includes('neuron') ? 'neuron' : 'synapse');
           that.parentObj.addByRid(rid_list);
@@ -677,7 +677,7 @@ moduleExporter("ConnTable",
           const rid_list = that.get_table_list('add', 'post', this.name.includes('neuron') ? 'neuron' : 'synapse');
           that.parentObj.addByRid(rid_list);
         }else if(this.name.includes('post-remove-all')){
-          const rid_list = that.get_table_list('remove', 'pre', this.name.includes('neuron') ? 'neuron' : 'synapse');
+          const rid_list = that.get_table_list('remove', 'post', this.name.includes('neuron') ? 'neuron' : 'synapse');
           that.parentObj.removeByRid(rid_list);
         } else if (this.className.includes('btn-type') ) { // group add/remove button
           if (this.className.includes('add')) {
@@ -810,7 +810,11 @@ moduleExporter("ConnTable",
           if (cc) {
             if (addremovehighlight === 'add'){
               if ( groupName ){
-                rid_list.push(...Object.keys(cc.rid));
+                for (let [rid, orid] of Object.entries(cc.rid)) {
+                  if (!this.parentObj.isInWorkspace(orid) ) {
+                    rid_list.push(rid);
+                  }
+                }
               } else {
                 if (cc.className.includes('add')){
                   rid_list.push(...Object.keys(cc.rid));
@@ -818,7 +822,11 @@ moduleExporter("ConnTable",
               }
             } else if (addremovehighlight === 'remove'){
               if ( groupName ){
-                rid_list.push(...Object.keys(cc.rid));
+                for (let [rid, orid] of Object.entries(cc.rid)) {
+                  if (this.parentObj.isInWorkspace(orid) ) {
+                    rid_list.push(rid);
+                  }
+                }
               } else {
                 if (cc.className.includes('remove')){
                   rid_list.push(...Object.keys(cc.rid));
@@ -826,7 +834,11 @@ moduleExporter("ConnTable",
               }
             } else if (addremovehighlight === 'highlight'){
               if ( groupName ){
-                rid_list.push(...Object.values(cc.rid));
+                for (let [rid, orid] of Object.entries(cc.rid)) {
+                  if (this.parentObj.isInWorkspace(orid) ) {
+                    rid_list.push(orid);
+                  }
+                }
               } else {
                 if (cc.className.includes('remove')){
                   rid_list.push(...Object.values(cc.rid));
