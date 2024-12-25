@@ -74,13 +74,13 @@ moduleExporter("InfoPanel",[
     // innerhtml += '<div id="info-panel-summary-extra"></div>';  // summary
     template += '<div id="' + obj.connSVGId + '"></div>';  // SVG
     template += '<div id="' + obj.connTableId + '"></div>';
-    template += '<div class="slider-bar ui-draggable ui-draggable-handle" draggable="true" id="info_panel_dragger"></div>';
+    //template += '<div class="slider-bar ui-draggable ui-draggable-handle" draggable="true" id="info_panel_dragger"></div>';
     return template;
   }
 
 
   /**
-   * Reset to detaul HTML
+   * Reset to default HTML
    */
   InfoPanel.prototype.reset = function (){
     // purge div and add table
@@ -238,15 +238,15 @@ moduleExporter("InfoPanel",[
     }else{
       this.name = new_name;
 
-      if ('connectivity' in data){ // synapse data does not have connectivity
-        if (data['summary']['class'] == 'Neuron') {
+      if ('connectivity' in data){ 
+        if (data['summary']['class'] === 'Neuron') { // neuron
             this.connSVG.update(data['connectivity']);
-            this.connTable.update(data['connectivity']);
+            this.connTable.update(data['connectivity'], data['summary']['class']);
             this.summaryTable.update(data['summary']);
             this.show();
-        }else{
+        }else{ // synapse
             this.connSVG.hide();
-            this.connTable.update(data['connectivity']);
+            this.connTable.update(data['connectivity'], data['summary']['class']);
             this.summaryTable.update(data['summary']);
             this.connTable.show();
             this.summaryTable.show(); //show all

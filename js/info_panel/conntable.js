@@ -12,6 +12,27 @@ if( moduleExporter === undefined){
   };
 }
 
+var decodeEntities = (function() {
+  // this prevents any overhead from creating the object each time
+  var element = document.createElement('div');
+
+  function decodeHTMLEntities (str) {
+    if(str && typeof str === 'string') {
+      // strip script/html tags
+      str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
+      str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
+      element.innerHTML = str;
+      str = element.textContent;
+      element.textContent = '';
+    }
+
+    return str;
+  }
+
+  return decodeHTMLEntities;
+})();
+
+
 moduleExporter("ConnTable",
   ['jquery',
   'd3',
@@ -54,7 +75,21 @@ moduleExporter("ConnTable",
 
     this.parentObj = parentObj;
 
-    let overlayText = `<h3>Inferred Synaptic Partners</h3><p>Inferred synaptic partners are marked by &dagger; </p><p>The synaptic partners are inferred according to <a target="_blank" href="https://doi.org/10.3389/fninf.2018.00099">Yu-Chi Huang et al., A Single-Cell Level and Connectome-Derived Computational Model of the Drosophila Brain. Front. Neuroinform. 2019, 12:99</a>.</p>`
+    let overlayText = `
+<h3>Additional Annotations</h3>
+<ul>
+  <li>
+    <p>
+    &dagger;: Inferred synaptic partners are marked by &dagger; </p><p>The synaptic partners are inferred according to <a target="_blank" href="https://doi.org/10.3389/fninf.2018.00099">Yu-Chi Huang et al., A Single-Cell Level and Connectome-Derived Computational Model of the Drosophila Brain. Front. Neuroinform. 2019, 12:99</a>.
+    </p>
+  </li>
+  <li>
+    <p>
+    <i class='fa fa-exchange fa-fw' aria-hidden='true'></i>: Both presynaptic neuron that is also postsynaptic and postsynaptic neuron that is also presynaptic will be labeled with <i class='fa fa-exchange fa-fw' aria-hidden='true'></i>
+    </p>
+  </li>
+</ul>
+`
 
     // remove existing overlay if exists
     $("#"+this.overlayId).remove();
@@ -76,13 +111,49 @@ moduleExporter("ConnTable",
     template = "";
     template += '<h4>Presynaptic Partners</h4>';
     template += '<table id="' + obj.preTabId + '" class="table table-inverse table-custom-striped">';
-    template += '<colgroup> <col style="min-width=150px;" /> <col /> <col /> <col />';
-    template += '<thead><tr class=""><th>Neuron <label class="toggle-switch"><input type="checkbox" id="pregroup-toggle-checkbox" class="toggle-switch-checkbox" checkedpre><span class="toggle-slider round"></span></label>Group by Type</th> <th>Number of Synapses</th> <th class="neuron_add_pre">+/- Neuron</th><th class="synapse_add_pre">+/- Synapses</th></tr><tr class=""><th><span class="info-input-span"> Filter by name <br></span><input type="text" id="presyn-srch" value="" placeholder="start with /r for regex" class="info-input"/></th> <th><span class="info-input-span"> N greater than <br></span><input type="number" id="presyn-N" value="0" class="info-input selectable"/></th> <th class="neuron_add_pre"><button class="btn btn-all btn-add btn-success" id="btn-pre-add-all-neuron" name="btn-pre-add-all-neuron">+</button><br></span><button class="btn btn-all btn-remove btn-danger" id="btn-pre-remove-all-neuron" name="btn-pre-remove-all-neuron">-</button></th><th class="synapse_add_pre"><button class="btn btn-all btn-add btn-success" id="btn-pre-add-all-synapse" name="btn-pre-add-all-synapse">+</button><br></span><button class="btn btn-all btn-remove btn-danger" id="btn-pre-remove-all-synapse" name="btn-pre-remove-all-synapse">-</button></th></tr></thead>';
+    template += '<colgroup> <col /><col /> <col /><col /> <col /> <col />';
+    template += `
+    <thead>
+    <tr class="">
+      <th></th>
+      <th>Neuron <label class="toggle-switch"><input type="checkbox" id="pregroup-toggle-checkbox" class="toggle-switch-checkbox" checkedpre><span class="toggle-slider round"></span></label>Group by Type</th>
+      <th id="cell-count-pre"></th>
+      <th>Number of Synapses</th> 
+      <th class="neuron_add_pre">+/- Neuron</th>
+      <th class="synapse_add_pre">+/- Synapses</th>
+    </tr>
+    <tr class="">
+      <th></th>
+      <th><span class="info-input-span"> Filter by name <br></span><input type="text" id="presyn-srch" value="" placeholder="start with /r for regex" class="info-input"/></th>
+      <th id="cell-filter-pre"></th>
+      <th><span class="info-input-span"> N greater than <br></span><input type="number" id="presyn-N" value="0" placeholder="0" class="info-input selectable"/></th>
+      <th class="neuron_add_pre"><button class="btn btn-all btn-add btn-success" id="btn-pre-add-all-neuron" name="btn-pre-add-all-neuron">+</button><br></span><button class="btn btn-all btn-remove btn-danger" id="btn-pre-remove-all-neuron" name="btn-pre-remove-all-neuron">-</button></th>
+      <th class="synapse_add_pre"><button class="btn btn-all btn-add btn-success" id="btn-pre-add-all-synapse" name="btn-pre-add-all-synapse">+</button><br></span><button class="btn btn-all btn-remove btn-danger" id="btn-pre-remove-all-synapse" name="btn-pre-remove-all-synapse">-</button></th>
+      </tr>
+    </thead>`;
     template += '<tbody></tbody></table>';
     template += '<h4>Postsynaptic Partners</h4>';
     template += '<table id="' + obj.postTabId + '" class="table table-inverse table-custom-striped">';
-    template += '<colgroup> <col style="min-width=150px;" /> <col /> <col /> <col />';
-    template += '<thead><tr  class=""><th>Neuron <label class="toggle-switch"><input type="checkbox" id="postgroup-toggle-checkbox" class="toggle-switch-checkbox" checkedpost><span class="toggle-slider round"></span></label>Group by Type</th> <th>Number of Synapses</th> <th class="neuron_add_post">+/- Neuron</th><th class="synapse_add_post">+/- Synapses</th></tr><tr class=""><th><span class="info-input-span"> Filter by name <br></span><input type="text" id="postsyn-srch" value="" placeholder="start with /r for regex" class="info-input"/></th> <th><span class="info-input-span"> N greater than <br></span><input type="number" id="postsyn-N" value="0" class="info-input selectable"/></th> <th class="neuron_add_post"><button class="btn btn-all btn-add btn-success" id="btn-post-add-all-neuron" name="btn-post-add-all-neuron">+</button><br></span><button class="btn btn-all btn-remove btn-danger" id="btn-post-remove-all-neuron" name="btn-post-remove-all-neuron">-</button></th><th class="synapse_add_post"><button class="btn btn-all btn-add btn-success" id="btn-post-add-all-synapse" name="btn-post-add-all-synapse">+</button><br></span><button class="btn btn-all btn-remove btn-danger" id="btn-post-remove-all-synapse" name="btn-post-remove-all-synapse">-</button></th></tr></thead>';
+    template += '<colgroup> <col /><col style="min-width=150px;" /> <col /><col /> <col /> <col />';
+    template += `
+    <thead>
+    <tr  class="">
+      <th></th>
+      <th>Neuron <label class="toggle-switch"><input type="checkbox" id="postgroup-toggle-checkbox" class="toggle-switch-checkbox" checkedpost><span class="toggle-slider round"></span></label>Group by Type</th>
+      <th id="cell-count-post"></th>
+      <th>Number of Synapses</th>
+      <th class="neuron_add_post">+/- Neuron</th>
+      <th class="synapse_add_post">+/- Synapses</th>
+    </tr>
+    <tr class="">
+      <th></th>
+      <th><span class="info-input-span"> Filter by name <br></span><input type="text" id="postsyn-srch" value="" placeholder="start with /r for regex" class="info-input"/></th>
+      <th id="cell-filter-post"></th>
+      <th><span class="info-input-span"> N greater than <br></span><input type="number" id="postsyn-N" value="0" placeholder="0" class="info-input selectable"/></th>
+      <th class="neuron_add_post"><button class="btn btn-all btn-add btn-success" id="btn-post-add-all-neuron" name="btn-post-add-all-neuron">+</button><br></span><button class="btn btn-all btn-remove btn-danger" id="btn-post-remove-all-neuron" name="btn-post-remove-all-neuron">-</button></th>
+      <th class="synapse_add_post"><button class="btn btn-all btn-add btn-success" id="btn-post-add-all-synapse" name="btn-post-add-all-synapse">+</button><br></span><button class="btn btn-all btn-remove btn-danger" id="btn-post-remove-all-synapse" name="btn-post-remove-all-synapse">-</button></th>
+    </tr>
+    </thead>`;
     template += '<tbody></tbody></table>';
     return template;
   }
@@ -93,7 +164,24 @@ moduleExporter("ConnTable",
   ConnTable.prototype.reset = function (){
     // purge div and add table
     const tmp = this.htmlTemplate.replace('checkedpre', this.preGroupByName ? 'checked' : '').replace('checkedpost', this.postGroupByName ? 'checked' : '');
+
     this.dom.innerHTML = tmp;
+    
+    // if (this.preGroupByName !== undefined) {
+    //   if (this.preGroupByName && this.dataType === 'Neuron') {
+    //     $("#cell-count-pre")[0].innerHTML="Cell Count";
+    //     $("#cell-filter-pre")[0].innerHTML=`<span class="info-input-span"> N greater than <br></span><input type="number" id="precount-N" value="0" class="info-input selectable"/>`;
+    //     $("#presyn-N")[0].value = 0;
+    //   } else {
+    //     $("#cell-count-pre")[0].innerHTML="";
+    //     $("#cell-filter-pre")[0].innerHTML="";
+    //     $("#presyn-N")[0].value = 0;
+    //   }
+    // } else {
+    //   $("#cell-count-pre")[0].innerHTML="";
+    //   $("#cell-filter-pre")[0].innerHTML="";
+    //   $("#presyn-N")[0].value = 0;
+    // }
   }
 
   /**
@@ -130,7 +218,8 @@ moduleExporter("ConnTable",
   * @param {obj} data - connectivity data, must be in the format specified by `InfoPanel.reformatData()` method
   * @param {boolean} inferred - whether the connectivity is inferred or not
   */
-  ConnTable.prototype.update = function(data){
+  ConnTable.prototype.update = function(data, dataType){
+    this.dataType = dataType;
     // show synaptic table
     if (verifyDataIntegrity(data) == false){
       return;
@@ -161,6 +250,26 @@ moduleExporter("ConnTable",
 
     this.updateData(data);
 
+    if (this.preGroupByName && this.dataType === 'Neuron') {
+      $("#cell-count-pre")[0].innerHTML="Cell Count";
+      $("#cell-filter-pre")[0].innerHTML=`<span class="info-input-span"> N greater than <br></span><input type="number" id="precount-N" value="0" class="info-input selectable"/>`;
+      $("#presyn-N")[0].value = 0;
+    } else {
+      $("#cell-count-pre")[0].innerHTML="";
+      $("#cell-filter-pre")[0].innerHTML="";
+      $("#presyn-N")[0].value = 0;
+    }
+
+    if (this.postGroupByName && this.dataType === 'Neuron') {
+      $("#cell-count-post")[0].innerHTML="Cell Count";
+      $("#cell-filter-post")[0].innerHTML=`<span class="info-input-span"> N greater than <br></span><input type="number" id="postcount-N" value="0" class="info-input selectable"/>`;
+      $("#postsyn-N")[0].value = 0;
+    } else {
+      $("#cell-count-post")[0].innerHTML="";
+      $("#cell-filter-post")[0].innerHTML="";
+      $("#postsyn-N")[0].value = 0;
+    }
+
     // create table
     this.updateTable('pre');
     this.updateTable('post');
@@ -169,7 +278,6 @@ moduleExporter("ConnTable",
   }
 
   ConnTable.prototype.updateData = function(data) {
-
     if ('pre' in data) {
       let preTableData = {};
       let preTypeData = {};
@@ -317,6 +425,7 @@ moduleExporter("ConnTable",
       tableData = this.preTableData;
       group = this.preGroupByName;
       typeData = this.preTypeData;
+      otherTableData = this.postTableData;
 
     } else {
       if ( Object.keys(this.postTableData).length === 0 ) {
@@ -331,24 +440,30 @@ moduleExporter("ConnTable",
       tableData = this.postTableData;
       group = this.postGroupByName;
       typeData = this.postTypeData;
+      otherTableData = this.preTableData;
     }
 
     // flags for detecting if neuron or synapses have been added
     let neuron_add = false;
     let synapse_add = false;
-    if (group) {
+    if (group && this.dataType === 'Neuron') {
       for (var name in typeData) {
         var row = table.insertRow(0);
-        var c1 = row.insertCell(0);
-        var c2 = row.insertCell(1);
-        var c3 = row.insertCell(2);
+        row.className = "conn-type";
+        var carrow = row.insertCell(0);
+        var c1 = row.insertCell(1);
+        var neuron_count = row.insertCell(2);
+        var c2 = row.insertCell(3);
+        var c3 = row.insertCell(4);
         c3.className = (connDir==='pre') ? 'neuron_add_type_pre': 'neuron_add_type_post'; // remove the . character
-        var c4 = row.insertCell(3);
+        var c4 = row.insertCell(5);
         c4.className = (connDir==='pre') ? 'synapse_add_type_pre': 'synapse_add_type_post';
+        carrow.innerHTML = ((connDir==='pre') ? `<span id="toggle-expander-pre-` : `<span id="toggle-expander-post-`) + name + `" class="expander-arrow">&#9658;</span>`;
+        neuron_count.innerHTML = typeData[name]['count'];
 
         let N = typeData[name]['N'];
         let disp_name = name.replace('<', '&lt').replace('>', '&gt');
-        c1.innerHTML = disp_name + ' - (' + typeData[name]['count'] + ')';
+        c1.innerHTML =  disp_name;
         c2.innerHTML = N;
 
         nrids = {};
@@ -411,19 +526,100 @@ moduleExporter("ConnTable",
           c4.appendChild(btn);
           synapse_add = true;
         }
+
+        for (let uname of Object.keys(typeData[name]['data'])){
+          var row = table.insertRow(1); // insert to 2nd row as the first row is the cell type
+          row.className = "conn-cell";
+          var carrow = row.insertCell(0);
+          var c1 = row.insertCell(1);
+          var neuron_count = row.insertCell(2);
+          var c2 = row.insertCell(3);
+          var c3 = row.insertCell(4);
+          c3.className = (connDir==='pre') ? 'neuron_add_pre': 'neuron_add_post'; // remove the . character
+          var c4 = row.insertCell(5);
+          c4.className = (connDir==='pre') ? 'synapse_add_pre': 'synapse_add_post';
+          carrow.innerHTML = `|`;
+
+          let N = tableData[uname]['N'];
+          let disp_uname = "&nbsp" + uname.replace('<', '&lt').replace('>', '&gt');
+          if (uname in otherTableData) {
+            if (connDir === 'pre') {
+              disp_uname += " <i class='fa fa-exchange fa-fw' aria-hidden='true'></i>";
+            } else {
+              disp_uname += " <i class='fa fa-exchange fa-fw' aria-hidden='true'></i>";
+            }
+          }
+          if ( tableData[uname]['inferred'] == 1 ){
+            c1.innerHTML = "&dagger;" + disp_uname;
+          }else{
+            c1.innerHTML = disp_uname;
+          }
+          c2.innerHTML = N;
+          
+          if( tableData[uname]['has_morph'] ){
+            let btn = document.createElement('button');
+            btn.className = 'btn btn-neuron';
+            
+            btn.id = (connDir==='pre') ? 'btn-pre-add-' + uname : 'btn-post-add-' + uname;
+            btn.name = uname;
+            let rid = tableData[uname]['orid'];
+            btn.rid = {[tableData[uname]['n_rid']]: rid };
+
+            if (this.parentObj.isInWorkspace(rid)){
+              btn.innerText = '-';
+              btn.className += ' btn-remove btn-danger';
+            }else{
+              btn.innerText = '+';
+              btn.className += ' btn-add btn-success';
+            }
+            c3.appendChild(btn);
+          }
+        
+
+          if( tableData[uname]['has_syn_morph'] ){
+            let btn = document.createElement('button');
+            btn.className = 'btn btn-syn';
+            let syn_uname = tableData[uname]['syn_uname']; 
+            btn.id = (connDir==='pre') ? 'btn-pre-syn-add-' + syn_uname : 'btn-post-syn-add-' + syn_uname;
+            btn.name = syn_uname;
+            let rid = tableData[uname]['syn_rid'];
+            btn.rid = {[tableData[uname]['s_rid']]: rid};
+
+            if (this.parentObj.isInWorkspace(rid)){
+              btn.innerText = '-';
+              btn.className += ' btn-remove btn-danger';
+            }else{
+              btn.innerText = '+';
+              btn.className += ' btn-add btn-success';
+            }
+
+            c4.appendChild(btn);
+          }
+        }
       }
     } else {
       for (var uname in tableData) {
         var row = table.insertRow(0);
-        var c1 = row.insertCell(0);
-        var c2 = row.insertCell(1);
-        var c3 = row.insertCell(2);
+        var carrow = row.insertCell(0);
+        var c1 = row.insertCell(1);
+        var neuron_count = row.insertCell(2);
+        var c2 = row.insertCell(3);
+        var c3 = row.insertCell(4);
         c3.className = (connDir==='pre') ? 'neuron_add_pre': 'neuron_add_post'; // remove the . character
-        var c4 = row.insertCell(3);
+        var c4 = row.insertCell(5);
         c4.className = (connDir==='pre') ? 'synapse_add_pre': 'synapse_add_post';
 
         let N = tableData[uname]['N'];
         let disp_uname = uname.replace('<', '&lt').replace('>', '&gt');
+        
+        if (uname in otherTableData) {
+          if (connDir === 'pre') {
+            disp_uname += " <i class='fa fa-exchange fa-fw' aria-hidden='true'></i>";
+          } else {
+            disp_uname += " <i class='fa fa-exchange fa-fw' aria-hidden='true'></i>";
+          }
+        }
+
         if ( tableData[uname]['inferred'] == 1 ){
           c1.innerHTML = "&dagger;" + disp_uname;
         }else{
@@ -486,62 +682,45 @@ moduleExporter("ConnTable",
     } else{
       $('.synapse_add_'+connDir).hide();
     }
-
+ 
+    if (connDir === 'pre') {
     // refresh list
-    this.filterByName(this.preTabId,document.getElementById("presyn-srch").value);
-    this.filterByNum(this.preTabId,document.getElementById("presyn-N").value);
-    this.filterByName(this.postTabId,document.getElementById("postsyn-srch").value);
-    this.filterByNum(this.postTabId,document.getElementById("postsyn-N").value);
-
-    // add callback
-    $("#presyn-srch").on('keyup change',(function(){
-      this.filterByName(this.preTabId,document.getElementById("presyn-srch").value);
-    }).bind(this));
-    $("#presyn-N").on('keyup change', (function (){
-      this.filterByNum(this.preTabId,document.getElementById("presyn-N").value);
-    }).bind(this));
-    $("#postsyn-srch").on('keyup change', (function (){
-      this.filterByName(this.postTabId,document.getElementById("postsyn-srch").value);
-    }).bind(this));
-    $("#postsyn-N").on('keyup change', (function (){
-      this.filterByNum(this.postTabId,document.getElementById("postsyn-N").value);
-    }).bind(this));
+      this.filterByName(this.preTabId, this.preGroupByName, document.getElementById("presyn-srch").value);
+      this.filterByNum(this.preTabId, this.preGroupByName, document.getElementById("presyn-N").value);
+      if (this.preGroupByName && this.dataType === "Neuron") {
+        this.filterByCellCount(this.preTabId, this.preGroupByName, document.getElementById("precount-N").value);
+      }
+      
+      // add callback
+      $("#presyn-srch").on('keyup change',(function(){
+        this.filterByName(this.preTabId, this.preGroupByName, document.getElementById("presyn-srch").value);
+      }).bind(this));
+      $("#presyn-N").on('keyup change', (function (){
+        this.filterByNum(this.preTabId, this.preGroupByName, document.getElementById("presyn-N").value);
+      }).bind(this));
+      $("#precount-N").on('keyup change', (function (){
+        this.filterByCellCount(this.preTabId, this.preGroupByName, document.getElementById("precount-N").value);
+      }).bind(this));
+      
+    } else if (connDir === 'post') {
+      this.filterByName(this.postTabId, this.postGroupByName, document.getElementById("postsyn-srch").value);
+      this.filterByNum(this.postTabId, this.postGroupByName, document.getElementById("postsyn-N").value);
+      if (this.postGroupByName && this.dataType === "Neuron") {
+        this.filterByCellCount(this.postTabId, this.postGroupByName, document.getElementById("postcount-N").value);
+      }
+      // add callback
+      $("#postsyn-srch").on('keyup change', (function (){
+        this.filterByName(this.postTabId, this.postGroupByName, document.getElementById("postsyn-srch").value);
+      }).bind(this));
+      $("#postsyn-N").on('keyup change', (function (){
+        this.filterByNum(this.postTabId, this.postGroupByName, document.getElementById("postsyn-N").value);
+      }).bind(this));
+      $("#postcount-N").on('keyup change', (function (){
+        this.filterByCellCount(this.postTabId, this.postGroupByName, document.getElementById("postcount-N").value);
+      }).bind(this));
+    }
 
   }
-
-
-  /**
-  * Add/Remove neuron upon buttonclick in info panel and toggle button
-  */
-  // ConnTable.prototype.toggleBtn = function(btn){
-  //   if(btn.className.includes('add')){
-  //     $('button[name="' + btn.name + '"]').each((idx,dom) => {
-  //       dom.innerText = "-";
-  //       dom.className = "btn btn-remove btn-danger";
-  //     });
-  //     this.parentObj.addByUname(btn.name);
-
-  //   }
-  //   else{
-  //     $('button[name="' + btn.name + '"]').each((idx,dom) => {
-  //       dom.innerText = "+";
-  //       dom.className = "btn btn-add btn-success";
-  //     });
-
-  //     this.parentObj.removeByUname(btn.name);
-  //     //$('button[name="' + btn.name + '"]').
-  //   }
-  // }
-
-  // function toggleSynBtn(btn){
-  //   if(btn.className.includes('add')){
-  //     btn.innerText = "-";
-  //     btn.className = "btn btn-remove btn-danger";
-  //   } else{
-  //     btn.innerText = "+";
-  //     btn.className = "btn btn-add btn-success";
-  //   }
-  // }
 
 
   /**
@@ -584,44 +763,74 @@ moduleExporter("ConnTable",
   * @param {string} tableId - id of table being filtered
   * @param {string} text - text used for filtering
   */
-  ConnTable.prototype.filterByName = function(tableId, text){
-    var filter, table, tr, td, i;
+  ConnTable.prototype.filterByName = function(tableId, grouped, text){
+    var filter, table, tr, td, i, name;
     if (text.startsWith('/r')) {
       try {
         filter = new RegExp(text.slice(2));
       } catch (error) {
         return;
       }
-      table = document.getElementById(tableId).children[2];
-      tr = table.getElementsByTagName("tr");
+    } else {
+      try {
+        filter = new RegExp(text, "i");
+      } catch (error) {
+        return;
+      }
+    }
+    table = document.getElementById(tableId).children[2];
+    tr = table.getElementsByTagName("tr");
 
+    if (grouped && this.dataType === 'Neuron') {
+      var cell_type_visible = undefined;
       for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        if(td) {
-          if (filter.test(td.innerHTML.split(' - '[0]))) {
+        if (hasClass(tr[i], "conn-type")){
+          td = tr[i].getElementsByTagName("td")[1];
+          if(td) {
+            if (filter.test(decodeEntities(td.innerHTML.split(' <')[0]))) {
               removeClass(tr[i], "filtered-name");
-            if(!hasClass(tr[i], "filtered-N"))
+          
+              if(!hasClass(tr[i], "filtered-N") && !hasClass(tr[i], "filtered-count")) {
+                tr[i].style.display = "";
+                cell_type_visible = true;
+              } else {
+                tr[i].style.display = "none";
+                cell_type_visible = false;
+              }
+            } else {
+              addClass(tr[i], "filtered-name");
+              cell_type_visible = false;
+              tr[i].style.display = "none";
+            }
+            
+          }
+
+        } else if (hasClass(tr[i], "conn-cell")) {
+          if (cell_type_visible) {
+            removeClass(tr[i], "filtered-name");
+            if(hasClass(tr[i], "type-expanded")) {
               tr[i].style.display = "";
-          } else{
+            } else {
+              tr[i].style.display = "none";
+            }
+          } else {
             addClass(tr[i], "filtered-name");
             tr[i].style.display = "none";
           }
         }
       }
     } else {
-      filter = text.toLowerCase();
-      table = document.getElementById(tableId).children[2];
-      tr = table.getElementsByTagName("tr");
-
       for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        if (td) {
-          if (td.innerHTML.split(' - ')[0].toLowerCase().indexOf(filter) > -1) {
-            removeClass(tr[i],"filtered-name");
-            if(!hasClass(tr[i],"filtered-N"))
+        td = tr[i].getElementsByTagName("td")[1];
+        if(td) {
+          if (filter.test(decodeEntities(td.innerHTML.split(' <')[0]))) {
+            removeClass(tr[i], "filtered-name");
+        
+            if(!hasClass(tr[i], "filtered-N") && !hasClass(tr[i], "filtered-count")) {
               tr[i].style.display = "";
-          } else {
-            addClass(tr[i],"filtered-name");
+            }
+          } else{
+            addClass(tr[i], "filtered-name");
             tr[i].style.display = "none";
           }
         }
@@ -635,24 +844,115 @@ moduleExporter("ConnTable",
   * @param {string} tableId - id of table being filtered
   * @param {string} N - filter neurons with number of connectivty `> N`
   */
-  ConnTable.prototype.filterByNum = function(tableId,N){
+  ConnTable.prototype.filterByNum = function(tableId, grouped, N){
     // Declare variables
-    var table, tr, td, i;
+    var table, tr, td, i, cell_type_visible;
+    table = document.getElementById(tableId).children[2];
+    tr = table.getElementsByTagName("tr");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    
+    for (i = 0; i < tr.length; i++) {
+      if (grouped && this.dataType === 'Neuron') {
+        if (hasClass(tr[i], "conn-type")){
+          td = tr[i].getElementsByTagName("td")[3];
+          if (td) {
+            if (Number(td.innerHTML) > Number(N)) {
+              removeClass(tr[i],"filtered-N");
+              if(!hasClass(tr[i],"filtered-name") && !hasClass(tr[i], "filtered-count")){
+                tr[i].style.display = "";
+                cell_type_visible = true;
+              } else {
+                tr[i].style.display = "none";
+                cell_type_visible = false;
+              }
+            } else {
+              addClass(tr[i],"filtered-N");
+              tr[i].style.display = "none";
+              cell_type_visible = false;
+            }
+          }
+        } else if (hasClass(tr[i], "conn-cell")){
+          if (cell_type_visible) {
+            removeClass(tr[i], "filtered-N");
+            if(hasClass(tr[i], "type-expanded")) {
+              tr[i].style.display = "";
+            } else {
+              tr[i].style.display = "none";
+            }
+          } else {
+            addClass(tr[i], "filtered-N");
+            tr[i].style.display = "none";
+          }
+        }
+
+      } else {
+        td = tr[i].getElementsByTagName("td")[3];
+        if (td) {
+          if (Number(td.innerHTML) > Number(N)) {
+            removeClass(tr[i],"filtered-N");
+            if(!hasClass(tr[i],"filtered-name") && !hasClass(tr[i], "filtered-count")){
+              tr[i].style.display = "";
+            } else {
+              tr[i].style.display = "none";
+            }
+          } else {
+            addClass(tr[i],"filtered-N");
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+  }
+
+
+  /**
+  * Filter Connectivity Table by Number
+  *
+  * @param {string} tableId - id of table being filtered
+  * @param {string} N - filter neurons with number of connectivty `> N`
+  */
+  ConnTable.prototype.filterByCellCount = function(tableId, grouped, N){
+    // Declare variables
+    var table, tr, td, i, cell_type_visible;
     table = document.getElementById(tableId).children[2];
     tr = table.getElementsByTagName("tr");
 
     // Loop through all table rows, and hide those who don't match the search query
     for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[1];
-      if (td) {
-        if (Number(td.innerHTML) > Number(N)) {
-          removeClass(tr[i],"filtered-N");
-          if(!hasClass(tr[i],"filtered-name"))
-            tr[i].style.display = "";
-        } else {
-          addClass(tr[i],"filtered-N");
-          tr[i].style.display = "none";
+      if (grouped && this.dataType === 'Neuron') {
+        if (hasClass(tr[i], "conn-type")){
+          td = tr[i].getElementsByTagName("td")[2];
+          if (td) {
+            if (Number(td.innerHTML) > Number(N)) {
+              removeClass(tr[i],"filtered-count");
+              if(!hasClass(tr[i],"filtered-name") && !hasClass(tr[i], "filtered-N")){
+                tr[i].style.display = "";
+                cell_type_visible = true;
+              } else {
+                tr[i].style.display = "none";
+                cell_type_visible = false;
+              }
+            } else {
+              addClass(tr[i],"filtered-count");
+              tr[i].style.display = "none";
+              cell_type_visible = false;
+            }
+          }
+        } else if (hasClass(tr[i], "conn-cell")){
+          if (cell_type_visible) {
+            removeClass(tr[i], "filtered-count");
+            if(hasClass(tr[i], "type-expanded")) {
+              tr[i].style.display = "";
+            } else {
+              tr[i].style.display = "none";
+            }
+          } else {
+            addClass(tr[i], "filtered-count");
+            tr[i].style.display = "none";
+          }
         }
+
       }
     }
   }
@@ -701,7 +1001,7 @@ moduleExporter("ConnTable",
           that.parentObj.addByRid(Object.keys(this.rid));
         } else if(this.className.includes('remove')){
           that.parentObj.removeByRid(Object.keys(this.rid));
-        } else{}
+        }
     })
     .mouseenter( function() {
       if (this.className.includes('btn-type')) {
@@ -752,30 +1052,118 @@ moduleExporter("ConnTable",
 
     $("#pregroup-toggle-checkbox").off("change").on("change", function() {
       that.preGroupByName = $(this).is(":checked");
+      if (that.preGroupByName && that.dataType === 'Neuron') {
+        $("#cell-count-pre")[0].innerHTML="Cell Count";
+        $("#cell-filter-pre")[0].innerHTML=`<span class="info-input-span"> N greater than <br></span><input type="number" id="precount-N" value="0" class="info-input selectable"/>`;
+        $("#presyn-N")[0].value = 0;
+      } else {
+        $("#cell-count-pre")[0].innerHTML="";
+        $("#cell-filter-pre")[0].innerHTML="";
+        $("#presyn-N")[0].value = 0;
+      }
       that.updateTable('pre');
       that.setupCallbacks();
     });
 
     $("#postgroup-toggle-checkbox").off("change").on("change", function() {
       that.postGroupByName = $(this).is(":checked");
+      if (that.postGroupByName && that.dataType === 'Neuron') {
+        $("#cell-count-post")[0].innerHTML="Cell Count";
+        $("#cell-filter-post")[0].innerHTML=`<span class="info-input-span"> N greater than <br></span><input type="number" id="postcount-N" value="0" class="info-input selectable"/>`;
+        $("#postsyn-N")[0].value = 0;
+      } else {
+        $("#cell-count-post")[0].innerHTML="";
+        $("#cell-filter-post")[0].innerHTML="";
+        $("#postsyn-N")[0].value = 0;
+      }
       that.updateTable('post');
       that.setupCallbacks();
     });
+
+
+    $('*[id*="toggle-expander"]').off('click').on('click', function() {
+      var pre = this.id.split('-')[2] === 'pre';
+      var name = this.id.split('-')[3];
+
+      var table, tr, td, i;
+      table = document.getElementById(pre ? that.preTabId : that.postTabId).children[2];
+      tr = table.getElementsByTagName("tr");
+
+      // Loop through all table rows, and hide those who don't match the search query
+      var found = false;
+      var toexpand = undefined;
+      for (i = 0; i < tr.length; i++) {
+        if (hasClass(tr[i], "conn-type")){
+          if (found) {
+            break;
+          }
+          td = tr[i].getElementsByTagName("td")[1];
+
+          if (td) {
+            if (decodeEntities(td.innerHTML.split(' <')[0]) === name) {
+              var arrowSpan;
+              found = true;
+              if (hasClass(tr[i], "type-expanded")){
+                removeClass(tr[i], "type-expanded");
+                toexpand = false;
+
+                td = tr[i].getElementsByTagName("td")[0];
+                arrowSpan = td.querySelector("#"+this.id);
+                if (arrowSpan) {
+                  arrowSpan.innerHTML = "&#9658";
+                }
+              } else {
+                addClass(tr[i], "type-expanded");
+                toexpand = true;
+
+                td = tr[i].getElementsByTagName("td")[0];
+                arrowSpan = td.querySelector("#"+this.id);
+                if (arrowSpan) {
+                  arrowSpan.innerHTML = "&#9660";
+                }
+              }
+            }
+          }
+          
+        } else if (hasClass(tr[i], "conn-cell")){
+          if (found) {
+            if (toexpand) {
+              addClass(tr[i], 'type-expanded');
+              if (!hasClass(tr[i], 'filtered-N') && !hasClass(tr[i], 'filtered-count') && !hasClass(tr[i], 'filtered-name')){
+                tr[i].style.display = "";
+              }
+            } else {
+              removeClass(tr[i], 'type-expanded');
+              tr[i].style.display = "none";
+            }
+          }
+        }
+      }
+    });
+
+    
   };
 
   ConnTable.prototype.get_table_list = function(addremovehighlight, prepost, neuronsynapse){
-    var tableId, table, tr, td, i, cc, groupName;
+    var tableId, table, tr, td, i, cc, grouped, N, count;
 
+    count = 0;
     if (prepost === 'pre') {
       tableId = this.preTabId;
       text = document.getElementById("presyn-srch").value;
       N =  Number(document.getElementById("presyn-N").value);
-      groupName = this.preGroupByName
+      grouped = this.preGroupByName && this.dataType === 'Neuron'
+      if (grouped) {
+        count = Number(document.getElementById("precount-N").value)
+      }
     } else if (prepost === 'post') {
       tableId = this.postTabId;
       text = document.getElementById("postsyn-srch").value;
       N =  Number(document.getElementById("postsyn-N").value);
-      groupName = this.postGroupByName
+      grouped = this.postGroupByName && this.dataType === 'Neuron'
+      if (grouped) {
+        count = Number(document.getElementById("postcount-N").value)
+      }
     }
 
     table = document.getElementById(tableId).children[2];
@@ -783,79 +1171,132 @@ moduleExporter("ConnTable",
     if (text.startsWith('/r')) {
       try {
         filter = new RegExp(text.slice(2));
-        use_regex = true;
+        // use_regex = true;
       } catch (error) {
         return;
       }
     } else {
-      filter = text.toLowerCase();
-      use_regex = false;
+      filter = new RegExp(text, 'i');
+      // use_regex = false;
     }
     var rid_list = [];
-    for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td");
-      if (td[0]) {
-        if (use_regex) {
-          test = filter.test(td[0].innerHTML.split(' - ')[0]);
-        } else {
-          test = td[0].innerHTML.split(' - ')[0].toLowerCase().indexOf(filter) > -1
-        }
-        if (test && td[1].innerHTML > N) {
-          if (neuronsynapse === 'neuron') { // if(this.name.includes('neuron')){
-            //cc = document.getElementById("btn-pre-add-"+td[0].innerHTML);
-            cc = td[2].getElementsByTagName("button")[0];
-          }else if (neuronsynapse === 'synapse') {
-            cc = td[3].getElementsByTagName("button")[0];
-          }
-          if (cc) {
-            if (addremovehighlight === 'add'){
-              if ( groupName ){
+    if (grouped) {
+      var cell_type_visible = undefined;
+      for (i = 0; i < tr.length; i++) {
+        if (!hasClass(tr[i], "conn-type")){
+          if (!hasClass(tr[i], "filtered-name") && !hasClass(tr[i], "filtered-N") && !hasClass(tr[i], "filtered-count") ) {
+            td = tr[i].getElementsByTagName("td");
+            if (neuronsynapse === 'neuron') {
+              cc = td[4].getElementsByTagName("button")[0];
+            } else if (neuronsynapse === 'synapse') {
+              cc = td[5].getElementsByTagName("button")[0];
+            }
+            if (cc) {
+              if (addremovehighlight === 'add'){
                 for (let [rid, orid] of Object.entries(cc.rid)) {
                   if (!this.parentObj.isInWorkspace(orid) ) {
                     rid_list.push(rid);
                   }
                 }
-              } else {
-                if (cc.className.includes('add')){
-                  rid_list.push(...Object.keys(cc.rid));
-                }
-              }
-            } else if (addremovehighlight === 'remove'){
-              if ( groupName ){
+              } else if (addremovehighlight === 'remove'){
                 for (let [rid, orid] of Object.entries(cc.rid)) {
                   if (this.parentObj.isInWorkspace(orid) ) {
                     rid_list.push(rid);
                   }
                 }
-              } else {
-                if (cc.className.includes('remove')){
-                  rid_list.push(...Object.keys(cc.rid));
-                }
-              }
-            } else if (addremovehighlight === 'highlight'){
-              if ( groupName ){
+              } else if (addremovehighlight === 'highlight'){
                 for (let [rid, orid] of Object.entries(cc.rid)) {
                   if (this.parentObj.isInWorkspace(orid) ) {
                     rid_list.push(orid);
                   }
                 }
-              } else {
-                if (cc.className.includes('remove')){
-                  rid_list.push(...Object.values(cc.rid));
-                }
               }
             }
-            // if ( groupName ){
-            //   rid_list.push(...Object.keys(cc.rid));
-            // } else {
-            //   if (cc.className.includes('add')){
-            //     rid_list.push(...Object.keys(cc.rid));
-            //   }
-            // }
+          }
+        }
+      }
+    } else {
+      for (i = 0; i < tr.length; i++) {
+        if (!hasClass(tr[i], "filtered-name") && !hasClass(tr[i], "filtered-N") && !hasClass(tr[i], "filtered-count") ) {
+          td = tr[i].getElementsByTagName("td");
+          if (neuronsynapse === 'neuron') {
+            cc = td[4].getElementsByTagName("button")[0];
+          } else if (neuronsynapse === 'synapse') {
+            cc = td[5].getElementsByTagName("button")[0];
+          }
+          if (cc) {
+            if (addremovehighlight === 'add'){
+              if (cc.className.includes('add')){
+                rid_list.push(...Object.keys(cc.rid));
+              }
+            } else if (addremovehighlight === 'remove'){
+              if (cc.className.includes('remove')){
+                rid_list.push(...Object.keys(cc.rid));
+              }
+            } else if (addremovehighlight === 'highlight'){
+              if (cc.className.includes('remove')){
+                rid_list.push(...Object.values(cc.rid));
+              }
+            }
           }
         }
       }
     }
+    
+    // for (i = 0; i < tr.length; i++) {
+    //   td = tr[i].getElementsByTagName("td");
+    //   if (td[1]) {
+    //     test = filter.test(td[1].innerHTML.split(' <')[0]);
+        
+    //     if (test && td[3].innerHTML > N && (!grouped || (grouped && td[2].innerHTML > count))) {
+    //       if (neuronsynapse === 'neuron') { // if(this.name.includes('neuron')){
+    //         //cc = document.getElementById("btn-pre-add-"+td[0].innerHTML);
+    //         cc = td[4].getElementsByTagName("button")[0];
+    //       }else if (neuronsynapse === 'synapse') {
+    //         cc = td[5].getElementsByTagName("button")[0];
+    //       }
+    //       if (cc) {
+    //         if (addremovehighlight === 'add'){
+    //           if ( grouped ){
+    //             for (let [rid, orid] of Object.entries(cc.rid)) {
+    //               if (!this.parentObj.isInWorkspace(orid) ) {
+    //                 rid_list.push(rid);
+    //               }
+    //             }
+    //           } else {
+    //             if (cc.className.includes('add')){
+    //               rid_list.push(...Object.keys(cc.rid));
+    //             }
+    //           }
+    //         } else if (addremovehighlight === 'remove'){
+    //           if ( grouped ){
+    //             for (let [rid, orid] of Object.entries(cc.rid)) {
+    //               if (this.parentObj.isInWorkspace(orid) ) {
+    //                 rid_list.push(rid);
+    //               }
+    //             }
+    //           } else {
+    //             if (cc.className.includes('remove')){
+    //               rid_list.push(...Object.keys(cc.rid));
+    //             }
+    //           }
+    //         } else if (addremovehighlight === 'highlight'){
+    //           if ( grouped ){
+    //             for (let [rid, orid] of Object.entries(cc.rid)) {
+    //               if (this.parentObj.isInWorkspace(orid) ) {
+    //                 rid_list.push(orid);
+    //               }
+    //             }
+    //           } else {
+    //             if (cc.className.includes('remove')){
+    //               rid_list.push(...Object.values(cc.rid));
+    //             }
+    //           }
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
     return rid_list;
   }
   /**
