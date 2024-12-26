@@ -12,25 +12,25 @@ if( moduleExporter === undefined){
   };
 }
 
-var decodeEntities = (function() {
-  // this prevents any overhead from creating the object each time
-  var element = document.createElement('div');
+// var decodeEntities = (function() {
+//   // this prevents any overhead from creating the object each time
+//   var element = document.createElement('div');
 
-  function decodeHTMLEntities (str) {
-    if(str && typeof str === 'string') {
-      // strip script/html tags
-      str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
-      str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
-      element.innerHTML = str;
-      str = element.textContent;
-      element.textContent = '';
-    }
+//   function decodeHTMLEntities (str) {
+//     if(str && typeof str === 'string') {
+//       // strip script/html tags
+//       str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
+//       str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
+//       element.innerHTML = str;
+//       str = element.textContent;
+//       element.textContent = '';
+//     }
 
-    return str;
-  }
+//     return str;
+//   }
 
-  return decodeHTMLEntities;
-})();
+//   return decodeHTMLEntities;
+// })();
 
 
 moduleExporter("ConnTable",
@@ -109,7 +109,9 @@ moduleExporter("ConnTable",
   function createTemplate(obj){
     var template = "";
     template = "";
-    template += '<h4>Presynaptic Partners</h4>';
+    template += `<h4>&nbsp;
+      <span id="toggle-pre-arrow" class="expander-arrow">&#9660;</span>
+      Presynaptic Partners<a id="inferred-details-pre" class="info-panel-more-info inferred-more-info"> <i class="fa fa-info-circle" aria-hidden="true"></i></a></h4>`;
     template += '<table id="' + obj.preTabId + '" class="table table-inverse table-custom-striped">';
     template += '<colgroup> <col /><col /> <col /><col /> <col /> <col />';
     template += `
@@ -132,7 +134,8 @@ moduleExporter("ConnTable",
       </tr>
     </thead>`;
     template += '<tbody></tbody></table>';
-    template += '<h4>Postsynaptic Partners</h4>';
+    template += `<h4>&nbsp;
+      <span id="toggle-post-arrow" class="expander-arrow">&#9660;</span>Postsynaptic Partners<a id="inferred-details-pre" class="info-panel-more-info inferred-more-info"> <i class="fa fa-info-circle" aria-hidden="true"></i></a></h4>`;
     template += '<table id="' + obj.postTabId + '" class="table table-inverse table-custom-striped">';
     template += '<colgroup> <col /><col style="min-width=150px;" /> <col /><col /> <col /> <col />';
     template += `
@@ -216,7 +219,7 @@ moduleExporter("ConnTable",
   * Update synpatic reference and table
   *
   * @param {obj} data - connectivity data, must be in the format specified by `InfoPanel.reformatData()` method
-  * @param {boolean} inferred - whether the connectivity is inferred or not
+  * @param {string} dataType - the type of data, 'Neuron', Synapse'
   */
   ConnTable.prototype.update = function(data, dataType){
     this.dataType = dataType;
@@ -227,25 +230,49 @@ moduleExporter("ConnTable",
     this.reset();
     this.show();
 
-    const btnMoreInfo = '<a id="inferred-details-pre" class="info-panel-more-info inferred-more-info"> <i class="fa fa-info-circle" aria-hidden="true"></i></a>';
-    $('#'+this.divId).children('h4').eq(0).html(`
-      &nbsp;
-      <span id="toggle-pre-arrow" class="expander-arrow">&#9660;</span>
-      Presynaptic Partners
-      ${btnMoreInfo}
-    `);
-    $('#'+this.divId).children('h4').eq(1).html(`
-      &nbsp;
-      <span id="toggle-post-arrow" class="expander-arrow">&#9660;</span>
-      Postsynaptic Partners
-      ${btnMoreInfo}
-    `);
+    // const btnMoreInfo = '<a id="inferred-details-pre" class="info-panel-more-info inferred-more-info"> <i class="fa fa-info-circle" aria-hidden="true"></i></a>';
+    // $('#'+this.divId).children('h4').eq(0).html(`
+    //   &nbsp;
+    //   <span id="toggle-pre-arrow" class="expander-arrow">&#9660;</span>
+    //   Presynaptic Partners
+    //   ${btnMoreInfo}
+    // `);
+    // $('#'+this.divId).children('h4').eq(1).html(`
+    //   &nbsp;
+    //   <span id="toggle-post-arrow" class="expander-arrow">&#9660;</span>
+    //   Postsynaptic Partners
+    //   ${btnMoreInfo}
+    // `);
 
-
-    $('#'+this.divId+ " .inferred-more-info").click(() => {
+    let that = this;
+    $('#'+this.divId+ " .inferred-more-info").off('click').on('click', function () {
       // info = "<h2>Inferred Synaptic Partners</h2>";
       // this.overlay.update(info + data['description']); //<TODO> overwrite in the future
-      this.overlay.show();
+      that.overlay.show();
+    });
+
+    
+    // Add a click handler for the arrow
+    $("#toggle-pre-arrow").off("click").on("click", function() {
+      const preTable = $('#'+that.preTabId);
+      if (preTable.is(':visible')) {
+        preTable.hide();
+        $(this).html("&#9658;");
+      } else {
+        preTable.show();
+        $(this).html("&#9660;");
+      }
+    });
+
+    $("#toggle-post-arrow").off("click").on("click", function() {
+      const postTable = $('#'+that.postTabId);
+      if (postTable.is(':visible')) {
+        postTable.hide();
+        $(this).html("&#9658;");
+      } else {
+        postTable.show();
+        $(this).html("&#9660;");
+      }
     });
 
     this.updateData(data);
@@ -683,43 +710,21 @@ moduleExporter("ConnTable",
       $('.synapse_add_'+connDir).hide();
     }
  
-    if (connDir === 'pre') {
+    
     // refresh list
-      this.filterByName(this.preTabId, this.preGroupByName, document.getElementById("presyn-srch").value);
-      this.filterByNum(this.preTabId, this.preGroupByName, document.getElementById("presyn-N").value);
-      if (this.preGroupByName && this.dataType === "Neuron") {
-        this.filterByCellCount(this.preTabId, this.preGroupByName, document.getElementById("precount-N").value);
-      }
-      
-      // add callback
-      $("#presyn-srch").on('keyup change',(function(){
-        this.filterByName(this.preTabId, this.preGroupByName, document.getElementById("presyn-srch").value);
-      }).bind(this));
-      $("#presyn-N").on('keyup change', (function (){
-        this.filterByNum(this.preTabId, this.preGroupByName, document.getElementById("presyn-N").value);
-      }).bind(this));
-      $("#precount-N").on('keyup change', (function (){
-        this.filterByCellCount(this.preTabId, this.preGroupByName, document.getElementById("precount-N").value);
-      }).bind(this));
-      
-    } else if (connDir === 'post') {
-      this.filterByName(this.postTabId, this.postGroupByName, document.getElementById("postsyn-srch").value);
-      this.filterByNum(this.postTabId, this.postGroupByName, document.getElementById("postsyn-N").value);
-      if (this.postGroupByName && this.dataType === "Neuron") {
-        this.filterByCellCount(this.postTabId, this.postGroupByName, document.getElementById("postcount-N").value);
-      }
-      // add callback
-      $("#postsyn-srch").on('keyup change', (function (){
-        this.filterByName(this.postTabId, this.postGroupByName, document.getElementById("postsyn-srch").value);
-      }).bind(this));
-      $("#postsyn-N").on('keyup change', (function (){
-        this.filterByNum(this.postTabId, this.postGroupByName, document.getElementById("postsyn-N").value);
-      }).bind(this));
-      $("#postcount-N").on('keyup change', (function (){
-        this.filterByCellCount(this.postTabId, this.postGroupByName, document.getElementById("postcount-N").value);
+    this.filterAll(connDir);
+    // add callback
+    $("#" + connDir + "syn-srch").off('keyup change').on('keyup change',(function(){
+      this.filterByName(connDir);
+    }).bind(this));
+    $("#" + connDir + "syn-N").off('keyup change').on('keyup change', (function (){
+      this.filterByNum(connDir);
+    }).bind(this));
+    if (group) {
+      $("#" + connDir + "count-N").off('keyup change').on('keyup change', (function (){
+        this.filterByCellCount(connDir);
       }).bind(this));
     }
-
   }
 
 
@@ -756,14 +761,29 @@ moduleExporter("ConnTable",
     }
   }
 
-
-  /**
+/**
   * Filter Connectivity Table by Name
   *
-  * @param {string} tableId - id of table being filtered
-  * @param {string} text - text used for filtering
+  * @param {string} connDir - 'pre' or 'post'
   */
-  ConnTable.prototype.filterByName = function(tableId, grouped, text){
+  ConnTable.prototype.filterAll = function(connDir){
+    var text, N, count, tableId, grouped;
+    if (connDir == 'pre') {
+      tableId = this.preTabId;
+      grouped = this.preGroupByName && this.dataType === 'Neuron';
+      text = $("#presyn-srch").val();
+      N = Number($("#presyn-N").val());
+      count = Number($("#precount-N").val());
+    } else if (connDir == 'post') {
+      tableId = this.postTabId;
+      grouped = this.postGroupByName && this.dataType === 'Neuron';
+      text = $("#postsyn-srch").val();
+      N = Number($("#postsyn-N").val());
+      count = Number($("#postcount-N").val());
+    } else {
+      return;
+    }
+
     var filter, table, tr, td, i, name;
     if (text.startsWith('/r')) {
       try {
@@ -781,13 +801,144 @@ moduleExporter("ConnTable",
     table = document.getElementById(tableId).children[2];
     tr = table.getElementsByTagName("tr");
 
-    if (grouped && this.dataType === 'Neuron') {
+    var cell_type_visible;
+    if (grouped) {
+      for (i = 0; i < tr.length; i++) {
+        if (hasClass(tr[i], "conn-type")){
+          td = tr[i].getElementsByTagName("td")[1];
+          cell_type_visible = true;
+          filtered_name = false;
+          filtered_N = false;
+          filtered_count = false;
+          
+          if(td) {
+            if (filter.test(td.textContent.split(' <')[0])) {
+              removeClass(tr[i], "filtered-name");
+            } else {
+              addClass(tr[i], "filtered-name");
+              cell_type_visible = false;
+              filtered_name = true;
+            }
+          }
+          td = tr[i].getElementsByTagName("td")[2];
+          if(td) {
+            if (Number(td.innerHTML) > count) {
+              removeClass(tr[i], "filtered-count");
+            } else {
+              addClass(tr[i], "filtered-count");
+              cell_type_visible = false;
+              filtered_count = true;
+            }
+          }
+
+          td = tr[i].getElementsByTagName("td")[3];
+          if(td) {
+            if (Number(td.innerHTML) > N) {
+              removeClass(tr[i], "filtered-N");
+            } else {
+              addClass(tr[i], "filtered-N");
+              cell_type_visible = false;
+              filtered_N = true;
+            }
+          }
+
+          if (cell_type_visible) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+
+        } else if (hasClass(tr[i], "conn-cell")) {
+          if (cell_type_visible) {
+            removeClass(tr[i], "filtered");
+            if(hasClass(tr[i], "type-expanded")) {
+              tr[i].style.display = "";
+            } else {
+              tr[i].style.display = "none";
+            }
+          } else {
+            addClass(tr[i], "filtered");
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    } else {
+      for (i = 0; i < tr.length; i++) {
+        cell_type_visible = true;
+        td = tr[i].getElementsByTagName("td")[1];
+        if(td) {
+          if (filter.test(td.textContent.split(' <')[0])) {
+            removeClass(tr[i], "filtered-name");
+          } else {
+            addClass(tr[i], "filtered-name");
+            cell_type_visible = false;
+          }
+        }
+        td = tr[i].getElementsByTagName("td")[3];
+        if(td) {
+          if (Number(td.innerHTML) > N) {
+            removeClass(tr[i], "filtered-N");
+          } else {
+            addClass(tr[i], "filtered-N");
+            cell_type_visible = false;
+          }
+        }
+
+        if (cell_type_visible) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+
+
+  /**
+  * Filter Connectivity Table by Name
+  *
+  * @param {string} tableId - id of table being filtered
+  * @param {boolean} grouped - whether it is grouped
+  * @param {string} text - text used for filtering
+  */
+  ConnTable.prototype.filterByName = function(connDir){
+    var text, tableId, grouped;
+    if (connDir == 'pre') {
+      tableId = this.preTabId;
+      grouped = this.preGroupByName && this.dataType === 'Neuron';
+      text = $("#presyn-srch").val();
+    } else if (connDir == 'post') {
+      tableId = this.postTabId;
+      grouped = this.postGroupByName && this.dataType === 'Neuron';
+      text = $("#postsyn-srch").val();
+    } else {
+      return;
+    }
+
+    var filter, table, tr, td, i, name;
+    if (text.startsWith('/r')) {
+      try {
+        filter = new RegExp(text.slice(2));
+      } catch (error) {
+        return;
+      }
+    } else {
+      try {
+        filter = new RegExp(text, "i");
+      } catch (error) {
+        return;
+      }
+    }
+    table = document.getElementById(tableId).children[2];
+    tr = table.getElementsByTagName("tr");
+
+    if (grouped) {
       var cell_type_visible = undefined;
       for (i = 0; i < tr.length; i++) {
         if (hasClass(tr[i], "conn-type")){
           td = tr[i].getElementsByTagName("td")[1];
           if(td) {
-            if (filter.test(decodeEntities(td.innerHTML.split(' <')[0]))) {
+            if (filter.test(td.textContent.split(' <')[0])) {
               removeClass(tr[i], "filtered-name");
           
               if(!hasClass(tr[i], "filtered-N") && !hasClass(tr[i], "filtered-count")) {
@@ -807,14 +958,14 @@ moduleExporter("ConnTable",
 
         } else if (hasClass(tr[i], "conn-cell")) {
           if (cell_type_visible) {
-            removeClass(tr[i], "filtered-name");
+            removeClass(tr[i], "filtered");
             if(hasClass(tr[i], "type-expanded")) {
               tr[i].style.display = "";
             } else {
               tr[i].style.display = "none";
             }
           } else {
-            addClass(tr[i], "filtered-name");
+            addClass(tr[i], "filtered");
             tr[i].style.display = "none";
           }
         }
@@ -823,7 +974,7 @@ moduleExporter("ConnTable",
       for (i = 0; i < tr.length; i++) {
         td = tr[i].getElementsByTagName("td")[1];
         if(td) {
-          if (filter.test(decodeEntities(td.innerHTML.split(' <')[0]))) {
+          if (filter.test(td.textContent.split(' <')[0])) {
             removeClass(tr[i], "filtered-name");
         
             if(!hasClass(tr[i], "filtered-N") && !hasClass(tr[i], "filtered-count")) {
@@ -841,10 +992,22 @@ moduleExporter("ConnTable",
   /**
   * Filter Connectivity Table by Number
   *
-  * @param {string} tableId - id of table being filtered
-  * @param {string} N - filter neurons with number of connectivty `> N`
+  * @param {string} connDIr - 'pre' or 'post'
   */
-  ConnTable.prototype.filterByNum = function(tableId, grouped, N){
+  ConnTable.prototype.filterByNum = function(connDir){
+    var N, tableId, grouped;
+    if (connDir == 'pre') {
+      tableId = this.preTabId;
+      grouped = this.preGroupByName && this.dataType === 'Neuron';
+      N = Number($("#presyn-N").val());
+    } else if (connDir == 'post') {
+      tableId = this.postTabId;
+      grouped = this.postGroupByName && this.dataType === 'Neuron';
+      N = Number($("#postsyn-N").val());
+    } else {
+      return;
+    }
+
     // Declare variables
     var table, tr, td, i, cell_type_visible;
     table = document.getElementById(tableId).children[2];
@@ -853,11 +1016,11 @@ moduleExporter("ConnTable",
     // Loop through all table rows, and hide those who don't match the search query
     
     for (i = 0; i < tr.length; i++) {
-      if (grouped && this.dataType === 'Neuron') {
+      if (grouped) {
         if (hasClass(tr[i], "conn-type")){
           td = tr[i].getElementsByTagName("td")[3];
           if (td) {
-            if (Number(td.innerHTML) > Number(N)) {
+            if (Number(td.innerHTML) > N) {
               removeClass(tr[i],"filtered-N");
               if(!hasClass(tr[i],"filtered-name") && !hasClass(tr[i], "filtered-count")){
                 tr[i].style.display = "";
@@ -874,14 +1037,14 @@ moduleExporter("ConnTable",
           }
         } else if (hasClass(tr[i], "conn-cell")){
           if (cell_type_visible) {
-            removeClass(tr[i], "filtered-N");
+            removeClass(tr[i], "filtered");
             if(hasClass(tr[i], "type-expanded")) {
               tr[i].style.display = "";
             } else {
               tr[i].style.display = "none";
             }
           } else {
-            addClass(tr[i], "filtered-N");
+            addClass(tr[i], "filtered");
             tr[i].style.display = "none";
           }
         }
@@ -889,7 +1052,7 @@ moduleExporter("ConnTable",
       } else {
         td = tr[i].getElementsByTagName("td")[3];
         if (td) {
-          if (Number(td.innerHTML) > Number(N)) {
+          if (Number(td.innerHTML) > N) {
             removeClass(tr[i],"filtered-N");
             if(!hasClass(tr[i],"filtered-name") && !hasClass(tr[i], "filtered-count")){
               tr[i].style.display = "";
@@ -907,12 +1070,24 @@ moduleExporter("ConnTable",
 
 
   /**
-  * Filter Connectivity Table by Number
+  * Filter Connectivity Table by Cell Count
   *
-  * @param {string} tableId - id of table being filtered
-  * @param {string} N - filter neurons with number of connectivty `> N`
+  * @param {string} connDir - 'pre' or 'post'
   */
-  ConnTable.prototype.filterByCellCount = function(tableId, grouped, N){
+  ConnTable.prototype.filterByCellCount = function(connDir){
+    var N, tableId, grouped;
+    if (connDir == 'pre') {
+      tableId = this.preTabId;
+      grouped = this.preGroupByName && this.dataType === 'Neuron';
+      N = Number($("#precount-N").val());
+    } else if (connDir == 'post') {
+      tableId = this.postTabId;
+      grouped = this.postGroupByName && this.dataType === 'Neuron';
+      N = Number($("#postcount-N").val());
+    } else {
+      return;
+    }
+
     // Declare variables
     var table, tr, td, i, cell_type_visible;
     table = document.getElementById(tableId).children[2];
@@ -920,11 +1095,11 @@ moduleExporter("ConnTable",
 
     // Loop through all table rows, and hide those who don't match the search query
     for (i = 0; i < tr.length; i++) {
-      if (grouped && this.dataType === 'Neuron') {
+      if (grouped) {
         if (hasClass(tr[i], "conn-type")){
           td = tr[i].getElementsByTagName("td")[2];
           if (td) {
-            if (Number(td.innerHTML) > Number(N)) {
+            if (Number(td.innerHTML) > N) {
               removeClass(tr[i],"filtered-count");
               if(!hasClass(tr[i],"filtered-name") && !hasClass(tr[i], "filtered-N")){
                 tr[i].style.display = "";
@@ -941,14 +1116,14 @@ moduleExporter("ConnTable",
           }
         } else if (hasClass(tr[i], "conn-cell")){
           if (cell_type_visible) {
-            removeClass(tr[i], "filtered-count");
+            removeClass(tr[i], "filtered");
             if(hasClass(tr[i], "type-expanded")) {
               tr[i].style.display = "";
             } else {
               tr[i].style.display = "none";
             }
           } else {
-            addClass(tr[i], "filtered-count");
+            addClass(tr[i], "filtered");
             tr[i].style.display = "none";
           }
         }
@@ -1027,28 +1202,7 @@ moduleExporter("ConnTable",
       }
     });
 
-      // Add a click handler for the arrow
-    $("#toggle-pre-arrow").off("click").on("click", function() {
-      const preTable = $('#'+that.preTabId);
-      if (preTable.is(':visible')) {
-        preTable.hide();
-        $(this).html("&#9658;");
-      } else {
-        preTable.show();
-        $(this).html("&#9660;");
-      }
-    });
-
-    $("#toggle-post-arrow").off("click").on("click", function() {
-      const postTable = $('#'+that.postTabId);
-      if (postTable.is(':visible')) {
-        postTable.hide();
-        $(this).html("&#9658;");
-      } else {
-        postTable.show();
-        $(this).html("&#9660;");
-      }
-    });
+    
 
     $("#pregroup-toggle-checkbox").off("change").on("change", function() {
       that.preGroupByName = $(this).is(":checked");
@@ -1100,7 +1254,7 @@ moduleExporter("ConnTable",
           td = tr[i].getElementsByTagName("td")[1];
 
           if (td) {
-            if (decodeEntities(td.innerHTML.split(' <')[0]) === name) {
+            if (td.textContent.split(' <')[0] === name) {
               var arrowSpan;
               found = true;
               if (hasClass(tr[i], "type-expanded")){
@@ -1129,7 +1283,7 @@ moduleExporter("ConnTable",
           if (found) {
             if (toexpand) {
               addClass(tr[i], 'type-expanded');
-              if (!hasClass(tr[i], 'filtered-N') && !hasClass(tr[i], 'filtered-count') && !hasClass(tr[i], 'filtered-name')){
+              if (!hasClass(tr[i], 'filtered') ){
                 tr[i].style.display = "";
               }
             } else {
