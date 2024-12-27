@@ -1300,7 +1300,7 @@ moduleExporter("ConnTable",
       var pre = this.id.split('-')[2] === 'pre';
       var name = this.id.split('-').slice(3).join("-");
 
-      var button = (pre ? $('#expand-pre-all') : $('#expand-post-all'))[0];
+      let button = (pre ? $('#expand-pre-all') : $('#expand-post-all'))[0];
 
       var table, tr, td, i;
       table = document.getElementById(pre ? that.preTabId : that.postTabId).children[2];
@@ -1369,6 +1369,7 @@ moduleExporter("ConnTable",
 
       let grouped = that.postGroupByName && that.dataType === "Neuron";
       var table, i, td;
+      let button = $('#expand-post-all')[0];
 
       if (grouped) {
         table = $('#'+that.postTabId);
@@ -1396,6 +1397,15 @@ moduleExporter("ConnTable",
             if( tr[i].getElementsByTagName("td")[1].textContent === name) {
               if(!that.hasClass(tr[i], 'type-expanded')) {
                 that.addClass(tr[i], 'type-expanded');
+                tr[i].getElementsByTagName("td")[0].getElementsByTagName("span")[0].innerHTML = `<i class="fa fa-minus-square-o aria-hidden"true">`;
+                
+                if (!that.hasClass(button, 'type-expanded')){
+                  that.addClass(button, 'type-expanded');
+                  button.innerHTML = `<i class="fa fa-minus-square-o aria-hidden"true">`
+                  button.setAttribute("title", "Collapse all");
+                  console.log('abcd');
+                }
+                
               }
               found = true;
             }
@@ -1439,6 +1449,7 @@ moduleExporter("ConnTable",
 
       let grouped = that.preGroupByName && that.dataType === "Neuron";
       var table, i, td;
+      let button = $('#expand-pre-all')[0];
 
       if (grouped) {
         table = $('#'+that.preTabId);
@@ -1466,6 +1477,13 @@ moduleExporter("ConnTable",
             if( tr[i].getElementsByTagName("td")[1].textContent === name) {
               if(!that.hasClass(tr[i], 'type-expanded')) {
                 that.addClass(tr[i], 'type-expanded');
+                tr[i].getElementsByTagName("td")[0].getElementsByTagName("span")[0].innerHTML = `<i class="fa fa-minus-square-o aria-hidden"true">`;
+                if (!that.hasClass(button, 'type-expanded')){
+                  that.addClass(button, 'type-expanded');
+                  button.innerHTML = `<i class="fa fa-minus-square-o aria-hidden"true">`
+                  button.setAttribute("title", "Collapse all");
+                  console.log('dcba');
+                }
               }
               found = true;
             }
