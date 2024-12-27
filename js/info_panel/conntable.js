@@ -175,7 +175,7 @@ moduleExporter("ConnTable",
       <th class="synapse_add_pre">+/- Synapses</th>
     </tr>
     <tr class="">
-      <th></th>
+      <th><span id='expand-pre-all'>button_pre_all</span></th>
       <th><span class="info-input-span"> Filter by name <br></span><input type="text" id="presyn-srch" value="" placeholder="start with /r for regex" class="info-input"/></th>
       <th id="cell-filter-pre"></th>
       <th><span class="info-input-span"> N greater than <br></span><input type="number" id="presyn-N" value="0" placeholder="0" class="info-input selectable"/></th>
@@ -190,7 +190,7 @@ moduleExporter("ConnTable",
     template += '<colgroup> <col /><col style="min-width=150px;" /> <col /><col /> <col /> <col />';
     template += `
     <thead>
-    <tr  class="">
+    <tr class="">
       <th></th>
       <th>Neuron <label class="toggle-switch"><input type="checkbox" id="postgroup-toggle-checkbox" class="toggle-switch-checkbox" checkedpost><span class="toggle-slider round"></span></label>Group by Type</th>
       <th id="cell-count-post"></th>
@@ -199,7 +199,7 @@ moduleExporter("ConnTable",
       <th class="synapse_add_post">+/- Synapses</th>
     </tr>
     <tr class="">
-      <th></th>
+      <th><span id='expand-post-all'>button_post_all</span></th>
       <th><span class="info-input-span"> Filter by name <br></span><input type="text" id="postsyn-srch" value="" placeholder="start with /r for regex" class="info-input"/></th>
       <th id="cell-filter-post"></th>
       <th><span class="info-input-span"> N greater than <br></span><input type="number" id="postsyn-N" value="0" placeholder="0" class="info-input selectable"/></th>
@@ -216,7 +216,7 @@ moduleExporter("ConnTable",
    */
   ConnTable.prototype.reset = function (){
     // purge div and add table
-    const tmp = this.htmlTemplate.replace('checkedpre', this.preGroupByName ? 'checked' : '').replace('checkedpost', this.postGroupByName ? 'checked' : '');
+    const tmp = this.htmlTemplate.replace('checkedpre', this.preGroupByName ? 'checked' : '').replace('checkedpost', this.postGroupByName ? 'checked' : '').replace('button_pre_all', this.preGroupByName ? `<i class="fa fa-plus-square-o aria-hidden"true">` : '').replace('button_post_all', this.postGroupByName ? `<i class="fa fa-plus-square-o aria-hidden"true">` : '');
 
     this.dom.innerHTML = tmp;
     
@@ -520,7 +520,7 @@ moduleExporter("ConnTable",
         c3.className = (connDir==='pre') ? 'neuron_add_type_pre': 'neuron_add_type_post'; // remove the . character
         var c4 = row.insertCell(5);
         c4.className = (connDir==='pre') ? 'synapse_add_type_pre': 'synapse_add_type_post';
-        carrow.innerHTML = ((connDir==='pre') ? `<span id="toggle-expander-pre-` : `<span id="toggle-expander-post-`) + name + `" class="expander-arrow">&#9658;</span>`;
+        carrow.innerHTML = ((connDir==='pre') ? `<span id="toggle-expander-pre-` : `<span id="toggle-expander-post-`) + name + `" class="expander-arrow"><i class="fa fa-plus-square-o aria-hidden"true"></span>`;
         neuron_count.innerHTML = typeData[name]['count'];
 
         let N = typeData[name]['N'];
@@ -1260,10 +1260,14 @@ moduleExporter("ConnTable",
     $("#pregroup-toggle-checkbox").off("change").on("change", function() {
       that.preGroupByName = $(this).is(":checked");
       if (that.preGroupByName && that.dataType === 'Neuron') {
+        let button = $('#expand-pre-all')[0]
+        button.innerHTML = `<i class="fa fa-plus-square-o aria-hidden"true">`;
+        button.setAttribute("title", "Expand all");
         $("#cell-count-pre")[0].innerHTML="Cell Count";
         $("#cell-filter-pre")[0].innerHTML=`<span class="info-input-span"> N greater than <br></span><input type="number" id="precount-N" value="0" placeholder="0" class="info-input selectable"/>`;
         $("#presyn-N")[0].value = 0;
       } else {
+        $('#expand-pre-all')[0].innerHTML = "";
         $("#cell-count-pre")[0].innerHTML="";
         $("#cell-filter-pre")[0].innerHTML="";
         $("#presyn-N")[0].value = 0;
@@ -1275,10 +1279,14 @@ moduleExporter("ConnTable",
     $("#postgroup-toggle-checkbox").off("change").on("change", function() {
       that.postGroupByName = $(this).is(":checked");
       if (that.postGroupByName && that.dataType === 'Neuron') {
+        let button = $('#expand-post-all')[0]
+        button.innerHTML = `<i class="fa fa-plus-square-o aria-hidden"true">`;
+        button.setAttribute("title", "Expand all");
         $("#cell-count-post")[0].innerHTML="Cell Count";
         $("#cell-filter-post")[0].innerHTML=`<span class="info-input-span"> N greater than <br></span><input type="number" id="postcount-N" value="0" placeholder="0" class="info-input selectable"/>`;
         $("#postsyn-N")[0].value = 0;
       } else {
+        $('#expand-post-all')[0].innerHTML = "";
         $("#cell-count-post")[0].innerHTML="";
         $("#cell-filter-post")[0].innerHTML="";
         $("#postsyn-N")[0].value = 0;
@@ -1291,6 +1299,8 @@ moduleExporter("ConnTable",
     $('*[id*="toggle-expander"]').off('click').on('click', function() {
       var pre = this.id.split('-')[2] === 'pre';
       var name = this.id.split('-').slice(3).join("-");
+
+      var button = (pre ? $('#expand-pre-all') : $('#expand-post-all'))[0];
 
       var table, tr, td, i;
       table = document.getElementById(pre ? that.preTabId : that.postTabId).children[2];
@@ -1317,16 +1327,22 @@ moduleExporter("ConnTable",
                 td = tr[i].getElementsByTagName("td")[0];
                 arrowSpan = td.querySelector("#"+this.id);
                 if (arrowSpan) {
-                  arrowSpan.innerHTML = "&#9658";
+                  arrowSpan.innerHTML = `<i class="fa fa-plus-square-o aria-hidden"true">`;
                 }
               } else {
                 that.addClass(tr[i], "type-expanded");
                 toexpand = true;
 
+                if (!that.hasClass(button, "type-expanded")) {
+                  that.addClass(button, "type-expanded");
+                  button.innerHTML = `<i class="fa fa-minus-square-o aria-hidden"true">`
+                  button.setAttribute("title", "Collapse all");
+                }
+
                 td = tr[i].getElementsByTagName("td")[0];
                 arrowSpan = td.querySelector("#"+this.id);
                 if (arrowSpan) {
-                  arrowSpan.innerHTML = "&#9660";
+                  arrowSpan.innerHTML = `<i class="fa fa-minus-square-o aria-hidden"true">`;
                 }
               }
             }
@@ -1484,6 +1500,118 @@ moduleExporter("ConnTable",
             break;
           }
         }
+      }
+    });
+
+    $('#expand-pre-all').off("click").on("click", function() {
+      // must have been grouped
+      var tr = $('#'+that.preTabId).children()[2].getElementsByTagName("tr");
+      
+      if (that.hasClass(this, "type-expanded")) {
+        that.removeClass(this, "type-expanded");
+        this.innerHTML = `<i class="fa fa-plus-square-o aria-hidden"true">`
+        this.setAttribute("title", "Expand all");
+        var toRetract, arrowSpan;
+        for (i = 0; i < tr.length; i++) {
+          if (that.hasClass(tr[i], "conn-type")) {
+            toRetract = false;
+            if (that.hasClass(tr[i], "type-expanded")) {
+              toRetract = true;
+              that.removeClass(tr[i], "type-expanded");
+              td = tr[i].getElementsByTagName("td")[0];
+              arrowSpan = td.getElementsByTagName("span")[0];
+              if (arrowSpan) {
+                arrowSpan.innerHTML = `<i class="fa fa-plus-square-o aria-hidden"true">`;
+              }
+            }
+          } else { // conn-cell
+            if (toRetract) {
+              tr[i].style.display = "none";
+            }
+          }
+        }  
+      } else {
+        that.addClass(this, "type-expanded");
+        this.innerHTML = `<i class="fa fa-minus-square-o aria-hidden"true">`
+        this.setAttribute("title", "Collapse all");
+        var toExpand, arrowSpan;
+        for (i = 0; i < tr.length; i++) {
+          if (that.hasClass(tr[i], "conn-type")) {
+            toExpand = false;
+            if (!that.hasClass(tr[i], "type-expanded")) {
+              that.addClass(tr[i], "type-expanded");
+              toExpand = true;
+              td = tr[i].getElementsByTagName("td")[0];
+              arrowSpan = td.getElementsByTagName("span")[0];
+              if (arrowSpan) {
+                arrowSpan.innerHTML = `<i class="fa fa-minus-square-o aria-hidden"true">`;
+              }
+            }
+          } else { // conn-cell
+            if (toExpand) {
+              that.addClass(tr[i], 'type-expanded');
+              if (!that.hasClass(tr[i], 'filtered') ){
+                tr[i].style.display = "";
+              }
+            }
+          }
+        } 
+      }
+    });
+
+    $('#expand-post-all').off("click").on("click", function() {
+      // must have been grouped
+      var tr = $('#'+that.postTabId).children()[2].getElementsByTagName("tr");
+      
+      if (that.hasClass(this, "type-expanded")) {
+        that.removeClass(this, "type-expanded");
+        this.innerHTML = `<i class="fa fa-plus-square-o aria-hidden"true">`
+        this.setAttribute("title", "Expand all");
+        var toRetract, arrowSpan;
+        for (i = 0; i < tr.length; i++) {
+          if (that.hasClass(tr[i], "conn-type")) {
+            toRetract = false;
+            if (that.hasClass(tr[i], "type-expanded")) {
+              toRetract = true;
+              that.removeClass(tr[i], "type-expanded");
+              td = tr[i].getElementsByTagName("td")[0];
+              arrowSpan = td.getElementsByTagName("span")[0];
+              if (arrowSpan) {
+                arrowSpan.innerHTML = `<i class="fa fa-plus-square-o aria-hidden"true">`;
+              }
+            }
+          } else { // conn-cell
+            if (toRetract) {
+              tr[i].style.display = "none";
+            }
+          }
+        }  
+      } else {
+        that.addClass(this, "type-expanded");
+        this.innerHTML = `<i class="fa fa-minus-square-o aria-hidden"true">`
+        this.setAttribute("title", "Collapse all");
+        var toExpand, arrowSpan;
+        for (i = 0; i < tr.length; i++) {
+          if (that.hasClass(tr[i], "conn-type")) {
+            toExpand = false;
+            if (!that.hasClass(tr[i], "type-expanded")) {
+              that.addClass(tr[i], "type-expanded");
+              toExpand = true;
+              td = tr[i].getElementsByTagName("td")[0];
+              arrowSpan = td.getElementsByTagName("span")[0];
+              if (arrowSpan) {
+                arrowSpan.innerHTML = `<i class="fa fa-minus-square-o aria-hidden"true">`;
+              }
+            }
+          } else { // conn-cell
+            if (toExpand) {
+              that.addClass(tr[i], 'type-expanded');
+              if (!that.hasClass(tr[i], 'filtered') ){
+                tr[i].style.display = "";
+              }
+            }
+          }
+        } 
       }
     });
   };
