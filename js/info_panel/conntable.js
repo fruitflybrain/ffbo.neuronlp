@@ -98,6 +98,16 @@ moduleExporter("ConnTable",
     this.htmlTemplate = createTemplate(this);
     this.dom = document.getElementById(this.divId);
     this.reset();
+
+    this.class_filters = {
+      'filtered-N': new RegExp('(\\s|^)' + 'filtered-N' + '(\\s|$)'),
+      'filtered-count': new RegExp('(\\s|^)' + 'filtered-count' + '(\\s|$)'),
+      'filtered-name': new RegExp('(\\s|^)' + 'filtered-name' + '(\\s|$)'),
+      'filtered': new RegExp('(\\s|^)' + 'filtered' + '(\\s|$)'),
+      'conn-type': new RegExp('(\\s|^)' + 'conn-type' + '(\\s|$)'),
+      'conn-cell': new RegExp('(\\s|^)' + 'conn-cell' + '(\\s|$)'),
+      'type-expanded': new RegExp('(\\s|^)' + 'type-expanded' + '(\\s|$)'),
+    }
   }
 
 
@@ -714,37 +724,55 @@ moduleExporter("ConnTable",
     // refresh list
     this.filterAll(connDir);
     // add callback
-    $("#" + connDir + "syn-srch").off('keyup change').on('keyup change',(function(){
+    $("#" + connDir + "syn-srch").off('keyup change').on('keyup change', debounce( (function(){
       this.filterByName(connDir);
-    }).bind(this));
-    $("#" + connDir + "syn-N").off('keyup change').on('keyup change', (function (){
+    }).bind(this), 300));
+    $("#" + connDir + "syn-N").off('keyup change').on('keyup change', debounce( (function (){
       this.filterByNum(connDir);
-    }).bind(this));
+    }).bind(this), 300));
     if (group) {
-      $("#" + connDir + "count-N").off('keyup change').on('keyup change', (function (){
+      $("#" + connDir + "count-N").off('keyup change').on('keyup change', debounce( (function (){
         this.filterByCellCount(connDir);
-      }).bind(this));
+      }).bind(this), 300));
     }
   }
 
-
-  /**
-  * Pure JS class helpers
-  */
-  function hasClass(el, className){
-    if (el.classList)
-      return el.classList.contains(className);
-    else
-      return !!el.className.match(new RegExp('(\\s|^)' + className + '(\\s|$)'));
+  function debounce(fn, delay) {
+    let timer;
+    return function(...args) {
+      const context = this;
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        fn.apply(context, args);
+      }, delay);
+    };
+  }
+  
+  function wildcardToRegex(userInput) {
+    const escapedInput = userInput.replace(/[.+^${}()|[\]\\]/g, '\\$&');
+    const regexPattern = escapedInput
+                        .replace(/\*/g, '.*')
+                        .replace(/\?/g, '.');
+    return new RegExp(regexPattern, 'i'); 
   }
 
   /**
   * Pure JS class helpers
   */
-  function addClass(el, className){
+  ConnTable.prototype.hasClass = function(el, className){
+    if (el.classList)
+      return el.classList.contains(className);
+    else
+      return !!el.className.match(this.class_filters[classname]);
+  }
+
+  /**
+  * Pure JS class helpers
+  */
+  ConnTable.prototype.addClass = function(el, className){
     if (el.classList){
       el.classList.add(className);
-    }else if (!hasClass(el, className)){
+    }else if (!this.hasClass(el, className)){
       el.className += " " + className;
     }
   }
@@ -752,11 +780,11 @@ moduleExporter("ConnTable",
   /**
   * Pure JS class helpers
   */
-  function removeClass(el, className){
+  ConnTable.prototype.removeClass = function(el, className){
     if (el.classList){
       el.classList.remove(className);
-    }else if (hasClass(el, className)){
-      var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
+    }else if (this.hasClass(el, className)){
+      var reg = this.class_filters[classname];
       el.className=el.className.replace(reg, ' ');
     }
   }
@@ -793,7 +821,7 @@ moduleExporter("ConnTable",
       }
     } else {
       try {
-        filter = new RegExp(text, "i");
+        filter = wildcardToRegex(text);
       } catch (error) {
         return;
       }
@@ -804,18 +832,18 @@ moduleExporter("ConnTable",
     var cell_type_visible;
     if (grouped) {
       for (i = 0; i < tr.length; i++) {
-        if (hasClass(tr[i], "conn-type")){
-          td = tr[i].getElementsByTagName("td")[1];
+        if (this.hasClass(tr[i], "conn-type")){
           cell_type_visible = true;
           filtered_name = false;
           filtered_N = false;
           filtered_count = false;
-          
+
+          td = tr[i].getElementsByTagName("td")[1];
           if(td) {
             if (filter.test(td.textContent.split(' <')[0])) {
-              removeClass(tr[i], "filtered-name");
+              this.removeClass(tr[i], "filtered-name");
             } else {
-              addClass(tr[i], "filtered-name");
+              this.addClass(tr[i], "filtered-name");
               cell_type_visible = false;
               filtered_name = true;
             }
@@ -823,9 +851,9 @@ moduleExporter("ConnTable",
           td = tr[i].getElementsByTagName("td")[2];
           if(td) {
             if (Number(td.innerHTML) > count) {
-              removeClass(tr[i], "filtered-count");
+              this.removeClass(tr[i], "filtered-count");
             } else {
-              addClass(tr[i], "filtered-count");
+              this.addClass(tr[i], "filtered-count");
               cell_type_visible = false;
               filtered_count = true;
             }
@@ -834,9 +862,9 @@ moduleExporter("ConnTable",
           td = tr[i].getElementsByTagName("td")[3];
           if(td) {
             if (Number(td.innerHTML) > N) {
-              removeClass(tr[i], "filtered-N");
+              this.removeClass(tr[i], "filtered-N");
             } else {
-              addClass(tr[i], "filtered-N");
+              this.addClass(tr[i], "filtered-N");
               cell_type_visible = false;
               filtered_N = true;
             }
@@ -848,16 +876,16 @@ moduleExporter("ConnTable",
             tr[i].style.display = "none";
           }
 
-        } else if (hasClass(tr[i], "conn-cell")) {
+        } else if (this.hasClass(tr[i], "conn-cell")) {
           if (cell_type_visible) {
-            removeClass(tr[i], "filtered");
-            if(hasClass(tr[i], "type-expanded")) {
+            this.removeClass(tr[i], "filtered");
+            if(this.hasClass(tr[i], "type-expanded")) {
               tr[i].style.display = "";
             } else {
               tr[i].style.display = "none";
             }
           } else {
-            addClass(tr[i], "filtered");
+            this.addClass(tr[i], "filtered");
             tr[i].style.display = "none";
           }
         }
@@ -868,18 +896,18 @@ moduleExporter("ConnTable",
         td = tr[i].getElementsByTagName("td")[1];
         if(td) {
           if (filter.test(td.textContent.split(' <')[0])) {
-            removeClass(tr[i], "filtered-name");
+            this.removeClass(tr[i], "filtered-name");
           } else {
-            addClass(tr[i], "filtered-name");
+            this.addClass(tr[i], "filtered-name");
             cell_type_visible = false;
           }
         }
         td = tr[i].getElementsByTagName("td")[3];
         if(td) {
           if (Number(td.innerHTML) > N) {
-            removeClass(tr[i], "filtered-N");
+            this.removeClass(tr[i], "filtered-N");
           } else {
-            addClass(tr[i], "filtered-N");
+            this.addClass(tr[i], "filtered-N");
             cell_type_visible = false;
           }
         }
@@ -924,7 +952,7 @@ moduleExporter("ConnTable",
       }
     } else {
       try {
-        filter = new RegExp(text, "i");
+        filter = wildcardToRegex(text);
       } catch (error) {
         return;
       }
@@ -935,13 +963,13 @@ moduleExporter("ConnTable",
     if (grouped) {
       var cell_type_visible = undefined;
       for (i = 0; i < tr.length; i++) {
-        if (hasClass(tr[i], "conn-type")){
+        if (this.hasClass(tr[i], "conn-type")){
           td = tr[i].getElementsByTagName("td")[1];
           if(td) {
             if (filter.test(td.textContent.split(' <')[0])) {
-              removeClass(tr[i], "filtered-name");
+              this.removeClass(tr[i], "filtered-name");
           
-              if(!hasClass(tr[i], "filtered-N") && !hasClass(tr[i], "filtered-count")) {
+              if(!this.hasClass(tr[i], "filtered-N") && !this.hasClass(tr[i], "filtered-count")) {
                 tr[i].style.display = "";
                 cell_type_visible = true;
               } else {
@@ -949,23 +977,23 @@ moduleExporter("ConnTable",
                 cell_type_visible = false;
               }
             } else {
-              addClass(tr[i], "filtered-name");
+              this.addClass(tr[i], "filtered-name");
               cell_type_visible = false;
               tr[i].style.display = "none";
             }
             
           }
 
-        } else if (hasClass(tr[i], "conn-cell")) {
+        } else if (this.hasClass(tr[i], "conn-cell")) {
           if (cell_type_visible) {
-            removeClass(tr[i], "filtered");
-            if(hasClass(tr[i], "type-expanded")) {
+            this.removeClass(tr[i], "filtered");
+            if(this.hasClass(tr[i], "type-expanded")) {
               tr[i].style.display = "";
             } else {
               tr[i].style.display = "none";
             }
           } else {
-            addClass(tr[i], "filtered");
+            this.addClass(tr[i], "filtered");
             tr[i].style.display = "none";
           }
         }
@@ -975,13 +1003,13 @@ moduleExporter("ConnTable",
         td = tr[i].getElementsByTagName("td")[1];
         if(td) {
           if (filter.test(td.textContent.split(' <')[0])) {
-            removeClass(tr[i], "filtered-name");
+            this.removeClass(tr[i], "filtered-name");
         
-            if(!hasClass(tr[i], "filtered-N") && !hasClass(tr[i], "filtered-count")) {
+            if(!this.hasClass(tr[i], "filtered-N") && !this.hasClass(tr[i], "filtered-count")) {
               tr[i].style.display = "";
             }
           } else{
-            addClass(tr[i], "filtered-name");
+            this.addClass(tr[i], "filtered-name");
             tr[i].style.display = "none";
           }
         }
@@ -1017,12 +1045,12 @@ moduleExporter("ConnTable",
     
     for (i = 0; i < tr.length; i++) {
       if (grouped) {
-        if (hasClass(tr[i], "conn-type")){
+        if (this.hasClass(tr[i], "conn-type")){
           td = tr[i].getElementsByTagName("td")[3];
           if (td) {
             if (Number(td.innerHTML) > N) {
-              removeClass(tr[i],"filtered-N");
-              if(!hasClass(tr[i],"filtered-name") && !hasClass(tr[i], "filtered-count")){
+              this.removeClass(tr[i],"filtered-N");
+              if(!this.hasClass(tr[i],"filtered-name") && !this.hasClass(tr[i], "filtered-count")){
                 tr[i].style.display = "";
                 cell_type_visible = true;
               } else {
@@ -1030,21 +1058,21 @@ moduleExporter("ConnTable",
                 cell_type_visible = false;
               }
             } else {
-              addClass(tr[i],"filtered-N");
+              this.addClass(tr[i],"filtered-N");
               tr[i].style.display = "none";
               cell_type_visible = false;
             }
           }
-        } else if (hasClass(tr[i], "conn-cell")){
+        } else if (this.hasClass(tr[i], "conn-cell")){
           if (cell_type_visible) {
-            removeClass(tr[i], "filtered");
-            if(hasClass(tr[i], "type-expanded")) {
+            this.removeClass(tr[i], "filtered");
+            if(this.hasClass(tr[i], "type-expanded")) {
               tr[i].style.display = "";
             } else {
               tr[i].style.display = "none";
             }
           } else {
-            addClass(tr[i], "filtered");
+            this.addClass(tr[i], "filtered");
             tr[i].style.display = "none";
           }
         }
@@ -1053,14 +1081,14 @@ moduleExporter("ConnTable",
         td = tr[i].getElementsByTagName("td")[3];
         if (td) {
           if (Number(td.innerHTML) > N) {
-            removeClass(tr[i],"filtered-N");
-            if(!hasClass(tr[i],"filtered-name") && !hasClass(tr[i], "filtered-count")){
+            this.removeClass(tr[i],"filtered-N");
+            if(!this.hasClass(tr[i],"filtered-name") && !this.hasClass(tr[i], "filtered-count")){
               tr[i].style.display = "";
             } else {
               tr[i].style.display = "none";
             }
           } else {
-            addClass(tr[i],"filtered-N");
+            this.addClass(tr[i],"filtered-N");
             tr[i].style.display = "none";
           }
         }
@@ -1096,12 +1124,12 @@ moduleExporter("ConnTable",
     // Loop through all table rows, and hide those who don't match the search query
     for (i = 0; i < tr.length; i++) {
       if (grouped) {
-        if (hasClass(tr[i], "conn-type")){
+        if (this.hasClass(tr[i], "conn-type")){
           td = tr[i].getElementsByTagName("td")[2];
           if (td) {
             if (Number(td.innerHTML) > N) {
-              removeClass(tr[i],"filtered-count");
-              if(!hasClass(tr[i],"filtered-name") && !hasClass(tr[i], "filtered-N")){
+              this.removeClass(tr[i],"filtered-count");
+              if(!this.hasClass(tr[i],"filtered-name") && !this.hasClass(tr[i], "filtered-N")){
                 tr[i].style.display = "";
                 cell_type_visible = true;
               } else {
@@ -1109,21 +1137,21 @@ moduleExporter("ConnTable",
                 cell_type_visible = false;
               }
             } else {
-              addClass(tr[i],"filtered-count");
+              this.addClass(tr[i],"filtered-count");
               tr[i].style.display = "none";
               cell_type_visible = false;
             }
           }
-        } else if (hasClass(tr[i], "conn-cell")){
+        } else if (this.hasClass(tr[i], "conn-cell")){
           if (cell_type_visible) {
-            removeClass(tr[i], "filtered");
-            if(hasClass(tr[i], "type-expanded")) {
+            this.removeClass(tr[i], "filtered");
+            if(this.hasClass(tr[i], "type-expanded")) {
               tr[i].style.display = "";
             } else {
               tr[i].style.display = "none";
             }
           } else {
-            addClass(tr[i], "filtered");
+            this.addClass(tr[i], "filtered");
             tr[i].style.display = "none";
           }
         }
@@ -1208,7 +1236,7 @@ moduleExporter("ConnTable",
       that.preGroupByName = $(this).is(":checked");
       if (that.preGroupByName && that.dataType === 'Neuron') {
         $("#cell-count-pre")[0].innerHTML="Cell Count";
-        $("#cell-filter-pre")[0].innerHTML=`<span class="info-input-span"> N greater than <br></span><input type="number" id="precount-N" value="0" class="info-input selectable"/>`;
+        $("#cell-filter-pre")[0].innerHTML=`<span class="info-input-span"> N greater than <br></span><input type="number" id="precount-N" value="0" placeholder="0" class="info-input selectable"/>`;
         $("#presyn-N")[0].value = 0;
       } else {
         $("#cell-count-pre")[0].innerHTML="";
@@ -1223,7 +1251,7 @@ moduleExporter("ConnTable",
       that.postGroupByName = $(this).is(":checked");
       if (that.postGroupByName && that.dataType === 'Neuron') {
         $("#cell-count-post")[0].innerHTML="Cell Count";
-        $("#cell-filter-post")[0].innerHTML=`<span class="info-input-span"> N greater than <br></span><input type="number" id="postcount-N" value="0" class="info-input selectable"/>`;
+        $("#cell-filter-post")[0].innerHTML=`<span class="info-input-span"> N greater than <br></span><input type="number" id="postcount-N" value="0" placeholder="0" class="info-input selectable"/>`;
         $("#postsyn-N")[0].value = 0;
       } else {
         $("#cell-count-post")[0].innerHTML="";
@@ -1247,7 +1275,7 @@ moduleExporter("ConnTable",
       var found = false;
       var toexpand = undefined;
       for (i = 0; i < tr.length; i++) {
-        if (hasClass(tr[i], "conn-type")){
+        if (that.hasClass(tr[i], "conn-type")){
           if (found) {
             break;
           }
@@ -1257,8 +1285,8 @@ moduleExporter("ConnTable",
             if (td.textContent.split(' <')[0] === name) {
               var arrowSpan;
               found = true;
-              if (hasClass(tr[i], "type-expanded")){
-                removeClass(tr[i], "type-expanded");
+              if (that.hasClass(tr[i], "type-expanded")){
+                that.removeClass(tr[i], "type-expanded");
                 toexpand = false;
 
                 td = tr[i].getElementsByTagName("td")[0];
@@ -1267,7 +1295,7 @@ moduleExporter("ConnTable",
                   arrowSpan.innerHTML = "&#9658";
                 }
               } else {
-                addClass(tr[i], "type-expanded");
+                that.addClass(tr[i], "type-expanded");
                 toexpand = true;
 
                 td = tr[i].getElementsByTagName("td")[0];
@@ -1279,15 +1307,15 @@ moduleExporter("ConnTable",
             }
           }
           
-        } else if (hasClass(tr[i], "conn-cell")){
+        } else if (that.hasClass(tr[i], "conn-cell")){
           if (found) {
             if (toexpand) {
-              addClass(tr[i], 'type-expanded');
-              if (!hasClass(tr[i], 'filtered') ){
+              that.addClass(tr[i], 'type-expanded');
+              if (!that.hasClass(tr[i], 'filtered') ){
                 tr[i].style.display = "";
               }
             } else {
-              removeClass(tr[i], 'type-expanded');
+              that.removeClass(tr[i], 'type-expanded');
               tr[i].style.display = "none";
             }
           }
@@ -1306,7 +1334,7 @@ moduleExporter("ConnTable",
       tableId = this.preTabId;
       text = document.getElementById("presyn-srch").value;
       N =  Number(document.getElementById("presyn-N").value);
-      grouped = this.preGroupByName && this.dataType === 'Neuron'
+      grouped = this.preGroupByName && this.dataType === 'Neuron';
       if (grouped) {
         count = Number(document.getElementById("precount-N").value)
       }
@@ -1316,7 +1344,7 @@ moduleExporter("ConnTable",
       N =  Number(document.getElementById("postsyn-N").value);
       grouped = this.postGroupByName && this.dataType === 'Neuron'
       if (grouped) {
-        count = Number(document.getElementById("postcount-N").value)
+        count = Number(document.getElementById("postcount-N").value);
       }
     }
 
@@ -1337,8 +1365,8 @@ moduleExporter("ConnTable",
     if (grouped) {
       var cell_type_visible = undefined;
       for (i = 0; i < tr.length; i++) {
-        if (!hasClass(tr[i], "conn-type")){
-          if (!hasClass(tr[i], "filtered-name") && !hasClass(tr[i], "filtered-N") && !hasClass(tr[i], "filtered-count") ) {
+        if (!this.hasClass(tr[i], "conn-type")){
+          if (!this.hasClass(tr[i], "filtered-name") && !this.hasClass(tr[i], "filtered-N") && !this.hasClass(tr[i], "filtered-count") ) {
             td = tr[i].getElementsByTagName("td");
             if (neuronsynapse === 'neuron') {
               cc = td[4].getElementsByTagName("button")[0];
@@ -1371,7 +1399,7 @@ moduleExporter("ConnTable",
       }
     } else {
       for (i = 0; i < tr.length; i++) {
-        if (!hasClass(tr[i], "filtered-name") && !hasClass(tr[i], "filtered-N") && !hasClass(tr[i], "filtered-count") ) {
+        if (!this.hasClass(tr[i], "filtered-name") && !this.hasClass(tr[i], "filtered-N") && !this.hasClass(tr[i], "filtered-count") ) {
           td = tr[i].getElementsByTagName("td");
           if (neuronsynapse === 'neuron') {
             cc = td[4].getElementsByTagName("button")[0];
