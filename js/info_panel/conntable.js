@@ -33,13 +33,8 @@ if( moduleExporter === undefined){
 // })();
 
 function scrollAndHighlight(element) {
-  // 1. Scroll into view
   element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-  // 2. Add highlight class
   element.classList.add('exchange-highlight-flash');
-
-  // 3. Wait 1 second, then remove highlight
   setTimeout(() => {
     element.classList.remove('exchange-highlight-flash');
   }, 800);
@@ -285,27 +280,12 @@ moduleExporter("ConnTable",
     this.reset();
     this.show();
 
-    // const btnMoreInfo = '<a id="inferred-details-pre" class="info-panel-more-info inferred-more-info"> <i class="fa fa-info-circle" aria-hidden="true"></i></a>';
-    // $('#'+this.divId).children('h4').eq(0).html(`
-    //   &nbsp;
-    //   <span id="toggle-pre-arrow" class="expander-arrow">&#9660;</span>
-    //   Presynaptic Partners
-    //   ${btnMoreInfo}
-    // `);
-    // $('#'+this.divId).children('h4').eq(1).html(`
-    //   &nbsp;
-    //   <span id="toggle-post-arrow" class="expander-arrow">&#9660;</span>
-    //   Postsynaptic Partners
-    //   ${btnMoreInfo}
-    // `);
-
     let that = this;
     $('#'+this.divId+ " .inferred-more-info").off('click').on('click', function () {
       // info = "<h2>Inferred Synaptic Partners</h2>";
       // this.overlay.update(info + data['description']); //<TODO> overwrite in the future
       that.overlay.show();
     });
-
     
     // Add a click handler for the arrow
     $("#toggle-pre-arrow").off("click").on("click", function() {
@@ -1351,7 +1331,6 @@ moduleExporter("ConnTable",
               }
             }
           }
-          
         } else if (that.hasClass(tr[i], "conn-cell")){
           if (found) {
             if (toexpand) {
@@ -1507,8 +1486,6 @@ moduleExporter("ConnTable",
         }
       }
     });
-
-    
   };
 
   ConnTable.prototype.get_table_list = function(addremovehighlight, prepost, neuronsynapse){
@@ -1517,35 +1494,15 @@ moduleExporter("ConnTable",
     count = 0;
     if (prepost === 'pre') {
       tableId = this.preTabId;
-      // text = document.getElementById("presyn-srch").value;
-      // N =  Number(document.getElementById("presyn-N").value);
       grouped = this.preGroupByName && this.dataType === 'Neuron';
-      // if (grouped) {
-      //   count = Number(document.getElementById("precount-N").value)
-      // }
     } else if (prepost === 'post') {
       tableId = this.postTabId;
-      // text = document.getElementById("postsyn-srch").value;
-      // N =  Number(document.getElementById("postsyn-N").value);
       grouped = this.postGroupByName && this.dataType === 'Neuron';
-      // if (grouped) {
-      //   count = Number(document.getElementById("postcount-N").value);
-      // }
     }
 
     table = document.getElementById(tableId).children[2];
     tr = table.getElementsByTagName("tr");
-    // if (text.startsWith('/r')) {
-    //   try {
-    //     filter = new RegExp(text.slice(2));
-    //     // use_regex = true;
-    //   } catch (error) {
-    //     return;
-    //   }
-    // } else {
-    //   filter = wildcardToRegex(text);
-    //   // use_regex = false;
-    // }
+
     var rid_list = [];
     if (grouped) {
       var cell_type_visible = undefined;
@@ -1610,60 +1567,6 @@ moduleExporter("ConnTable",
       }
     }
     
-    // for (i = 0; i < tr.length; i++) {
-    //   td = tr[i].getElementsByTagName("td");
-    //   if (td[1]) {
-    //     test = filter.test(td[1].innerHTML.split(' <')[0]);
-        
-    //     if (test && td[3].innerHTML > N && (!grouped || (grouped && td[2].innerHTML > count))) {
-    //       if (neuronsynapse === 'neuron') { // if(this.name.includes('neuron')){
-    //         //cc = document.getElementById("btn-pre-add-"+td[0].innerHTML);
-    //         cc = td[4].getElementsByTagName("button")[0];
-    //       }else if (neuronsynapse === 'synapse') {
-    //         cc = td[5].getElementsByTagName("button")[0];
-    //       }
-    //       if (cc) {
-    //         if (addremovehighlight === 'add'){
-    //           if ( grouped ){
-    //             for (let [rid, orid] of Object.entries(cc.rid)) {
-    //               if (!this.parentObj.isInWorkspace(orid) ) {
-    //                 rid_list.push(rid);
-    //               }
-    //             }
-    //           } else {
-    //             if (cc.className.includes('add')){
-    //               rid_list.push(...Object.keys(cc.rid));
-    //             }
-    //           }
-    //         } else if (addremovehighlight === 'remove'){
-    //           if ( grouped ){
-    //             for (let [rid, orid] of Object.entries(cc.rid)) {
-    //               if (this.parentObj.isInWorkspace(orid) ) {
-    //                 rid_list.push(rid);
-    //               }
-    //             }
-    //           } else {
-    //             if (cc.className.includes('remove')){
-    //               rid_list.push(...Object.keys(cc.rid));
-    //             }
-    //           }
-    //         } else if (addremovehighlight === 'highlight'){
-    //           if ( grouped ){
-    //             for (let [rid, orid] of Object.entries(cc.rid)) {
-    //               if (this.parentObj.isInWorkspace(orid) ) {
-    //                 rid_list.push(orid);
-    //               }
-    //             }
-    //           } else {
-    //             if (cc.className.includes('remove')){
-    //               rid_list.push(...Object.values(cc.rid));
-    //             }
-    //           }
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
     return rid_list;
   }
   /**
