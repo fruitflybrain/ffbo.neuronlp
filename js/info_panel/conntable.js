@@ -32,6 +32,19 @@ if( moduleExporter === undefined){
 //   return decodeHTMLEntities;
 // })();
 
+function scrollAndHighlight(element) {
+  // 1. Scroll into view
+  element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+  // 2. Add highlight class
+  element.classList.add('exchange-highlight-flash');
+
+  // 3. Wait 1 second, then remove highlight
+  setTimeout(() => {
+    element.classList.remove('exchange-highlight-flash');
+  }, 800);
+}
+
 
 moduleExporter("ConnTable",
   ['jquery',
@@ -613,9 +626,9 @@ moduleExporter("ConnTable",
           let disp_uname = uname.replace('<', '&lt').replace('>', '&gt');
           if (uname in otherTableData) {
             if (connDir === 'pre') {
-              disp_uname += " <i class='fa fa-exchange fa-fw' aria-hidden='true'></i>";
+              disp_uname += "<i class='fa fa-exchange fa-fw' aria-hidden='true'></i>";
             } else {
-              disp_uname += " <i class='fa fa-exchange fa-fw' aria-hidden='true'></i>";
+              disp_uname += "<i class='fa fa-exchange fa-fw' aria-hidden='true'></i>";
             }
           }
           if ( tableData[uname]['inferred'] == 1 ){
@@ -683,9 +696,9 @@ moduleExporter("ConnTable",
         
         if (uname in otherTableData) {
           if (connDir === 'pre') {
-            disp_uname += " <i class='fa fa-exchange fa-fw' aria-hidden='true'></i>";
+            disp_uname += "<i class='fa fa-exchange fa-fw' aria-hidden='true'></i>";
           } else {
-            disp_uname += " <i class='fa fa-exchange fa-fw' aria-hidden='true'></i>";
+            disp_uname += "<i class='fa fa-exchange fa-fw' aria-hidden='true'></i>";
           }
         }
 
@@ -872,7 +885,7 @@ moduleExporter("ConnTable",
 
           td = tr[i].getElementsByTagName("td")[1];
           if(td) {
-            if (filter.test(td.textContent.split(' <')[0])) {
+            if (filter.test(td.textContent)) {
               this.removeClass(tr[i], "filtered-name");
             } else {
               this.addClass(tr[i], "filtered-name");
@@ -927,7 +940,7 @@ moduleExporter("ConnTable",
         cell_type_visible = true;
         td = tr[i].getElementsByTagName("td")[1];
         if(td) {
-          if (filter.test(td.textContent.split(' <')[0])) {
+          if (filter.test(td.textContent)) {
             this.removeClass(tr[i], "filtered-name");
           } else {
             this.addClass(tr[i], "filtered-name");
@@ -998,7 +1011,7 @@ moduleExporter("ConnTable",
         if (this.hasClass(tr[i], "conn-type")){
           td = tr[i].getElementsByTagName("td")[1];
           if(td) {
-            if (filter.test(td.textContent.split(' <')[0])) {
+            if (filter.test(td.textContent)) {
               this.removeClass(tr[i], "filtered-name");
           
               if(!this.hasClass(tr[i], "filtered-N") && !this.hasClass(tr[i], "filtered-count")) {
@@ -1034,7 +1047,7 @@ moduleExporter("ConnTable",
       for (i = 0; i < tr.length; i++) {
         td = tr[i].getElementsByTagName("td")[1];
         if(td) {
-          if (filter.test(td.textContent.split(' <')[0])) {
+          if (filter.test(td.textContent)) {
             this.removeClass(tr[i], "filtered-name");
         
             if(!this.hasClass(tr[i], "filtered-N") && !this.hasClass(tr[i], "filtered-count")) {
@@ -1297,7 +1310,7 @@ moduleExporter("ConnTable",
 
     $('*[id*="toggle-expander"]').off('click').on('click', function() {
       var pre = this.id.split('-')[2] === 'pre';
-      var name = this.id.split('-').slice(3).join("-");;
+      var name = this.id.split('-').slice(3).join("-");
 
       var table, tr, td, i;
       table = document.getElementById(pre ? that.preTabId : that.postTabId).children[2];
@@ -1314,7 +1327,7 @@ moduleExporter("ConnTable",
           td = tr[i].getElementsByTagName("td")[1];
 
           if (td) {
-            if (td.textContent.split(' <')[0] === name) {
+            if (td.textContent === name) {
               var arrowSpan;
               found = true;
               if (that.hasClass(tr[i], "type-expanded")){
@@ -1350,6 +1363,146 @@ moduleExporter("ConnTable",
               that.removeClass(tr[i], 'type-expanded');
               tr[i].style.display = "none";
             }
+          }
+        }
+      }
+    });
+
+    $("#"+this.preTabId).off("click").on("click", ".fa-exchange", function() {
+      let $cell = $(this).closest("td");
+      let uname = $cell.text(); // closest td does not have the fa-exchange span, removing the trailing space
+
+      let grouped = that.postGroupByName && that.dataType === "Neuron";
+      var table, i, td;
+
+      if (grouped) {
+        table = $('#'+that.postTabId);
+        if (!table.is(':visible')) {
+          table.show();
+          $("#toggle-post-arrow").html("&#9660;");
+        }
+
+        $("#postsyn-N").val(0);
+        $("#postcount-N").val(0);
+        $("#postsyn-srch").val("");
+        that.filterAll('post');
+        
+        tr = table.children()[2].getElementsByTagName("tr");
+        let name = that.preTableData[uname]['name'];
+        var found = false;
+        var target_tr;
+
+        for (i = 0; i < tr.length; i++) {
+          if (that.hasClass(tr[i], "conn-type")) {
+            if (found) {
+              break;
+            }
+
+            if( tr[i].getElementsByTagName("td")[1].textContent === name) {
+              if(!that.hasClass(tr[i], 'type-expanded')) {
+                that.addClass(tr[i], 'type-expanded');
+              }
+              found = true;
+            }
+          } else if (found && that.hasClass(tr[i], "conn-cell") ) {
+            if(!that.hasClass(tr[i], 'type-expanded')) {
+              that.addClass(tr[i], 'type-expanded');
+              tr[i].style.display = "";
+            }
+            if(tr[i].getElementsByTagName("td")[1].textContent === uname ) {
+              target_tr = tr[i];
+            }
+          }
+        }
+        scrollAndHighlight(target_tr);
+      } else {
+        $("#postsyn-N").val(0);
+        $("#postsyn-srch").val("");
+        that.filterAll('post');
+        table = $('#'+that.postTabId);
+        
+        if (!table.is(':visible')) {
+          table.show();
+          $("#toggle-post-arrow").html("&#9660;");
+        }
+
+        tr = table.children()[2].getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+          if( tr[i].getElementsByTagName("td")[1].textContent === uname)
+          {
+            scrollAndHighlight(tr[i]);
+            break;
+          }
+        }
+      }
+    });
+
+    $("#"+this.postTabId).off("click").on("click", ".fa-exchange", function() {
+      let $cell = $(this).closest("td");
+      let uname = $cell.text(); // closest td does not have the fa-exchange span, removing the trailing space
+
+      let grouped = that.preGroupByName && that.dataType === "Neuron";
+      var table, i, td;
+
+      if (grouped) {
+        table = $('#'+that.preTabId);
+        if (!table.is(':visible')) {
+          table.show();
+          $("#toggle-pre-arrow").html("&#9660;");
+        }
+
+        $("#presyn-N").val(0);
+        $("#precount-N").val(0);
+        $("#presyn-srch").val("");
+        that.filterAll('pre');
+        
+        tr = table.children()[2].getElementsByTagName("tr");
+        let name = that.postTableData[uname]['name'];
+        var found = false;
+        var target_tr;
+
+        for (i = 0; i < tr.length; i++) {
+          if (that.hasClass(tr[i], "conn-type")) {
+            if (found) {
+              break;
+            }
+
+            if( tr[i].getElementsByTagName("td")[1].textContent === name) {
+              if(!that.hasClass(tr[i], 'type-expanded')) {
+                that.addClass(tr[i], 'type-expanded');
+              }
+              found = true;
+            }
+          } else if (found && that.hasClass(tr[i], "conn-cell") ) {
+            if(!that.hasClass(tr[i], 'type-expanded')) {
+              that.addClass(tr[i], 'type-expanded');
+              tr[i].style.display = "";
+            }
+            if(tr[i].getElementsByTagName("td")[1].textContent === uname ) {
+              target_tr = tr[i];
+            }
+          }
+        }
+        scrollAndHighlight(target_tr);
+      } else {
+        $("#presyn-N").val(0);
+        $("#presyn-srch").val("");
+        that.filterAll('pre');
+        table = $('#'+that.preTabId);
+        
+        if (!table.is(':visible')) {
+          table.show();
+          $("#toggle-pre-arrow").html("&#9660;");
+        }
+
+        tr = table.children()[2].getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+          if( tr[i].getElementsByTagName("td")[1].textContent === uname)
+          {
+            scrollAndHighlight(tr[i]);
+            break;
           }
         }
       }
