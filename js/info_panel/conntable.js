@@ -726,14 +726,14 @@ moduleExporter("ConnTable",
     // add callback
     $("#" + connDir + "syn-srch").off('keyup change').on('keyup change', debounce( (function(){
       this.filterByName(connDir);
-    }).bind(this), 300));
+    }).bind(this), 200));
     $("#" + connDir + "syn-N").off('keyup change').on('keyup change', debounce( (function (){
       this.filterByNum(connDir);
-    }).bind(this), 300));
+    }).bind(this), 200));
     if (group) {
       $("#" + connDir + "count-N").off('keyup change').on('keyup change', debounce( (function (){
         this.filterByCellCount(connDir);
-      }).bind(this), 300));
+      }).bind(this), 200));
     }
   }
 
