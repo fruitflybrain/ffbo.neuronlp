@@ -1297,7 +1297,7 @@ moduleExporter("ConnTable",
 
     $('*[id*="toggle-expander"]').off('click').on('click', function() {
       var pre = this.id.split('-')[2] === 'pre';
-      var name = this.id.split('-')[3];
+      var name = this.id.split('-').slice(3).join("-");;
 
       var table, tr, td, i;
       table = document.getElementById(pre ? that.preTabId : that.postTabId).children[2];
