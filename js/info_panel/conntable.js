@@ -89,6 +89,38 @@ moduleExporter("ConnTable",
     </p>
   </li>
 </ul>
+<h3>Filter by Name</h3>
+<p> There are 2 ways to specify your filter in the "Filter by name" textbox.</p>
+<ul>
+  <li>
+    <p>
+    <b>Normal filter</b>: If your search text matches any part of the neuron name (in Neuron mode) or cell-type name (in Group by Type mode), then the neuron or type will be displayed. This search is case-insensitive. In addition, you can use '?' as a wild card to match any single character, and '*' as a wild card to match any number of characters (as the case in typical file name wild cards; the other unix file name matching such as [1-9] is not supported in normal filter). For example, if you type in "L1" in the search box, any of the following can be matched "abL1cd", "L1ij", "afL1", etc. If you type in "L?1" in the search box, any of the following can be matched: "abL21", "Lf1cd", etc. 
+    </p>
+  </li>
+  <li>
+    <p>
+    <b>Regex filter</b>: You can specify a regex pattern match if you start the search with "/r". For example, if your regex pattern is "^(?!)segment" (which removes all untraced segments), then you should put in the search box (without the quotes) "/r^(?!segment)".
+    </p>
+  </li>
+</ul>
+<h3>Buttons</h3>
+<ul>
+  <li>
+    <p>
+    Buttons can be used to add/remove neurons or synapses. By clicking on the + button on a row with individual neuron, you will add the corresponding pre- or post-synaptic neuron or the synapses corresponding to this connection. Likewise, the - button will remove it. When the neuron/synapses is added into the visualization, hovering mouse on top of the buttons will highlight the neuron/synapse.
+    <p>
+  </li>
+  <li>
+    <p>
+    When clicking on the buttons on the top of each table, you will add all the neuron/synapses that are in the current filtered tabled (i.e., it will only add the ones that satisfy the filter criteria). You can hover on top of these buttons, it will highlight all the neurons/synpases that are currently in the workspace AND in the table.
+    </p>
+  </li>
+  <li>
+    <p>
+    When clicking on the buttons associated with a cell-type row, you will add all the neuron/synapses that associated with this cell-type. You can hover on top of these buttons, it will highlight all the neurons/synpases associated with this cell type that are currently in the workspace.
+    </p>
+  </li>
+</ul>
 `
 
     // remove existing overlay if exists
@@ -578,7 +610,7 @@ moduleExporter("ConnTable",
           carrow.innerHTML = `|`;
 
           let N = tableData[uname]['N'];
-          let disp_uname = "&nbsp" + uname.replace('<', '&lt').replace('>', '&gt');
+          let disp_uname = uname.replace('<', '&lt').replace('>', '&gt');
           if (uname in otherTableData) {
             if (connDir === 'pre') {
               disp_uname += " <i class='fa fa-exchange fa-fw' aria-hidden='true'></i>";
@@ -1332,40 +1364,40 @@ moduleExporter("ConnTable",
     count = 0;
     if (prepost === 'pre') {
       tableId = this.preTabId;
-      text = document.getElementById("presyn-srch").value;
-      N =  Number(document.getElementById("presyn-N").value);
+      // text = document.getElementById("presyn-srch").value;
+      // N =  Number(document.getElementById("presyn-N").value);
       grouped = this.preGroupByName && this.dataType === 'Neuron';
-      if (grouped) {
-        count = Number(document.getElementById("precount-N").value)
-      }
+      // if (grouped) {
+      //   count = Number(document.getElementById("precount-N").value)
+      // }
     } else if (prepost === 'post') {
       tableId = this.postTabId;
-      text = document.getElementById("postsyn-srch").value;
-      N =  Number(document.getElementById("postsyn-N").value);
-      grouped = this.postGroupByName && this.dataType === 'Neuron'
-      if (grouped) {
-        count = Number(document.getElementById("postcount-N").value);
-      }
+      // text = document.getElementById("postsyn-srch").value;
+      // N =  Number(document.getElementById("postsyn-N").value);
+      grouped = this.postGroupByName && this.dataType === 'Neuron';
+      // if (grouped) {
+      //   count = Number(document.getElementById("postcount-N").value);
+      // }
     }
 
     table = document.getElementById(tableId).children[2];
     tr = table.getElementsByTagName("tr");
-    if (text.startsWith('/r')) {
-      try {
-        filter = new RegExp(text.slice(2));
-        // use_regex = true;
-      } catch (error) {
-        return;
-      }
-    } else {
-      filter = new RegExp(text, 'i');
-      // use_regex = false;
-    }
+    // if (text.startsWith('/r')) {
+    //   try {
+    //     filter = new RegExp(text.slice(2));
+    //     // use_regex = true;
+    //   } catch (error) {
+    //     return;
+    //   }
+    // } else {
+    //   filter = wildcardToRegex(text);
+    //   // use_regex = false;
+    // }
     var rid_list = [];
     if (grouped) {
       var cell_type_visible = undefined;
       for (i = 0; i < tr.length; i++) {
-        if (!this.hasClass(tr[i], "conn-type")){
+        if (this.hasClass(tr[i], "conn-type")){
           if (!this.hasClass(tr[i], "filtered-name") && !this.hasClass(tr[i], "filtered-N") && !this.hasClass(tr[i], "filtered-count") ) {
             td = tr[i].getElementsByTagName("td");
             if (neuronsynapse === 'neuron') {
