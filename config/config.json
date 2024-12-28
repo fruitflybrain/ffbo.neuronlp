@@ -1,7 +1,7 @@
 {
   "branch":"optic_lobe",
   "connection":{
-    "url":"ws://localhost:10001/ws",
+    "url":"ws://localhost:8081/ws",
     "user":"guest",
     "secret":"guestpass"
   },
