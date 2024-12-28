@@ -1416,7 +1416,6 @@ moduleExporter("ConnTable",
     $(`*[id*="toggle-expander-${connDir}"]`).off('click').on('click', function() {
       // var pre = this.id.split('-')[2] === 'pre';
       var name = unescapeSelector(this.id.split('-').slice(3).join("-"));
-      console.log(name);
 
       var td, i;
       // Loop through all table rows, and hide those who don't match the search query
