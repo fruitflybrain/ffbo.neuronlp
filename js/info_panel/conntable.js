@@ -139,6 +139,7 @@ moduleExporter("ConnTable",
     this.dom = document.getElementById(this.divId);
     this.reset();
 
+
     this.class_filters = {
       'filtered-N': new RegExp('(\\s|^)' + 'filtered-N' + '(\\s|$)'),
       'filtered-count': new RegExp('(\\s|^)' + 'filtered-count' + '(\\s|$)'),
@@ -217,9 +218,12 @@ moduleExporter("ConnTable",
    */
   ConnTable.prototype.reset = function (){
     // purge div and add table
-    const tmp = this.htmlTemplate.replace('checkedpre', this.preGroupByName ? 'checked' : '').replace('checkedpost', this.postGroupByName ? 'checked' : '').replace('button_pre_all', this.preGroupByName ? `<i class="fa fa-plus-square-o aria-hidden"true">` : '').replace('button_post_all', this.postGroupByName ? `<i class="fa fa-plus-square-o aria-hidden"true">` : '');
+    const tmp = this.htmlTemplate.replace('checkedpre', this.preGroupByName ? 'checked' : '').replace('checkedpost', this.postGroupByName ? 'checked' : '').replace('button_pre_all', this.preGroupByName && ((this.dataType !== undefined && this.dataType === 'Neuron') || this.dataType == undefined) ? `<i class="fa fa-plus-square-o aria-hidden="true">` : '').replace('button_post_all', this.postGroupByName && ((this.dataType !== undefined && this.dataType === 'Neuron') || this.dataType == undefined) ? `<i class="fa fa-plus-square-o aria-hidden="true">` : '');
 
     this.dom.innerHTML = tmp;
+
+    this.groupToggleCallbacks('pre');
+    this.groupToggleCallbacks('post');
     
     // if (this.preGroupByName !== undefined) {
     //   if (this.preGroupByName && this.dataType === 'Neuron') {
@@ -336,7 +340,6 @@ moduleExporter("ConnTable",
     // create table
     this.updateTable('pre');
     this.updateTable('post');
-    this.setupCallbacks();
 
   }
 
@@ -521,7 +524,7 @@ moduleExporter("ConnTable",
         c3.className = (connDir==='pre') ? 'neuron_add_type_pre': 'neuron_add_type_post'; // remove the . character
         var c4 = row.insertCell(5);
         c4.className = (connDir==='pre') ? 'synapse_add_type_pre': 'synapse_add_type_post';
-        carrow.innerHTML = ((connDir==='pre') ? `<span id="toggle-expander-pre-` : `<span id="toggle-expander-post-`) + name + `" class="expander-arrow" title="Expand ` + name + `"><i class="fa fa-plus-square-o aria-hidden"true"></span>`;
+        carrow.innerHTML = ((connDir==='pre') ? `<span id="toggle-expander-pre-` : `<span id="toggle-expander-post-`) + name + `" class="expander-arrow" title="Expand ` + name + `"><i class="fa fa-plus-square-o aria-hidden="true"></span>`;
         neuron_count.innerHTML = typeData[name]['count'];
 
         let N = typeData[name]['N'];
@@ -761,6 +764,13 @@ moduleExporter("ConnTable",
         this.filterByCellCount(connDir);
       }).bind(this), 200));
     }
+
+    this.buttonCallbacks(connDir);
+    this.exchangeCallbacks(connDir);
+    if (group && this.dataType === 'Neuron') {
+      this.groupExpandCallbacks(connDir);
+      this.expandAllCallbacks(connDir);
+    }
   }
 
   function debounce(fn, delay) {
@@ -821,19 +831,21 @@ moduleExporter("ConnTable",
   * @param {string} connDir - 'pre' or 'post'
   */
   ConnTable.prototype.filterAll = function(connDir){
-    var text, N, count, tableId, grouped;
+    var text, N, count, tableId, grouped, button;
     if (connDir == 'pre') {
       tableId = this.preTabId;
       grouped = this.preGroupByName && this.dataType === 'Neuron';
       text = $("#presyn-srch").val();
       N = Number($("#presyn-N").val());
       count = Number($("#precount-N").val());
+      button = $('#expand-pre-all')[0];
     } else if (connDir == 'post') {
       tableId = this.postTabId;
       grouped = this.postGroupByName && this.dataType === 'Neuron';
       text = $("#postsyn-srch").val();
       N = Number($("#postsyn-N").val());
       count = Number($("#postcount-N").val());
+      button = $('#expand-post-all')[0];
     } else {
       return;
     }
@@ -857,12 +869,15 @@ moduleExporter("ConnTable",
 
     var cell_type_visible;
     if (grouped) {
+      let expanded_count = 0;
+      let total_count = 0;
       for (i = 0; i < tr.length; i++) {
         if (this.hasClass(tr[i], "conn-type")){
           cell_type_visible = true;
           filtered_name = false;
           filtered_N = false;
           filtered_count = false;
+          total_count += 1;
 
           td = tr[i].getElementsByTagName("td")[1];
           if(td) {
@@ -898,6 +913,9 @@ moduleExporter("ConnTable",
 
           if (cell_type_visible) {
             tr[i].style.display = "";
+            if (this.hasClass(tr[i], "type-expanded")) {
+              expanded_count += 1;
+            }
           } else {
             tr[i].style.display = "none";
           }
@@ -914,6 +932,20 @@ moduleExporter("ConnTable",
             this.addClass(tr[i], "filtered");
             tr[i].style.display = "none";
           }
+        }
+      }
+
+      if(expanded_count == 0) {
+        if (this.hasClass(button, "type-expanded")) {
+          this.removeClass(button, "type-expanded");
+          button.innerHTML = `<i class="fa fa-plus-square-o aria-hidden="true">`
+          button.setAttribute("title", "Expand all");
+        }
+      } else {
+        if (!this.hasClass(button, "type-expanded")) {
+          this.addClass(button, "type-expanded");
+          button.innerHTML = `<i class="fa fa-minus-square-o aria-hidden="true">`
+          button.setAttribute("title", "Collapse all");
         }
       }
     } else {
@@ -956,15 +988,17 @@ moduleExporter("ConnTable",
   * @param {string} text - text used for filtering
   */
   ConnTable.prototype.filterByName = function(connDir){
-    var text, tableId, grouped;
+    var text, tableId, grouped, button;
     if (connDir == 'pre') {
       tableId = this.preTabId;
       grouped = this.preGroupByName && this.dataType === 'Neuron';
       text = $("#presyn-srch").val();
+      button = $('#expand-pre-all')[0];
     } else if (connDir == 'post') {
       tableId = this.postTabId;
       grouped = this.postGroupByName && this.dataType === 'Neuron';
       text = $("#postsyn-srch").val();
+      button = $('#expand-post-all')[0];
     } else {
       return;
     }
@@ -988,8 +1022,11 @@ moduleExporter("ConnTable",
 
     if (grouped) {
       var cell_type_visible = undefined;
+      let expanded_count = 0;
+      let total_count = 0
       for (i = 0; i < tr.length; i++) {
         if (this.hasClass(tr[i], "conn-type")){
+          total_count += 1;
           td = tr[i].getElementsByTagName("td")[1];
           if(td) {
             if (filter.test(td.textContent)) {
@@ -1009,7 +1046,11 @@ moduleExporter("ConnTable",
             }
             
           }
-
+          if (cell_type_visible) {
+            if (this.hasClass(tr[i], "type-expanded")) {
+              expanded_count += 1;
+            }
+          }
         } else if (this.hasClass(tr[i], "conn-cell")) {
           if (cell_type_visible) {
             this.removeClass(tr[i], "filtered");
@@ -1022,6 +1063,20 @@ moduleExporter("ConnTable",
             this.addClass(tr[i], "filtered");
             tr[i].style.display = "none";
           }
+        }
+      }
+
+      if(expanded_count == 0) {
+        if (this.hasClass(button, "type-expanded")) {
+          this.removeClass(button, "type-expanded");
+          button.innerHTML = `<i class="fa fa-plus-square-o aria-hidden="true">`
+          button.setAttribute("title", "Expand all");
+        }
+      } else {
+        if (!this.hasClass(button, "type-expanded")) {
+          this.addClass(button, "type-expanded");
+          button.innerHTML = `<i class="fa fa-minus-square-o aria-hidden="true">`
+          button.setAttribute("title", "Collapse all");
         }
       }
     } else {
@@ -1049,15 +1104,17 @@ moduleExporter("ConnTable",
   * @param {string} connDIr - 'pre' or 'post'
   */
   ConnTable.prototype.filterByNum = function(connDir){
-    var N, tableId, grouped;
+    var N, tableId, grouped, button;
     if (connDir == 'pre') {
       tableId = this.preTabId;
       grouped = this.preGroupByName && this.dataType === 'Neuron';
       N = Number($("#presyn-N").val());
+      button = $('#expand-pre-all')[0];
     } else if (connDir == 'post') {
       tableId = this.postTabId;
       grouped = this.postGroupByName && this.dataType === 'Neuron';
       N = Number($("#postsyn-N").val());
+      button = $('#expand-post-all')[0];
     } else {
       return;
     }
@@ -1068,10 +1125,12 @@ moduleExporter("ConnTable",
     tr = table.getElementsByTagName("tr");
 
     // Loop through all table rows, and hide those who don't match the search query
-    
-    for (i = 0; i < tr.length; i++) {
-      if (grouped) {
+    if (grouped) {
+      let expanded_count = 0;
+      let total_count = 0;
+      for (i = 0; i < tr.length; i++) {
         if (this.hasClass(tr[i], "conn-type")){
+          total_count += 1;
           td = tr[i].getElementsByTagName("td")[3];
           if (td) {
             if (Number(td.innerHTML) > N) {
@@ -1089,6 +1148,12 @@ moduleExporter("ConnTable",
               cell_type_visible = false;
             }
           }
+
+          if (cell_type_visible){
+            if (this.hasClass(tr[i], "type-expanded")) {
+              expanded_count += 1;
+            }
+          }
         } else if (this.hasClass(tr[i], "conn-cell")){
           if (cell_type_visible) {
             this.removeClass(tr[i], "filtered");
@@ -1102,8 +1167,23 @@ moduleExporter("ConnTable",
             tr[i].style.display = "none";
           }
         }
+      }
 
+      if(expanded_count == 0) {
+        if (this.hasClass(button, "type-expanded")) {
+          this.removeClass(button, "type-expanded");
+          button.innerHTML = `<i class="fa fa-plus-square-o aria-hidden="true">`
+          button.setAttribute("title", "Expand all");
+        }
       } else {
+        if (!this.hasClass(button, "type-expanded")) {
+          this.addClass(button, "type-expanded");
+          button.innerHTML = `<i class="fa fa-minus-square-o aria-hidden="true">`
+          button.setAttribute("title", "Collapse all");
+        }
+      }
+    } else {
+      for (i = 0; i < tr.length; i++) {
         td = tr[i].getElementsByTagName("td")[3];
         if (td) {
           if (Number(td.innerHTML) > N) {
@@ -1120,6 +1200,7 @@ moduleExporter("ConnTable",
         }
       }
     }
+    
   }
 
 
@@ -1129,15 +1210,17 @@ moduleExporter("ConnTable",
   * @param {string} connDir - 'pre' or 'post'
   */
   ConnTable.prototype.filterByCellCount = function(connDir){
-    var N, tableId, grouped;
+    var N, tableId, grouped, button;
     if (connDir == 'pre') {
       tableId = this.preTabId;
       grouped = this.preGroupByName && this.dataType === 'Neuron';
       N = Number($("#precount-N").val());
+      button = $('#expand-pre-all')[0];
     } else if (connDir == 'post') {
       tableId = this.postTabId;
       grouped = this.postGroupByName && this.dataType === 'Neuron';
       N = Number($("#postcount-N").val());
+      button = $('#expand-post-all')[0];
     } else {
       return;
     }
@@ -1148,9 +1231,12 @@ moduleExporter("ConnTable",
     tr = table.getElementsByTagName("tr");
 
     // Loop through all table rows, and hide those who don't match the search query
-    for (i = 0; i < tr.length; i++) {
-      if (grouped) {
+    if (grouped) {
+      let expanded_count = 0;
+      let total_count = 0;
+      for (i = 0; i < tr.length; i++) {
         if (this.hasClass(tr[i], "conn-type")){
+          total_count += 1;
           td = tr[i].getElementsByTagName("td")[2];
           if (td) {
             if (Number(td.innerHTML) > N) {
@@ -1168,6 +1254,12 @@ moduleExporter("ConnTable",
               cell_type_visible = false;
             }
           }
+
+          if (cell_type_visible){
+            if (this.hasClass(tr[i], "type-expanded")) {
+              expanded_count += 1;
+            }
+          }
         } else if (this.hasClass(tr[i], "conn-cell")){
           if (cell_type_visible) {
             this.removeClass(tr[i], "filtered");
@@ -1181,56 +1273,65 @@ moduleExporter("ConnTable",
             tr[i].style.display = "none";
           }
         }
+      }
 
+      if(expanded_count == 0) {
+        if (this.hasClass(button, "type-expanded")) {
+          this.removeClass(button, "type-expanded");
+          button.innerHTML = `<i class="fa fa-plus-square-o aria-hidden="true">`
+          button.setAttribute("title", "Expand all");
+        }
+      } else {
+        if (!this.hasClass(button, "type-expanded")) {
+          this.addClass(button, "type-expanded");
+          button.innerHTML = `<i class="fa fa-minus-square-o aria-hidden="true">`
+          button.setAttribute("title", "Collapse all");
+        }
       }
     }
   }
 
-  /**
-   * Setup Callback for add remove button
-   */
-  ConnTable.prototype.setupCallbacks = function(){
+  ConnTable.prototype.buttonCallbacks = function(connDir){
     let that = this;
 
-    $("#pregroup-toggle-checkbox").prop("checked", that.preGroupByName);
-    $("#postgroup-toggle-checkbox").prop("checked", that.postGroupByName);
-
-    $("#"+that.divId + " button").off("click").on("click", function(){
-        if(this.name.includes('pre-add-all')){
-          const rid_list = that.get_table_list('add', 'pre', this.name.includes('neuron') ? 'neuron' : 'synapse');
-          that.parentObj.addByRid(rid_list);
-        }else if(this.name.includes('pre-remove-all')){
-          const rid_list = that.get_table_list('remove', 'pre', this.name.includes('neuron') ? 'neuron' : 'synapse');
-          that.parentObj.removeByRid(rid_list);
-        }else if(this.name.includes('post-add-all')){
-          const rid_list = that.get_table_list('add', 'post', this.name.includes('neuron') ? 'neuron' : 'synapse');
-          that.parentObj.addByRid(rid_list);
-        }else if(this.name.includes('post-remove-all')){
-          const rid_list = that.get_table_list('remove', 'post', this.name.includes('neuron') ? 'neuron' : 'synapse');
-          that.parentObj.removeByRid(rid_list);
-        } else if (this.className.includes('btn-type') ) { // group add/remove button
-          if (this.className.includes('add')) {
-            let rids = [];
-            for (let [rid, orid] of Object.entries(this.rid)) {
-              if (!that.parentObj.isInWorkspace(orid) ) {
-                rids.push(rid);
-              }
+    $("#" + that.divId + ` button[id^='btn-${connDir}']`).off("click").on("click", function(){
+      if(this.name.includes(connDir+'-add-all')){
+        const rid_list = that.get_table_list('add', connDir, this.name.includes('neuron') ? 'neuron' : 'synapse');
+        that.parentObj.addByRid(rid_list);
+      }else if(this.name.includes(connDir+'-remove-all')){
+        const rid_list = that.get_table_list('remove', connDir, this.name.includes('neuron') ? 'neuron' : 'synapse');
+        that.parentObj.removeByRid(rid_list);
+      }
+      // else if(this.name.includes('post-add-all')){
+      //   const rid_list = that.get_table_list('add', 'post', this.name.includes('neuron') ? 'neuron' : 'synapse');
+      //   that.parentObj.addByRid(rid_list);
+      // }else if(this.name.includes('post-remove-all')){
+      //   const rid_list = that.get_table_list('remove', 'post', this.name.includes('neuron') ? 'neuron' : 'synapse');
+      //   that.parentObj.removeByRid(rid_list);
+      // }
+      else if (this.className.includes('btn-type') ) { // group add/remove button
+        if (this.className.includes('add')) {
+          let rids = [];
+          for (let [rid, orid] of Object.entries(this.rid)) {
+            if (!that.parentObj.isInWorkspace(orid) ) {
+              rids.push(rid);
             }
-            that.parentObj.addByRid(rids);
-          } else if (this.className.includes('remove') ) {
-            let rids = [];
-            for (let [rid, orid] of Object.entries(this.rid)) {
-              if (that.parentObj.isInWorkspace(orid) ) {
-                rids.push(rid);
-              }
-            }
-            that.parentObj.removeByRid(rids);
           }
-        } else if(this.className.includes('add')){ 
-          that.parentObj.addByRid(Object.keys(this.rid));
-        } else if(this.className.includes('remove')){
-          that.parentObj.removeByRid(Object.keys(this.rid));
+          that.parentObj.addByRid(rids);
+        } else if (this.className.includes('remove') ) {
+          let rids = [];
+          for (let [rid, orid] of Object.entries(this.rid)) {
+            if (that.parentObj.isInWorkspace(orid) ) {
+              rids.push(rid);
+            }
+          }
+          that.parentObj.removeByRid(rids);
         }
+      } else if(this.className.includes('add')){ 
+        that.parentObj.addByRid(Object.keys(this.rid));
+      } else if(this.className.includes('remove')){
+        that.parentObj.removeByRid(Object.keys(this.rid));
+      }
     })
     .mouseenter( function() {
       if (this.className.includes('btn-type')) {
@@ -1238,7 +1339,8 @@ moduleExporter("ConnTable",
       } else if (this.className.includes('btn-all')) {
         const rid_list = that.get_table_list(
           'highlight', 
-          this.name.includes('pre') ? 'pre' : 'post',
+          // this.name.includes('pre') ? 'pre' : 'post',
+          connDir,
           this.name.includes('neuron') ? 'neuron' : 'synapse',
         );
         that.parentObj.highlight(rid_list);
@@ -1255,66 +1357,73 @@ moduleExporter("ConnTable",
           that.parentObj.resume();
       }
     });
+  };
 
-    
 
-    $("#pregroup-toggle-checkbox").off("change").on("change", function() {
-      that.preGroupByName = $(this).is(":checked");
-      if (that.preGroupByName && that.dataType === 'Neuron') {
-        let button = $('#expand-pre-all')[0]
-        button.innerHTML = `<i class="fa fa-plus-square-o aria-hidden"true">`;
-        button.setAttribute("title", "Expand all");
-        $("#cell-count-pre")[0].innerHTML="Cell Count";
-        $("#cell-filter-pre")[0].innerHTML=`<span class="info-input-span"> N greater than <br></span><input type="number" id="precount-N" value="0" placeholder="0" class="info-input selectable"/>`;
-        $("#presyn-N")[0].value = 0;
+  /**
+   * Setup Callback for group toggle buttons
+   */
+  ConnTable.prototype.groupToggleCallbacks = function(connDir){
+    let that = this;
+
+    $("#"+connDir+"group-toggle-checkbox").prop("checked", connDir === 'pre' ? this.preGroupByName : this.postGroupByName);
+
+    var grouped;
+    $("#" + connDir + "group-toggle-checkbox").off("change").on("change", function() {
+      if (connDir === 'pre') {
+        that.preGroupByName = $(this).is(":checked");
+        grouped = that.preGroupByName;
       } else {
-        $('#expand-pre-all')[0].innerHTML = "";
-        $("#cell-count-pre")[0].innerHTML="";
-        $("#cell-filter-pre")[0].innerHTML="";
-        $("#presyn-N")[0].value = 0;
+        that.postGroupByName = $(this).is(":checked");
+        grouped = that.postGroupByName;
       }
-      that.updateTable('pre');
-      that.setupCallbacks();
-    });
-
-    $("#postgroup-toggle-checkbox").off("change").on("change", function() {
-      that.postGroupByName = $(this).is(":checked");
-      if (that.postGroupByName && that.dataType === 'Neuron') {
-        let button = $('#expand-post-all')[0]
-        button.innerHTML = `<i class="fa fa-plus-square-o aria-hidden"true">`;
+      if (grouped && that.dataType === 'Neuron') {
+        let button = $('#expand-' + connDir + '-all')[0]
+        button.innerHTML = `<i class="fa fa-plus-square-o aria-hidden="true">`;
         button.setAttribute("title", "Expand all");
-        $("#cell-count-post")[0].innerHTML="Cell Count";
-        $("#cell-filter-post")[0].innerHTML=`<span class="info-input-span"> N greater than <br></span><input type="number" id="postcount-N" value="0" placeholder="0" class="info-input selectable"/>`;
-        $("#postsyn-N")[0].value = 0;
+        $("#cell-count-" + connDir)[0].innerHTML="Cell Count";
+        $("#cell-filter-" + connDir)[0].innerHTML=`<span class="info-input-span"> N greater than <br></span><input type="number" id="` + connDir + `count-N" value="0" placeholder="0" class="info-input selectable"/>`;
+        $("#" + connDir + "syn-N")[0].value = 0;
       } else {
-        $('#expand-post-all')[0].innerHTML = "";
-        $("#cell-count-post")[0].innerHTML="";
-        $("#cell-filter-post")[0].innerHTML="";
-        $("#postsyn-N")[0].value = 0;
+        let button = $('#expand-' + connDir + '-all')[0]
+        button.innerHTML = "";
+        $('#expand-' + connDir + '-all')[0].innerHTML = "";
+        $("#cell-count-" + connDir)[0].innerHTML="";
+        $("#cell-filter-" + connDir)[0].innerHTML="";
+        $("#" + connDir + "syn-N")[0].value = 0;
       }
-      that.updateTable('post');
-      that.setupCallbacks();
+      that.updateTable(connDir);
+      // that.setupCallbacks();
     });
+  }
 
+  /**
+   * Setup Callback for group expand/collapse buttons
+   */
+  ConnTable.prototype.groupExpandCallbacks = function(connDir){
+    let that = this;
+    let button = $('#expand-'+connDir+'-all')[0];
+    let table = document.getElementById( (connDir === 'pre') ? that.preTabId : that.postTabId).children[2];
+    let tr = table.getElementsByTagName("tr");
 
-    $('*[id*="toggle-expander"]').off('click').on('click', function() {
-      var pre = this.id.split('-')[2] === 'pre';
+    $(`*[id*="toggle-expander-${connDir}"]`).off('click').on('click', function() {
+      // var pre = this.id.split('-')[2] === 'pre';
       var name = this.id.split('-').slice(3).join("-");
 
-      let button = (pre ? $('#expand-pre-all') : $('#expand-post-all'))[0];
-
-      var table, tr, td, i;
-      table = document.getElementById(pre ? that.preTabId : that.postTabId).children[2];
-      tr = table.getElementsByTagName("tr");
-
+      var td, i;
       // Loop through all table rows, and hide those who don't match the search query
       var found = false;
       var toexpand = undefined;
+      let expanded_count = 0;
       for (i = 0; i < tr.length; i++) {
         if (that.hasClass(tr[i], "conn-type")){
           if (found) {
-            break;
+            found = false; // only to signal found to the conn-cells immediately following the conn-type
           }
+          if (that.hasClass(tr[i], "type-expanded") && !that.hasClass(tr[i], "filtered-N") && !that.hasClass(tr[i], "filtered-count") && !that.hasClass(tr[i], "filtered-name")){
+            expanded_count += 1;
+          }
+
           td = tr[i].getElementsByTagName("td")[1];
 
           if (td) {
@@ -1328,23 +1437,25 @@ moduleExporter("ConnTable",
                 td = tr[i].getElementsByTagName("td")[0];
                 arrowSpan = td.querySelector("#"+this.id);
                 if (arrowSpan) {
-                  arrowSpan.innerHTML = `<i class="fa fa-plus-square-o aria-hidden"true">`;
+                  arrowSpan.innerHTML = `<i class="fa fa-plus-square-o aria-hidden="true">`;
                   arrowSpan.setAttribute("title", "Expand " + name)
                 }
+                expanded_count -= 1;
               } else {
                 that.addClass(tr[i], "type-expanded");
                 toexpand = true;
+                expanded_count += 1;
 
-                if (!that.hasClass(button, "type-expanded")) {
-                  that.addClass(button, "type-expanded");
-                  button.innerHTML = `<i class="fa fa-minus-square-o aria-hidden"true">`
-                  button.setAttribute("title", "Collapse all");
-                }
+                // if (!that.hasClass(button, "type-expanded")) {
+                //   that.addClass(button, "type-expanded");
+                //   button.innerHTML = `<i class="fa fa-minus-square-o aria-hidden="true">`
+                //   button.setAttribute("title", "Collapse all");
+                // }
 
                 td = tr[i].getElementsByTagName("td")[0];
                 arrowSpan = td.querySelector("#"+this.id);
                 if (arrowSpan) {
-                  arrowSpan.innerHTML = `<i class="fa fa-minus-square-o aria-hidden"true">`;
+                  arrowSpan.innerHTML = `<i class="fa fa-minus-square-o aria-hidden="true">`;
                   arrowSpan.setAttribute("title", "Collapse " + name)
                 }
               }
@@ -1364,30 +1475,73 @@ moduleExporter("ConnTable",
           }
         }
       }
+
+      if(expanded_count == 0) {
+        if (that.hasClass(button, "type-expanded")) {
+          that.removeClass(button, "type-expanded");
+          button.innerHTML = `<i class="fa fa-plus-square-o aria-hidden="true">`
+          button.setAttribute("title", "Expand all");
+        }
+      } else {
+        if (!that.hasClass(button, "type-expanded")) {
+          that.addClass(button, "type-expanded");
+          button.innerHTML = `<i class="fa fa-minus-square-o aria-hidden="true">`
+          button.setAttribute("title", "Collapse all");
+        }
+      }
     });
+  }
 
-    $("#"+this.preTabId).off("click").on("click", ".fa-exchange", function() {
+  /**
+   * Setup Callback for exchange buttons
+   */
+  ConnTable.prototype.exchangeCallbacks = function(connDir){
+    let that = this;
+
+    var tabId, grouped, button, otherTabId, invDir, tableData;
+    if (connDir === 'pre') {
+      invDir = 'post';
+      tabId = this.preTabId;
+      otherTabId = this.postTabId;
+      grouped = that.postGroupByName && that.dataType === "Neuron"; // look at the other table
+      button = $('#expand-post-all')[0];
+      tableData = this.preTableData;
+    } else {
+      invDir = 'pre';
+      tabId = this.postTabId;
+      otherTabId = this.preTabId;
+      grouped = that.preGroupByName && that.dataType === "Neuron"; // look at the other table
+      button = $('#expand-pre-all')[0];
+      tableData = this.postTableData;
+    }
+
+    var table = $('#'+otherTabId);
+
+    $("#"+tabId).off("click").on("click", ".fa-exchange", function() {
       let $cell = $(this).closest("td");
-      let uname = $cell.text(); // closest td does not have the fa-exchange span, removing the trailing space
-
-      let grouped = that.postGroupByName && that.dataType === "Neuron";
-      var table, i, td;
-      let button = $('#expand-post-all')[0];
-
+      let uname = $cell.text();
+      
+      // grouped cannot be determined when exchangeCallback
+      // is setup, as the other table can change
+      if (connDir === 'pre') {
+        grouped = that.postGroupByName && that.dataType === "Neuron";
+      } else {
+        grouped = that.preGroupByName && that.dataType === "Neuron";
+      }
+      var i, td;
       if (grouped) {
-        table = $('#'+that.postTabId);
         if (!table.is(':visible')) {
           table.show();
-          $("#toggle-post-arrow").html("&#9660;");
+          $("#toggle-"+ invDir + "-arrow").html("&#9660;");
         }
 
-        $("#postsyn-N").val(0);
-        $("#postcount-N").val(0);
-        $("#postsyn-srch").val("");
-        that.filterAll('post');
+        $("#"+invDir+"syn-N").val(0);
+        $("#"+invDir+"count-N").val(0);
+        $("#"+invDir+"syn-srch").val("");
+        that.filterAll(invDir);
         
         tr = table.children()[2].getElementsByTagName("tr");
-        let name = that.preTableData[uname]['name'];
+        let name = tableData[uname]['name'];
         var found = false;
         var target_tr;
 
@@ -1401,12 +1555,12 @@ moduleExporter("ConnTable",
               if(!that.hasClass(tr[i], 'type-expanded')) {
                 that.addClass(tr[i], 'type-expanded');
                 let arrowSpan = tr[i].getElementsByTagName("td")[0].getElementsByTagName("span")[0];
-                arrowSpan.innerHTML = `<i class="fa fa-minus-square-o aria-hidden"true">`;
+                arrowSpan.innerHTML = `<i class="fa fa-minus-square-o aria-hidden="true">`;
                 arrowSpan.setAttribute("title", "Collapse " + name);
                 
                 if (!that.hasClass(button, 'type-expanded')){
                   that.addClass(button, 'type-expanded');
-                  button.innerHTML = `<i class="fa fa-minus-square-o aria-hidden"true">`
+                  button.innerHTML = `<i class="fa fa-minus-square-o aria-hidden="true">`
                   button.setAttribute("title", "Collapse all");
                 }
                 
@@ -1425,14 +1579,13 @@ moduleExporter("ConnTable",
         }
         scrollAndHighlight(target_tr);
       } else {
-        $("#postsyn-N").val(0);
-        $("#postsyn-srch").val("");
-        that.filterAll('post');
-        table = $('#'+that.postTabId);
+        $("#"+invDir+"syn-N").val(0);
+        $("#"+invDir+"postsyn-srch").val("");
+        that.filterAll(invDir);
         
         if (!table.is(':visible')) {
           table.show();
-          $("#toggle-post-arrow").html("&#9660;");
+          $("#toggle-"+invDir+"-arrow").html("&#9660;");
         }
 
         tr = table.children()[2].getElementsByTagName("tr");
@@ -1446,211 +1599,449 @@ moduleExporter("ConnTable",
         }
       }
     });
+  }
+  
+  /**
+   * Setup Callback for expand/collapse-all buttons
+   */
+  ConnTable.prototype.expandAllCallbacks = function(connDir){
+    let that = this;
+    var tabId;
+    if (connDir === 'pre') {
+      tabId = this.preTabId;
+    } else {
+      tabId = this.postTabId;
+    }
 
-    $("#"+this.postTabId).off("click").on("click", ".fa-exchange", function() {
-      let $cell = $(this).closest("td");
-      let uname = $cell.text(); // closest td does not have the fa-exchange span, removing the trailing space
-
-      let grouped = that.preGroupByName && that.dataType === "Neuron";
-      var table, i, td;
-      let button = $('#expand-pre-all')[0];
-
-      if (grouped) {
-        table = $('#'+that.preTabId);
-        if (!table.is(':visible')) {
-          table.show();
-          $("#toggle-pre-arrow").html("&#9660;");
-        }
-
-        $("#presyn-N").val(0);
-        $("#precount-N").val(0);
-        $("#presyn-srch").val("");
-        that.filterAll('pre');
-        
-        tr = table.children()[2].getElementsByTagName("tr");
-        let name = that.postTableData[uname]['name'];
-        var found = false;
-        var target_tr;
-
+    $('#expand-'+connDir+'-all').off("click").on("click", function() {
+      // must have been grouped
+      var tr = $('#'+tabId).children()[2].getElementsByTagName("tr");
+      
+      if (that.hasClass(this, "type-expanded")) {
+        that.removeClass(this, "type-expanded");
+        this.innerHTML = `<i class="fa fa-plus-square-o aria-hidden="true">`
+        this.setAttribute("title", "Expand all");
+        var toRetract, arrowSpan;
         for (i = 0; i < tr.length; i++) {
           if (that.hasClass(tr[i], "conn-type")) {
-            if (found) {
-              break;
-            }
-
-            if( tr[i].getElementsByTagName("td")[1].textContent === name) {
-              if(!that.hasClass(tr[i], 'type-expanded')) {
-                that.addClass(tr[i], 'type-expanded');
-                let arrowSpan = tr[i].getElementsByTagName("td")[0].getElementsByTagName("span")[0];
-                arrowSpan.innerHTML = `<i class="fa fa-minus-square-o aria-hidden"true">`;
-                arrowSpan.setAttribute("title", "Collapse " + name);
-                if (!that.hasClass(button, 'type-expanded')){
-                  that.addClass(button, 'type-expanded');
-                  button.innerHTML = `<i class="fa fa-minus-square-o aria-hidden"true">`
-                  button.setAttribute("title", "Collapse all");
+            toRetract = false;
+            if ( !that.hasClass(tr[i], "filtered-N") && !that.hasClass(tr[i], "filtered-count") && !that.hasClass(tr[i], "filtered-name")) {
+              if (that.hasClass(tr[i], "type-expanded")) {
+                toRetract = true;
+                that.removeClass(tr[i], "type-expanded");
+                td = tr[i].getElementsByTagName("td")[0];
+                arrowSpan = td.getElementsByTagName("span")[0];
+                if (arrowSpan) {
+                  arrowSpan.innerHTML = `<i class="fa fa-plus-square-o aria-hidden="true">`;
+                  let name = tr[i].getElementsByTagName("td")[1].textContent;
+                  arrowSpan.setAttribute("title", "Expand " + name);
                 }
               }
-              found = true;
             }
-          } else if (found && that.hasClass(tr[i], "conn-cell") ) {
-            if(!that.hasClass(tr[i], 'type-expanded')) {
-              that.addClass(tr[i], 'type-expanded');
-              tr[i].style.display = "";
-            }
-            if(tr[i].getElementsByTagName("td")[1].textContent === uname ) {
-              target_tr = tr[i];
+          } else { // conn-cell
+            if (toRetract) {
+              if (that.hasClass(tr[i], "type-expanded")) {
+                that.removeClass(tr[i], "type-expanded");
+              }
+              tr[i].style.display = "none";
             }
           }
-        }
-        scrollAndHighlight(target_tr);
+        }  
       } else {
-        $("#presyn-N").val(0);
-        $("#presyn-srch").val("");
-        that.filterAll('pre');
-        table = $('#'+that.preTabId);
+        that.addClass(this, "type-expanded");
+        this.innerHTML = `<i class="fa fa-minus-square-o aria-hidden="true">`
+        this.setAttribute("title", "Collapse all");
+        var toExpand, arrowSpan;
+        for (i = 0; i < tr.length; i++) {
+          if (that.hasClass(tr[i], "conn-type")) {
+            toExpand = false;
+            if ( !that.hasClass(tr[i], "filtered-N") && !that.hasClass(tr[i], "filtered-count") && !that.hasClass(tr[i], "filtered-name")) {
+              if (!that.hasClass(tr[i], "type-expanded")) {
+                that.addClass(tr[i], "type-expanded");
+                toExpand = true;
+                td = tr[i].getElementsByTagName("td")[0];
+                arrowSpan = td.getElementsByTagName("span")[0];
+                if (arrowSpan) {
+                  arrowSpan.innerHTML = `<i class="fa fa-minus-square-o aria-hidden="true">`;
+                  const name = tr[i].getElementsByTagName("td")[1].textContent;
+                  arrowSpan.setAttribute("title", "Collapse " + name);
+                }
+              }
+            }
+          } else { // conn-cell
+            if (toExpand) {
+              that.addClass(tr[i], 'type-expanded');
+              // if (!that.hasClass(tr[i], 'filtered') ){
+                tr[i].style.display = "";
+              // }
+            }
+          }
+        } 
+      }
+    });
+  }
+
+  /**
+   * Setup Callback 
+   */
+  // ConnTable.prototype.groupToggleCheckboxCallbacks = function(){
+  //   $("#pregroup-toggle-checkbox").prop("checked", this.preGroupByName);
+  //   $("#postgroup-toggle-checkbox").prop("checked", this.postGroupByName);
+  //   this.groupToggleCallbacks('pre');
+  //   this.groupToggleCallbacks('post');
+  // }
+
+  /**
+   * Setup Callback 
+   */
+  ConnTable.prototype.setupCallbacks = function(){
+
+    // this.buttonCallbacks('pre');
+    // this.buttonCallbacks('post');
+    // this.groupExpandCallbacks('pre');
+    // this.groupExpandCallbacks('post');
+    // this.exchangeCallbacks('pre');
+    // this.exchangeCallbacks('post');
+    // this.expandAllCallbacks('pre');
+    // this.expandAllCallbacks('post');
+    
+    
+    
+
+    // $("#pregroup-toggle-checkbox").off("change").on("change", function() {
+    //   that.preGroupByName = $(this).is(":checked");
+    //   if (that.preGroupByName && that.dataType === 'Neuron') {
+    //     let button = $('#expand-pre-all')[0]
+    //     button.innerHTML = `<i class="fa fa-plus-square-o aria-hidden="true">`;
+    //     button.setAttribute("title", "Expand all");
+    //     $("#cell-count-pre")[0].innerHTML="Cell Count";
+    //     $("#cell-filter-pre")[0].innerHTML=`<span class="info-input-span"> N greater than <br></span><input type="number" id="precount-N" value="0" placeholder="0" class="info-input selectable"/>`;
+    //     $("#presyn-N")[0].value = 0;
+    //   } else {
+    //     $('#expand-pre-all')[0].innerHTML = "";
+    //     $("#cell-count-pre")[0].innerHTML="";
+    //     $("#cell-filter-pre")[0].innerHTML="";
+    //     $("#presyn-N")[0].value = 0;
+    //   }
+    //   that.updateTable('pre');
+    //   that.setupCallbacks();
+    // });
+
+    // $("#postgroup-toggle-checkbox").off("change").on("change", function() {
+    //   that.postGroupByName = $(this).is(":checked");
+    //   if (that.postGroupByName && that.dataType === 'Neuron') {
+    //     let button = $('#expand-post-all')[0]
+    //     button.innerHTML = `<i class="fa fa-plus-square-o aria-hidden="true">`;
+    //     button.setAttribute("title", "Expand all");
+    //     $("#cell-count-post")[0].innerHTML="Cell Count";
+    //     $("#cell-filter-post")[0].innerHTML=`<span class="info-input-span"> N greater than <br></span><input type="number" id="postcount-N" value="0" placeholder="0" class="info-input selectable"/>`;
+    //     $("#postsyn-N")[0].value = 0;
+    //   } else {
+    //     $('#expand-post-all')[0].innerHTML = "";
+    //     $("#cell-count-post")[0].innerHTML="";
+    //     $("#cell-filter-post")[0].innerHTML="";
+    //     $("#postsyn-N")[0].value = 0;
+    //   }
+    //   that.updateTable('post');
+    //   that.setupCallbacks();
+    // });
+
+
+    
+
+    // $("#"+this.preTabId).off("click").on("click", ".fa-exchange", function() {
+    //   let $cell = $(this).closest("td");
+    //   let uname = $cell.text(); // closest td does not have the fa-exchange span, removing the trailing space
+
+    //   let grouped = that.postGroupByName && that.dataType === "Neuron";
+    //   var table, i, td;
+    //   let button = $('#expand-post-all')[0];
+
+    //   if (grouped) {
+    //     table = $('#'+that.postTabId);
+    //     if (!table.is(':visible')) {
+    //       table.show();
+    //       $("#toggle-post-arrow").html("&#9660;");
+    //     }
+
+    //     $("#postsyn-N").val(0);
+    //     $("#postcount-N").val(0);
+    //     $("#postsyn-srch").val("");
+    //     that.filterAll('post');
         
-        if (!table.is(':visible')) {
-          table.show();
-          $("#toggle-pre-arrow").html("&#9660;");
-        }
+    //     tr = table.children()[2].getElementsByTagName("tr");
+    //     let name = that.preTableData[uname]['name'];
+    //     var found = false;
+    //     var target_tr;
 
-        tr = table.children()[2].getElementsByTagName("tr");
+    //     for (i = 0; i < tr.length; i++) {
+    //       if (that.hasClass(tr[i], "conn-type")) {
+    //         if (found) {
+    //           break;
+    //         }
 
-        for (i = 0; i < tr.length; i++) {
-          if( tr[i].getElementsByTagName("td")[1].textContent === uname)
-          {
-            scrollAndHighlight(tr[i]);
-            break;
-          }
-        }
-      }
-    });
+    //         if( tr[i].getElementsByTagName("td")[1].textContent === name) {
+    //           if(!that.hasClass(tr[i], 'type-expanded')) {
+    //             that.addClass(tr[i], 'type-expanded');
+    //             let arrowSpan = tr[i].getElementsByTagName("td")[0].getElementsByTagName("span")[0];
+    //             arrowSpan.innerHTML = `<i class="fa fa-minus-square-o aria-hidden="true">`;
+    //             arrowSpan.setAttribute("title", "Collapse " + name);
+                
+    //             if (!that.hasClass(button, 'type-expanded')){
+    //               that.addClass(button, 'type-expanded');
+    //               button.innerHTML = `<i class="fa fa-minus-square-o aria-hidden="true">`
+    //               button.setAttribute("title", "Collapse all");
+    //             }
+                
+    //           }
+    //           found = true;
+    //         }
+    //       } else if (found && that.hasClass(tr[i], "conn-cell") ) {
+    //         if(!that.hasClass(tr[i], 'type-expanded')) {
+    //           that.addClass(tr[i], 'type-expanded');
+    //           tr[i].style.display = "";
+    //         }
+    //         if(tr[i].getElementsByTagName("td")[1].textContent === uname ) {
+    //           target_tr = tr[i];
+    //         }
+    //       }
+    //     }
+    //     scrollAndHighlight(target_tr);
+    //   } else {
+    //     $("#postsyn-N").val(0);
+    //     $("#postsyn-srch").val("");
+    //     that.filterAll('post');
+    //     table = $('#'+that.postTabId);
+        
+    //     if (!table.is(':visible')) {
+    //       table.show();
+    //       $("#toggle-post-arrow").html("&#9660;");
+    //     }
 
-    $('#expand-pre-all').off("click").on("click", function() {
-      // must have been grouped
-      var tr = $('#'+that.preTabId).children()[2].getElementsByTagName("tr");
+    //     tr = table.children()[2].getElementsByTagName("tr");
+
+    //     for (i = 0; i < tr.length; i++) {
+    //       if( tr[i].getElementsByTagName("td")[1].textContent === uname)
+    //       {
+    //         scrollAndHighlight(tr[i]);
+    //         break;
+    //       }
+    //     }
+    //   }
+    // });
+
+    // $("#"+this.postTabId).off("click").on("click", ".fa-exchange", function() {
+    //   let $cell = $(this).closest("td");
+    //   let uname = $cell.text(); // closest td does not have the fa-exchange span, removing the trailing space
+
+    //   let grouped = that.preGroupByName && that.dataType === "Neuron";
+    //   var table, i, td;
+    //   let button = $('#expand-pre-all')[0];
+
+    //   if (grouped) {
+    //     table = $('#'+that.preTabId);
+    //     if (!table.is(':visible')) {
+    //       table.show();
+    //       $("#toggle-pre-arrow").html("&#9660;");
+    //     }
+
+    //     $("#presyn-N").val(0);
+    //     $("#precount-N").val(0);
+    //     $("#presyn-srch").val("");
+    //     that.filterAll('pre');
+        
+    //     tr = table.children()[2].getElementsByTagName("tr");
+    //     let name = that.postTableData[uname]['name'];
+    //     var found = false;
+    //     var target_tr;
+
+    //     for (i = 0; i < tr.length; i++) {
+    //       if (that.hasClass(tr[i], "conn-type")) {
+    //         if (found) {
+    //           break;
+    //         }
+
+    //         if( tr[i].getElementsByTagName("td")[1].textContent === name) {
+    //           if(!that.hasClass(tr[i], 'type-expanded')) {
+    //             that.addClass(tr[i], 'type-expanded');
+    //             let arrowSpan = tr[i].getElementsByTagName("td")[0].getElementsByTagName("span")[0];
+    //             arrowSpan.innerHTML = `<i class="fa fa-minus-square-o aria-hidden="true">`;
+    //             arrowSpan.setAttribute("title", "Collapse " + name);
+    //             if (!that.hasClass(button, 'type-expanded')){
+    //               that.addClass(button, 'type-expanded');
+    //               button.innerHTML = `<i class="fa fa-minus-square-o aria-hidden="true">`
+    //               button.setAttribute("title", "Collapse all");
+    //             }
+    //           }
+    //           found = true;
+    //         }
+    //       } else if (found && that.hasClass(tr[i], "conn-cell") ) {
+    //         if(!that.hasClass(tr[i], 'type-expanded')) {
+    //           that.addClass(tr[i], 'type-expanded');
+    //           tr[i].style.display = "";
+    //         }
+    //         if(tr[i].getElementsByTagName("td")[1].textContent === uname ) {
+    //           target_tr = tr[i];
+    //         }
+    //       }
+    //     }
+    //     scrollAndHighlight(target_tr);
+    //   } else {
+    //     $("#presyn-N").val(0);
+    //     $("#presyn-srch").val("");
+    //     that.filterAll('pre');
+    //     table = $('#'+that.preTabId);
+        
+    //     if (!table.is(':visible')) {
+    //       table.show();
+    //       $("#toggle-pre-arrow").html("&#9660;");
+    //     }
+
+    //     tr = table.children()[2].getElementsByTagName("tr");
+
+    //     for (i = 0; i < tr.length; i++) {
+    //       if( tr[i].getElementsByTagName("td")[1].textContent === uname)
+    //       {
+    //         scrollAndHighlight(tr[i]);
+    //         break;
+    //       }
+    //     }
+    //   }
+    // });
+
+    // $('#expand-pre-all').off("click").on("click", function() {
+    //   // must have been grouped
+    //   var tr = $('#'+that.preTabId).children()[2].getElementsByTagName("tr");
       
-      if (that.hasClass(this, "type-expanded")) {
-        that.removeClass(this, "type-expanded");
-        this.innerHTML = `<i class="fa fa-plus-square-o aria-hidden"true">`
-        this.setAttribute("title", "Expand all");
-        var toRetract, arrowSpan;
-        for (i = 0; i < tr.length; i++) {
-          if (that.hasClass(tr[i], "conn-type")) {
-            toRetract = false;
-            if (that.hasClass(tr[i], "type-expanded")) {
-              toRetract = true;
-              that.removeClass(tr[i], "type-expanded");
-              td = tr[i].getElementsByTagName("td")[0];
-              arrowSpan = td.getElementsByTagName("span")[0];
-              if (arrowSpan) {
-                arrowSpan.innerHTML = `<i class="fa fa-plus-square-o aria-hidden"true">`;
-                let name = tr[i].getElementsByTagName("td")[1].textContent;
-                arrowSpan.setAttribute("title", "Expand " + name);
-              }
-            }
-          } else { // conn-cell
-            if (toRetract) {
-              if (that.hasClass(tr[i], "type-expanded")) {
-                that.removeClass(tr[i], "type-expanded");
-              }
-              tr[i].style.display = "none";
-            }
-          }
-        }  
-      } else {
-        that.addClass(this, "type-expanded");
-        this.innerHTML = `<i class="fa fa-minus-square-o aria-hidden"true">`
-        this.setAttribute("title", "Collapse all");
-        var toExpand, arrowSpan;
-        for (i = 0; i < tr.length; i++) {
-          if (that.hasClass(tr[i], "conn-type")) {
-            toExpand = false;
-            if (!that.hasClass(tr[i], "type-expanded")) {
-              that.addClass(tr[i], "type-expanded");
-              toExpand = true;
-              td = tr[i].getElementsByTagName("td")[0];
-              arrowSpan = td.getElementsByTagName("span")[0];
-              if (arrowSpan) {
-                arrowSpan.innerHTML = `<i class="fa fa-minus-square-o aria-hidden"true">`;
-                const name = tr[i].getElementsByTagName("td")[1].textContent;
-                arrowSpan.setAttribute("title", "Collapse " + name);
-              }
-            }
-          } else { // conn-cell
-            if (toExpand) {
-              that.addClass(tr[i], 'type-expanded');
-              if (!that.hasClass(tr[i], 'filtered') ){
-                tr[i].style.display = "";
-              }
-            }
-          }
-        } 
-      }
-    });
+    //   if (that.hasClass(this, "type-expanded")) {
+    //     that.removeClass(this, "type-expanded");
+    //     this.innerHTML = `<i class="fa fa-plus-square-o aria-hidden="true">`
+    //     this.setAttribute("title", "Expand all");
+    //     var toRetract, arrowSpan;
+    //     for (i = 0; i < tr.length; i++) {
+    //       if (that.hasClass(tr[i], "conn-type")) {
+    //         toRetract = false;
+    //         if ( !that.hasClass(tr[i], "filtered-N") && !that.hasClass(tr[i], "filtered-count") && !that.hasClass(tr[i], "filtered-name")) {
+    //           if (that.hasClass(tr[i], "type-expanded")) {
+    //             toRetract = true;
+    //             that.removeClass(tr[i], "type-expanded");
+    //             td = tr[i].getElementsByTagName("td")[0];
+    //             arrowSpan = td.getElementsByTagName("span")[0];
+    //             if (arrowSpan) {
+    //               arrowSpan.innerHTML = `<i class="fa fa-plus-square-o aria-hidden="true">`;
+    //               let name = tr[i].getElementsByTagName("td")[1].textContent;
+    //               arrowSpan.setAttribute("title", "Expand " + name);
+    //             }
+    //           }
+    //         }
+    //       } else { // conn-cell
+    //         if (toRetract) {
+    //           if (that.hasClass(tr[i], "type-expanded")) {
+    //             that.removeClass(tr[i], "type-expanded");
+    //           }
+    //           tr[i].style.display = "none";
+    //         }
+    //       }
+    //     }  
+    //   } else {
+    //     that.addClass(this, "type-expanded");
+    //     this.innerHTML = `<i class="fa fa-minus-square-o aria-hidden="true">`
+    //     this.setAttribute("title", "Collapse all");
+    //     var toExpand, arrowSpan;
+    //     for (i = 0; i < tr.length; i++) {
+    //       if (that.hasClass(tr[i], "conn-type")) {
+    //         toExpand = false;
+    //         if ( !that.hasClass(tr[i], "filtered-N") && !that.hasClass(tr[i], "filtered-count") && !that.hasClass(tr[i], "filtered-name")) {
+    //           if (!that.hasClass(tr[i], "type-expanded")) {
+    //             that.addClass(tr[i], "type-expanded");
+    //             toExpand = true;
+    //             td = tr[i].getElementsByTagName("td")[0];
+    //             arrowSpan = td.getElementsByTagName("span")[0];
+    //             if (arrowSpan) {
+    //               arrowSpan.innerHTML = `<i class="fa fa-minus-square-o aria-hidden="true">`;
+    //               const name = tr[i].getElementsByTagName("td")[1].textContent;
+    //               arrowSpan.setAttribute("title", "Collapse " + name);
+    //             }
+    //           }
+    //         }
+    //       } else { // conn-cell
+    //         if (toExpand) {
+    //           that.addClass(tr[i], 'type-expanded');
+    //           // if (!that.hasClass(tr[i], 'filtered') ){
+    //             tr[i].style.display = "";
+    //           // }
+    //         }
+    //       }
+    //     } 
+    //   }
+    // });
 
-    $('#expand-post-all').off("click").on("click", function() {
-      // must have been grouped
-      var tr = $('#'+that.postTabId).children()[2].getElementsByTagName("tr");
+    // $('#expand-post-all').off("click").on("click", function() {
+    //   // must have been grouped
+    //   var tr = $('#'+that.postTabId).children()[2].getElementsByTagName("tr");
       
-      if (that.hasClass(this, "type-expanded")) {
-        that.removeClass(this, "type-expanded");
-        this.innerHTML = `<i class="fa fa-plus-square-o aria-hidden"true">`
-        this.setAttribute("title", "Expand all");
-        var toRetract, arrowSpan;
-        for (i = 0; i < tr.length; i++) {
-          if (that.hasClass(tr[i], "conn-type")) {
-            toRetract = false;
-            if (that.hasClass(tr[i], "type-expanded")) {
-              toRetract = true;
-              that.removeClass(tr[i], "type-expanded");
-              td = tr[i].getElementsByTagName("td")[0];
-              arrowSpan = td.getElementsByTagName("span")[0];
-              if (arrowSpan) {
-                arrowSpan.innerHTML = `<i class="fa fa-plus-square-o aria-hidden"true">`;
-                const name = tr[i].getElementsByTagName("td")[1].textContent;
-                arrowSpan.setAttribute("title", "Collapse " + name);
-              }
-            }
-          } else { // conn-cell
-            if (toRetract) {
-              if (that.hasClass(tr[i], "type-expanded")) {
-                that.removeClass(tr[i], "type-expanded");
-              }
-              tr[i].style.display = "none";
-            }
-          }
-        }  
-      } else {
-        that.addClass(this, "type-expanded");
-        this.innerHTML = `<i class="fa fa-minus-square-o aria-hidden"true">`
-        this.setAttribute("title", "Collapse all");
-        var toExpand, arrowSpan;
-        for (i = 0; i < tr.length; i++) {
-          if (that.hasClass(tr[i], "conn-type")) {
-            toExpand = false;
-            if (!that.hasClass(tr[i], "type-expanded")) {
-              that.addClass(tr[i], "type-expanded");
-              toExpand = true;
-              td = tr[i].getElementsByTagName("td")[0];
-              arrowSpan = td.getElementsByTagName("span")[0];
-              if (arrowSpan) {
-                arrowSpan.innerHTML = `<i class="fa fa-minus-square-o aria-hidden"true">`;
-                const name = tr[i].getElementsByTagName("td")[1].textContent;
-                arrowSpan.setAttribute("title", "Expand " + name);
-              }
-            }
-          } else { // conn-cell
-            if (toExpand) {
-              that.addClass(tr[i], 'type-expanded');
-              if (!that.hasClass(tr[i], 'filtered') ){
-                tr[i].style.display = "";
-              }
-            }
-          }
-        } 
-      }
-    });
+    //   if (that.hasClass(this, "type-expanded")) {
+    //     that.removeClass(this, "type-expanded");
+    //     this.innerHTML = `<i class="fa fa-plus-square-o aria-hidden="true">`
+    //     this.setAttribute("title", "Expand all");
+    //     var toRetract, arrowSpan;
+    //     for (i = 0; i < tr.length; i++) {
+    //       if (that.hasClass(tr[i], "conn-type")) {
+    //         toRetract = false;
+    //         if ( !that.hasClass(tr[i], "filtered-N") && !that.hasClass(tr[i], "filtered-count") && !that.hasClass(tr[i], "filtered-name")) {
+    //           if (that.hasClass(tr[i], "type-expanded")) {
+    //             toRetract = true;
+    //             that.removeClass(tr[i], "type-expanded");
+    //             td = tr[i].getElementsByTagName("td")[0];
+    //             arrowSpan = td.getElementsByTagName("span")[0];
+    //             if (arrowSpan) {
+    //               arrowSpan.innerHTML = `<i class="fa fa-plus-square-o aria-hidden="true">`;
+    //               const name = tr[i].getElementsByTagName("td")[1].textContent;
+    //               arrowSpan.setAttribute("title", "Collapse " + name);
+    //             }
+    //           }
+    //         }
+    //       } else { // conn-cell
+    //         if (toRetract) {
+    //           if (that.hasClass(tr[i], "type-expanded")) {
+    //             that.removeClass(tr[i], "type-expanded");
+    //           }
+    //           tr[i].style.display = "none";
+    //         }
+    //       }
+    //     }  
+    //   } else {
+    //     that.addClass(this, "type-expanded");
+    //     this.innerHTML = `<i class="fa fa-minus-square-o aria-hidden="true">`
+    //     this.setAttribute("title", "Collapse all");
+    //     var toExpand, arrowSpan;
+    //     for (i = 0; i < tr.length; i++) {
+    //       if (that.hasClass(tr[i], "conn-type")) {
+    //         toExpand = false;
+    //         if ( !that.hasClass(tr[i], "filtered-N") && !that.hasClass(tr[i], "filtered-count") && !that.hasClass(tr[i], "filtered-name")) {
+    //           if (!that.hasClass(tr[i], "type-expanded")) {
+    //             that.addClass(tr[i], "type-expanded");
+    //             toExpand = true;
+    //             td = tr[i].getElementsByTagName("td")[0];
+    //             arrowSpan = td.getElementsByTagName("span")[0];
+    //             if (arrowSpan) {
+    //               arrowSpan.innerHTML = `<i class="fa fa-minus-square-o aria-hidden="true">`;
+    //               const name = tr[i].getElementsByTagName("td")[1].textContent;
+    //               arrowSpan.setAttribute("title", "Expand " + name);
+    //             }
+    //           }
+    //         }
+    //       } else { // conn-cell
+    //         if (toExpand) {
+    //           that.addClass(tr[i], 'type-expanded');
+    //           // if (!that.hasClass(tr[i], 'filtered') ){
+    //             tr[i].style.display = "";
+    //           // }
+    //         }
+    //       }
+    //     } 
+    //   }
+    // });
   };
 
   ConnTable.prototype.get_table_list = function(addremovehighlight, prepost, neuronsynapse){
