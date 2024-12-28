@@ -1442,7 +1442,7 @@ moduleExporter("ConnTable",
                 toexpand = false;
 
                 td = tr[i].getElementsByTagName("td")[0];
-                arrowSpan = td.querySelector("#"+this.id);
+                arrowSpan = td.getElementsByTagName("span")[0];
                 if (arrowSpan) {
                   arrowSpan.innerHTML = `<i class="fa fa-plus-square-o aria-hidden="true">`;
                   arrowSpan.setAttribute("title", "Expand " + name)
@@ -1460,7 +1460,7 @@ moduleExporter("ConnTable",
                 // }
 
                 td = tr[i].getElementsByTagName("td")[0];
-                arrowSpan = td.querySelector("#"+this.id);
+                arrowSpan = td.getElementsByTagName("span")[0];
                 if (arrowSpan) {
                   arrowSpan.innerHTML = `<i class="fa fa-minus-square-o aria-hidden="true">`;
                   arrowSpan.setAttribute("title", "Collapse " + name)
