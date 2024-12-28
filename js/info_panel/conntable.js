@@ -520,7 +520,7 @@ moduleExporter("ConnTable",
         c3.className = (connDir==='pre') ? 'neuron_add_type_pre': 'neuron_add_type_post'; // remove the . character
         var c4 = row.insertCell(5);
         c4.className = (connDir==='pre') ? 'synapse_add_type_pre': 'synapse_add_type_post';
-        carrow.innerHTML = ((connDir==='pre') ? `<span id="toggle-expander-pre-` : `<span id="toggle-expander-post-`) + name + `" class="expander-arrow"><i class="fa fa-plus-square-o aria-hidden"true"></span>`;
+        carrow.innerHTML = ((connDir==='pre') ? `<span id="toggle-expander-pre-` : `<span id="toggle-expander-post-`) + name + `" class="expander-arrow" title="Expand ` + name + `"><i class="fa fa-plus-square-o aria-hidden"true"></span>`;
         neuron_count.innerHTML = typeData[name]['count'];
 
         let N = typeData[name]['N'];
@@ -1328,6 +1328,7 @@ moduleExporter("ConnTable",
                 arrowSpan = td.querySelector("#"+this.id);
                 if (arrowSpan) {
                   arrowSpan.innerHTML = `<i class="fa fa-plus-square-o aria-hidden"true">`;
+                  arrowSpan.setAttribute("title", "Expand " + name)
                 }
               } else {
                 that.addClass(tr[i], "type-expanded");
@@ -1343,6 +1344,7 @@ moduleExporter("ConnTable",
                 arrowSpan = td.querySelector("#"+this.id);
                 if (arrowSpan) {
                   arrowSpan.innerHTML = `<i class="fa fa-minus-square-o aria-hidden"true">`;
+                  arrowSpan.setAttribute("title", "Collapse " + name)
                 }
               }
             }
@@ -1397,7 +1399,9 @@ moduleExporter("ConnTable",
             if( tr[i].getElementsByTagName("td")[1].textContent === name) {
               if(!that.hasClass(tr[i], 'type-expanded')) {
                 that.addClass(tr[i], 'type-expanded');
-                tr[i].getElementsByTagName("td")[0].getElementsByTagName("span")[0].innerHTML = `<i class="fa fa-minus-square-o aria-hidden"true">`;
+                let arrowSpan = tr[i].getElementsByTagName("td")[0].getElementsByTagName("span")[0];
+                arrowSpan.innerHTML = `<i class="fa fa-minus-square-o aria-hidden"true">`;
+                arrowSpan.setAttribute("title", "Collapse " + name);
                 
                 if (!that.hasClass(button, 'type-expanded')){
                   that.addClass(button, 'type-expanded');
@@ -1477,7 +1481,9 @@ moduleExporter("ConnTable",
             if( tr[i].getElementsByTagName("td")[1].textContent === name) {
               if(!that.hasClass(tr[i], 'type-expanded')) {
                 that.addClass(tr[i], 'type-expanded');
-                tr[i].getElementsByTagName("td")[0].getElementsByTagName("span")[0].innerHTML = `<i class="fa fa-minus-square-o aria-hidden"true">`;
+                let arrowSpan = tr[i].getElementsByTagName("td")[0].getElementsByTagName("span")[0];
+                arrowSpan.innerHTML = `<i class="fa fa-minus-square-o aria-hidden"true">`;
+                arrowSpan.setAttribute("title", "Collapse " + name);
                 if (!that.hasClass(button, 'type-expanded')){
                   that.addClass(button, 'type-expanded');
                   button.innerHTML = `<i class="fa fa-minus-square-o aria-hidden"true">`
@@ -1563,6 +1569,8 @@ moduleExporter("ConnTable",
               arrowSpan = td.getElementsByTagName("span")[0];
               if (arrowSpan) {
                 arrowSpan.innerHTML = `<i class="fa fa-minus-square-o aria-hidden"true">`;
+                const name = tr[i].getElementsByTagName("td")[1].textContent;
+                arrowSpan.setAttribute("title", "Collapse " + name);
               }
             }
           } else { // conn-cell
@@ -1596,6 +1604,8 @@ moduleExporter("ConnTable",
               arrowSpan = td.getElementsByTagName("span")[0];
               if (arrowSpan) {
                 arrowSpan.innerHTML = `<i class="fa fa-plus-square-o aria-hidden"true">`;
+                const name = tr[i].getElementsByTagName("td")[1].textContent;
+                arrowSpan.setAttribute("title", "Collapse " + name);
               }
             }
           } else { // conn-cell
