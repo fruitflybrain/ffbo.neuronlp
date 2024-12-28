@@ -93,7 +93,7 @@ moduleExporter("ConnTable",
   </li>
   <li>
     <p>
-    <i class='fa fa-exchange fa-fw' aria-hidden='true'></i>: Both presynaptic neuron that is also postsynaptic and postsynaptic neuron that is also presynaptic will be labeled with <i class='fa fa-exchange fa-fw' aria-hidden='true'></i>
+    <i class='fa fa-exchange fa-fw' aria-hidden='true'></i>: Both presynaptic neuron that is also postsynaptic and postsynaptic neuron that is also presynaptic will be labeled with <i class='fa fa-exchange fa-fw' aria-hidden='true'></i>. Clicking on this button will take you directly to the item reversing the connection.
     </p>
   </li>
 </ul>
@@ -185,7 +185,8 @@ moduleExporter("ConnTable",
     </thead>`;
     template += '<tbody></tbody></table>';
     template += `<h4>&nbsp;
-      <span id="toggle-post-arrow" class="expander-arrow">&#9660;</span>Postsynaptic Partners<a id="inferred-details-pre" class="info-panel-more-info inferred-more-info"> <i class="fa fa-info-circle" aria-hidden="true"></i></a></h4>`;
+      <span id="toggle-post-arrow" class="expander-arrow">&#9660;</span>
+      Postsynaptic Partners<a id="inferred-details-pre" class="info-panel-more-info inferred-more-info"> <i class="fa fa-info-circle" aria-hidden="true"></i></a></h4>`;
     template += '<table id="' + obj.postTabId + '" class="table table-inverse table-custom-striped">';
     template += '<colgroup> <col /><col style="min-width=150px;" /> <col /><col /> <col /> <col />';
     template += `
