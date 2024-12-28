@@ -40,6 +40,13 @@ function scrollAndHighlight(element) {
   }, 800);
 }
 
+function escapeSelector(selector) {
+  return selector.replace(/([$&+,:;=?@#|'<>.^*()%!])/g, '\\$&');
+}
+
+function unescapeSelector(escapedSelector) {
+  return escapedSelector.replace(/\\/g, '');
+}
 
 moduleExporter("ConnTable",
   ['jquery',
@@ -524,7 +531,7 @@ moduleExporter("ConnTable",
         c3.className = (connDir==='pre') ? 'neuron_add_type_pre': 'neuron_add_type_post'; // remove the . character
         var c4 = row.insertCell(5);
         c4.className = (connDir==='pre') ? 'synapse_add_type_pre': 'synapse_add_type_post';
-        carrow.innerHTML = ((connDir==='pre') ? `<span id="toggle-expander-pre-` : `<span id="toggle-expander-post-`) + name + `" class="expander-arrow" title="Expand ` + name + `"><i class="fa fa-plus-square-o aria-hidden="true"></span>`;
+        carrow.innerHTML = ((connDir==='pre') ? `<span id="toggle-expander-pre-` : `<span id="toggle-expander-post-`) + escapeSelector(name) + `" class="expander-arrow" title="Expand ` + name + `"><i class="fa fa-plus-square-o aria-hidden="true"></span>`;
         neuron_count.innerHTML = typeData[name]['count'];
 
         let N = typeData[name]['N'];
@@ -1408,7 +1415,8 @@ moduleExporter("ConnTable",
 
     $(`*[id*="toggle-expander-${connDir}"]`).off('click').on('click', function() {
       // var pre = this.id.split('-')[2] === 'pre';
-      var name = this.id.split('-').slice(3).join("-");
+      var name = unescapeSelector(this.id.split('-').slice(3).join("-"));
+      console.log(name);
 
       var td, i;
       // Loop through all table rows, and hide those who don't match the search query
