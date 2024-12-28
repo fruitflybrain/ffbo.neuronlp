@@ -1407,7 +1407,6 @@ moduleExporter("ConnTable",
                   that.addClass(button, 'type-expanded');
                   button.innerHTML = `<i class="fa fa-minus-square-o aria-hidden"true">`
                   button.setAttribute("title", "Collapse all");
-                  console.log('abcd');
                 }
                 
               }
@@ -1488,7 +1487,6 @@ moduleExporter("ConnTable",
                   that.addClass(button, 'type-expanded');
                   button.innerHTML = `<i class="fa fa-minus-square-o aria-hidden"true">`
                   button.setAttribute("title", "Collapse all");
-                  console.log('dcba');
                 }
               }
               found = true;
@@ -1546,10 +1544,15 @@ moduleExporter("ConnTable",
               arrowSpan = td.getElementsByTagName("span")[0];
               if (arrowSpan) {
                 arrowSpan.innerHTML = `<i class="fa fa-plus-square-o aria-hidden"true">`;
+                let name = tr[i].getElementsByTagName("td")[1].textContent;
+                arrowSpan.setAttribute("title", "Expand " + name);
               }
             }
           } else { // conn-cell
             if (toRetract) {
+              if (that.hasClass(tr[i], "type-expanded")) {
+                that.removeClass(tr[i], "type-expanded");
+              }
               tr[i].style.display = "none";
             }
           }
@@ -1610,6 +1613,9 @@ moduleExporter("ConnTable",
             }
           } else { // conn-cell
             if (toRetract) {
+              if (that.hasClass(tr[i], "type-expanded")) {
+                that.removeClass(tr[i], "type-expanded");
+              }
               tr[i].style.display = "none";
             }
           }
@@ -1629,6 +1635,8 @@ moduleExporter("ConnTable",
               arrowSpan = td.getElementsByTagName("span")[0];
               if (arrowSpan) {
                 arrowSpan.innerHTML = `<i class="fa fa-minus-square-o aria-hidden"true">`;
+                const name = tr[i].getElementsByTagName("td")[1].textContent;
+                arrowSpan.setAttribute("title", "Expand " + name);
               }
             }
           } else { // conn-cell
