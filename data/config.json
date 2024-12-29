@@ -5,7 +5,7 @@
   {
     "ROB(R)": {
       "filename": "lib/mesh/optic_lobe/ROB_R_.json",
-      "label": "ROB(R)",
+      "label": "Right Round Body (ROB)",
       "highlight": true,
       "background": true,
       "color": [
@@ -16,7 +16,7 @@
     },
     "PED(R)": {
       "filename": "lib/mesh/optic_lobe/PED_R_.json",
-      "label": "PED(R)",
+      "label": "Right Pedunculus (PED)",
       "highlight": true,
       "background": true,
       "color": [
@@ -27,7 +27,7 @@
     },
     "AOTU(L)": {
       "filename": "lib/mesh/optic_lobe/AOTU_L_.json",
-      "label": "AOTU(L)",
+      "label": "Left Anterior Optic Tubercle (AOTU)",
       "highlight": true,
       "background": true,
       "color": [
@@ -38,7 +38,7 @@
     },
     "gL(L)": {
       "filename": "lib/mesh/optic_lobe/gL_L_.json",
-      "label": "gL(L)",
+      "label": "Left γ-Lobe (gL)",
       "highlight": true,
       "background": true,
       "color": [
@@ -49,7 +49,7 @@
     },
     "AVLP(L)": {
       "filename": "lib/mesh/optic_lobe/AVLP_L_.json",
-      "label": "AVLP(L)",
+      "label": "Left Anterior Ventrolateral Protocerebrum (AVLP)",
       "highlight": true,
       "background": true,
       "color": [
@@ -60,7 +60,7 @@
     },
     "GA(L)": {
       "filename": "lib/mesh/optic_lobe/GA_L_.json",
-      "label": "GA(L)",
+      "label": "Left Gall (GA)",
       "highlight": true,
       "background": true,
       "color": [
@@ -71,7 +71,7 @@
     },
     "AME(L)": {
       "filename": "lib/mesh/optic_lobe/AME_L_.json",
-      "label": "AME(L)",
+      "label": "Left Accessory Medulla (AME)",
       "highlight": true,
       "background": true,
       "color": [
@@ -82,7 +82,7 @@
     },
     "SPS(R)": {
       "filename": "lib/mesh/optic_lobe/SPS_R_.json",
-      "label": "SPS(R)",
+      "label": "Right Superior Posterior Slope (SPS)",
       "highlight": true,
       "background": true,
       "color": [
@@ -93,7 +93,7 @@
     },
     "LAL(R)": {
       "filename": "lib/mesh/optic_lobe/LAL_R_.json",
-      "label": "LAL(R)",
+      "label": "Right Lateral Accessory Lobe (LAL)",
       "highlight": true,
       "background": true,
       "color": [
@@ -104,7 +104,7 @@
     },
     "VES(L)": {
       "filename": "lib/mesh/optic_lobe/VES_L_.json",
-      "label": "VES(L)",
+      "label": "Left Vest (VES)",
       "highlight": true,
       "background": true,
       "color": [
@@ -115,7 +115,7 @@
     },
     "EPA(L)": {
       "filename": "lib/mesh/optic_lobe/EPA_L_.json",
-      "label": "EPA(L)",
+      "label": "Left Epaulette (EPA)",
       "highlight": true,
       "background": true,
       "color": [
@@ -126,7 +126,7 @@
     },
     "SCL(L)": {
       "filename": "lib/mesh/optic_lobe/SCL_L_.json",
-      "label": "SCL(L)",
+      "label": "Right Superior Clamp (SCL)",
       "highlight": true,
       "background": true,
       "color": [
@@ -137,7 +137,7 @@
     },
     "LO(L)": {
       "filename": "lib/mesh/optic_lobe/LO_L_.json",
-      "label": "LO(L)",
+      "label": "Left Lobula (LO)",
       "highlight": true,
       "background": true,
       "color": [
@@ -148,7 +148,7 @@
     },
     "SMP(R)": {
       "filename": "lib/mesh/optic_lobe/SMP_R_.json",
-      "label": "SMP(R)",
+      "label": "Right Superior Medial Protocebrebrum (SMP)",
       "highlight": true,
       "background": true,
       "color": [
@@ -159,7 +159,7 @@
     },
     "PB": {
       "filename": "lib/mesh/optic_lobe/PB.json",
-      "label": "PB",
+      "label": "Protocerebral Bridge (PB)",
       "highlight": true,
       "background": true,
       "color": [
@@ -170,7 +170,7 @@
     },
     "ME(L)": {
       "filename": "lib/mesh/optic_lobe/ME_L_.json",
-      "label": "ME(L)",
+      "label": "Left Medulla (ME)",
       "highlight": true,
       "background": true,
       "color": [
@@ -181,7 +181,7 @@
     },
     "BU(L)": {
       "filename": "lib/mesh/optic_lobe/BU_L_.json",
-      "label": "BU(L)",
+      "label": "Left Bulb (BU)",
       "highlight": true,
       "background": true,
       "color": [
@@ -192,7 +192,7 @@
     },
     "ROB(L)": {
       "filename": "lib/mesh/optic_lobe/ROB_L_.json",
-      "label": "ROB(L)",
+      "label": "Left Round Body (ROB)",
       "highlight": true,
       "background": true,
       "color": [
@@ -203,7 +203,7 @@
     },
     "LA(L)": {
       "filename": "lib/mesh/optic_lobe/LA_L_.json",
-      "label": "LA(L)",
+      "label": "Left Lamina (LA)",
       "highlight": true,
       "background": true,
       "color": [
@@ -214,7 +214,7 @@
     },
     "SIP(R)": {
       "filename": "lib/mesh/optic_lobe/SIP_R_.json",
-      "label": "SIP(R)",
+      "label": "Right Superior Intermediate Protocebrebrum (SIP)",
       "highlight": true,
       "background": true,
       "color": [
@@ -225,7 +225,7 @@
     },
     "CRE(L)": {
       "filename": "lib/mesh/optic_lobe/CRE_L_.json",
-      "label": "CRE(L)",
+      "label": "Left Crepine (CRE)",
       "highlight": true,
       "background": true,
       "color": [
@@ -236,7 +236,7 @@
     },
     "SAD": {
       "filename": "lib/mesh/optic_lobe/SAD.json",
-      "label": "SAD",
+      "label": "Saddle (SAD)",
       "highlight": true,
       "background": true,
       "color": [
@@ -247,7 +247,7 @@
     },
     "GA(R)": {
       "filename": "lib/mesh/optic_lobe/GA_R_.json",
-      "label": "GA(R)",
+      "label": "Right Gall (GA)",
       "highlight": true,
       "background": true,
       "color": [
@@ -258,7 +258,7 @@
     },
     "bL(R)": {
       "filename": "lib/mesh/optic_lobe/bL_R_.json",
-      "label": "bL(R)",
+      "label": "Right β-Lobe (bL)",
       "highlight": true,
       "background": true,
       "color": [
@@ -269,7 +269,7 @@
     },
     "AMMC(L)": {
       "filename": "lib/mesh/optic_lobe/AMMC_L_.json",
-      "label": "AMMC(L)",
+      "label": "Left Antennal Mechanosensory and Motor Center (AMMC)",
       "highlight": true,
       "background": true,
       "color": [
@@ -280,7 +280,7 @@
     },
     "IPS(R)": {
       "filename": "lib/mesh/optic_lobe/IPS_R_.json",
-      "label": "IPS(R)",
+      "label": "Right Inferior Posterior Slope (IPS)",
       "highlight": true,
       "background": true,
       "color": [
@@ -291,7 +291,7 @@
     },
     "FLA(R)": {
       "filename": "lib/mesh/optic_lobe/FLA_R_.json",
-      "label": "FLA(R)",
+      "label": "Right Flange (FLA)",
       "highlight": true,
       "background": true,
       "color": [
@@ -302,7 +302,7 @@
     },
     "SCL(R)": {
       "filename": "lib/mesh/optic_lobe/SCL_R_.json",
-      "label": "SCL(R)",
+      "label": "Right Superior Clamp (SCL)",
       "highlight": true,
       "background": true,
       "color": [
@@ -313,7 +313,7 @@
     },
     "SLP(R)": {
       "filename": "lib/mesh/optic_lobe/SLP_R_.json",
-      "label": "SLP(R)",
+      "label": "Right Superior Lateral Protocebrebrum (SLP)",
       "highlight": true,
       "background": true,
       "color": [
@@ -324,7 +324,7 @@
     },
     "LH(L)": {
       "filename": "lib/mesh/optic_lobe/LH_L_.json",
-      "label": "LH(L)",
+      "label": "Left Lateral Horn (LH)",
       "highlight": true,
       "background": true,
       "color": [
@@ -335,7 +335,7 @@
     },
     "AVLP(R)": {
       "filename": "lib/mesh/optic_lobe/AVLP_R_.json",
-      "label": "AVLP(R)",
+      "label": "Right Anterior Ventrolateral Protocerebrum (AVLP)",
       "highlight": true,
       "background": true,
       "color": [
@@ -346,7 +346,7 @@
     },
     "CAN(R)": {
       "filename": "lib/mesh/optic_lobe/CAN_R_.json",
-      "label": "CAN(R)",
+      "label": "Right Cantle (CAN)",
       "highlight": true,
       "background": true,
       "color": [
@@ -357,7 +357,7 @@
     },
     "RUB(L)": {
       "filename": "lib/mesh/optic_lobe/RUB_L_.json",
-      "label": "RUB(L)",
+      "label": "Left Rubus (RUB)",
       "highlight": true,
       "background": true,
       "color": [
@@ -368,7 +368,7 @@
     },
     "WED(L)": {
       "filename": "lib/mesh/optic_lobe/WED_L_.json",
-      "label": "WED(L)",
+      "label": "Left Wedge (WED)",
       "highlight": true,
       "background": true,
       "color": [
@@ -379,7 +379,7 @@
     },
     "WED(R)": {
       "filename": "lib/mesh/optic_lobe/WED_R_.json",
-      "label": "WED(R)",
+      "label": "Right Wedge (WED)",
       "highlight": true,
       "background": true,
       "color": [
@@ -390,7 +390,7 @@
     },
     "ICL(L)": {
       "filename": "lib/mesh/optic_lobe/ICL_L_.json",
-      "label": "ICL(L)",
+      "label": "Left Inferior Clamp (ICL)",
       "highlight": true,
       "background": true,
       "color": [
@@ -401,7 +401,7 @@
     },
     "BU(R)": {
       "filename": "lib/mesh/optic_lobe/BU_R_.json",
-      "label": "BU(R)",
+      "label": "Right Bulb (BU)",
       "highlight": true,
       "background": true,
       "color": [
@@ -412,7 +412,7 @@
     },
     "AL(L)": {
       "filename": "lib/mesh/optic_lobe/AL_L_.json",
-      "label": "AL(L)",
+      "label": "Left Antennal Lobe (AL)",
       "highlight": true,
       "background": true,
       "color": [
@@ -423,7 +423,7 @@
     },
     "FB": {
       "filename": "lib/mesh/optic_lobe/FB.json",
-      "label": "FB",
+      "label": "Fan-shaped Body (FB)",
       "highlight": true,
       "background": true,
       "color": [
@@ -434,7 +434,7 @@
     },
     "LH(R)": {
       "filename": "lib/mesh/optic_lobe/LH_R_.json",
-      "label": "LH(R)",
+      "label": "Right Lateral Horn (LH)",
       "highlight": true,
       "background": true,
       "color": [
@@ -445,7 +445,7 @@
     },
     "SMP(L)": {
       "filename": "lib/mesh/optic_lobe/SMP_L_.json",
-      "label": "SMP(L)",
+      "label": "Left Superior Medial [Protocebrebrum (SMP)",
       "highlight": true,
       "background": true,
       "color": [
@@ -456,7 +456,7 @@
     },
     "NO": {
       "filename": "lib/mesh/optic_lobe/NO.json",
-      "label": "NO",
+      "label": "Noduli (NO)",
       "highlight": true,
       "background": true,
       "color": [
@@ -467,7 +467,7 @@
     },
     "ME(R)": {
       "filename": "lib/mesh/optic_lobe/ME_R_.json",
-      "label": "ME(R)",
+      "label": "Right Medulla (ME)",
       "highlight": true,
       "background": true,
       "color": [
@@ -478,7 +478,7 @@
     },
     "LO(R)": {
       "filename": "lib/mesh/optic_lobe/LO_R_.json",
-      "label": "LO(R)",
+      "label": "Right Lobula (LO)",
       "highlight": true,
       "background": true,
       "color": [
@@ -489,7 +489,7 @@
     },
     "PVLP(L)": {
       "filename": "lib/mesh/optic_lobe/PVLP_L_.json",
-      "label": "PVLP(L)",
+      "label": "Left Posterior Ventrolateral Protocerebrum (PVLP)",
       "highlight": true,
       "background": true,
       "color": [
@@ -500,7 +500,7 @@
     },
     "GNG": {
       "filename": "lib/mesh/optic_lobe/GNG.json",
-      "label": "GNG",
+      "label": "Gnatha Ganglia (GNG)",
       "highlight": true,
       "background": true,
       "color": [
@@ -511,7 +511,7 @@
     },
     "GOR(R)": {
       "filename": "lib/mesh/optic_lobe/GOR_R_.json",
-      "label": "GOR(R)",
+      "label": "Right Gorget (GOR)",
       "highlight": true,
       "background": true,
       "color": [
@@ -522,7 +522,7 @@
     },
     "EB": {
       "filename": "lib/mesh/optic_lobe/EB.json",
-      "label": "EB",
+      "label": "Ellipsoid Body (EB)",
       "highlight": true,
       "background": true,
       "color": [
@@ -533,7 +533,7 @@
     },
     "VES(R)": {
       "filename": "lib/mesh/optic_lobe/VES_R_.json",
-      "label": "VES(R)",
+      "label": "Right Vest (VES)",
       "highlight": true,
       "background": true,
       "color": [
@@ -544,7 +544,7 @@
     },
     "LOP(R)": {
       "filename": "lib/mesh/optic_lobe/LOP_R_.json",
-      "label": "LOP(R)",
+      "label": "Right Lobula Plate (LOP)",
       "highlight": true,
       "background": true,
       "color": [
@@ -555,7 +555,7 @@
     },
     "LOP(L)": {
       "filename": "lib/mesh/optic_lobe/LOP_L_.json",
-      "label": "LOP(L)",
+      "label": "Left Lobula Plate (LOP)",
       "highlight": true,
       "background": true,
       "color": [
@@ -566,7 +566,7 @@
     },
     "CRE(R)": {
       "filename": "lib/mesh/optic_lobe/CRE_R_.json",
-      "label": "CRE(R)",
+      "label": "Right Crepine (CRE)",
       "highlight": true,
       "background": true,
       "color": [
@@ -577,7 +577,7 @@
     },
     "ICL(R)": {
       "filename": "lib/mesh/optic_lobe/ICL_R_.json",
-      "label": "ICL(R)",
+      "label": "Right Inferior Clamp (ICL)",
       "highlight": true,
       "background": true,
       "color": [
@@ -588,7 +588,7 @@
     },
     "LA(R)": {
       "filename": "lib/mesh/optic_lobe/LA_R_.json",
-      "label": "LA(R)",
+      "label": "Right Lamina (LA)",
       "highlight": true,
       "background": true,
       "color": [
@@ -599,7 +599,7 @@
     },
     "SPS(L)": {
       "filename": "lib/mesh/optic_lobe/SPS_L_.json",
-      "label": "SPS(L)",
+      "label": "Left Superior Posterior Slope (SPS)",
       "highlight": true,
       "background": true,
       "color": [
@@ -610,7 +610,7 @@
     },
     "SIP(L)": {
       "filename": "lib/mesh/optic_lobe/SIP_L_.json",
-      "label": "SIP(L)",
+      "label": "Left Superior Intermediate Protocebrebrum (SIP)",
       "highlight": true,
       "background": true,
       "color": [
@@ -621,7 +621,7 @@
     },
     "AOTU(R)": {
       "filename": "lib/mesh/optic_lobe/AOTU_R_.json",
-      "label": "AOTU(R)",
+      "label": "Right Anterior Optic Tubercle (AOTU)",
       "highlight": true,
       "background": true,
       "color": [
@@ -632,7 +632,7 @@
     },
     "CAN(L)": {
       "filename": "lib/mesh/optic_lobe/CAN_L_.json",
-      "label": "CAN(L)",
+      "label": "Left Cantle (CAN)",
       "highlight": true,
       "background": true,
       "color": [
@@ -643,7 +643,7 @@
     },
     "ATL(R)": {
       "filename": "lib/mesh/optic_lobe/ATL_R_.json",
-      "label": "ATL(R)",
+      "label": "Right Antler (ATL)",
       "highlight": true,
       "background": true,
       "color": [
@@ -654,7 +654,7 @@
     },
     "CA(L)": {
       "filename": "lib/mesh/optic_lobe/CA_L_.json",
-      "label": "CA(L)",
+      "label": "Left Calyx (CA)",
       "highlight": true,
       "background": true,
       "color": [
@@ -665,7 +665,7 @@
     },
     "bL(L)": {
       "filename": "lib/mesh/optic_lobe/bL_L_.json",
-      "label": "bL(L)",
+      "label": "Left β-Lobe (bL)",
       "highlight": true,
       "background": true,
       "color": [
@@ -676,7 +676,7 @@
     },
     "AMMC(R)": {
       "filename": "lib/mesh/optic_lobe/AMMC_R_.json",
-      "label": "AMMC(R)",
+      "label": "Right Antennal Mechanosensory and Motor Center (AMMC)",
       "highlight": true,
       "background": true,
       "color": [
@@ -687,7 +687,7 @@
     },
     "LAL(L)": {
       "filename": "lib/mesh/optic_lobe/LAL_L_.json",
-      "label": "LAL(L)",
+      "label": "Left Lateral Accessory Lobe (LAL)",
       "highlight": true,
       "background": true,
       "color": [
@@ -698,7 +698,7 @@
     },
     "aL(L)": {
       "filename": "lib/mesh/optic_lobe/aL_L_.json",
-      "label": "aL(L)",
+      "label": "Left α-Lobe (aL)",
       "highlight": true,
       "background": true,
       "color": [
@@ -709,7 +709,7 @@
     },
     "GOR(L)": {
       "filename": "lib/mesh/optic_lobe/GOR_L_.json",
-      "label": "GOR(L)",
+      "label": "Left Gorget (GOR)",
       "highlight": true,
       "background": true,
       "color": [
@@ -720,7 +720,7 @@
     },
     "AL(R)": {
       "filename": "lib/mesh/optic_lobe/AL_R_.json",
-      "label": "AL(R)",
+      "label": "Right Antennal Lobe (AL)",
       "highlight": true,
       "background": true,
       "color": [
@@ -731,7 +731,7 @@
     },
     "PLP(L)": {
       "filename": "lib/mesh/optic_lobe/PLP_L_.json",
-      "label": "PLP(L)",
+      "label": "Left Posterior Lateral Protocerebrum (PLP)",
       "highlight": true,
       "background": true,
       "color": [
@@ -742,7 +742,7 @@
     },
     "PVLP(R)": {
       "filename": "lib/mesh/optic_lobe/PVLP_R_.json",
-      "label": "PVLP(R)",
+      "label": "Right Posterior Ventrolateral Protocerebrum (PVLP)",
       "highlight": true,
       "background": true,
       "color": [
@@ -753,7 +753,7 @@
     },
     "RUB(R)": {
       "filename": "lib/mesh/optic_lobe/RUB_R_.json",
-      "label": "RUB(R)",
+      "label": "Right Rubus (RUB)",
       "highlight": true,
       "background": true,
       "color": [
@@ -764,7 +764,7 @@
     },
     "CA(R)": {
       "filename": "lib/mesh/optic_lobe/CA_R_.json",
-      "label": "CA(R)",
+      "label": "Right Calyx (CA)",
       "highlight": true,
       "background": true,
       "color": [
@@ -775,7 +775,7 @@
     },
     "aL(R)": {
       "filename": "lib/mesh/optic_lobe/aL_R_.json",
-      "label": "aL(R)",
+      "label": "Right α-Lobe (aL)",
       "highlight": true,
       "background": true,
       "color": [
@@ -786,7 +786,7 @@
     },
     "EPA(R)": {
       "filename": "lib/mesh/optic_lobe/EPA_R_.json",
-      "label": "EPA(R)",
+      "label": "Right Epaulette (EPA)",
       "highlight": true,
       "background": true,
       "color": [
@@ -797,7 +797,7 @@
     },
     "FLA(L)": {
       "filename": "lib/mesh/optic_lobe/FLA_L_.json",
-      "label": "FLA(L)",
+      "label": "Left Flange (FLA)",
       "highlight": true,
       "background": true,
       "color": [
@@ -808,7 +808,7 @@
     },
     "IPS(L)": {
       "filename": "lib/mesh/optic_lobe/IPS_L_.json",
-      "label": "IPS(L)",
+      "label": "Left Inferior Posterior Slope (IPS)",
       "highlight": true,
       "background": true,
       "color": [
@@ -819,7 +819,7 @@
     },
     "IB": {
       "filename": "lib/mesh/optic_lobe/IB.json",
-      "label": "IB",
+      "label": "Inferior Bridge (IB)",
       "highlight": true,
       "background": true,
       "color": [
@@ -830,7 +830,7 @@
     },
     "gL(R)": {
       "filename": "lib/mesh/optic_lobe/gL_R_.json",
-      "label": "gL(R)",
+      "label": "Right γ-Lobe (gL)",
       "highlight": true,
       "background": true,
       "color": [
@@ -841,7 +841,7 @@
     },
     "SLP(L)": {
       "filename": "lib/mesh/optic_lobe/SLP_L_.json",
-      "label": "SLP(L)",
+      "label": "Left Superior Lateral Protocebrebrum (SLP)",
       "highlight": true,
       "background": true,
       "color": [
@@ -852,7 +852,7 @@
     },
     "PLP(R)": {
       "filename": "lib/mesh/optic_lobe/PLP_R_.json",
-      "label": "PLP(R)",
+      "label": "Right Posterior Lateral Protocerebrum (PLP)",
       "highlight": true,
       "background": true,
       "color": [
@@ -863,7 +863,7 @@
     },
     "PED(L)": {
       "filename": "lib/mesh/optic_lobe/PED_L_.json",
-      "label": "PED(L)",
+      "label": "Left Pedunculus (PED)",
       "highlight": true,
       "background": true,
       "color": [
@@ -874,7 +874,7 @@
     },
     "ATL(L)": {
       "filename": "lib/mesh/optic_lobe/ATL_L_.json",
-      "label": "ATL(L)",
+      "label": "Left Antler (ATL)",
       "highlight": true,
       "background": true,
       "color": [
@@ -885,7 +885,7 @@
     },
     "PRW": {
       "filename": "lib/mesh/optic_lobe/PRW.json",
-      "label": "PRW",
+      "label": "Prow (PRW)",
       "highlight": true,
       "background": true,
       "color": [
@@ -896,7 +896,7 @@
     },
     "AME(R)": {
       "filename": "lib/mesh/optic_lobe/AME_R_.json",
-      "label": "AME(R)",
+      "label": "Right Accessory Medulla (AME)",
       "highlight": true,
       "background": true,
       "color": [
