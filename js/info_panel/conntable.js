@@ -13,7 +13,7 @@ if( moduleExporter === undefined){
 }
 
 function scrollAndHighlight(element) {
-  element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  element.scrollIntoView({ behavior: 'instant', block: 'center' });
   element.classList.add('exchange-highlight-flash');
   setTimeout(() => {
     element.classList.remove('exchange-highlight-flash');

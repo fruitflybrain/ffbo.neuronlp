@@ -264,8 +264,9 @@ moduleExporter(
           _this.btnLabelList.splice(idx, 1);
       }
 
-      this.toggleVisibility = function(id, visibility) {
-        var btn = $("[id='btn-toggle-" + uidDecode(id) + "']");
+      // really has to be a class method, otherwise it might change menu item that does not belong to the object
+      this.toggleVisibility = function(id, visibility) { 
+        var btn = $("[id='btn-toggle-" + uidDecode(id.replace('(', '_').replace(')', '_').replaceAll(' ', '_')) + "']");
         var symbol = (visibility) ? _this.config.showSymbol : _this.config.hideSymbol;
         btn.html(symbol);
       }
