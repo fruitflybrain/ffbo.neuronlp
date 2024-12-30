@@ -39,6 +39,11 @@ moduleExporter("NeuroNLPUI", ["jquery", "overlay", "mmenu"], function ($, Overla
   <li><h2>Demos </h2></li>
 </ul>
 <div id="demo-table-wrapper" class="demo-table-wrapper"></div>`);
+    this.extraInfoOverlay = new Overlay("extra-info", "");
+
+    this.viewExtraInfo = function() {
+      this.extraInfoOverlay.show();
+    }
 
     this.onShowDemo = function () {
       // mm_menu_right.close();

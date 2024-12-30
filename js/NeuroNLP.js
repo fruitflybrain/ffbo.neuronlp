@@ -213,6 +213,7 @@ require([
     var visualizationSettings = new FFBOVisualizationSettings(ffbomesh);
     window.NeuroNLPUI.onCreateTag = (tagsPanel.onCreateTag).bind(tagsPanel);
     window.NeuroNLPUI.onRetrieveTag = (tagsPanel.onRetrieveTag).bind(tagsPanel);
+    var extraInfo = config.extraInfo;
 
     var elmnt = document.getElementById("info-intro");
     window.info_intro = elmnt.cloneNode(true);
@@ -602,6 +603,7 @@ require([
     ffbomesh.createUIBtn("downData", "fa-download", "Download Connectivity")
     ffbomesh.createUIBtn("showGraph", "fa-connectdevelop", "Show Connectivity Graph");
     ffbomesh.createUIBtn("showCellGraph", "fa-cubes", "Show Cell-Type Connectivity Graph");
+    ffbomesh.createUIBtn("extraInfo", "fa-address-book", extraInfo);
 
     ffbomesh.on('showSettings', (function () { window.NeuroNLPUI.onClickVisualizationSettings() }));
     ffbomesh.on('resetView', (function () { ffbomesh.resetView() }));
@@ -612,6 +614,7 @@ require([
     ffbomesh.on('takeScreenshot', (function () { ffbomesh._take_screenshot = true; }));
     ffbomesh.on('showInfo', function () { window.NeuroNLPUI.onShowGUIinfo(); });
     ffbomesh.on('showStats', function () { ffbomesh.toggleStats(); });
+    ffbomesh.on('extraInfo', function () { window.NeuroNLPUI.viewExtraInfo(); });
 
 
     demoLoad = false;

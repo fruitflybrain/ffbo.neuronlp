@@ -872,6 +872,9 @@
                 <li>
                  <i class="fa fa-download"></i>:  Download the graph in CSV format, that includes the pre-synaptic neuron name, post-synaptic neuron name and the number of synapses on each row.
                 </li>
+                <li>
+                  <i class="fa fa-image" onclick="NeuroNLPUI.viewExtraInfo()" title="View Dataset Specific Extra Info"></i>
+                 </li>
               </ul>
             </article>
             <images>
@@ -926,6 +929,12 @@
             </article>
           </band>
         </div>
+
+        <div id="extra-info" class="overlay-container" style="display: none;">
+          <div class="overlay-content" style="height: 400px; max-height: 90%; margin: auto;">
+          </div>
+        </div>
+
       </div>
         <div id="neuronlp-switch" class="overlay">
           <div class="neuronlp-switch-wrapper">

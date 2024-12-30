@@ -47,5 +47,6 @@
     "neuron_mesh": {
       "url": ""
     }
-  }
+  },
+  "extraInfo": "Dataset Specific Extra Info"
 }
