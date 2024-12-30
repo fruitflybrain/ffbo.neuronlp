@@ -1,6 +1,6 @@
 // Adapted from https://stackoverflow.com/a/30538574
-if( moduleExporter === undefined){
-  var moduleExporter = function(name, dependencies, definition) {
+if (moduleExporter === undefined) {
+  var moduleExporter = function (name, dependencies, definition) {
     if (typeof module === 'object' && module && module.exports) {
       dependencies = dependencies.map(require);
       module.exports = definition.apply(context, dependencies);
@@ -12,26 +12,26 @@ if( moduleExporter === undefined){
   };
 }
 
-moduleExporter("preprocess",[],function(){
+moduleExporter("preprocess", [], function () {
   /**
    * Preprocess data for Synaptic plot
    */
-   function preprocessSynProfileData(d){
+  function preprocessSynProfileData(d) {
     if (!d) {
       return
     };
-    combine_regexes = [/(Dm[0-9]+)_?[0-9]*/, /(Pm[0-9]+)_?[0-9]*/ ];
+    combine_regexes = [/(Dm[0-9]+)_?[0-9]*/, /(Pm[0-9]+)_?[0-9]*/];
     pre_sum = {};
     post_sum = {};
     // Pre_sum
-    if ('pre_sum' in d){
-      for (x in d['pre_sum']){
+    if ('pre_sum' in d) {
+      for (x in d['pre_sum']) {
         matched = 0;
-        for(i in combine_regexes){
+        for (i in combine_regexes) {
           re = combine_regexes[i];
-          if(re.exec(x)){
+          if (re.exec(x)) {
             key = re.exec(x)[1];
-            if(key in pre_sum)
+            if (key in pre_sum)
               pre_sum[key] += d['pre_sum'][x];
             else
               pre_sum[key] = d['pre_sum'][x];
@@ -39,7 +39,7 @@ moduleExporter("preprocess",[],function(){
             break;
           }
         }
-        if (!matched){
+        if (!matched) {
           pre_sum[x] = d['pre_sum'][x];
         }
       }
@@ -47,14 +47,14 @@ moduleExporter("preprocess",[],function(){
     }
 
     //Post_sum
-    if ('post_sum' in d){
-      for (x in d['post_sum']){
+    if ('post_sum' in d) {
+      for (x in d['post_sum']) {
         matched = 0;
-        for(i in combine_regexes){
+        for (i in combine_regexes) {
           re = combine_regexes[i];
-          if(re.exec(x)){
+          if (re.exec(x)) {
             key = re.exec(x)[1];
-            if(key in post_sum)
+            if (key in post_sum)
               post_sum[key] += d['post_sum'][x];
             else
               post_sum[key] = d['post_sum'][x];
@@ -71,7 +71,7 @@ moduleExporter("preprocess",[],function(){
   }
 
 
-  return{
-    preprocessSynProfileData:preprocessSynProfileData
+  return {
+    preprocessSynProfileData: preprocessSynProfileData
   }
 });

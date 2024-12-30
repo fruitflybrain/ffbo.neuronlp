@@ -102,7 +102,7 @@ requirejs.config({
     trackballcontrols: { deps: ['three'] },
     simplifymodifier: { deps: ['three'] },
     lut: { deps: ['three'] },
-    buffergeometryutils: {deps: ['three']},
+    buffergeometryutils: { deps: ['three'] },
     copyshader: { deps: ['three'] },
     convolutionshader: { deps: ['three'] },
     fxaashader: { deps: ['three'] },
@@ -122,24 +122,24 @@ requirejs.config({
     unrealbloompass: { deps: ['three', 'effectcomposer'] },
     adaptivetonemappingpass: { deps: ['three', 'effectcomposer'] },
     tageditor: { deps: ['jquery'] },
-    linematerial: {deps: ['three']},
-    linesegmentsgeometry: {deps: ['three']},
-    linesegments2: {deps: ['three', 'linesegmentsgeometry']},
-    fontloader: {deps: ['three']},
-    textgeometry: {deps: ['three']},
-    gltfloader: {deps: ['three']},
-    sigma_forceAtlas2: {deps: ['sigma']},
-    sigma_exporters: {deps: ['sigma']},
-    sigma_forceAtlas2: {deps: ['sigma']},
-    sigma_noverlap: {deps: ['sigma']},
-    sigma_cypher: {deps: ['sigma']},
-    sigma_gexf: {deps: ['sigma']},
-    sigma_json: {deps: ['sigma']},
-    sigma_astar: {deps: ['sigma']},
-    sigma_animate: {deps: ['sigma']},
-    sigma_dragNodes: {deps: ['sigma']},
-    sigma_filter: {deps: ['sigma']},
-    graphvis: {deps: ['sigma', 'sigma_forceAtlas2', 'sigma_dragNodes', 'sigma_exporters', 'sigma_noverlap', 'sigma_cypher', 'sigma_gexf', 'sigma_json', 'sigma_astar', 'sigma_animate', 'sigma_filter']}
+    linematerial: { deps: ['three'] },
+    linesegmentsgeometry: { deps: ['three'] },
+    linesegments2: { deps: ['three', 'linesegmentsgeometry'] },
+    fontloader: { deps: ['three'] },
+    textgeometry: { deps: ['three'] },
+    gltfloader: { deps: ['three'] },
+    sigma_forceAtlas2: { deps: ['sigma'] },
+    sigma_exporters: { deps: ['sigma'] },
+    sigma_forceAtlas2: { deps: ['sigma'] },
+    sigma_noverlap: { deps: ['sigma'] },
+    sigma_cypher: { deps: ['sigma'] },
+    sigma_gexf: { deps: ['sigma'] },
+    sigma_json: { deps: ['sigma'] },
+    sigma_astar: { deps: ['sigma'] },
+    sigma_animate: { deps: ['sigma'] },
+    sigma_dragNodes: { deps: ['sigma'] },
+    sigma_filter: { deps: ['sigma'] },
+    graphvis: { deps: ['sigma', 'sigma_forceAtlas2', 'sigma_dragNodes', 'sigma_exporters', 'sigma_noverlap', 'sigma_cypher', 'sigma_gexf', 'sigma_json', 'sigma_astar', 'sigma_animate', 'sigma_filter'] }
   },
   waitSeconds: 15
 });
@@ -206,8 +206,8 @@ require([
     var dynamicNeuropilMenu = new FFBODynamicMenu({ singleObjSel: '#toggle_neuropil > .mm-listview', compare: 'LeftRight' });
     var dynamicCellTypeMenu = new FFBODynamicMenu({ singleObjSel: '#toggle_celltype > .mm-listview', compare: 'LeftRight' });
     var ffbomesh = new FFBOMesh3D('vis-3d', undefined,
-                                  config.metadata,
-                                  stats = false);
+      config.metadata,
+      stats = false);
     var tagsPanel = new Tags('tagsMenu');
     var client = new FFBOClient(config.dataset);
     var visualizationSettings = new FFBOVisualizationSettings(ffbomesh);
@@ -261,7 +261,7 @@ require([
                 }
                 break;
               }
-            } 
+            }
           }
           if (!foundMorphology) {
             if (unit['class'] === 'Neuron' || unit['class'] === 'NeuronFragment') {
@@ -357,7 +357,7 @@ require([
    * Add tag retrieval functionality.
    */
     tagsPanel.activateTagLinks = (function (tagName) {
-      $('.tag-el').click( (e) => {
+      $('.tag-el').click((e) => {
         let tag_name = $(e.currentTarget).attr('tag_name');
         this.retrieveTag(tag_name);
         this.overlay.closeAll();
@@ -412,7 +412,7 @@ require([
     };
 
     infoPanel.resume = (rid) => {
-      ffbomesh.highlight(undefined) 
+      ffbomesh.highlight(undefined)
     };
 
     infoPanel.isInWorkspace = (rid) => {
@@ -495,13 +495,13 @@ require([
     dynamicNeuropilMenu.dispatch.getInfo = function (id) { ffbomesh.toggleVis(id) };
     dynamicNeuropilMenu.dispatch.highlight = function (id) { ffbomesh.highlight(id, true) };
     dynamicNeuropilMenu.dispatch.resume = function () { ffbomesh.highlight(undefined) };
-    dynamicCellTypeMenu.dispatch.highlight = function (id) {ffbomesh.highlight(id, true) };
-    dynamicCellTypeMenu.dispatch.resume = function() {ffbomesh.highlight()};
+    dynamicCellTypeMenu.dispatch.highlight = function (id) { ffbomesh.highlight(id, true) };
+    dynamicCellTypeMenu.dispatch.resume = function () { ffbomesh.highlight() };
 
     ffbomesh.on('add',
       function (e) {
         if (!e.value.background) {
-          if(e.value['class'] === 'Neuron' || e.value['class'] === 'NeuronFragment') {
+          if (e.value['class'] === 'Neuron' || e.value['class'] === 'NeuronFragment') {
             dynamicNeuronMenu.addNeuron(e.prop, e.value.label);
           } else if (e.value['class'] === 'Synapse') {
             dynamicSynapseMenu.addNeuron(e.prop, e.value.label);
@@ -513,7 +513,7 @@ require([
       });
     ffbomesh.on('remove', function (e) {
       if (!e.value.background) {
-        if(e.value['class'] === 'Neuron' || e.value['class'] === 'NeuronFragment') {
+        if (e.value['class'] === 'Neuron' || e.value['class'] === 'NeuronFragment') {
           dynamicNeuronMenu.removeNeuron(e.prop);
         } else if (e.value['class'] === 'Synapse') {
           dynamicSynapseMenu.removeNeuron(e.prop);
@@ -555,7 +555,7 @@ require([
         }
         $("#search-wrapper").block({ message: null });
         srchInput.blur();
-        
+
         queryID = client.executeNLPquery(query, { success: dataCallback });
         client.status.on("change", function (e) {
           $("#search-wrapper").unblock();
@@ -567,7 +567,7 @@ require([
           else
             resolve();
         }, queryID);
-        
+
       });
     }
 
@@ -613,7 +613,7 @@ require([
     ffbomesh.on('showInfo', function () { window.NeuroNLPUI.onShowGUIinfo(); });
     ffbomesh.on('showStats', function () { ffbomesh.toggleStats(); });
 
-    
+
     demoLoad = false;
     $(document).ready(function () {
       GvisInitCallbacks();
@@ -684,7 +684,7 @@ require([
     });
 
     var dynamicCellTypeNeuropilMenu = {};
-    window.NeuroNLPUI.loadAllCellTypesNeuropil = function() {
+    window.NeuroNLPUI.loadAllCellTypesNeuropil = function () {
       $.getJSON("./data/types_in_neuropils.json", function (json) {
         json = json[1];
         window.CellTypes = json;
@@ -698,7 +698,7 @@ require([
       });
     }
     window.dynamicCellTypeNeuropilMenu = dynamicCellTypeNeuropilMenu;
-    
+
     $.getJSON("./data/config.json", function (json) {
       json = json[1];
       window.Neuropils = json;
