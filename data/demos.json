@@ -203,7 +203,7 @@
       ["notify", {"message": "This menu can also be helpful when exploring the dataset without prior knowledge about any cell type"}],
       ["notify", {"message": "Let's begin by navigating to the Cell Type Menu"}],
       ["click", {"menu": {"type": "cellTypes"}}],
-      ["notify", {"message": "and select AL(L) (right lobula)"}],
+      ["notify", {"message": "and select AL(L) (left Antennal Lobe)"}],
       ["click", {"menu": {"type": "toggleCellType", "neuropil":"AL(L)", "label": "DNc01"}}],
       ["notify", {"message": "Here we can see the cell types present in the left Antennal lobe related to the optic lobe."}],
       ["notify", {"message": "We can select and load the first one, DNc01"}],
@@ -344,7 +344,7 @@
     "col_index": {
     "script": [
       ["notify", {"message": "A reference plot for unique medulla column index defined on hexagonal rings can be found by clicking <i class=\"fa fa-address-book\"><\/i>"}],
-      ["click", {"uiBtn": {"type": "viewMedullaColumnIndex"}}],
+      ["click", {"uiBtn": {"type": "extraInfo"}}],
       ["notify", {"message": "Done! Try it yourself!", "pause": 0}]
     ],
     "keyword": "View Medulla Column Index",
