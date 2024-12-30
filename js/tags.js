@@ -1,6 +1,6 @@
 // Adapted from https://stackoverflow.com/a/30538574
-if( moduleExporter === undefined){
-  var moduleExporter = function(name, dependencies, definition) {
+if (moduleExporter === undefined) {
+  var moduleExporter = function (name, dependencies, definition) {
     if (typeof module === 'object' && module && module.exports) {
       dependencies = dependencies.map(require);
       module.exports = definition.apply(context, dependencies);
@@ -12,15 +12,17 @@ if( moduleExporter === undefined){
   };
 }
 
-moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], function(perfectScrollbar, tagEditor, Overlay, $){
+moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], function (perfectScrollbar, tagEditor, Overlay, $) {
   $ = $ || window.$;
   perfectScrollbar = perfectScrollbar || window.perfectScrollbar;
   tagEditor = tagEditor || window.tagEditor;
   Overlay = Overlay || window.Overlay;
-  function Tags(div_id, tagsConfigUpdate = { }) {
-    this.tagsConfig = { retrieveTag: '#retrieve_tag_name_input', tag: '#tag_name_input', tagSubmit: '#tagSubmit', tagModal: '#tagModal',
-                        tagSearchMenu: '#tagSearchMenu', tagTagEditor: '#tagTagEditor',
-                        createTag: '.createtag', loadTag: '.loadtag', tagClose: '#tagClose'};
+  function Tags(div_id, tagsConfigUpdate = {}) {
+    this.tagsConfig = {
+      retrieveTag: '#retrieve_tag_name_input', tag: '#tag_name_input', tagSubmit: '#tagSubmit', tagModal: '#tagModal',
+      tagSearchMenu: '#tagSearchMenu', tagTagEditor: '#tagTagEditor',
+      createTag: '.createtag', loadTag: '.loadtag', tagClose: '#tagClose'
+    };
     this.tagsConfig = Object.assign({}, this.tagsConfig, tagsConfigUpdate);
     this.metadata = {};
     this.div_id = div_id;
@@ -57,8 +59,8 @@ moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], f
     //this.inDiv.append(a);
     //this.overlay.dom.style['height'] = '30%';      
 
-    $(this.tagsConfig['tagClose']).click( () => {this.overlay.closeAll();} );
-    $(this.tagsConfig['tagSubmit']).click( () => {
+    $(this.tagsConfig['tagClose']).click(() => { this.overlay.closeAll(); });
+    $(this.tagsConfig['tagSubmit']).click(() => {
       if ($(this.tagsConfig['tagSubmit']).text() == 'Create Tag')
         this.createTag($(this.tagsConfig['tag']).val());
       else
@@ -66,7 +68,7 @@ moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], f
       this.overlay.closeAll();
       //$(this.tagsConfig['tagModal']).modal('hide');
     });
-    $('.tag-name').keyup( (event) => {
+    $('.tag-name').keyup((event) => {
       if (event.keyCode == 13) {
         if ($(this.tagsConfig['tagSubmit']).text() == 'Create Tag')
           this.createTag($(this.tagsConfig['tag']).val());
@@ -79,7 +81,7 @@ moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], f
 
     $(this.tagsConfig['tagSearchMenu']).perfectScrollbar();
     $(this.div_id + ' .overlay_container').perfectScrollbar();
-    $(this.tagsConfig['tag']).keyup( (event) => {
+    $(this.tagsConfig['tag']).keyup((event) => {
       if (event.keyCode == 13) {
         if ($(this.tagsConfig['tagSubmit']).text() == 'Create tag')
           this.createTag($(this.tagsConfig['tag']).val());
@@ -102,7 +104,7 @@ moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], f
       });
     */
 
-    this.onCreateTag = function() {
+    this.onCreateTag = function () {
       /**
        * Opens the Create Tag menu.
        */
@@ -114,7 +116,7 @@ moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], f
       $(this.tagsConfig['tag']).focus();
     }
 
-    this.onRetrieveTag = function(){
+    this.onRetrieveTag = function () {
       /**
        * Opens the Retrieve Tag menu.
        */
@@ -131,22 +133,22 @@ moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], f
 
 
     // Should be Overloaded by application
-    this.createTag = function(tagName) {}
+    this.createTag = function (tagName) { }
 
     // Should be Overloaded by application
-    this.retrieveTag = function(tagName) {}
+    this.retrieveTag = function (tagName) { }
 
     // Should be Overloaded by application
-    this.activateTagLinks = function(tagName) {}
+    this.activateTagLinks = function (tagName) { }
 
-    this.clearTagBrowser = function() {
+    this.clearTagBrowser = function () {
       $(this.tagsConfig.tagSearchMenu).html('');
     }
 
-    this.populateTags = function(tagDataList) {
-       /*
-       * Populates the Tag Browser.
-       */
+    this.populateTags = function (tagDataList) {
+      /*
+      * Populates the Tag Browser.
+      */
       this.clearTagBrowser();
       for (var i = 0; i < tagDataList.length; i++) {
         this.addTagToBrowser(tagDataList[i]);
@@ -154,36 +156,36 @@ moduleExporter('Tags', ['perfectscrollbar', 'tageditor', 'overlay', 'jquery'], f
       this.activateTagLinks();
     }
 
-    this.addTagToBrowser = function(tagData) {
+    this.addTagToBrowser = function (tagData) {
       /**
        * Adds Tags to the Tag Browser.
        */
-           var a = document.createElement('a');
-           a.className = "list-group-item list-group-item-action flex-column align-items-start tag-el";
-           a.href = "#";
-           a.setAttribute("tag_name", tagData.name);
-           var b = document.createElement('div');
-           b.className = "d-flex w-100 justify-content-between";
-           a.appendChild( b );
+      var a = document.createElement('a');
+      a.className = "list-group-item list-group-item-action flex-column align-items-start tag-el";
+      a.href = "#";
+      a.setAttribute("tag_name", tagData.name);
+      var b = document.createElement('div');
+      b.className = "d-flex w-100 justify-content-between";
+      a.appendChild(b);
 
-           $(this.tagsConfig['tagSearchMenu']).append(a);
-           $(b).append('<h5 class="mb-1">' + tagData['name'] + '</h5> <div class="tags-aggregate">');
-           var tags_text = '';
-           for (i = 0; i < tagData['keywords'].length; i++) {
-             tags_text += '<span class="badge badge-primary">' + tagData['keywords'][i] + "</span>";
-           }
+      $(this.tagsConfig['tagSearchMenu']).append(a);
+      $(b).append('<h5 class="mb-1">' + tagData['name'] + '</h5> <div class="tags-aggregate">');
+      var tags_text = '';
+      for (i = 0; i < tagData['keywords'].length; i++) {
+        tags_text += '<span class="badge badge-primary">' + tagData['keywords'][i] + "</span>";
+      }
 
-           try{
-             $(b).append(tags_text);
-             $(b).append('<p class="mb-1">' + tagData['desc'] + '</p>');
-             $(b).append('<small>' + tagData['FFBOdata']['extra'] + '</small>');
-           }
-           catch(err){}
-           $(".tag-el").on("click", function() {
-             $(".tag-el").removeClass("active");
-             $(this).addClass("active");
-           });
-         }
+      try {
+        $(b).append(tags_text);
+        $(b).append('<p class="mb-1">' + tagData['desc'] + '</p>');
+        $(b).append('<small>' + tagData['FFBOdata']['extra'] + '</small>');
+      }
+      catch (err) { }
+      $(".tag-el").on("click", function () {
+        $(".tag-el").removeClass("active");
+        $(this).addClass("active");
+      });
+    }
   }
   return Tags;
 });
