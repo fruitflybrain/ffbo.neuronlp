@@ -63,11 +63,11 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager", "showdown"], functi
     this.notifyError(err.args[0]);
   }
 
-  announcement = function(serverInfo) {
+  announcement = function (serverInfo) {
     if (serverInfo.hasOwnProperty(0))
       serverInfo = serverInfo[0];
     if (typeof (serverInfo) == "object" && "processor" in serverInfo) {
-      if ("announcement" in serverInfo["processor"] ){
+      if ("announcement" in serverInfo["processor"]) {
         client.notifySuccess(serverInfo["processor"]["announcement"]);
       }
     }
@@ -79,36 +79,36 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager", "showdown"], functi
      */
     if (serverInfo.hasOwnProperty(0))
       serverInfo = serverInfo[0];
-      if (typeof (serverInfo) == "object" && 'na' in serverInfo) {
-        if (naServerID === undefined) { // not connected
-          if (!(Object.keys(serverInfo.na).length)) {
+    if (typeof (serverInfo) == "object" && 'na' in serverInfo) {
+      if (naServerID === undefined) { // not connected
+        if (!(Object.keys(serverInfo.na).length)) {
+          if (!naServerLost) {
+            client.notifyError('NeuroArch server not detected.');
+            naServerLost = true;
+          }
+        } else {
+          for (var key of Object.keys(serverInfo.na)) {
+            if (serverInfo.na[key]['dataset'] == dataset) {
+              naServerID = key;
+            }
+          }
+          if (naServerID !== undefined) {
+            client.notifySuccess('NeuroArch server detected.')
+          } else {
             if (!naServerLost) {
               client.notifyError('NeuroArch server not detected.');
               naServerLost = true;
             }
-          } else {
-            for(var key of Object.keys(serverInfo.na)) {
-              if(serverInfo.na[key]['dataset'] == dataset) {
-                  naServerID = key;
-              }
-            }
-            if(naServerID !== undefined) {
-              client.notifySuccess('NeuroArch server detected.')
-            } else {
-              if (!naServerLost) {
-                client.notifyError('NeuroArch server not detected.');
-                naServerLost = true;
-              }
-            }
-          }
-        } else { // naServerID !== undefined, connected
-          if (!(naServerID in serverInfo.na)) {
-            naServerID = undefined;
-            client.notifyError('NeuroArch server lost.');
-            naServerLost = true;
           }
         }
+      } else { // naServerID !== undefined, connected
+        if (!(naServerID in serverInfo.na)) {
+          naServerID = undefined;
+          client.notifyError('NeuroArch server lost.');
+          naServerLost = true;
+        }
       }
+    }
     if (typeof (serverInfo) == "object" && 'nlp' in serverInfo) {
       if (nlpServerID === undefined) { // not connected
         if (!(Object.keys(serverInfo.nlp).length)) {
@@ -117,12 +117,12 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager", "showdown"], functi
             nlpServerLost = true;
           }
         } else {
-          for(var key of Object.keys(serverInfo.nlp)) {
-            if(serverInfo.nlp[key]['dataset'] == dataset) {
-                nlpServerID = key;
+          for (var key of Object.keys(serverInfo.nlp)) {
+            if (serverInfo.nlp[key]['dataset'] == dataset) {
+              nlpServerID = key;
             }
           }
-          if(nlpServerID !== undefined) {
+          if (nlpServerID !== undefined) {
             client.notifySuccess('NLP server detected.')
           } else {
             if (!nlpServerLost) {
@@ -161,15 +161,15 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager", "showdown"], functi
     return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
   }
 
-  drosobotResponse = function(query, message) {
+  drosobotResponse = function (query, message) {
     var text_to_convert = `<a onclick="document.getElementById('info-intro').innerHTML = window.info_intro.innerHTML;">Return to Overview</a>  <h4> Query: ` + query + `</h4> <p>The entries below are the search results retrieved by Drosobot. Click on the 'Add to Visualization Panel' button to visualize neurons of the corresponding cell type.  </p> <p> Note that Drosobot is a search engine, and not all entries in the result may be relevant. Overlapping synonyms or nomenclature terms might result in mistakes in the output. Please double check the descriptions in the results.</p>`;
     for (mes of message) {
       var name = mes['name'];
-      var text = '\n <strong>' + mes['entry']+'.' + mes['label'] + `</strong> (<a target="_blank" href='` + name + `'>` + name + '</a>)' + ` <p></p><a id='plusplusresult`+ mes['link_id'] + `' onclick="window.NLPsearch('!visualize ` + name + `')" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Add to Visualization Panel</a>` + `<a id='plusplusbresult`+ mes['link_id'] + `' onclick="window.NLPsearch('!pin ` + name + `')" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Pin</a>` + `<a id='pluspluscresult`+ mes['link_id'] + `' onclick="window.NLPsearch('!unpin ` + name + `')" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Unpin</a>` + '\n <i>' + mes['definition'] + '</i> \n'
-      text_to_convert = text_to_convert + `<hr>` + text.replace(/\n/g,'<p>').replaceAll('_','sbackslash');
+      var text = '\n <strong>' + mes['entry'] + '.' + mes['label'] + `</strong> (<a target="_blank" href='` + name + `'>` + name + '</a>)' + ` <p></p><a id='plusplusresult` + mes['link_id'] + `' onclick="window.NLPsearch('!visualize ` + name + `')" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Add to Visualization Panel</a>` + `<a id='plusplusbresult` + mes['link_id'] + `' onclick="window.NLPsearch('!pin ` + name + `')" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Pin</a>` + `<a id='pluspluscresult` + mes['link_id'] + `' onclick="window.NLPsearch('!unpin ` + name + `')" class="info-try btn btn-xs"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Unpin</a>` + '\n <i>' + mes['definition'] + '</i> \n'
+      text_to_convert = text_to_convert + `<hr>` + text.replace(/\n/g, '<p>').replaceAll('_', 'sbackslash');
     }
     var converter = new showdown.Converter();
-    var html = converter.makeHtml(text_to_convert).replace(/\n/g,'<p>').replaceAll('sbackslash','_');
+    var html = converter.makeHtml(text_to_convert).replace(/\n/g, '<p>').replaceAll('sbackslash', '_');
     return html
   }
 
@@ -229,36 +229,36 @@ moduleExporter("FFBOClient", ["autobahn", "propertymanager", "showdown"], functi
     this.session.call(uri, [query, this.language]).then(
       (function (res) {
         if (typeof (res) == "object" && Object.keys(res).length) {
-          if ('engine' in res){
+          if ('engine' in res) {
             if (res['engine'] === 'nlp') {
               if (Object.keys(res).length > 1) {
                 this.notifySuccess("NLP module successfully interpreted the query");
                 this.executeNAquery(res, callbacks, format, queryID);
               } else {
                 this.status[queryID] = -1;
-              this.notifyError('NLP module did not understand the query');
+                this.notifyError('NLP module did not understand the query');
               }
             } else if (res['engine'] === 'drosobot') {
-              if (res['message'].length>0) {
-                  this.notifySuccess('Drosobot successfully interpreted the query.');
-                  var html = drosobotResponse(query, res['message']);
-                  $('#info-intro').html(html); $('#info-intro').show();
-                  this.status[queryID] = -1;
+              if (res['message'].length > 0) {
+                this.notifySuccess('Drosobot successfully interpreted the query.');
+                var html = drosobotResponse(query, res['message']);
+                $('#info-intro').html(html); $('#info-intro').show();
+                this.status[queryID] = -1;
               }
               if (res['query']) {
-                  this.executeNAquery(res['query'], callbacks, format, queryID);
+                this.executeNAquery(res['query'], callbacks, format, queryID);
               }
-              if (res['warning'].length>0) {
-                  this.notifySuccess(res['warning']);
-                  this.status[queryID] = -1;
+              if (res['warning'].length > 0) {
+                this.notifySuccess(res['warning']);
+                this.status[queryID] = -1;
               }
             } else {
               this.status[queryID] = -1;
               this.notifyError('NLP module did not understand the query');
             }
           } else {
-              this.status[queryID] = -1;
-              this.notifyError('NLP module did not understand the query');
+            this.status[queryID] = -1;
+            this.notifyError('NLP module did not understand the query');
           }
         } else {
           this.status[queryID] = -1;
@@ -597,7 +597,7 @@ ${connectivity.map(conn => `${conn[0]},${conn[1]},${conn[2]},${conn[3]}\n`).join
     /**
      * Query to add a neuron by its name.
      */
-    if ( neuropil === undefined) {
+    if (neuropil === undefined) {
       return this.executeNAquery({
         verb: "add",
         query: [
@@ -611,24 +611,24 @@ ${connectivity.map(conn => `${conn[0]},${conn[1]},${conn[2]},${conn[3]}\n`).join
       return this.executeNAquery({
         verb: "add",
         query: [
-            {
-                action: { method: { query: { name: neuropil }}},
-                object: { class: ["Neuropil"] },
-            },
-            {
-                action: { method: { gen_traversal_in: {pass_through: ['ArborizesIn', 'Neuron', 'instanceof', {'name': name}], min_depth: 1}}},                      object: { memory: 0}
-            }
+          {
+            action: { method: { query: { name: neuropil } } },
+            object: { class: ["Neuropil"] },
+          },
+          {
+            action: { method: { gen_traversal_in: { pass_through: ['ArborizesIn', 'Neuron', 'instanceof', { 'name': name }], min_depth: 1 } } }, object: { memory: 0 }
+          }
         ]
       }, callbacks, format);
     }
-    
+
   }
 
   FFBOClient.prototype.removeType = function (name, neuropil, callbacks, format) {
     /**
      * Query to add a neuron by its name.
      */
-    if ( neuropil === undefined) {
+    if (neuropil === undefined) {
       return this.executeNAquery({
         verb: "remove",
         query: [
@@ -642,13 +642,13 @@ ${connectivity.map(conn => `${conn[0]},${conn[1]},${conn[2]},${conn[3]}\n`).join
       return this.executeNAquery({
         verb: "remove",
         query: [
-            {
-                action: { method: { query: { name: neuropil }}},
-                object: { class: ["Neuropil"] },
-            },
-            {
-                action: { method: { gen_traversal_in: {pass_through: ['ArborizesIn', 'Neuron', 'instanceof', {'name': name}], min_depth: 1}}},                      object: { memory: 0}
-            }
+          {
+            action: { method: { query: { name: neuropil } } },
+            object: { class: ["Neuropil"] },
+          },
+          {
+            action: { method: { gen_traversal_in: { pass_through: ['ArborizesIn', 'Neuron', 'instanceof', { 'name': name }], min_depth: 1 } } }, object: { memory: 0 }
+          }
         ]
       }, callbacks, format);
     }
@@ -688,7 +688,7 @@ ${connectivity.map(conn => `${conn[0]},${conn[1]},${conn[2]},${conn[3]}\n`).join
     /**
      * Query to keep a list of Objs based on their Rids. rids must be an array
      */
-    if(verb == undefined) { verb = "show" }
+    if (verb == undefined) { verb = "show" }
     return this.executeNAquery({
       verb: verb,
       command: {
