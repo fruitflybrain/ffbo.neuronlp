@@ -615,7 +615,7 @@ require([
     ffbomesh.on('showInfo', function () { window.NeuroNLPUI.onShowGUIinfo(); });
     ffbomesh.on('showStats', function () { ffbomesh.toggleStats(); });
     
-    if (extraInfo !== "") {
+    if (!(extraInfo === undefined || extraInfo === "")) {
       ffbomesh.createUIBtn("extraInfo", "fa-address-book", extraInfo);
       ffbomesh.on('extraInfo', function () { window.NeuroNLPUI.viewExtraInfo(); });
     }
