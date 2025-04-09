@@ -17,9 +17,31 @@ moduleExporter(
   function ($) {
     $ = $ || window.$;
 
-    var FFBOVisualizationSettings = function (ffbomesh) {
+    var FFBOVisualizationSettings = function (ffbomesh, metadata) {
 
       var _this = this;
+
+      // add mesh modes to menu if exists
+      let counter = 7;
+      const container = document.querySelector('#vis-3d-mode-option a');
+      Object.keys(metadata.neuron_mesh).forEach(labelText => {
+        const id = `rd${counter}`;
+
+        const input = document.createElement('input');
+        input.type = 'radio';
+        input.name = 'mode3d';
+        input.id = id;
+        input.value = counter;
+
+        const label = document.createElement('label');
+        label.htmlFor = id;
+        label.textContent = labelText;
+
+        container.appendChild(input);
+        container.appendChild(label);
+        container.appendChild(document.createElement('br'));
+        counter++;
+      });
 
       if (ffbomesh.settings.neuron3dMode != 2) {
         $("#vis-linewidth_enclose").hide("slide", { direction: "right" }, 800);

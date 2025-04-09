@@ -212,7 +212,7 @@ require([
       stats = false);
     var tagsPanel = new Tags('tagsMenu');
     var client = new FFBOClient(config.dataset);
-    var visualizationSettings = new FFBOVisualizationSettings(ffbomesh);
+    var visualizationSettings = new FFBOVisualizationSettings(ffbomesh, config.metadata);
     window.NeuroNLPUI.onCreateTag = (tagsPanel.onCreateTag).bind(tagsPanel);
     window.NeuroNLPUI.onRetrieveTag = (tagsPanel.onRetrieveTag).bind(tagsPanel);
     var extraInfo = config.extraInfo;
@@ -254,7 +254,7 @@ require([
                   }
                 }
                 if (unit['class'] === 'Neuron' || unit['class'] === 'NeuronFragment') {
-                  if (ffbomesh.settings.neuron3dMode == 7) {
+                  if (ffbomesh.settings.neuron3dMode >= 7) {
                     gltf_data[rid] = unit;
                   } else {
                     morph_data[rid] = unit;
