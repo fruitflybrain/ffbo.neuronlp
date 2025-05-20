@@ -56,6 +56,7 @@ requirejs.config({
     bloompass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/postprocessing/BloomPass',
     unrealbloompass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/postprocessing/UnrealBloomPass',
     gltfloader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/loaders/GLTFLoader',
+    dracoloader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/loaders/DRACOLoader',
     fontloader: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/loaders/FontLoader',
     textgeometry: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/geometries/TextGeometry',
     adaptivetonemappingpass: '//cdn.jsdelivr.net/gh/mrdoob/three.js@r140/examples/js/postprocessing/AdaptiveToneMappingPass',
@@ -128,6 +129,7 @@ requirejs.config({
     fontloader: { deps: ['three'] },
     textgeometry: { deps: ['three'] },
     gltfloader: { deps: ['three'] },
+    dracoloader: { deps: ['three'] },
     sigma_forceAtlas2: { deps: ['sigma'] },
     sigma_exporters: { deps: ['sigma'] },
     sigma_forceAtlas2: { deps: ['sigma'] },
@@ -210,7 +212,7 @@ require([
       stats = false);
     var tagsPanel = new Tags('tagsMenu');
     var client = new FFBOClient(config.dataset);
-    var visualizationSettings = new FFBOVisualizationSettings(ffbomesh);
+    var visualizationSettings = new FFBOVisualizationSettings(ffbomesh, config.metadata);
     window.NeuroNLPUI.onCreateTag = (tagsPanel.onCreateTag).bind(tagsPanel);
     window.NeuroNLPUI.onRetrieveTag = (tagsPanel.onRetrieveTag).bind(tagsPanel);
     var extraInfo = config.extraInfo;
@@ -252,7 +254,7 @@ require([
                   }
                 }
                 if (unit['class'] === 'Neuron' || unit['class'] === 'NeuronFragment') {
-                  if (ffbomesh.settings.neuron3dMode == 7) {
+                  if (ffbomesh.settings.neuron3dMode >= 7) {
                     gltf_data[rid] = unit;
                   } else {
                     morph_data[rid] = unit;
