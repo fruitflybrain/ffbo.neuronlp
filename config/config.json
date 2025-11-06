@@ -33,7 +33,7 @@
       "pinOpacity":0.9,
       "pinLowOpacity":0.1,
       "highlightedObjectOpacity":1.0,
-      "defaultRadius":1.0,
+      "defaultRadius":0.5,
       "defaultSomaRadius":3.0,
       "defaultSynapseRadius":0.5,
       "RadiusRange":[
